@@ -4,8 +4,24 @@
   height: 100%
 
 .fico.layout > .ant-layout 
-  &> .ant-layout > .ant-layout-header
-    height: auto
+  &> .ant-layout 
+    &> .ant-layout-header
+      height: auto
+      background-color: $content-background-color
+      padding: 0px 0px
+
+      .ant-page-header
+        padding: 0px
+
+        .ant-page-header-heading
+          padding: 16px
+          border-bottom: 3px solid $background-color
+
+        .ant-page-header-content .ant-page-header .ant-page-header-heading
+          border-bottom: 0
+    
+    &> .ant-layout-content
+      background: $background-color
 
   &> .ant-layout-sider-dark
     background-color: $main-menu-background-color
