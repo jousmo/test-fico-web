@@ -1,5 +1,13 @@
+@import "../../../styles/globals.sass"
+  
 .full-height, #__next
   height: 100%
 
-.fico.layout > .ant-layout > .ant-layout > .ant-layout-header
-  height: auto
+.fico.layout > .ant-layout 
+  &> .ant-layout > .ant-layout-header
+    height: auto
+
+  &> .ant-layout-sider-dark
+    background-color: $main-menu-background-color
+
+
