@@ -21,6 +21,8 @@
   "homepage": "https://github.com/jaxitanku/ficosec-centro-sur-web#readme",
   "dependencies": {
     "@ant-design/icons": "^4.0.2",
+    "@types/react": "^16.9.23",
+    "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "antd": "^3.26.12",
     "fibers": "^4.0.2",
