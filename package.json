@@ -1,0 +1,31 @@
+{
+  "name": "ficosec-centro-sur-web",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaxitanku/ficosec-centro-sur-web.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/jaxitanku/ficosec-centro-sur-web/issues"
+  },
+  "homepage": "https://github.com/jaxitanku/ficosec-centro-sur-web#readme",
+  "dependencies": {
+    "antd": "^3.26.12",
+    "fibers": "^4.0.2",
+    "next": "^9.2.2",
+    "node-sass": "^4.13.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "sass": "^1.26.0"
+  }
+}
