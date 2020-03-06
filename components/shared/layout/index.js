@@ -12,7 +12,11 @@ export function Layout({children}) {
         </ALayout.Sider>
         <ALayout>
           <ALayout.Header><Toolbar /></ALayout.Header>
-          <ALayout.Content>{children}</ALayout.Content>
+          <ALayout.Content>
+            <div className="full-height">
+              {children}
+            </div>
+          </ALayout.Content>
         </ALayout>
       </ALayout>
     </div>
