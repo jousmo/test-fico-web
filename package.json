@@ -30,6 +30,10 @@
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "sass": "^1.26.2"
+    "sass": "^1.26.2",
+    "webpack": "^4.42.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }
