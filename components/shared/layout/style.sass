@@ -3,6 +3,9 @@
 .full-height, #__next
   height: 100%
 
+.full-width
+  width: 100%
+
 .fico.layout > .ant-layout 
   &> .ant-layout 
     &> .ant-layout-header
@@ -22,6 +25,9 @@
     
     &> .ant-layout-content
       background: $background-color
+
+      .ant-row.fico.section:first-child
+        margin-top: 35px !important
 
   &> .ant-layout-sider-dark
     background-color: $main-menu-background-color
