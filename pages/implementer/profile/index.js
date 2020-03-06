@@ -1,12 +1,11 @@
 import { Layout } from "../../../components/shared"
 import { PageContext } from "../../../contexts/page"
-import { context } from "./context"
 import { GeneralInformation } from "../../../components/implementer/profile"
-import { Row, Col } from "antd"
+import { data } from "../../../contexts/implementer/profile"
 
 export default function Profile() {
   return (
-    <PageContext.Provider value={context}>
+    <PageContext.Provider value={data}>
       <Layout>
         <GeneralInformation />
       </Layout>
