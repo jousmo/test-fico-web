@@ -10,7 +10,7 @@ export default function Profile() {
 
   return (
     <PageContext.Provider value={data}>
-      <ImplementerProfileContext.Provider value={dispatch}>
+      <ImplementerProfileContext.Provider value={{dispatch, state}}>
         <Layout>
           <GeneralInformation />
         </Layout>
