@@ -1,7 +1,7 @@
 import { Layout } from "../../../components/shared"
 import { PageContext } from "../../../contexts/page"
 import { GeneralInformation } from "../../../components/implementer/profile"
-import { data } from "../../../contexts/implementer/profile"
+import { data, ImplementerProfileContext } from "../../../contexts/implementer/profile"
 import { useReducer } from "react"
 import { reducer } from "../../../contexts/implementer/profile/reducer"
 
