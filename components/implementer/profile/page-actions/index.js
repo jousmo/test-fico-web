@@ -1,7 +1,7 @@
 import { Button } from "antd"
 
-export function PageActions() {
+export function PageActions({save}) {
   return (
-    <Button type="primary">Guardar</Button>
+    <Button onClick={() => { save() }}>Guardar</Button>
   )
 }

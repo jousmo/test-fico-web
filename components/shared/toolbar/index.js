@@ -2,25 +2,22 @@ import { PageHeader } from "antd"
 import { MenuUnfoldOutlined } from "@ant-design/icons"
 import { extra } from "./extra"
 import { PageContext } from "../../../contexts/page"
+import { useContext } from "react"
 
 function Toolbar() {
+  const { title, actions } = useContext(PageContext)
+
   return (
-    <PageContext.Consumer>
-      {({title, actions}) => 
-        <div>
-          <PageHeader
-            backIcon={<MenuUnfoldOutlined />}
-            extra={extra}>
-            <PageHeader
-              title={title}
-              extra={actions} />
-          </PageHeader>
-        </div>
-      }
-    </PageContext.Consumer>
+    <div>
+      <PageHeader
+        backIcon={<MenuUnfoldOutlined />}
+        extra={extra}>
+        <PageHeader
+          title={title}
+          extra={actions} />
+      </PageHeader>
+    </div>
   )
 }
-
-Toolbar.contextType = PageContext
 
 export { Toolbar }
