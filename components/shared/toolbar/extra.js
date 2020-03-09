@@ -1,16 +1,17 @@
-import { SearchOutlined, BellOutlined } from "@ant-design/icons";
 import { Avatar, Button } from "antd";
 
 export const extra = [
   <Button
+    id="search"
     type="link"
     shape="circle"
-    icon={<SearchOutlined />} />,
+    icon="search_outlined" />,
   <Button
+    id="notifications"
     type="link"
     shape="circle"
-    icon={<BellOutlined />} />,
-  <span>
+    icon="bell_outlined" />,
+  <span id="user_avatar">
     <Avatar size="large" />
     Username
   </span>
