@@ -1,3 +1,3 @@
 import { createContext } from "react";
 
-export const ImplementerProfileContext = createContext(null)
+export const ImplementerProfileContext = createContext()
