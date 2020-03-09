@@ -4,16 +4,13 @@ import { useContext } from "react";
 import { ImplementerProfileContext } from "../../../../contexts/implementer/profile";
 
 export function GeneralInformation() {
-  const { state, dispatch } = useContext(ImplementerProfileContext)
+  const { updateGeneralInformation } = useContext(ImplementerProfileContext)
 
   const onChange = ({ currentTarget: { id, value } }) => {
     const newData = {}
     newData[id] = value
 
-    dispatch({
-      type: "updateGeneralInformation",
-      data: newData
-    })
+    updateGeneralInformation(newData)
   }
 
   const onSelectChange = (value, option) => {

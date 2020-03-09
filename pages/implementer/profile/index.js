@@ -7,29 +7,25 @@ import { useState, useCallback, useMemo } from "react"
 export default function Profile() {
   const [state, setState] = useState({ generalInformation: {} })
 
-  const setGeneralInformation = useCallback(() =>
-    generalInformation => {
-      return setState(prevState => {
-        return {
-          ...prevState,
-          generalInformation: {
-            ...prevState.generalInformation,
-            generalInformation
-          }
-        }
-      })
-    }
-  )
+  const updateGeneralInformation = useCallback(generalInformation => {
+    const newGeneralInformation = { ...state.generalInformation, ...generalInformation }
 
-  const injectActions = useMemo(() => { setGeneralInformation }, []) 
+    setState({...state, generalInformation: newGeneralInformation})
+  })
+
+  const save = useCallback(() => {
+    console.log(state)
+  })
+
+  const injectActions = useMemo(() => ({ updateGeneralInformation, save }), [state])
 
   return (
-    <PageContext.Provider value={data}>
-      <ImplementerProfileContext.Provider value={injectActions()}>
+    <ImplementerProfileContext.Provider value={injectActions}>
+      <PageContext.Provider value={data(injectActions)}>
         <Layout>
           <GeneralInformation />
         </Layout>
-      </ImplementerProfileContext.Provider>
-    </PageContext.Provider>
+      </PageContext.Provider>
+    </ImplementerProfileContext.Provider>
   )
 }
