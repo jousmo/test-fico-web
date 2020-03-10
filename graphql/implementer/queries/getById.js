@@ -18,10 +18,10 @@ export const getById = gql`
       mission
       vision
       history
-      institutionExperience
+      institutionalExperience
       previousSupports
       alliances
-      incomeAndExpenses
+      incomesAndExpenses
     }
   }
 `
