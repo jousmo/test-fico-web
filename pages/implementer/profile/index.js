@@ -30,7 +30,7 @@ function Profile({client}) {
         variables: { ...state.generalInformation, id: "1" }
       })
 
-      console.log(updatedProfile)
+      /* TODO: Show feedback to the user */
     }
     catch(e) {
       console.error(e)

@@ -19,8 +19,6 @@ export function GeneralInformation() {
     updateGeneralInformation(newData)
   }
 
-  console.log(loading, error, data)
-
   return (
     <Section title="1. Información general">
       <Form
