@@ -1,7 +1,8 @@
 import { Card, Select, Form, Row, Col, Input } from "antd";
-import { Section } from "../../../shared";
+import { Section, SelectField } from "../../../shared";
 import { useContext } from "react";
 import { ImplementerProfileContext } from "../../../../contexts/implementer/profile";
+import { implementer } from "../../../../helpers/selectOptions";
 
 export function GeneralInformation() {
   const { updateGeneralInformation } = useContext(ImplementerProfileContext)
@@ -11,10 +12,6 @@ export function GeneralInformation() {
     newData[id] = value
 
     updateGeneralInformation(newData)
-  }
-
-  const onSelectChange = name => value => {
-    onChange({currentTarget: { id: name, value: value }})
   }
 
   return (
@@ -27,9 +24,11 @@ export function GeneralInformation() {
             <Form.Item
               style={{display: "inline"}}
               label="Tipo de la implementadora">
-              <Select id="type" onChange={onSelectChange("type")}>
-                <Select.Option value="1">Test</Select.Option>
-              </Select>
+              <SelectField
+                id="type"
+                name="type"
+                onChange={onChange}
+                options={implementer.profile.implementerTypes} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -55,10 +54,11 @@ export function GeneralInformation() {
             <Form.Item
               style={{display: "inline"}}
               label="Director">
-              <Input
+              <SelectField
                 id="director"
-                onChange={onChange}
-                type="text" />
+                name="director"
+                options={implementer.profile.directorTypes}
+                onChange={onChange} />
             </Form.Item>
           </Col>
           <Col span={12}>
