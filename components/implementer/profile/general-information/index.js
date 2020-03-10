@@ -5,7 +5,12 @@ import { ImplementerProfileContext } from "../../../../contexts/implementer/prof
 import { implementer } from "../../../../helpers/selectOptions";
 
 export function GeneralInformation() {
-  const { updateGeneralInformation } = useContext(ImplementerProfileContext)
+  const {
+    updateGeneralInformation,
+    loading,
+    error,
+    data
+  } = useContext(ImplementerProfileContext)
 
   const onChange = ({ currentTarget: { id, value } }) => {
     const newData = {}
@@ -13,6 +18,8 @@ export function GeneralInformation() {
 
     updateGeneralInformation(newData)
   }
+
+  console.log(loading, error, data)
 
   return (
     <Section title="1. Información general">
@@ -28,6 +35,7 @@ export function GeneralInformation() {
                 id="type"
                 name="type"
                 onChange={onChange}
+                defaultValue={data?.Implementer?.type}
                 options={implementer.profile.implementerTypes} />
             </Form.Item>
           </Col>
@@ -46,6 +54,8 @@ export function GeneralInformation() {
               label="Nombre de la implementadora">
               <Input
                 id="name"
+                name="name"
+                defaultValue={data?.Implementer?.name}
                 onChange={onChange}
                 type="text" />
             </Form.Item>
@@ -57,6 +67,7 @@ export function GeneralInformation() {
               <SelectField
                 id="director"
                 name="director"
+                defaultValue={data?.Implementer?.director}
                 options={implementer.profile.directorTypes}
                 onChange={onChange} />
             </Form.Item>
@@ -67,6 +78,8 @@ export function GeneralInformation() {
               label="RFC">
               <Input
                 id="rfc"
+                name="rfc"
+                defaultValue={data?.Implementer?.rfc}
                 onChange={onChange}
                 type="text" />
             </Form.Item>
@@ -77,6 +90,8 @@ export function GeneralInformation() {
               label="Nombre comercial">
               <Input
                 id="commercialName"
+                name="commercialName"
+                defaultValue={data?.Implementer?.commercialName}
                 onChange={onChange}
                 type="text" />
             </Form.Item>
@@ -87,6 +102,8 @@ export function GeneralInformation() {
               label="Domicilio comercial">
               <Input
                 id="commercialAddress"
+                name="commercialAddress"
+                defaultValue={data?.Implementer?.commercialAddress}
                 onChange={onChange}
                 type="text" />
             </Form.Item>
@@ -97,6 +114,8 @@ export function GeneralInformation() {
               label="Domicilio fiscal">
               <Input
                 id="fiscalAddress"
+                name="fiscalAddress"
+                defaultValue={data?.Implementer?.fiscalAddress}
                 onChange={onChange}
                 type="text" />
             </Form.Item>
@@ -107,6 +126,8 @@ export function GeneralInformation() {
               label="Teléfono">
               <Input
                 id="phone"
+                name="phone"
+                defaultValue={data?.Implementer?.phone}
                 onChange={onChange}
                 type="text" />
             </Form.Item>
@@ -117,6 +138,8 @@ export function GeneralInformation() {
               label="Representante legal">
               <Input
                 id="legalRepresentative"
+                name="legalRepresentative"
+                defaultValue={data?.Implementer?.legalRepresentative}
                 onChange={onChange}
                 type="text" />
             </Form.Item>
@@ -127,6 +150,8 @@ export function GeneralInformation() {
               label="Correo electrónico">
               <Input
                 id="email"
+                name="email"
+                defaultValue={data?.Implementer?.email}
                 onChange={onChange}
                 type="text" />
             </Form.Item>
@@ -137,6 +162,8 @@ export function GeneralInformation() {
               label="Oficio de donataria">
               <Input
                 id="proofOfCharitableContributions"
+                name="proofOfCharitableContributions"
+                defaultValue={data?.Implementer?.proofOfCharitableContributions}
                 onChange={onChange}
                 type="text" />
             </Form.Item>
@@ -147,6 +174,8 @@ export function GeneralInformation() {
               label="Misión">
               <Input.TextArea
                 id="mission"
+                name="mission"
+                defaultValue={data?.Implementer?.mission}
                 onChange={onChange}
                 autoSize={{minRows: 3}} />
             </Form.Item>
@@ -157,6 +186,8 @@ export function GeneralInformation() {
               label="Visión">
               <Input.TextArea
                 id="vision"
+                name="vision"
+                defaultValue={data?.Implementer?.vision}
                 onChange={onChange}
                 autoSize={{minRows: 3}} />
             </Form.Item>
@@ -167,6 +198,8 @@ export function GeneralInformation() {
               label="Historia">
               <Input.TextArea
                 id="history"
+                name="history"
+                defaultValue={data?.Implementer?.history}
                 onChange={onChange}
                 autoSize={{minRows: 3}} />
             </Form.Item>
@@ -177,6 +210,8 @@ export function GeneralInformation() {
               label="Experiencia institucional">
               <Input.TextArea
                 id="institutionalExperience"
+                name="institutionalExperience"
+                defaultValue={data?.Implementer?.institutionalExperience}
                 onChange={onChange}
                 autoSize={{minRows: 3}} />
             </Form.Item>
@@ -187,6 +222,8 @@ export function GeneralInformation() {
               label="Apoyos anteriores">
               <Input.TextArea
                 id="previousSupports"
+                name="previousSupports"
+                defaultValue={data?.Implementer?.previousSupports}
                 onChange={onChange}
                 autoSize={{minRows: 3}} />
             </Form.Item>
@@ -197,6 +234,8 @@ export function GeneralInformation() {
               label="Alianzas">
               <Input.TextArea
                 id="alliances"
+                name="alliances"
+                defaultValue={data?.Implementer?.alliances}
                 onChange={onChange}
                 autoSize={{minRows: 3}} />
             </Form.Item>
@@ -207,6 +246,8 @@ export function GeneralInformation() {
               label="Ingresos / egresos">
               <Input.TextArea
                 id="incomesAndExpenses"
+                name="incomesAndExpenses"
+                defaultValue={data?.Implementer?.incomesAndExpenses}
                 onChange={onChange}
                 autoSize={{minRows: 3}} />
             </Form.Item>
