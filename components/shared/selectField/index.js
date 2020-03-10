@@ -6,7 +6,8 @@ export function SelectField({
   id,
   name,
   onChange,
-  placeholder="Selecciona..."
+  placeholder="Selecciona...",
+  defaultValue
 }) {
   const onSelectChange = value => {
     onChange && onChange({
@@ -22,7 +23,8 @@ export function SelectField({
       id={id}
       name={name}
       onChange={onSelectChange}
-      placeholder={placeholder}>
+      placeholder={placeholder}
+      defaultValue={defaultValue}>
       { options.map((o, i) => 
         <Select.Option key={kebabCase(`${o.value}-${i}`)} value={o.value}>{o.label}</Select.Option>
       ) }
