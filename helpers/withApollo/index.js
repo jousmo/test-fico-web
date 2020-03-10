@@ -4,10 +4,17 @@ import { createHttpLink } from "apollo-link-http"
 import fetch from "node-fetch"
 import { setContext } from "apollo-link-context"
 
-const link = createHttpLink({ uri: process.env.GRAPHQL_URI, fetch: fetch })
+const link = createHttpLink({
+  uri: process.env.GRAPHQL_URI,
+  fetch: fetch,
+  credentials: "same-origin"
+})
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
+
+  if(!token)
+    return {}
 
   return {
     headers: {
