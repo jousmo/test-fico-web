@@ -1,4 +1,5 @@
 import { Select } from "antd"
+import { kebabCase } from "lodash"
 
 export function SelectField({
   options,
@@ -22,8 +23,8 @@ export function SelectField({
       name={name}
       onChange={onSelectChange}
       placeholder={placeholder}>
-      { options.map(o => 
-        <Select.Option value={o.value}>{o.label}</Select.Option>
+      { options.map((o, i) => 
+        <Select.Option key={kebabCase(`${o.value}-${i}`)} value={o.value}>{o.label}</Select.Option>
       ) }
     </Select>
   )
