@@ -13,8 +13,8 @@ export function GeneralInformation() {
     updateGeneralInformation(newData)
   }
 
-  const onSelectChange = (value, option) => {
-
+  const onSelectChange = name => value => {
+    onChange({currentTarget: { id: name, value: value }})
   }
 
   return (
@@ -27,7 +27,7 @@ export function GeneralInformation() {
             <Form.Item
               style={{display: "inline"}}
               label="Tipo de la implementadora">
-              <Select id="type" onChange={onSelectChange}>
+              <Select id="type" onChange={onSelectChange("type")}>
                 <Select.Option value="1">Test</Select.Option>
               </Select>
             </Form.Item>
