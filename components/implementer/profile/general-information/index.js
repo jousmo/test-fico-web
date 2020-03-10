@@ -1,8 +1,9 @@
-import { Card, Select, Form, Row, Col, Input } from "antd";
+import { Select, Form, Row, Col, Input, Button, Upload } from "antd";
 import { Section, SelectField } from "../../../shared";
 import { useContext } from "react";
 import { ImplementerProfileContext } from "../../../../contexts/implementer/profile";
 import { implementer } from "../../../../helpers/selectOptions";
+import { UploadOutlined } from "@ant-design/icons";
 
 export function GeneralInformation() {
   const {
@@ -158,12 +159,11 @@ export function GeneralInformation() {
             <Form.Item
               style={{display: "inline"}}
               label="Oficio de donataria">
-              <Input
-                id="proofOfCharitableContributions"
-                name="proofOfCharitableContributions"
-                defaultValue={data?.Implementer?.proofOfCharitableContributions}
-                onChange={onChange}
-                type="text" />
+              <Upload>
+                <Button>
+                  <UploadOutlined /> Subir oficio
+                </Button>
+              </Upload>
             </Form.Item>
           </Col>
           <Col span={24}>
