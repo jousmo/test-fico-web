@@ -71,12 +71,12 @@ export function GeneralInformationForm({data, isLoading, onChange, error}) {
           <Form.Item
             style={{display: "inline"}}
             label="Director">
-            <SelectField
+            <Input
               id="director"
               name="director"
               defaultValue={data?.Implementer?.director}
-              options={implementer.profile.directorTypes}
-              onChange={onChange} />
+              onChange={onChange}
+              type="text" />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -136,7 +136,7 @@ export function GeneralInformationForm({data, isLoading, onChange, error}) {
               name="phone"
               defaultValue={data?.Implementer?.phone}
               onChange={onChange}
-              type="text" />
+              type="tel" />
           </Form.Item>
         </Col>
         <Col span={12}>
