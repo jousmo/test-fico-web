@@ -1,6 +1,9 @@
 import { Layout } from "../../../components/shared"
 import { PageContext } from "../../../contexts/page"
-import { GeneralInformation } from "../../../components/implementer/profile"
+import {
+  GeneralInformation,
+  OrganizationalChart
+} from "../../../components/implementer/profile"
 import {
   data as contextData,
   ImplementerProfileContext
@@ -44,6 +47,7 @@ function Profile({client}) {
       <PageContext.Provider value={contextData(injectActions)}>
         <Layout>
           <GeneralInformation />
+          <OrganizationalChart />
         </Layout>
       </PageContext.Provider>
     </ImplementerProfileContext.Provider>
