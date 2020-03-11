@@ -1,7 +1,13 @@
 {
   "version": 2,
   "env": {
-    "GRAPHQL_URI": "https://ficosec-centro-sur-server.now.sh/graphql",
+    "GRAPHQL_URI": "@prod_graphql_uri",
     "NODE_ENV": "production"
+  },
+  "build": {
+    "env": {
+      "GRAPHQL_URI": "@prod_graphql_uri",
+      "NODE_ENV": "production"
+    }
   }
 }

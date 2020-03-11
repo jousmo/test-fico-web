@@ -5,9 +5,8 @@ import fetch from "node-fetch"
 import { setContext } from "apollo-link-context"
 
 const link = createHttpLink({
-  uri: process.env.GRAPHQL_URI,
-  fetch: fetch,
-  credentials: "same-origin"
+  uri: "https://ficosec-centro-sur-server-rod750.jaxitank.now.sh/graphql",
+  fetch: fetch
 })
 
 const authLink = setContext((_, { headers }) => {
