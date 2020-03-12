@@ -11,14 +11,14 @@ export function CompositeField({
   const [state, setState] = useState({ items: [] })
   
   const addNew = (value) => {
-    const newItems = [...state.items, ...value]
+    const newItems = [...state.items, value]
     setState({ items: newItems })
     onChange && onChange(items)
   }
 
   return (
     <div>
-      { children(state.items) }
+      { children({items: state.items }) }
       <Button
         type="dashed"
         icon={<PlusOutlined />}
