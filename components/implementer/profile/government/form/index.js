@@ -1,14 +1,30 @@
 import { CompositeField, SelectField } from "../../../../shared";
-import { Row, Col, Input, Form, Checkbox } from "antd";
+import { Row, Col, Input, Form, Checkbox, Skeleton, Alert } from "antd";
 import { implementer } from "../../../../../helpers/selectOptions";
 
-export function GovernmentForm() {
+export function GovernmentForm({data, isLoading, onChange, error}) {
+  if(isLoading) {
+    return <Skeleton active />
+  }
+
+  if(!data || error) {
+    return (
+      <Alert
+        message="Error"
+        description="Ha ocurrido un error al cargar los datos de esta sección,
+        por favor actualiza la página."
+        type="error"
+        showIcon />
+    )
+  }
+
   return (
     <Form layout="vertical">
       <Form.Item
         label="Incluye nombres y cargos del consejo directivo"
         style={{display: "inline"}}>
         <CompositeField
+          defaultValue={data?.Implementer?.councilMembers}
           onClickAdd={(addNew) => addNew({name: undefined, charge: undefined, remuneration: undefined})}
           addLabel="Agregar directivo">
           {({ items }) => 
