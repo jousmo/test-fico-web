@@ -10,7 +10,7 @@ import {
   Alert
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { SelectField } from "../../../../shared";
+import { SelectField, UploadButton } from "../../../../shared";
 import { implementer } from "../../../../../helpers/selectOptions";
 
 export function GeneralInformationForm({data, isLoading, onChange, error}) {
@@ -167,11 +167,7 @@ export function GeneralInformationForm({data, isLoading, onChange, error}) {
           <Form.Item
             style={{display: "inline"}}
             label="Oficio de donataria">
-            <Upload>
-              <Button>
-                <UploadOutlined /> Subir oficio
-              </Button>
-            </Upload>
+            <UploadButton>Subir oficio</UploadButton>
           </Form.Item>
         </Col>
         <Col span={24}>

@@ -12,6 +12,7 @@ import { useState, useCallback, useMemo } from "react"
 import { withApollo, client } from "../../../helpers/withApollo"
 import { implementer } from "../../../graphql"
 import { useMutation, useQuery } from "@apollo/react-hooks"
+import { LegalDocuments } from "../../../components/implementer/profile/legal-documents"
 
 function Profile({client}) {
   const [state, setState] = useState({ generalInformation: {} })
@@ -47,6 +48,7 @@ function Profile({client}) {
       <PageContext.Provider value={contextData(injectActions)}>
         <Layout>
           <GeneralInformation />
+          <LegalDocuments />
           <OrganizationalChart />
         </Layout>
       </PageContext.Provider>
