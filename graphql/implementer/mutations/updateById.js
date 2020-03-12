@@ -20,7 +20,8 @@ export const updateById = gql`
     $institutionalExperience: String,
     $previousSupports: String,
     $alliances: String,
-    $incomesAndExpenses: String){
+    $incomesAndExpenses: String,
+    $councilMembers: JSON){
       updateImplementer(
         id: $id,
         type: $type,
@@ -40,7 +41,8 @@ export const updateById = gql`
         institutionalExperience: $institutionalExperience,
         previousSupports: $previousSupports,
         alliances: $alliances,
-        incomesAndExpenses: $incomesAndExpenses
+        incomesAndExpenses: $incomesAndExpenses,
+        councilMembers: $councilMembers
       ) {
         id
       }
