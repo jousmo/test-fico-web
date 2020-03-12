@@ -1,4 +1,4 @@
-export const directorTypes = [
+export const chargeTypes = [
   { label: "Presidente", value: "PRESIDENT" },
   { label: "Secretario", value: "SECRETARY" },
   { label: "Vocal", value: "BOARD_MEMBER"},
