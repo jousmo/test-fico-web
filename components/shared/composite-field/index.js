@@ -6,9 +6,10 @@ export function CompositeField({
   children,
   onChange,
   onClickAdd,
-  addLabel
+  addLabel,
+  defaultValue=[]
 }) {
-  const [state, setState] = useState({ items: [] })
+  const [state, setState] = useState({ items: Array.from(defaultValue) })
   
   const addNew = (value) => {
     const newItems = [...state.items, value]
