@@ -24,12 +24,13 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
         label="Incluye nombres y cargos del consejo directivo"
         style={{display: "inline"}}>
         <CompositeField
+          onChange={onChange}
           defaultValue={data?.Implementer?.councilMembers}
-          onClickAdd={(addNew) => addNew({name: undefined, charge: undefined, remuneration: undefined})}
+          onClickAdd={(addNew) => addNew({name: "", charge: "", remuneration: false})}
           addLabel="Agregar directivo">
-          {({ items }) => 
+          {({ items, updateItem }) => 
             <div>
-              { items.map(item => 
+              { items.map((item, index) => 
                 <Form layout="vertical">
                   <Row gutter={[10, 8]} justify="start">
                     <Col span={8}>
@@ -40,6 +41,7 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
                           id="name"
                           name="name"
                           defaultValue={item.name}
+                          onChange={updateItem(index)}
                           type="text" />
                       </Form.Item>
                     </Col>
@@ -51,6 +53,7 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
                           id="charge"
                           name="charge"
                           defaultValue={item.charge}
+                          onChange={updateItem(index)}
                           options={implementer.profile.chargeTypes} />
                       </Form.Item>
                     </Col>
@@ -61,7 +64,8 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
                         <Checkbox
                           id="remuneration"
                           name="remuneration"
-                          defaultValue={item.remuneration}>
+                          onChange={updateItem(index)}
+                          checked={item.remuneration}>
                           Recibe remuneración
                         </Checkbox>
                       </Form.Item>
