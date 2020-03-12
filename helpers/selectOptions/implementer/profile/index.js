@@ -1,2 +1,2 @@
 export * from "./implementerTypes"
-export * from "./directorTypes"
+export * from "./chargeTypes"

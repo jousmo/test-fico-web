@@ -1,3 +1,5 @@
 export * from "./page-actions"
 export * from "./general-information"
 export * from "./organizational-chart"
+export * from "./legal-documents"
+export * from "./government"

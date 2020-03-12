@@ -2,7 +2,9 @@ import { Layout } from "../../../components/shared"
 import { PageContext } from "../../../contexts/page"
 import {
   GeneralInformation,
-  OrganizationalChart
+  OrganizationalChart,
+  LegalDocuments,
+  Government
 } from "../../../components/implementer/profile"
 import {
   data as contextData,
@@ -12,7 +14,6 @@ import { useState, useCallback, useMemo } from "react"
 import { withApollo, client } from "../../../helpers/withApollo"
 import { implementer } from "../../../graphql"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { LegalDocuments } from "../../../components/implementer/profile/legal-documents"
 
 function Profile({client}) {
   const [state, setState] = useState({ generalInformation: {} })
@@ -49,6 +50,7 @@ function Profile({client}) {
         <Layout>
           <GeneralInformation />
           <LegalDocuments />
+          <Government />
           <OrganizationalChart />
         </Layout>
       </PageContext.Provider>
