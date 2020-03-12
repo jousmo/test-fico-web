@@ -11,12 +11,17 @@ export function Government() {
     data
   } = useContext(ImplementerProfileContext)
 
+  const onChange = (data) => {
+    updateGeneralInformation({ councilMembers: data })
+  }
+
   return (
     <Section title="5. Gobernanza">
       <GovernmentForm
         data={data}
         isLoading={loading}
-        error={error} />
+        error={error}
+        onChange={onChange} />
     </Section>
   )
 }
