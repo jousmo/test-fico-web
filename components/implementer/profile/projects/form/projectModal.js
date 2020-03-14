@@ -1,92 +1,105 @@
 import { Modal, Form, Row, Col, Input } from "antd";
 import { YearSelect, SelectField } from "../../../../shared";
 import { implementer } from "../../../../../helpers/selectOptions";
+import { useForm } from "antd/lib/form/util";
+import { getSelectValue } from "../../../../../helpers/getSelectValue";
 
-export function ProjectModal({onSave, onCancel, ...props}) {
-  const onChange = () => {};
+export function ProjectModal({onCancel, onSave, ...props}) {
+  const [form] = useForm()
+  
+  const onOk = async () => {
+    try {
+      const values = await form.getFieldsValue()
+      onSave(values)
+      form.resetFields()
+    }
+    catch(e) {
+
+    }
+  }
 
   return (
-    <Modal title="Agregar proyecto" {...props}>
+    <Modal
+      title="Agregar proyecto"
+      onOk={onOk}
+      onCancel={onCancel}
+      {...props}>
       <Form
+        form={form}
         name="general-information"
         layout="vertical">
         <Row gutter={[10, 8]} justify="start">
           <Col span={24}>
             <Form.Item
+              name="financingInstitution"
               style={{display: "inline"}}
               label="Institución financiadora">
               <Input
                 id="financingInstitution"
-                name="financingInstitution"
-                onChange={onChange}
                 type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
+              name="amount"
               style={{display: "inline"}}
               label="Monto">
               <Input
                 id="amount"
-                name="amount"
                 addonBefore="$"
-                onChange={onChange}
                 type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
+              name="financingPercentage"
               style={{display: "inline"}}
               label="% de financiamiento">
               <Input
-                id="financingPercent"
-                name="financingPercent"
+                id="financingPercentage"
                 addonAfter="%"
-                onChange={onChange}
                 type="text" />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
+              name="name"
               style={{display: "inline"}}
               label="Nombre del proyecto">
               <Input
                 id="name"
-                name="name"
-                onChange={onChange}
                 type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
+              name="year"
               style={{display: "inline"}}
-              label="Año del proyecto">
+              label="Año del proyecto"
+              getValueFromEvent={getSelectValue}>
               <YearSelect
                 id="year"
-                name="year"
-                onChange={onChange}
                 displayNumber={50} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
+              name="budgetType"
               style={{display: "inline"}}
-              label="Tipo de presupuesto">
+              label="Tipo de presupuesto"
+              getValueFromEvent={getSelectValue}>
               <SelectField
                 id="budgetType"
-                name="budgetType"
-                onChange={onChange}
                 options={implementer.profile.budgetTypes} />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
+              name="objective"
               style={{display: "inline"}}
               label="Objetivo general del proyecto">
               <Input
                 id="objective"
-                name="objective"
-                onChange={onChange}
                 type="text" />
             </Form.Item>
           </Col>

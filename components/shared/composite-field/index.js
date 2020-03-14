@@ -31,7 +31,7 @@ export function CompositeField({
 
   return (
     <div>
-      { children({items: state.items, updateItem: updateItem }) }
+      { children({items: state.items, updateItem: updateItem, addNew: addNew}) }
       <Button
         type="dashed"
         icon={<PlusOutlined />}
