@@ -16,7 +16,7 @@ export function Projects() {
   }
 
   return (
-    <Section title="5. Gobernanza">
+    <Section title="2. Proyectos de implementadora">
       <ProjectsForm
         data={data}
         isLoading={loading}
