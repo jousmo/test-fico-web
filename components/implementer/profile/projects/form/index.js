@@ -1,6 +1,7 @@
 import { CompositeField, SelectField } from "../../../../shared";
-import { Row, Col, Input, Form, Checkbox, Skeleton, Alert, Table } from "antd";
+import { Row, Col, Input, Form, Checkbox, Skeleton, Alert, Table, Empty } from "antd";
 import { implementer } from "../../../../../helpers/selectOptions";
+import { ProjectModal } from "./projectModal";
 
 export function ProjectsForm({data, isLoading, onChange, error}) {
   if(isLoading) {
@@ -19,51 +20,56 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
   }
 
   return (
-    <Form layout="vertical">
-      <Form.Item
-        label="Incluye nombres y cargos del consejo directivo"
-        style={{display: "inline"}}>
-        <CompositeField
-          onChange={onChange}
-          defaultValue={data?.Implementer?.projects}
-          onClickAdd={(addNew) => addNew({name: "", charge: "", remuneration: false})}
-          addLabel="Agregar proyecto">
-          {({ items }) => 
-            <div>
-              <Table>
-                <Table.Column
-                  title="Institución financiadora"
-                  key="financialInstitution"
-                  dataIndex="financingInstitution" />
-                <Table.Column
-                  title="Monto"
-                  key="amount"
-                  dataIndex="amount" />
-                <Table.Column
-                  title="Financiamiento"
-                  key="financingPercentage"
-                  dataIndex="financingPercentage" />
-                <Table.Column
-                  title="Nombre del proyecto"
-                  key="name"
-                  dataIndex="name" />
-                <Table.Column
-                  title="Año"
-                  key="year"
-                  dataIndex="year" />
-                <Table.Column
-                  title="Presupuesto"
-                  key="budget"
-                  dataIndex="budget" />
-                <Table.Column
-                  title="Objetivo general"
-                  key="objective"
-                  dataIndex="objective" />
-              </Table>
-            </div>
-          }
-        </CompositeField>
-      </Form.Item>
-    </Form>
+    <>
+      <ProjectModal visible={true} />
+      <Form layout="vertical">
+        <Form.Item
+          style={{display: "inline"}}>
+          <CompositeField
+            onChange={onChange}
+            defaultValue={data?.Implementer?.projects}
+            onClickAdd={(addNew) => addNew({name: "", charge: "", remuneration: false})}
+            addLabel="Agregar proyecto">
+            {({ items }) => 
+              <div>
+                <Table
+                  pagination={false}
+                  locale={{emptyText: <Empty description="Agrega proyectos haciendo click en el botón de abajo" />}}
+                  >
+                  <Table.Column
+                    title="Institución financiadora"
+                    key="financialInstitution"
+                    dataIndex="financingInstitution" />
+                  <Table.Column
+                    title="Monto"
+                    key="amount"
+                    dataIndex="amount" />
+                  <Table.Column
+                    title="Financiamiento"
+                    key="financingPercentage"
+                    dataIndex="financingPercentage" />
+                  <Table.Column
+                    title="Nombre del proyecto"
+                    key="name"
+                    dataIndex="name" />
+                  <Table.Column
+                    title="Año"
+                    key="year"
+                    dataIndex="year" />
+                  <Table.Column
+                    title="Presupuesto"
+                    key="budget"
+                    dataIndex="budget" />
+                  <Table.Column
+                    title="Objetivo general"
+                    key="objective"
+                    dataIndex="objective" />
+                </Table>
+              </div>
+            }
+          </CompositeField>
+        </Form.Item>
+      </Form>
+    </>
   )
 }
