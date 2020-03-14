@@ -44,7 +44,7 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
           defaultValue={data?.Implementer?.projects}
           onClickAdd={onClickAdd}
           addLabel="Agregar proyecto">
-          {({ items, addNew }) => 
+          {({ items, addNew, removeItem }) => 
             <div>
               <ProjectModal
                 onSave={onSave(addNew)}
@@ -85,6 +85,10 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
                   title="Objetivo general"
                   key="objective"
                   dataIndex="objective" />
+                <Table.Column
+                  title=""
+                  key="actions"
+                  render={cellFormat.deleteAction(removeItem)} />
               </Table>
             </div>
           }
