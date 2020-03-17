@@ -21,7 +21,8 @@ export const updateById = gql`
     $previousSupports: String,
     $alliances: String,
     $incomesAndExpenses: String,
-    $councilMembers: JSON){
+    $councilMembers: JSON,
+    $projects: JSON){
       updateImplementer(
         id: $id,
         type: $type,
@@ -42,7 +43,8 @@ export const updateById = gql`
         previousSupports: $previousSupports,
         alliances: $alliances,
         incomesAndExpenses: $incomesAndExpenses,
-        councilMembers: $councilMembers
+        councilMembers: $councilMembers,
+        projects: $projects
       ) {
         id
       }

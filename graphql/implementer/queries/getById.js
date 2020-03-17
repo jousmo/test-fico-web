@@ -23,6 +23,7 @@ export const getById = gql`
       alliances
       incomesAndExpenses
       councilMembers
+      projects
     }
   }
 `

@@ -4,7 +4,8 @@ import {
   GeneralInformation,
   OrganizationalChart,
   LegalDocuments,
-  Government
+  Government,
+  Projects
 } from "../../../components/implementer/profile"
 import {
   data as contextData,
@@ -49,6 +50,7 @@ function Profile({client}) {
       <PageContext.Provider value={contextData(injectActions)}>
         <Layout>
           <GeneralInformation />
+          <Projects />
           <LegalDocuments />
           <Government />
           <OrganizationalChart />
