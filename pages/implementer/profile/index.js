@@ -43,7 +43,18 @@ function Profile({client}) {
     }
   })
 
-  const injectActions = useMemo(() => ({ updateGeneralInformation, save, loading, error, data }), [state, loading])
+  const isGovernment = useCallback(() => {
+    return this.state.generalInformation.type === "GOVERNMENT"
+  })
+
+  const injectActions = useMemo(() => ({
+    updateGeneralInformation,
+    save,
+    isGovernment,
+    loading,
+    error,
+    data
+  }), [state, loading])
 
   return (
     <ImplementerProfileContext.Provider value={injectActions}>
