@@ -44,7 +44,8 @@ function Profile({client}) {
   })
 
   const isGovernment = useCallback(() => {
-    return this.state.generalInformation.type === "GOVERNMENT"
+    return state.generalInformation.type === "GOVERNMENT" ||
+      data?.Implementer?.type === "GOVERNMENT"
   })
 
   const injectActions = useMemo(() => ({
