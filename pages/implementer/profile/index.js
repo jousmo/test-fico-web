@@ -1,4 +1,4 @@
-import { Layout } from "../../../components/shared"
+import { Layout, Visibility } from "../../../components/shared"
 import { PageContext } from "../../../contexts/page"
 import {
   GeneralInformation,
@@ -64,8 +64,12 @@ function Profile({client}) {
           <GeneralInformation />
           <Projects />
           <LegalDocuments />
-          <Government />
-          <OrganizationalChart />
+          <Visibility visible={!isGovernment()}>
+            <Government />
+          </Visibility>
+          <Visibility visible={!isGovernment()}>
+            <OrganizationalChart />
+          </Visibility>
         </Layout>
       </PageContext.Provider>
     </ImplementerProfileContext.Provider>
