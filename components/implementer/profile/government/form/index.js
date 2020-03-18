@@ -76,7 +76,9 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
                 </Form>
               ) }
               { !items.length ?
-                <Empty />
+                <Empty
+                  style={{marginBottom: "10px"}}
+                  description="Agrega directivos haciendo click en el botón de abajo" />
               : null }
             </div>
           }
