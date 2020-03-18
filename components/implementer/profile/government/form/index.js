@@ -67,7 +67,7 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
                           name="remuneration"
                           onChange={updateItem(index)}
                           checked={item.remuneration}>
-                          Recibe remuneración
+                          No recibe remuneración
                         </Checkbox>
                         <DeleteButton onClick={() => removeItem(index)} />
                       </Form.Item>
