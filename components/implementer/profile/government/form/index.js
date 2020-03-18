@@ -1,6 +1,7 @@
-import { CompositeField, SelectField } from "../../../../shared";
-import { Row, Col, Input, Form, Checkbox, Skeleton, Alert } from "antd";
+import { CompositeField, SelectField, DeleteButton } from "../../../../shared";
+import { Row, Col, Input, Form, Checkbox, Skeleton, Alert, Button, Empty } from "antd";
 import { implementer } from "../../../../../helpers/selectOptions";
+import { DeleteOutlined } from "@ant-design/icons";
 
 export function GovernmentForm({data, isLoading, onChange, error}) {
   if(isLoading) {
@@ -28,7 +29,7 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
           defaultValue={data?.Implementer?.councilMembers}
           onClickAdd={(addNew) => addNew({name: "", charge: "", remuneration: false})}
           addLabel="Agregar directivo">
-          {({ items, updateItem }) => 
+          {({ items, updateItem, removeItem }) => 
             <div>
               { items.map((item, index) => 
                 <Form layout="vertical">
@@ -66,13 +67,19 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
                           name="remuneration"
                           onChange={updateItem(index)}
                           checked={item.remuneration}>
-                          Recibe remuneración
+                          No recibe remuneración
                         </Checkbox>
+                        <DeleteButton onClick={() => removeItem(index)} />
                       </Form.Item>
                     </Col>
                   </Row>
                 </Form>
               ) }
+              { !items.length ?
+                <Empty
+                  style={{marginBottom: "10px"}}
+                  description="Agrega directivos haciendo click en el botón de abajo" />
+              : null }
             </div>
           }
         </CompositeField>

@@ -1,11 +1,7 @@
-import { Button } from "antd"
-import { DeleteOutlined } from "@ant-design/icons"
+import { DeleteButton } from "../../components/shared"
 
 export const deleteAction = (onDelete) => (text, record, index) => {
   return {
-    children: <Button
-      onClick={() => onDelete(index)}
-      shape="circle"
-      icon={<DeleteOutlined />} />
+    children: <DeleteButton onClick={() => onDelete(index)} />
   }
 }
