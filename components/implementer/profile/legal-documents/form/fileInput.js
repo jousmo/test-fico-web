@@ -1,11 +1,15 @@
-import { List } from "antd"
-import { LinkOutlined } from "@ant-design/icons";
+import { List, Tooltip } from "antd"
+import { LinkOutlined, QuestionCircleFilled } from "@ant-design/icons";
 import { UploadButton } from "../../../../shared";
 
-export function FileInput({label}) {
+export function FileInput({label, helpText}) {
   return (
     <List.Item actions={[<UploadButton>Subir documento</UploadButton>]}>
-      {label}
+      { helpText ?
+        <Tooltip title={helpText}>
+          {label} <QuestionCircleFilled style={{fontSize: "12px"}} />
+        </Tooltip>
+      : label }
     </List.Item>
   )
 }
