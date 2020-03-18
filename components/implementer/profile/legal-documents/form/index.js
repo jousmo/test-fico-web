@@ -10,9 +10,9 @@ export function LegalDocumentsForm() {
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Para continuar con la firma del convenio, por favor adjunta
-            los documentos que se solicitan a continuación y al finalizar
-            da click en 'Enviar documentos'.">
+            label='Para continuar, por favor adjuntar los documentos que se
+            solicitan a continuación y al finalizar da click en
+            "Enviar documentos"'>
             <List bordered>
               <FileInput
                 label="Carta intención"
