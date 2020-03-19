@@ -1,4 +1,4 @@
-import { Layout } from "../../../components/shared"
+import { Layout, Visibility } from "../../../components/shared"
 import { PageContext } from "../../../contexts/page"
 import {
   GeneralInformation,
@@ -43,7 +43,19 @@ function Profile({client}) {
     }
   })
 
-  const injectActions = useMemo(() => ({ updateGeneralInformation, save, loading, error, data }), [state, loading])
+  const isGovernment = useCallback(() => {
+    return state.generalInformation.type === "GOVERNMENT" ||
+      data?.Implementer?.type === "GOVERNMENT"
+  })
+
+  const injectActions = useMemo(() => ({
+    updateGeneralInformation,
+    save,
+    isGovernment,
+    loading,
+    error,
+    data
+  }), [state, loading])
 
   return (
     <ImplementerProfileContext.Provider value={injectActions}>
@@ -52,8 +64,12 @@ function Profile({client}) {
           <GeneralInformation />
           <Projects />
           <LegalDocuments />
-          <Government />
-          <OrganizationalChart />
+          <Visibility visible={!isGovernment()}>
+            <Government />
+          </Visibility>
+          <Visibility visible={!isGovernment()}>
+            <OrganizationalChart />
+          </Visibility>
         </Layout>
       </PageContext.Provider>
     </ImplementerProfileContext.Provider>

@@ -4,16 +4,20 @@ import {
   Row,
   Col,
   Input,
-  Button,
-  Upload,
   Skeleton,
   Alert
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { SelectField, UploadButton } from "../../../../shared";
+import { SelectField, UploadButton, Visibility } from "../../../../shared";
 import { implementer } from "../../../../../helpers/selectOptions";
 
-export function GeneralInformationForm({data, isLoading, onChange, error}) {
+export function GeneralInformationForm({
+  data,
+  isLoading,
+  onChange,
+  error,
+  isGovernment
+}) {
   if(isLoading) {
     return <Skeleton active />
   }
@@ -42,7 +46,7 @@ export function GeneralInformationForm({data, isLoading, onChange, error}) {
               id="type"
               name="type"
               onChange={onChange}
-              defaultValue={data?.Implementer?.type}
+              defaultValue={data?.Implementer?.type || "CIVIL_ORGANIZATION"}
               options={implementer.profile.implementerTypes} />
           </Form.Item>
         </Col>
@@ -91,18 +95,20 @@ export function GeneralInformationForm({data, isLoading, onChange, error}) {
               type="text" />
           </Form.Item>
         </Col>
-        <Col span={12}>
-          <Form.Item
-            style={{display: "inline"}}
-            label="Nombre comercial">
-            <Input
-              id="commercialName"
-              name="commercialName"
-              defaultValue={data?.Implementer?.commercialName}
-              onChange={onChange}
-              type="text" />
-          </Form.Item>
-        </Col>
+        <Visibility visible={!isGovernment}>
+          <Col span={12}>
+            <Form.Item
+              style={{display: "inline"}}
+              label="Nombre comercial">
+              <Input
+                id="commercialName"
+                name="commercialName"
+                defaultValue={data?.Implementer?.commercialName}
+                onChange={onChange}
+                type="text" />
+            </Form.Item>
+          </Col>
+        </Visibility>
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
@@ -163,13 +169,15 @@ export function GeneralInformationForm({data, isLoading, onChange, error}) {
               type="text" />
           </Form.Item>
         </Col>
-        <Col span={12}>
-          <Form.Item
-            style={{display: "inline"}}
-            label="Oficio de donataria">
-            <UploadButton>Subir oficio</UploadButton>
-          </Form.Item>
-        </Col>
+        <Visibility visible={!isGovernment}>
+          <Col span={12}>
+            <Form.Item
+              style={{display: "inline"}}
+              label="Oficio de donataria">
+              <UploadButton>Subir oficio</UploadButton>
+            </Form.Item>
+          </Col>
+        </Visibility>
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
@@ -194,18 +202,20 @@ export function GeneralInformationForm({data, isLoading, onChange, error}) {
               autoSize={{minRows: 3}} />
           </Form.Item>
         </Col>
-        <Col span={24}>
-          <Form.Item
-            style={{display: "inline"}}
-            label="Historia">
-            <Input.TextArea
-              id="history"
-              name="history"
-              defaultValue={data?.Implementer?.history}
-              onChange={onChange}
-              autoSize={{minRows: 3}} />
-          </Form.Item>
-        </Col>
+        <Visibility visible={!isGovernment}>
+          <Col span={24}>
+            <Form.Item
+              style={{display: "inline"}}
+              label="Historia">
+              <Input.TextArea
+                id="history"
+                name="history"
+                defaultValue={data?.Implementer?.history}
+                onChange={onChange}
+                autoSize={{minRows: 3}} />
+            </Form.Item>
+          </Col>
+        </Visibility>
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}

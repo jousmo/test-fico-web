@@ -4,7 +4,7 @@
     "es6": true,
     "node": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -77,8 +77,57 @@
     ],
     "semi": [
       "error",
-      "never",
-      { "omitLastInOneLineBlock": true }
-    ]
+      "never"
+    ],
+    "react/jsx-filename-extension": [1, {
+      "extensions": [
+        ".js"
+      ]
+    }],
+    "space-infix-ops": "error",
+    "react/no-deprecated": "warn",
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-closing-bracket-location": [
+        "error",
+        {
+            "selfClosing": "after-props",
+            "nonEmpty": "after-props"
+        }
+    ],
+    "react/jsx-first-prop-new-line": [
+        "error",
+        "multiline-multiprop"
+    ],
+    "react/jsx-indent": [
+        "error",
+        2
+    ],
+    "react/jsx-indent-props": [
+        "error",
+        2
+    ],
+    "react/jsx-no-bind": [
+        "error",
+        { "allowArrowFunctions": true }
+    ],
+    "react/jsx-no-duplicate-props": [
+        "error"
+    ],
+    "react/jsx-space-before-closing": "error",
+    "react/jsx-tag-spacing": [
+        "error",
+        {
+            "closingSlash": "never",
+            "beforeSelfClosing": "always",
+            "afterOpening": "never",
+            "beforeClosing": "never"
+        }
+    ],
+    "react/jsx-max-props-per-line": [
+        "error",
+        { "maximum": 2, "when": "always" }
+    ],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
   }
 }
