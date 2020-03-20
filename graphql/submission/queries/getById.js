@@ -9,7 +9,7 @@ export const getById = gql`
       type
       applyingCall
       region
-      applyingCallimplementationPlace
+      implementationPlace
       responsible
       startDate
       endDate
