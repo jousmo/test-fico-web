@@ -1,6 +1,6 @@
 import { Row, Form, DatePicker, Col, Alert, Skeleton, Input } from "antd"
 import { implementer } from "../../../../../../../helpers/selectOptions"
-import { SelectField } from "../../../../../../shared"
+import { SelectField, DateField } from "../../../../../../shared"
 
 export function ProjectDetailsForm({data=true, onChange, error=false, isLoading}) {
   if(isLoading) {
@@ -121,26 +121,24 @@ export function ProjectDetailsForm({data=true, onChange, error=false, isLoading}
           <Form.Item
             style={{display: "inline"}}
             label="Fecha de inicio">
-            <DatePicker
+            <DateField
               id="startDate"
               name="startDate"
-              style={{width: "100%"}}
               defaultValue={data?.Submission?.startDate}
-              placeholder="Selecciona fecha..."
-              onChange={onChange} />
+              onChange={onChange}
+              fullWidth />
           </Form.Item>
         </Col>
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
             label="Fecha de conclusión">
-            <DatePicker
+            <DateField
               id="endDate"
               name="endDate"
-              style={{width: "100%"}}
-              placeholder="Selecciona fecha..."
               defaultValue={data?.Submission?.endDate}
-              onChange={onChange} />
+              onChange={onChange}
+              fullWidth />
           </Form.Item>
         </Col>
         <Col span={12}>
