@@ -19,6 +19,10 @@ export function SelectField({
     })
   }
 
+  if(mode === "tags") {
+    defaultValue = defaultValue.split(",")
+  }
+
   return (
     <Select
       id={id}

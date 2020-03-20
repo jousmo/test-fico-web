@@ -16,8 +16,6 @@ function GeneralInformation({ client }) {
     variables: { id: "1" }
   })
 
-  console.log(data)
-
   const updateGeneralInformation = useCallback(generalInformation => {
     const newGeneralInformation = { ...state.generalInformation, ...generalInformation }
 
