@@ -5,7 +5,7 @@ import { Toolbar } from "../toolbar"
 
 export function Layout({children}) {
   return (
-    <div className="fico layout submissions full-height">
+    <div className="fico layout full-height">
       <ALayout className="full-height">
         <ALayout.Sider>
           <MainMenu />
