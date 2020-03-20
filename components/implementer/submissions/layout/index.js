@@ -3,11 +3,15 @@ import { Toolbar } from "../../../shared"
 import { Subheader } from "../subheader"
 
 export function Layout({children}) {
+  const subheader = ({title, actions}) => {
+    return <Subheader title={title} actions={actions} />
+  }
+
   return (
     <div className="fico layout submissions full-height">
       <ALayout className="full-height">
         <ALayout.Content>
-          <Toolbar subheader={<Subheader />} />
+          <Toolbar subheader={subheader} />
           <div className="full-height">
             {children}
           </div>
