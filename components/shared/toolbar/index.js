@@ -4,17 +4,21 @@ import { extra } from "./extra"
 import { PageContext } from "../../../contexts/page"
 import { useContext } from "react"
 
-function Toolbar() {
+function Toolbar({subheader}) {
   const { title, actions } = useContext(PageContext)
+
+  subheader = typeof subheader === "function" ?
+    subheader({title, actions}) :
+    subheader
+
+  subheader = subheader || <PageHeader title={title} extra={actions} />
 
   return (
     <div>
       <PageHeader
         backIcon={<MenuUnfoldOutlined />}
         extra={extra}>
-        <PageHeader
-          title={title}
-          extra={actions} />
+        {subheader}
       </PageHeader>
     </div>
   )
