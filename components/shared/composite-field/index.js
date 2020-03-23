@@ -7,12 +7,35 @@ export function CompositeField({
   onChange,
   onClickAdd,
   addLabel,
-  defaultValue=[]
+  defaultValue=[],
+  maxItems
 }) {
-  const [state, setState] = useState({ items: Array.from(defaultValue) })
+  const [state, setState] = useState({
+    items: Array.from(defaultValue),
+    maxReached: maxItems && (defaultValue.length >= maxItems)
+  })
+
+  const handleMaxReached = (items) => {
+    if(typeof maxItems !== "undefined") {
+      if(items.length >= maxItems) {
+        setState({ ...state, maxReached: true })
+        return true
+      }
+      else if(state.maxReached) {
+        setState({ ...state, maxReached: false })
+        return false
+      }
+    }
+  }
   
   const addNew = value => {
+    if(handleMaxReached(state.items)) {
+      return
+    }
+    
     const newItems = [...state.items, value]
+    
+
     setState({ items: newItems })
     onChange && onChange(newItems)
   }
@@ -32,6 +55,7 @@ export function CompositeField({
   const removeItem = index => {
     const newItems = Array.from(state.items).filter((it, i) => i !== index)
     setState({ items: newItems })
+    handleMaxReached(newItems)
     onChange && onChange(newItems)
   }
 
@@ -42,6 +66,7 @@ export function CompositeField({
         type="dashed"
         icon={<PlusOutlined />}
         onClick={() => onClickAdd && onClickAdd(addNew)}
+        disabled={state.maxReached}
         block>
         {addLabel}
       </Button>
