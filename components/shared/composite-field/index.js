@@ -27,16 +27,23 @@ export function CompositeField({
       }
     }
   }
+
+  const isMaxReached = (count) => {
+    if(typeof maxItems === "undefined") {
+      return false
+    }
+
+    if(count >= maxItems) {
+      return true
+    }
+
+    return false
+  }
   
   const addNew = value => {
-    if(handleMaxReached(state.items)) {
-      return
-    }
-    
     const newItems = [...state.items, value]
     
-
-    setState({ items: newItems })
+    setState({ items: newItems, maxReached: isMaxReached(newItems.length) })
     onChange && onChange(newItems)
   }
 
@@ -54,8 +61,7 @@ export function CompositeField({
 
   const removeItem = index => {
     const newItems = Array.from(state.items).filter((it, i) => i !== index)
-    setState({ items: newItems })
-    handleMaxReached(newItems)
+    setState({ items: newItems, maxReached: isMaxReached(newItems.length) })
     onChange && onChange(newItems)
   }
 
