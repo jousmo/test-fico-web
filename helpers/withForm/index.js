@@ -2,9 +2,9 @@ import { Skeleton, Alert } from "antd"
 
 export function withForm(func) {
   return function component({
-    data = true,
+    data,
     onChange,
-    error = false,
+    error,
     isLoading,
     ...props
   }) {
