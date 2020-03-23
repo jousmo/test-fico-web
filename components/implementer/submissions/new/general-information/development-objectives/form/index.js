@@ -50,7 +50,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
             maxItems={5}
             onChange={onSpecificObjectivesChange}
             defaultValue={data?.Submission?.specificObjectives || []}
-            addLabel="Agregar objectivo específico"
+            addLabel="Agregar objetivo específico"
             onClickAdd={(addNew) => addNew({description: ""})}>
             {({ items, updateItem, removeItem }) => 
               <div>
