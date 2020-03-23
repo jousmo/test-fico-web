@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import { gql } from "apollo-boost"
 
 export const getById = gql`
   query ImplementerById($id: ID!) {
@@ -24,6 +24,7 @@ export const getById = gql`
       incomesAndExpenses
       councilMembers
       projects
+      generalObjective
     }
   }
 `
