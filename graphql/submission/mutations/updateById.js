@@ -18,7 +18,10 @@ export const updateById = gql`
     $scope: String,
     $issueDescription: String
     $description: String,
-    $justification: String){
+    $justification: String,
+    $developmentObjective: String,
+    $generalObjective: String
+    $specificObjectives: JSON){
       updateSubmission(
         id: $id,
         implementerId: $implementerId,
@@ -36,7 +39,10 @@ export const updateById = gql`
         scope: $scope,
         issueDescription: $issueDescription,
         description: $description,
-        justification: $justification
+        justification: $justification,
+        developmentObjective: $developmentObjective,
+        generalObjective: $generalObjective,
+        specificObjectives: $specificObjectives
       ) {
         id
       }
