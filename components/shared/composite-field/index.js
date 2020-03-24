@@ -54,7 +54,7 @@ export function CompositeField({
       const newItems = Array.from(state.items)
       newItems[index][name] = value
 
-      setState({ items: newItems })
+      setState({ ...state, items: newItems })
       onChange && onChange(newItems)
     }
   }
