@@ -1,6 +1,11 @@
-import { Col, Form, Input, Radio, Row } from "antd"
+import { Col, Form, Input, Radio, Row, Empty } from "antd"
 import { selectOptions, withForm } from "../../../../../../helpers"
-import { UploadButton } from "../../../../../shared"
+import {
+  UploadButton,
+  DateField,
+  CompositeField,
+  DeleteButton
+} from "../../../../../shared"
 
 function ConsultantForm({data, onChange}) {
   const onSupportsChange = (newSupports) => {
@@ -14,6 +19,14 @@ function ConsultantForm({data, onChange}) {
 
   const fiscalPersonTypes = selectOptions.implementer.submission
     .fiscalPersonTypes
+
+  const onAddSupport = (addNew) => {
+    addNew({
+      name: "",
+      date: undefined,
+      ammount: undefined
+    })
+  }
 
   return (
     <Form
@@ -133,7 +146,9 @@ function ConsultantForm({data, onChange}) {
             style={{display: "inline"}}
             label="Documentos"
             help="Adjunta acta constitutiva, cotización firmada y CV.">
-            <UploadButton>Adjuntar</UploadButton>
+            <UploadButton style={{marginBottom: "12px"}}>
+              Adjuntar
+            </UploadButton>
           </Form.Item>
         </Col>
         <Col span={24}>
@@ -146,6 +161,72 @@ function ConsultantForm({data, onChange}) {
               defaultValue={data?.Submission?.consultor?.hadReceivedSupports}
               onChange={onChange}
               options={selectOptions.shared.yesNo} />
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="Agrega los apoyos que has recibido por parte de FICOSEC">
+            <CompositeField
+              onChange={onSupportsChange}
+              defaultValue={data?.Submission?.consultor?.supports}
+              onClickAdd={onAddSupport}
+              addLabel="Agregar apoyo">
+              {({ items, updateItem, removeItem }) => 
+                <div>
+                  { items.map((item, index) => 
+                    <Form layout="vertical">
+                      <Row gutter={[10, 8]} justify="start">
+                        <Col span={8}>
+                          <Form.Item
+                            style={{display: "inline"}}
+                            label="Nombre del proyecto">
+                            <Input
+                              id="name"
+                              name="name"
+                              defaultValue={item.name}
+                              onChange={updateItem(index)}
+                              type="text" />
+                          </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                          <Form.Item
+                            style={{display: "inline"}}
+                            label="Fecha">
+                            <DateField
+                              id="date"
+                              name="date"
+                              defaultValue={item.date}
+                              onChange={updateItem(index)}
+                              fullWidth />
+                          </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                          <Form.Item
+                            style={{display: "inline"}}
+                            label="Monto recibido">
+                            <Input
+                              style={{width: "auto"}}
+                              addonBefore="$"
+                              id="ammount"
+                              name="ammount"
+                              onChange={updateItem(index)}
+                              defaultValue={item.ammount} />
+                            <DeleteButton onClick={() => removeItem(index)} />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                    </Form>
+                  ) }
+                  { !items.length ?
+                    <Empty
+                      style={{marginBottom: "10px"}}
+                      description="Agrega apoyos haciendo click
+                      en el botón de abajo" />
+                  : null }
+                </div>
+              }
+            </CompositeField>
           </Form.Item>
         </Col>
       </Row>
