@@ -1,8 +1,5 @@
-import { withForm } from "../../../../../../../helpers"
-import { Form, Row, Col, Input, Radio } from "antd"
-import { CompositeField, DeleteButton } from "../../../../../../shared"
-import { selectOptions } from "../../../../../../helpers"
-import { FileInput } from "../../../../profile/legal-documents/form/fileInput"
+import { Col, Form, Input, Radio, Row } from "antd"
+import { selectOptions, withForm } from "../../../../../../helpers"
 import { UploadButton } from "../../../../../shared"
 
 function ConsultantForm({data, onChange}) {
@@ -32,7 +29,7 @@ function ConsultantForm({data, onChange}) {
               name="hasConsultant"
               defaultValue={data?.Submission?.hasConsultant}
               onChange={onChange}
-              options={selec} />
+              options={selectOptions.shared.yesNo} />
           </Form.Item>
         </Col>
         <Col span={24}>
@@ -156,4 +153,4 @@ function ConsultantForm({data, onChange}) {
   )
 }
 
-export default withForm(DevelopmentObjectivesForm)
+export default withForm(ConsultantForm)

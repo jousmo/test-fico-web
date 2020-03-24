@@ -1,7 +1,7 @@
-import ConsultantForm from "./form"
 import { useContext } from "react"
-import { ImplementerSubmissionContext } from "../../../../../../contexts/implementer/submissions/new/context"
-import { Section } from "../../../../../shared"
+import { ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
+import { Section } from "../../../../shared"
+import ConsultantForm from "./form"
 
 export function Consultant() {
   const {
@@ -9,7 +9,7 @@ export function Consultant() {
     loading,
     error,
     data
-  } = useContext(ImplementerSubmissionContext)
+  } = useContext(ImplementerSubmissionContext) 
 
   const onChange = ({ currentTarget: { id, value } }) => {
     const newData = {}

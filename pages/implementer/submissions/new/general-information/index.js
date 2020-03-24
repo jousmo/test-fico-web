@@ -10,6 +10,7 @@ import { submission } from "../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
+import { Consultant } from "../../../../../components/implementer/submissions/new/consultant"
 
 
 function GeneralInformation({ client }) {
@@ -58,6 +59,7 @@ function GeneralInformation({ client }) {
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
           <ProjectDetails />
+          <Consultant />
           <DevelopmentObjectives />
           <Beneficiaries />
         </Layout>
