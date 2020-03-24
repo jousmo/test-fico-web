@@ -4,8 +4,7 @@ import { CompositeField, DeleteButton } from "../../../../../../shared"
 
 function DevelopmentObjectivesForm({data, onChange}) {
   const onSpecificObjectivesChange = (newObjectives) => {
-    console.log(newObjectives)
-    onChange({
+    onChange && onChange({
       currentTarget: {
         id: "specificObjectives",
         value: newObjectives
