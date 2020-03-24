@@ -1,16 +1,22 @@
-import { withForm } from "../../../../../../../helpers/withForm"
-import { Form, Row, Col, Input } from "antd"
+import { withForm } from "../../../../../../../helpers"
+import { Form, Row, Col, Input, Radio } from "antd"
 import { CompositeField, DeleteButton } from "../../../../../../shared"
+import { selectOptions } from "../../../../../../helpers"
+import { FileInput } from "../../../../profile/legal-documents/form/fileInput"
+import { UploadButton } from "../../../../../shared"
 
 function ConsultantForm({data, onChange}) {
-  const onSpecificObjectivesChange = (newObjectives) => {
+  const onSupportsChange = (newSupports) => {
     onChange && onChange({
       currentTarget: {
-        id: "specificObjectives",
-        value: newObjectives
+        id: "supports",
+        value: newSupports
       }
     })
   }
+
+  const fiscalPersonTypes = selectOptions.implementer.submission
+    .fiscalPersonTypes
 
   return (
     <Form
@@ -20,59 +26,129 @@ function ConsultantForm({data, onChange}) {
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Objetivo de desarrollo">
-            <Input.TextArea
-              id="developmentObjective"
-              name="developmentObjective"
-              defaultValue={data?.Submission?.developmentObjective}
+            label="El proyecto cuenta con consultor">
+            <Radio.Group
+              id="hasConsultant"
+              name="hasConsultant"
+              defaultValue={data?.Submission?.hasConsultant}
               onChange={onChange}
-              autoSize={{minRows: 3}} />
+              options={selec} />
           </Form.Item>
         </Col>
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Objetivo general">
+            label="Describe el perfil del consultor">
             <Input.TextArea
-              id="generalObjective"
-              name="generalObjective"
-              defaultValue={data?.Submission?.generalObjective}
+              id="description"
+              name="description"
+              defaultValue={data?.Submission?.consultor?.description}
               onChange={onChange}
               autoSize={{minRows: 3}} />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="Nombre comercial">
+            <Input
+              id="commercialName"
+              name="commercialName"
+              defaultValue={data?.Submission?.consultor?.commercialName}
+              onChange={onChange}
+              type="text" />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="Dirección comercial">
+            <Input
+              id="commercialAddress"
+              name="commercialAddress"
+              defaultValue={data?.Submission?.consultor?.commercialAddress}
+              onChange={onChange}
+              type="text" />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="Contacto responsable">
+            <Input
+              id="contactName"
+              name="contactName"
+              defaultValue={data?.Submission?.consultor?.contactName}
+              onChange={onChange}
+              type="text" />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="Número de teléfono">
+            <Input
+              id="phone"
+              name="phone"
+              defaultValue={data?.Submission?.consultor?.phone}
+              onChange={onChange}
+              type="text" />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="RFC">
+            <Input
+              id="rfc"
+              name="rfc"
+              defaultValue={data?.Submission?.consultor?.contactName}
+              onChange={onChange}
+              type="text" />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="Dirección fiscal">
+            <Input
+              id="fiscalAddress"
+              name="fiscalAddress"
+              defaultValue={data?.Submission?.consultor?.fiscalAddress}
+              onChange={onChange}
+              type="text" />
           </Form.Item>
         </Col>
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Objetivos específicos (máximo 5)">
-            <CompositeField
-              maxItems={5}
-              onChange={onSpecificObjectivesChange}
-              defaultValue={data?.Submission?.specificObjectives || []}
-              addLabel="Agregar objetivo específico"
-              onClickAdd={(addNew) => addNew({description: ""})}>
-              {({ items, updateItem, removeItem }) => 
-                <div>
-                  { items.map((item, index) => 
-                    <Form.Item key={`specific_objective_${index}`}>
-                      <Row>
-                        <Col flex="auto">
-                          <Input.TextArea
-                            id="description"
-                            name="description"
-                            defaultValue={item.description}
-                            onChange={updateItem(index)}
-                            autoSize={{minRows: 3}} />
-                        </Col>
-                        <Col>
-                          <DeleteButton style={{marginLeft: "10px"}} onClick={() => removeItem(index)} />
-                        </Col>
-                      </Row>
-                    </Form.Item>
-                  ) }
-                </div>
-              }
-            </CompositeField>
+            label="Tipo de persona">
+            <Radio.Group
+              id="fiscalPersonType"
+              name="fiscalPersonType"
+              defaultValue={data?.Submission?.consultor?.fiscalPersonType}
+              onChange={onChange}
+              options={fiscalPersonTypes} />
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="Documentos"
+            help="Adjunta acta constitutiva, cotización firmada y CV.">
+            <UploadButton>Adjuntar</UploadButton>
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="¿Ha recibido apoyos de FICOSEC">
+            <Radio.Group
+              id="fiscalPersonType"
+              name="fiscalPersonType"
+              defaultValue={data?.Submission?.consultor?.hadReceivedSupports}
+              onChange={onChange}
+              options={selectOptions.shared.yesNo} />
           </Form.Item>
         </Col>
       </Row>
