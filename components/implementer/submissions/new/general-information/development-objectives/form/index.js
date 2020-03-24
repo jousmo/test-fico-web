@@ -33,7 +33,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Objetivo de general">
+            label="Objetivo general">
             <Input.TextArea
               id="generalObjective"
               name="generalObjective"
