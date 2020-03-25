@@ -12,8 +12,14 @@ export function Consultant() {
   } = useContext(ImplementerSubmissionContext) 
 
   const onChange = ({ currentTarget: { id, value } }) => {
-    const newData = {}
+    let newData = {}
     newData[id] = value
+
+    if(id !== "hasConsultant") {
+      newData = { consultant: { ...data.Submission.consultant, ...newData } }
+    }
+
+    console.log(newData)
 
     updateGeneralInformation(newData)
   }
