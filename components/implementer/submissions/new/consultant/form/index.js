@@ -9,7 +9,12 @@ import {
   Visibility
 } from "../../../../../shared"
 
-function ConsultantForm({data, onChange, hasConsultant}) {
+function ConsultantForm({
+  data,
+  onChange,
+  hasConsultant,
+  hadConsultantReceivedSupports
+}) {
   const onSupportsChange = (newSupports) => {
     onChange && onChange({
       currentTarget: {
@@ -166,72 +171,74 @@ function ConsultantForm({data, onChange, hasConsultant}) {
                 options={selectOptions.shared.yesNo} />
             </Form.Item>
           </Col>
-          <Col span={24}>
-            <Form.Item
-              style={{display: "inline"}}
-              label="Agrega los apoyos que has recibido por parte de FICOSEC">
-              <CompositeField
-                onChange={onSupportsChange}
-                defaultValue={data?.Submission?.consultant?.supports}
-                onClickAdd={onAddSupport}
-                addLabel="Agregar apoyo">
-                {({ items, updateItem, removeItem }) => 
-                  <div>
-                    { items.map((item, index) => 
-                      <Form layout="vertical">
-                        <Row gutter={[10, 8]} justify="start">
-                          <Col span={8}>
-                            <Form.Item
-                              style={{display: "inline"}}
-                              label="Nombre del proyecto">
-                              <Input
-                                id="name"
-                                name="name"
-                                defaultValue={item.name}
-                                onChange={updateItem(index)}
-                                type="text" />
-                            </Form.Item>
-                          </Col>
-                          <Col span={8}>
-                            <Form.Item
-                              style={{display: "inline"}}
-                              label="Fecha">
-                              <DateField
-                                id="date"
-                                name="date"
-                                defaultValue={item.date}
-                                onChange={updateItem(index)}
-                                fullWidth />
-                            </Form.Item>
-                          </Col>
-                          <Col span={8}>
-                            <Form.Item
-                              style={{display: "inline"}}
-                              label="Monto recibido">
-                              <Input
-                                style={{width: "auto"}}
-                                addonBefore="$"
-                                id="amount"
-                                name="amount"
-                                onChange={updateItem(index)}
-                                defaultValue={item.amount} />
-                              <DeleteButton onClick={() => removeItem(index)} />
-                            </Form.Item>
-                          </Col>
-                        </Row>
-                      </Form>
-                    ) }
-                    { !items.length ?
-                      <Empty
-                        style={{marginBottom: "10px"}}
-                        description="Agrega apoyos haciendo click
-                        en el botón de abajo" />
-                    : null }
-                  </div>
-                }
-              </CompositeField>
-            </Form.Item>
-          </Col>
+          <Visibility visible={hadConsultantReceivedSupports}>
+            <Col span={24}>
+              <Form.Item
+                style={{display: "inline"}}
+                label="Agrega los apoyos que has recibido por parte de FICOSEC">
+                <CompositeField
+                  onChange={onSupportsChange}
+                  defaultValue={data?.Submission?.consultant?.supports}
+                  onClickAdd={onAddSupport}
+                  addLabel="Agregar apoyo">
+                  {({ items, updateItem, removeItem }) => 
+                    <div>
+                      { items.map((item, index) => 
+                        <>
+                          <Row gutter={[10, 8]} justify="start">
+                            <Col span={8}>
+                              <Form.Item
+                                style={{display: "inline"}}
+                                label="Nombre del proyecto">
+                                <Input
+                                  id="name"
+                                  name="name"
+                                  defaultValue={item.name}
+                                  onChange={updateItem(index)}
+                                  type="text" />
+                              </Form.Item>
+                            </Col>
+                            <Col span={8}>
+                              <Form.Item
+                                style={{display: "inline"}}
+                                label="Fecha">
+                                <DateField
+                                  id="date"
+                                  name="date"
+                                  defaultValue={item.date}
+                                  onChange={updateItem(index)}
+                                  fullWidth />
+                              </Form.Item>
+                            </Col>
+                            <Col span={8}>
+                              <Form.Item
+                                style={{display: "inline"}}
+                                label="Monto recibido">
+                                <Input
+                                  style={{width: "auto"}}
+                                  addonBefore="$"
+                                  id="amount"
+                                  name="amount"
+                                  onChange={updateItem(index)}
+                                  defaultValue={item.amount} />
+                                <DeleteButton onClick={() => removeItem(index)} />
+                              </Form.Item>
+                            </Col>
+                          </Row>
+                        </>
+                      ) }
+                      { !items.length ?
+                        <Empty
+                          style={{marginBottom: "10px"}}
+                          description="Agrega apoyos haciendo click
+                          en el botón de abajo" />
+                      : null }
+                    </div>
+                  }
+                </CompositeField>
+              </Form.Item>
+            </Col>
+          </Visibility>
         </Visibility>
       </Row>
     </Form>

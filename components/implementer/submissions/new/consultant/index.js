@@ -9,7 +9,8 @@ export function Consultant() {
     loading,
     error,
     data,
-    hasConsultant
+    hasConsultant,
+    hadConsultantReceivedSupports,
   } = useContext(ImplementerSubmissionContext) 
 
   const onChange = ({ currentTarget: { id, value } }) => {
@@ -30,7 +31,8 @@ export function Consultant() {
         error={error}
         data={data}
         onChange={onChange}
-        hasConsultant={hasConsultant()} />
+        hasConsultant={hasConsultant()}
+        hadConsultantReceivedSupports={hadConsultantReceivedSupports()} />
     </Section>
   )
 }

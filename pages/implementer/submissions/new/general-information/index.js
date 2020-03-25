@@ -14,7 +14,7 @@ import { Consultant } from "../../../../../components/implementer/submissions/ne
 
 
 function GeneralInformation({ client }) {
-  const [state, setState] = useState({ generalInformation: {} })
+  const [state, setState] = useState({ generalInformation: { consultant: {} } })
   const [updateSubmission] = useMutation(submission.mutations.updateById, { client: client })
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
@@ -50,11 +50,17 @@ function GeneralInformation({ client }) {
       data?.Submission?.hasConsultant
   })
 
+  const hadConsultantReceivedSupports = useCallback(() => {
+    return state.generalInformation.consultant.hadReceivedSupports ||
+      data?.Submission?.consultant?.hadReceivedSupports
+  })
+
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
     save,
     isCall,
     hasConsultant,
+    hadConsultantReceivedSupports,
     loading,
     error,
     data
