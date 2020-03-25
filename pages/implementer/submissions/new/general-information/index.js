@@ -45,10 +45,16 @@ function GeneralInformation({ client }) {
       data?.Submission?.type === "CALL"
   })
 
+  const hasConsultant = useCallback(() => {
+    return state.generalInformation.hasConsultant ||
+      data?.Submission?.hasConsultant
+  })
+
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
     save,
     isCall,
+    hasConsultant,
     loading,
     error,
     data

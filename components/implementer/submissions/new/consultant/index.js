@@ -8,7 +8,8 @@ export function Consultant() {
     updateGeneralInformation,
     loading,
     error,
-    data
+    data,
+    hasConsultant
   } = useContext(ImplementerSubmissionContext) 
 
   const onChange = ({ currentTarget: { id, value } }) => {
@@ -19,8 +20,6 @@ export function Consultant() {
       newData = { consultant: { ...data.Submission.consultant, ...newData } }
     }
 
-    console.log(newData)
-
     updateGeneralInformation(newData)
   }
 
@@ -30,7 +29,8 @@ export function Consultant() {
         isLoading={loading}
         error={error}
         data={data}
-        onChange={onChange} />
+        onChange={onChange}
+        hasConsultant={hasConsultant()} />
     </Section>
   )
 }
