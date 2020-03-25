@@ -16,7 +16,7 @@ function ConsultantForm({data, onChange}) {
       }
     })
   }
-
+  
   const fiscalPersonTypes = selectOptions.implementer.submission
     .fiscalPersonTypes
 
@@ -52,7 +52,7 @@ function ConsultantForm({data, onChange}) {
             <Input.TextArea
               id="description"
               name="description"
-              defaultValue={data?.Submission?.consultor?.description}
+              defaultValue={data?.Submission?.consultant?.description}
               onChange={onChange}
               autoSize={{minRows: 3}} />
           </Form.Item>
@@ -64,7 +64,7 @@ function ConsultantForm({data, onChange}) {
             <Input
               id="commercialName"
               name="commercialName"
-              defaultValue={data?.Submission?.consultor?.commercialName}
+              defaultValue={data?.Submission?.consultant?.commercialName}
               onChange={onChange}
               type="text" />
           </Form.Item>
@@ -76,7 +76,7 @@ function ConsultantForm({data, onChange}) {
             <Input
               id="commercialAddress"
               name="commercialAddress"
-              defaultValue={data?.Submission?.consultor?.commercialAddress}
+              defaultValue={data?.Submission?.consultant?.commercialAddress}
               onChange={onChange}
               type="text" />
           </Form.Item>
@@ -88,7 +88,7 @@ function ConsultantForm({data, onChange}) {
             <Input
               id="contactName"
               name="contactName"
-              defaultValue={data?.Submission?.consultor?.contactName}
+              defaultValue={data?.Submission?.consultant?.contactName}
               onChange={onChange}
               type="text" />
           </Form.Item>
@@ -100,7 +100,7 @@ function ConsultantForm({data, onChange}) {
             <Input
               id="phone"
               name="phone"
-              defaultValue={data?.Submission?.consultor?.phone}
+              defaultValue={data?.Submission?.consultant?.phone}
               onChange={onChange}
               type="text" />
           </Form.Item>
@@ -112,7 +112,7 @@ function ConsultantForm({data, onChange}) {
             <Input
               id="rfc"
               name="rfc"
-              defaultValue={data?.Submission?.consultor?.contactName}
+              defaultValue={data?.Submission?.consultant?.rfc}
               onChange={onChange}
               type="text" />
           </Form.Item>
@@ -124,7 +124,7 @@ function ConsultantForm({data, onChange}) {
             <Input
               id="fiscalAddress"
               name="fiscalAddress"
-              defaultValue={data?.Submission?.consultor?.fiscalAddress}
+              defaultValue={data?.Submission?.consultant?.fiscalAddress}
               onChange={onChange}
               type="text" />
           </Form.Item>
@@ -136,7 +136,7 @@ function ConsultantForm({data, onChange}) {
             <Radio.Group
               id="fiscalPersonType"
               name="fiscalPersonType"
-              defaultValue={data?.Submission?.consultor?.fiscalPersonType}
+              defaultValue={data?.Submission?.consultant?.fiscalPersonType}
               onChange={onChange}
               options={fiscalPersonTypes} />
           </Form.Item>
@@ -158,7 +158,7 @@ function ConsultantForm({data, onChange}) {
             <Radio.Group
               id="fiscalPersonType"
               name="fiscalPersonType"
-              defaultValue={data?.Submission?.consultor?.hadReceivedSupports}
+              defaultValue={data?.Submission?.consultant?.hadReceivedSupports}
               onChange={onChange}
               options={selectOptions.shared.yesNo} />
           </Form.Item>
@@ -169,7 +169,7 @@ function ConsultantForm({data, onChange}) {
             label="Agrega los apoyos que has recibido por parte de FICOSEC">
             <CompositeField
               onChange={onSupportsChange}
-              defaultValue={data?.Submission?.consultor?.supports}
+              defaultValue={data?.Submission?.consultant?.supports}
               onClickAdd={onAddSupport}
               addLabel="Agregar apoyo">
               {({ items, updateItem, removeItem }) => 
