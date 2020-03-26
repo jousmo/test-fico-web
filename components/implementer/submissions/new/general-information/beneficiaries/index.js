@@ -18,7 +18,7 @@ export function Beneficiaries() {
   }
 
   return (
-    <Section title="2. Proyectos de implementadora">
+    <Section title="4. Beneficiarios">
       <BeneficiaryForm
         data={data}
         isLoading={loading}
