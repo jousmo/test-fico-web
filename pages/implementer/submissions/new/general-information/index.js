@@ -1,5 +1,9 @@
 import { Layout } from "../../../../../components/implementer/submissions"
-import { ProjectDetails, DevelopmentObjectives } from "../../../../../components/implementer/submissions/new/general-information"
+import {
+  ProjectDetails,
+  DevelopmentObjectives,
+  Beneficiaries
+} from "../../../../../components/implementer/submissions/new/general-information"
 import { data as pageData, ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../contexts/page"
 import { submission } from "../../../../../graphql/submission"
@@ -55,6 +59,7 @@ function GeneralInformation({ client }) {
         <Layout>
           <ProjectDetails />
           <DevelopmentObjectives />
+          <Beneficiaries />
         </Layout>
       </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
