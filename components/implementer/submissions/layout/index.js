@@ -9,7 +9,7 @@ export function Layout({children}) {
 
   return (
     <div className="fico layout submissions full-height">
-      <ALayout className="full-height">
+      <ALayout>
         <ALayout.Content>
           <Toolbar subheader={subheader} />
           <div className="page-content">
