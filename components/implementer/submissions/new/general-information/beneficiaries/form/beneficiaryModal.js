@@ -1,7 +1,13 @@
-import { Modal, Form, Row, Col, Input, InputNumber } from "antd"
+import { Modal, Form, Row, Col, Input } from "antd"
 import { useForm } from "antd/lib/form/util"
-import { YearSelect, SelectField } from "../../../../../shared"
-import { preventionLevelTypes } from "../../../../../../helpers/selectOptions/implementer/submission"
+import { SelectField } from "../../../../../../shared"
+import {
+  preventionLevelTypes,
+  ageRanges,
+  genderTypes,
+  educationLevelTypes
+} from "../../../../../../../helpers/selectOptions/implementer/submission"
+import { getSelectValue } from "../../../../../../../helpers/getSelectValue"
 
 export function BeneficiaryModal({onCancel, onSave, ...props}) {
   const [form] = useForm()
@@ -9,6 +15,7 @@ export function BeneficiaryModal({onCancel, onSave, ...props}) {
   const onOk = async () => {
     try {
       const values = await form.getFieldsValue()
+
       onSave(values)
       form.resetFields()
     }
@@ -43,8 +50,8 @@ export function BeneficiaryModal({onCancel, onSave, ...props}) {
               name="number"
               style={{display: "inline"}}
               label="Número de beneficiarios">
-              <InputNumber
-                id="amount"
+              <Input
+                id="number"
                 type="text" />
             </Form.Item>
           </Col>
@@ -52,37 +59,41 @@ export function BeneficiaryModal({onCancel, onSave, ...props}) {
             <Form.Item
               name="gender"
               style={{display: "inline"}}
-              label="Sexo">
-              <Input
+              label="Sexo"
+              getValueFromEvent={getSelectValue}>
+              <SelectField
                 id="gender"
-                type="text" />
+                options={genderTypes} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
               name="educationLevel"
               style={{display: "inline"}}
-              label="Nivel educativo">
-              <Input
+              label="Nivel educativo"
+              getValueFromEvent={getSelectValue}>
+              <SelectField
                 id="educationLevel"
-                type="text" />
+                options={educationLevelTypes} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
               name="age"
               style={{display: "inline"}}
-              label="Edad">
-              <InputNumber
+              label="Edad"
+              getValueFromEvent={getSelectValue}>
+              <SelectField
                 id="age"
-                type="text" />
+                options={ageRanges} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
               name="preventionLevel"
               style={{display: "inline"}}
-              label="Nivel de prevención">
+              label="Nivel de prevención"
+              getValueFromEvent={getSelectValue}>
               <SelectField
                 id="preventionLevel"
                 options={preventionLevelTypes} />
