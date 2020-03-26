@@ -1,23 +1,13 @@
 import { Row, Form, DatePicker, Col, Alert, Skeleton, Input } from "antd"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField } from "../../../../../../shared"
+import { withForm } from "../../../../../../../helpers/withForm"
 
-export function ProjectDetailsForm({data=true, onChange, error=false, isLoading}) {
-  if(isLoading) {
-    return <Skeleton active />
-  }
-
-  if(!data || error) {
-    return (
-      <Alert
-        message="Error"
-        description="Ha ocurrido un error al cargar los datos de esta sección,
-        por favor actualiza la página."
-        type="error"
-        showIcon />
-    )
-  }
-
+function ProjectDetailsForm({
+  data,
+  onChange,
+  isCall
+}) {
   return (
     <Form
       name="project-details"
@@ -44,7 +34,8 @@ export function ProjectDetailsForm({data=true, onChange, error=false, isLoading}
               name="applyingCall"
               defaultValue={data?.Submission?.applyingCall}
               onChange={onChange}
-              type="text" />
+              type="text"
+              disabled={!isCall} />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -218,3 +209,5 @@ export function ProjectDetailsForm({data=true, onChange, error=false, isLoading}
     </Form>
   )
 }
+
+export default withForm(ProjectDetailsForm)
