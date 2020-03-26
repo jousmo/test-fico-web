@@ -19,6 +19,9 @@ export const getById = gql`
       issueDescription
       description
       justification
+      developmentObjective
+      generalObjective
+      specificObjectives
     }
   }
 `

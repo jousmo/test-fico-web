@@ -12,7 +12,7 @@ export function Layout({children}) {
       <ALayout className="full-height">
         <ALayout.Content>
           <Toolbar subheader={subheader} />
-          <div className="full-height page-content">
+          <div className="page-content">
             {children}
           </div>
         </ALayout.Content>

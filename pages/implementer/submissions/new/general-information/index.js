@@ -1,5 +1,5 @@
 import { Layout } from "../../../../../components/implementer/submissions"
-import { ProjectDetails } from "../../../../../components/implementer/submissions/new/general-information"
+import { ProjectDetails, DevelopmentObjectives } from "../../../../../components/implementer/submissions/new/general-information"
 import { data as pageData, ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../contexts/page"
 import { submission } from "../../../../../graphql/submission"
@@ -54,6 +54,7 @@ function GeneralInformation({ client }) {
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
           <ProjectDetails />
+          <DevelopmentObjectives />
         </Layout>
       </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
