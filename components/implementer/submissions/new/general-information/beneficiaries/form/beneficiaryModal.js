@@ -39,7 +39,7 @@ export function BeneficiaryModal({onCancel, onSave, ...props}) {
             <Form.Item
               name="description"
               style={{display: "inline"}}
-              label="Caracteristicas del beneficiario">
+              label="Características del beneficiario">
               <Input
                 id="description"
                 type="text" />
