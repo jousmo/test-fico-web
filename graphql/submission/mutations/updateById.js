@@ -9,19 +9,20 @@ export const updateById = gql`
     $applyingCall: String,
     $region: String,
     $ally: String,
-    $implementationPlace: String
+    $implementationPlace: String,
     $responsible: String,
     $startDate: String,
     $endDate: String,
     $strategicAxis: String,
-    $preventionLevel: String
+    $preventionLevel: String,
     $scope: String,
-    $issueDescription: String
+    $issueDescription: String,
     $description: String,
     $justification: String,
     $developmentObjective: String,
-    $generalObjective: String
-    $specificObjectives: JSON){
+    $generalObjective: String,
+    $specificObjectives: JSON,
+    $beneficiaries: JSON){
       updateSubmission(
         id: $id,
         implementerId: $implementerId,
@@ -42,7 +43,8 @@ export const updateById = gql`
         justification: $justification,
         developmentObjective: $developmentObjective,
         generalObjective: $generalObjective,
-        specificObjectives: $specificObjectives
+        specificObjectives: $specificObjectives,
+        beneficiaries: $beneficiaries
       ) {
         id
       }

@@ -22,6 +22,7 @@ export const getById = gql`
       developmentObjective
       generalObjective
       specificObjectives
+      beneficiaries
     }
   }
 `
