@@ -3,6 +3,7 @@ import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers/withForm"
 import { PreventionLevelsText } from "./prevention-levels-text"
+import { ScopeText } from "./scope-text"
 
 function ProjectDetailsForm({
   data,
@@ -163,7 +164,10 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Ámbitos de intervención del Proyecto">
+            label={
+              <FieldLabel helpText={<ScopeText />}>
+                Ámbitos de intervención del Proyecto
+              </FieldLabel>}>
             <SelectField
               id="scope"
               name="scope"
