@@ -3,11 +3,9 @@ import { Popover } from "antd";
 
 export function FieldLabel({helpText, children}) {
   return (
-    <div>
+    <Popover content={helpText}>
       {children}&nbsp;
-      <Popover content={helpText}>
-        <QuestionCircleFilled />
-      </Popover>
-    </div>
+      <QuestionCircleFilled />
+    </Popover>
   )
 }
