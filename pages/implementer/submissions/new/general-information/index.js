@@ -14,17 +14,29 @@ import { Consultant } from "../../../../../components/implementer/submissions/ne
 
 
 function GeneralInformation({ client }) {
-  const [state, setState] = useState({ generalInformation: { consultant: {} } })
-  const [updateSubmission] = useMutation(submission.mutations.updateById, { client: client })
+  const [state, setState] = useState({
+    generalInformation: {
+      consultant: {}
+    },
+    dirty: false
+  })
+  
+  const [updateSubmission] = useMutation(
+    submission.mutations.updateById, { client: client }
+  )
+
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: "1" }
   })
 
   const updateGeneralInformation = useCallback(generalInformation => {
-    const newGeneralInformation = { ...state.generalInformation, ...generalInformation }
+    const newGeneralInformation = {
+      ...state.generalInformation,
+      ...generalInformation
+    }
 
-    setState({...state, generalInformation: newGeneralInformation})
+    setState({...state, dirty: true, generalInformation: newGeneralInformation})
   })
 
   const save = useCallback(async () => {
@@ -46,13 +58,31 @@ function GeneralInformation({ client }) {
   })
 
   const hasConsultant = useCallback(() => {
-    return state.generalInformation.hasConsultant ||
-      data?.Submission?.hasConsultant
+    const hasConsultant = state
+      .generalInformation
+      .hasConsultant
+    
+    const hasConsultantData = data
+      ?.Submission
+      ?.hasConsultant
+
+    return hasConsultant === true ||
+      (hasConsultantData === true && !state.dirty)
   })
 
   const hadConsultantReceivedSupports = useCallback(() => {
-    return state.generalInformation.consultant.hadReceivedSupports ||
-      data?.Submission?.consultant?.hadReceivedSupports
+    const hadReceivedSupports = state
+      .generalInformation
+      .consultant
+      .hadReceivedSupports
+    
+    const hadReceivedSupportsData = data
+      ?.Submission
+      ?.consultant
+      ?.hadReceivedSupports
+
+    return hadReceivedSupports === true ||
+      (hadReceivedSupportsData === true && !state.dirty)
   })
 
   const injectActions = useMemo(() => ({

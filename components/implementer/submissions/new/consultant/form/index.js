@@ -47,7 +47,7 @@ function ConsultantForm({
             <RadioField
               id="hasConsultant"
               name="hasConsultant"
-              defaultValue={data?.Submission?.hasConsultant}
+              defaultValue={hasConsultant}
               onChange={onChange}
               options={selectOptions.shared.yesNo} />
           </Form.Item>
@@ -166,7 +166,7 @@ function ConsultantForm({
               <RadioField
                 id="hadReceivedSupports"
                 name="hadReceivedSupports"
-                defaultValue={data?.Submission?.consultant?.hadReceivedSupports}
+                defaultValue={hadConsultantReceivedSupports}
                 onChange={onChange}
                 options={selectOptions.shared.yesNo} />
             </Form.Item>

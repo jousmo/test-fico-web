@@ -10,8 +10,8 @@ export function Consultant() {
     error,
     data,
     hasConsultant,
-    hadConsultantReceivedSupports,
-  } = useContext(ImplementerSubmissionContext) 
+    hadConsultantReceivedSupports
+  } = useContext(ImplementerSubmissionContext)
 
   const onChange = ({ currentTarget: { id, value } }) => {
     let newData = {}
