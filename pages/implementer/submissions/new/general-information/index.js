@@ -10,20 +10,33 @@ import { submission } from "../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
+import { Consultant } from "../../../../../components/implementer/submissions/new/consultant"
 
 
 function GeneralInformation({ client }) {
-  const [state, setState] = useState({ generalInformation: {} })
-  const [updateSubmission] = useMutation(submission.mutations.updateById, { client: client })
+  const [state, setState] = useState({
+    generalInformation: {
+      consultant: {}
+    },
+    dirty: false
+  })
+  
+  const [updateSubmission] = useMutation(
+    submission.mutations.updateById, { client: client }
+  )
+
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: "1" }
   })
 
   const updateGeneralInformation = useCallback(generalInformation => {
-    const newGeneralInformation = { ...state.generalInformation, ...generalInformation }
+    const newGeneralInformation = {
+      ...state.generalInformation,
+      ...generalInformation
+    }
 
-    setState({...state, generalInformation: newGeneralInformation})
+    setState({...state, dirty: true, generalInformation: newGeneralInformation})
   })
 
   const save = useCallback(async () => {
@@ -44,10 +57,40 @@ function GeneralInformation({ client }) {
       data?.Submission?.type === "CALL"
   })
 
+  const hasConsultant = useCallback(() => {
+    const hasConsultant = state
+      .generalInformation
+      .hasConsultant
+    
+    const hasConsultantData = data
+      ?.Submission
+      ?.hasConsultant
+
+    return hasConsultant === true ||
+      (hasConsultantData === true && !state.dirty)
+  })
+
+  const hadConsultantReceivedSupports = useCallback(() => {
+    const hadReceivedSupports = state
+      .generalInformation
+      .consultant
+      .hadReceivedSupports
+    
+    const hadReceivedSupportsData = data
+      ?.Submission
+      ?.consultant
+      ?.hadReceivedSupports
+
+    return hadReceivedSupports === true ||
+      (hadReceivedSupportsData === true && !state.dirty)
+  })
+
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
     save,
     isCall,
+    hasConsultant,
+    hadConsultantReceivedSupports,
     loading,
     error,
     data
@@ -58,6 +101,7 @@ function GeneralInformation({ client }) {
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
           <ProjectDetails />
+          <Consultant />
           <DevelopmentObjectives />
           <Beneficiaries />
         </Layout>
