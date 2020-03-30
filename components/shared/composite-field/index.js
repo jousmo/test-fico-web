@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Button } from "antd"
 import { PlusOutlined } from "@ant-design/icons"
+import { v4 as uuid } from "uuid"
 
 export function CompositeField({
   children,
@@ -10,8 +11,13 @@ export function CompositeField({
   defaultValue=[],
   maxItems
 }) {
+  const genUuid = i => {
+    i.uuid = uuid()
+    return i
+  }
+
   const [state, setState] = useState({
-    items: Array.from(defaultValue),
+    items: Array.from(defaultValue).map(genUuid),
     maxReached: maxItems && (defaultValue.length >= maxItems)
   })
 
