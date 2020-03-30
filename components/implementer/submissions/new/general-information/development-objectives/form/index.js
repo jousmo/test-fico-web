@@ -1,6 +1,7 @@
 import { withForm } from "../../../../../../../helpers/withForm"
 import { Form, Row, Col, Input } from "antd"
 import { CompositeField, DeleteButton } from "../../../../../../shared"
+import { v4 as uuid } from "uuid"
 
 function DevelopmentObjectivesForm({data, onChange}) {
   const onSpecificObjectivesChange = (newObjectives) => {
@@ -50,18 +51,18 @@ function DevelopmentObjectivesForm({data, onChange}) {
               onChange={onSpecificObjectivesChange}
               defaultValue={data?.Submission?.specificObjectives || []}
               addLabel="Agregar objetivo específico"
-              onClickAdd={(addNew) => addNew({description: ""})}>
+              onClickAdd={(addNew) => addNew({description: "", uuid: uuid()})}>
               {({ items, updateItem, removeItem }) => 
                 <div>
                   { items.map((item, index) => 
-                    <Form.Item key={`specific_objective_${index}`}>
+                    <Form.Item key={`specific_objective_${item.uuid}`}>
                       <Row>
                         <Col flex="auto">
                           <Input.TextArea
                             id="description"
                             name="description"
                             defaultValue={item.description}
-                            onChange={updateItem(index)}
+                            onBlur={updateItem(index)}
                             autoSize={{minRows: 3}} />
                         </Col>
                         <Col>
