@@ -1,7 +1,9 @@
 import { Row, Form, DatePicker, Col, Alert, Skeleton, Input } from "antd"
 import { implementer } from "../../../../../../../helpers/selectOptions"
-import { SelectField, DateField } from "../../../../../../shared"
+import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers/withForm"
+import { PreventionLevelsText } from "./prevention-levels-text"
+import { ScopeText } from "./scope-text"
 
 function ProjectDetailsForm({
   data,
@@ -147,7 +149,10 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Nivel de prevención">
+            label={
+              <FieldLabel helpText={<PreventionLevelsText />}>
+                Nivel de prevención
+              </FieldLabel>}>
             <SelectField
               id="preventionLevel"
               name="preventionLevel"
@@ -159,7 +164,10 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Ámbitos de intervención del Proyecto">
+            label={
+              <FieldLabel helpText={<ScopeText />}>
+                Ámbitos de intervención del Proyecto
+              </FieldLabel>}>
             <SelectField
               id="scope"
               name="scope"

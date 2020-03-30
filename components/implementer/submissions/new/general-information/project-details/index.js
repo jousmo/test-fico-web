@@ -2,7 +2,9 @@
 import { Section } from "../../../../../shared"
 import ProjectDetailsForm from "./form"
 import { useContext } from "react"
-import { ImplementerSubmissionContext } from "../../../../../../contexts/implementer/submissions/new/context"
+import {
+  ImplementerSubmissionContext
+} from "../../../../../../contexts/implementer/submissions/new/context"
 
 export function ProjectDetails() {
   const {
