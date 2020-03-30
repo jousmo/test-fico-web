@@ -1,6 +1,6 @@
 
 import { Section } from "../../../../../shared"
-import { ProjectDetailsForm } from "./form"
+import ProjectDetailsForm from "./form"
 import { useContext } from "react"
 import { ImplementerSubmissionContext } from "../../../../../../contexts/implementer/submissions/new/context"
 
@@ -9,7 +9,8 @@ export function ProjectDetails() {
     updateGeneralInformation,
     loading,
     error,
-    data
+    data,
+    isCall
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = ({ currentTarget: { id, value } }) => {
@@ -25,7 +26,8 @@ export function ProjectDetails() {
         isLoading={loading}
         error={error}
         data={data}
-        onChange={onChange} />
+        onChange={onChange}
+        isCall={isCall()} />
     </Section>
   )
 }
