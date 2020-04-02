@@ -21,7 +21,7 @@ export function DevelopmentObjective() {
   }
 
   return (
-    <Section title="3. Objetivos de desarrollo">
+    <Section title="Objetivo de desarrollo">
       <DevelopmentObjectiveForm
         isLoading={loading}
         error={error}
