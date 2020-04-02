@@ -3,8 +3,11 @@ import { Toolbar } from "../../../shared"
 import { Subheader } from "../subheader"
 
 export function Layout({children}) {
-  const subheader = ({title, actions}) => {
-    return <Subheader title={title} actions={actions} />
+  const subheader = ({title, actions, step}) => {
+    return <Subheader
+      title={title}
+      actions={actions}
+      step={step} />
   }
 
   return (

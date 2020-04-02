@@ -97,7 +97,7 @@ function GeneralInformation({ client }) {
   }), [state, loading])
 
   return (
-    <PageContext.Provider value={pageData({ save })}>
+    <PageContext.Provider value={pageData({ save, step: 0 })}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
           <ProjectDetails />

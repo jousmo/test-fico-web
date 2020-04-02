@@ -12,7 +12,7 @@ function TechnicalSpecification({ client }) {
     technicalSpecification: {},
     dirty: false
   })
-  
+
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
   )
@@ -57,7 +57,7 @@ function TechnicalSpecification({ client }) {
   }), [state, loading])
 
   return (
-    <PageContext.Provider value={pageData({ save })}>
+    <PageContext.Provider value={pageData({ save, step: 1 })}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
         </Layout>

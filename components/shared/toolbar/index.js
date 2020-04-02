@@ -5,10 +5,10 @@ import { PageContext } from "../../../contexts/page"
 import { useContext } from "react"
 
 function Toolbar({subheader}) {
-  const { title, actions } = useContext(PageContext)
+  const { title, actions, step } = useContext(PageContext)
 
   subheader = typeof subheader === "function" ?
-    subheader({title, actions}) :
+    subheader({title, actions, step}) :
     subheader
 
   subheader = subheader || <PageHeader title={title} extra={actions} />
