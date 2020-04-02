@@ -17,9 +17,12 @@ function DevelopmentObjectiveForm({data, onChange}) {
     <Form
       name="project-details"
       layout="vertical">
-      <Row gutter={[10, 8]} justify="start">
-        <Col span={24}>{data?.Submission?.developmentObjective}</Col>
-      </Row>
+      <Form.Item>
+        {data?.Submission?.developmentObjective}
+      </Form.Item>
+      <Form.Item label="Indicadores">
+
+      </Form.Item>
     </Form>
   )
 }
