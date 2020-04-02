@@ -1,10 +1,16 @@
 import { Layout } from "../../../../../components/implementer/submissions"
-import { data as pageData, ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
+import {
+  data as pageData,
+  ImplementerSubmissionContext
+} from "../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../contexts/page"
 import { submission } from "../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
+import {
+  DevelopmentObjective
+} from "../../../../../components/implementer/submissions/new/technical-specification/development-objective"
 
 
 function TechnicalSpecification({ client }) {
@@ -59,7 +65,8 @@ function TechnicalSpecification({ client }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 1 })}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
-        <Layout>
+        <Layout fullHeight>
+          <DevelopmentObjective />
         </Layout>
       </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
