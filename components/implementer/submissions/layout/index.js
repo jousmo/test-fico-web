@@ -2,7 +2,7 @@ import { Layout as ALayout } from "antd"
 import { Toolbar } from "../../../shared"
 import { Subheader } from "../subheader"
 
-export function Layout({children}) {
+export function Layout({children, fullHeight}) {
   const subheader = ({title, actions, step}) => {
     return <Subheader
       title={title}
@@ -10,9 +10,11 @@ export function Layout({children}) {
       step={step} />
   }
 
+  const className = fullHeight ? "full-height" : null
+
   return (
     <div className="fico layout submissions full-height">
-      <ALayout>
+      <ALayout className={className}>
         <ALayout.Content>
           <Toolbar subheader={subheader} />
           <div className="page-content">
