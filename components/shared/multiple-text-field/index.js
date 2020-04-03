@@ -1,4 +1,4 @@
-import { Form, Input } from "antd"
+import { Form, Input, Row, Col } from "antd"
 import { CompositeField } from "../composite-field"
 import { DeleteButton } from "../delete-button"
 import { v4 as uuid } from "uuid"
@@ -18,10 +18,18 @@ export function MultipleTextField({
         <div>
           {items.map((item, index) =>
             <Form.Item key={item.uuid}>
-              <Input
-                onChange={updateItem(index)}
-                defaultValue={item.value} />
-              <DeleteButton onClick={removeItem(index)} />
+              <Row>
+                <Col flex="auto">
+                  <Input
+                    onChange={updateItem(index)}
+                    defaultValue={item.value} />
+                </Col>
+                <Col>
+                  <DeleteButton
+                    style={{marginLeft: "10px"}}
+                    onClick={removeItem(index)} />
+                </Col>
+              </Row>
             </Form.Item>
           )}
         </div>
