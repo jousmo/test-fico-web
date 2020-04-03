@@ -6,13 +6,21 @@ export function IndicatorItem({data, onDelete, onEdit}) {
     title,
     description,
     methodology,
-    baseLine,
+    baseline,
     goal,
     formula,
     inputs,
     meansOfVerification,
     key
   } = data
+
+  const formatInputs = inputs => {
+    if(!inputs.length) {
+      return "N/A"
+    }
+
+    return `${inputs.join(", ")}.`
+  }
 
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
@@ -27,7 +35,7 @@ export function IndicatorItem({data, onDelete, onEdit}) {
       </Typography.Text>
       <br />
       <Typography.Text strong>Linea base: </Typography.Text>
-      <Typography.Text>{baseLine}</Typography.Text>
+      <Typography.Text>{baseline}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Meta: </Typography.Text>
       <Typography.Text>{goal}</Typography.Text>
@@ -36,7 +44,7 @@ export function IndicatorItem({data, onDelete, onEdit}) {
       <Typography.Text>{formula}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Insumos: </Typography.Text>
-      <Typography.Text>{inputs}</Typography.Text>
+      <Typography.Text>{formatInputs(inputs)}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
       <Typography.Text>{meansOfVerification}</Typography.Text>
