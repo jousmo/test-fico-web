@@ -34,7 +34,8 @@ export function IndicatorsField({defaultValue, onChange}) {
           { items.map((item, index) =>
             <IndicatorItem
               data={item}
-              key={`indicator_${index}`} />
+              key={`indicator_${item.uuid}`}
+              onDelete={removeItem(index)} />
           ) }
         </div>
       }

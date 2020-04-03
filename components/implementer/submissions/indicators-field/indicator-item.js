@@ -40,7 +40,9 @@ export function IndicatorItem({data, onDelete, onEdit}) {
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
       <Typography.Text>{meansOfVerification}</Typography.Text>
-      <DeleteButton onClick={onDelete} />
+      <DeleteButton
+        onClick={onDelete}
+        style={{marginLeft: "8px"}} />
       <EditButton onClick={onEdit} />
     </Card>
   )
