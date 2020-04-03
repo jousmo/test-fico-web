@@ -1,7 +1,6 @@
 import { withForm } from "../../../../../../../helpers/withForm"
-import { Form, Row, Col, Input } from "antd"
-import { CompositeField, DeleteButton } from "../../../../../../shared"
-import { v4 as uuid } from "uuid"
+import { Form } from "antd"
+import { IndicatorsField } from "../../../../indicators-field"
 
 function DevelopmentObjectiveForm({data, onChange}) {
   const onSpecificObjectivesChange = (newObjectives) => {
@@ -21,7 +20,7 @@ function DevelopmentObjectiveForm({data, onChange}) {
         {data?.Submission?.developmentObjective}
       </Form.Item>
       <Form.Item label="Indicadores">
-
+        <IndicatorsField />
       </Form.Item>
     </Form>
   )
