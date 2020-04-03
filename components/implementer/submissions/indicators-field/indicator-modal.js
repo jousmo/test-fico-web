@@ -119,7 +119,8 @@ export function IndicatorModal({ onSave, onCancel, ...props }) {
             <Form.Item
               name="startDate"
               style={{display: "inline"}}
-              label="Fecha de inicio">
+              label="Fecha de inicio"
+              getValueFromEvent={getSelectValue}>
               <DateField
                 id="startDate"
                 fullWidth />
@@ -129,7 +130,8 @@ export function IndicatorModal({ onSave, onCancel, ...props }) {
             <Form.Item
               name="endDate"
               style={{display: "inline"}}
-              label="Fecha fin">
+              label="Fecha fin"
+              getValueFromEvent={getSelectValue}>
               <DateField
                 id="endDate"
                 fullWidth />
