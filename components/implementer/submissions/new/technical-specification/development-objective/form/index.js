@@ -20,7 +20,9 @@ function DevelopmentObjectiveForm({data, onChange}) {
         {data?.Submission?.developmentObjective}
       </Form.Item>
       <Form.Item label="Indicadores">
-        <IndicatorsField onChange={onIndicatorsChange} />
+        <IndicatorsField
+          defaultValue={data?.Submission?.developmentObjectiveIndicators}
+          onChange={onIndicatorsChange} />
       </Form.Item>
     </Form>
   )
