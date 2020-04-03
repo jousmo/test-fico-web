@@ -3,11 +3,11 @@ import { Form } from "antd"
 import { IndicatorsField } from "../../../../indicators-field"
 
 function DevelopmentObjectiveForm({data, onChange}) {
-  const onSpecificObjectivesChange = (newObjectives) => {
+  const onIndicatorsChange = newIndicators => {
     onChange && onChange({
       currentTarget: {
-        id: "specificObjectives",
-        value: newObjectives
+        id: "developmentObjectiveIndicators",
+        value: newIndicators
       }
     })
   }
@@ -20,7 +20,7 @@ function DevelopmentObjectiveForm({data, onChange}) {
         {data?.Submission?.developmentObjective}
       </Form.Item>
       <Form.Item label="Indicadores">
-        <IndicatorsField />
+        <IndicatorsField onChange={onIndicatorsChange} />
       </Form.Item>
     </Form>
   )
