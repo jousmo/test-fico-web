@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid"
 
 export function MultipleTextField({
   onChange,
-  addLabel,
+  addLabel="Agregar elemento",
   defaultValue
 }) {
   return (
