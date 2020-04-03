@@ -25,6 +25,7 @@ export const getById = gql`
       beneficiaries
       hasConsultant
       consultant
+      developmentObjectiveIndicators
     }
   }
 `
