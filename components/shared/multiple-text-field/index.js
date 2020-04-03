@@ -2,17 +2,22 @@ import { Form, Input, Row, Col } from "antd"
 import { CompositeField } from "../composite-field"
 import { DeleteButton } from "../delete-button"
 import { v4 as uuid } from "uuid"
+import { itemGenUuid } from "../../../helpers"
 
 export function MultipleTextField({
   onChange,
   addLabel="Agregar elemento",
-  defaultValue
+  defaultValue=[]
 }) {
+  const onCompositeFieldChange = value => {
+    onChange && onChange(value.map(i => i.value))
+  }
+
   return (
     <CompositeField
-      onChange={onChange}
+      onChange={onCompositeFieldChange}
       addLabel={addLabel}
-      defaultValue={defaultValue}
+      defaultValue={defaultValue.map(itemGenUuid)}
       onClickAdd={addNew => addNew({ value: "", uuid: uuid() })}>
       {({items, removeItem, updateItem}) =>
         <div>
@@ -21,6 +26,8 @@ export function MultipleTextField({
               <Row>
                 <Col flex="auto">
                   <Input
+                    name="value"
+                    defaultValue={item.value}
                     onChange={updateItem(index)}
                     defaultValue={item.value} />
                 </Col>
