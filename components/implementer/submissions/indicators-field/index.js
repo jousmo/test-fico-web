@@ -10,6 +10,10 @@ export function IndicatorsField({defaultValue, onChange}) {
     setState({ isModalOpen: true })
   }
 
+  const onCancel = () => {
+    setState({ isModalOpen: false })
+  }
+
   return (
     <CompositeField
       onChange={onChange}
@@ -18,7 +22,9 @@ export function IndicatorsField({defaultValue, onChange}) {
       addLabel="Agregar indicador">
       {({ items, addNew, removeItem }) =>
         <div>
-          <IndicatorModal visible={state.isModalOpen} />
+          <IndicatorModal
+            onCancel={onCancel}
+            visible={state.isModalOpen} />
           { items.map((item, index) =>
             <IndicatorItem
               data={item}

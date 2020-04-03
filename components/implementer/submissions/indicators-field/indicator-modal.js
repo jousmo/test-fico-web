@@ -27,6 +27,8 @@ export function IndicatorModal({ onSave, onCancel, ...props }) {
       onOk={onOk}
       onCancel={onCancel}
       width={800}
+      okText="Agregar"
+      cancelText="Cancelar"
       {...props}>
       <Form
         form={form}
