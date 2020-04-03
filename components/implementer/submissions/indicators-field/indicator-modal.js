@@ -26,6 +26,7 @@ export function IndicatorModal({ onSave, onCancel, ...props }) {
       title="Agregar indicador"
       onOk={onOk}
       onCancel={onCancel}
+      width={800}
       {...props}>
       <Form
         form={form}
@@ -118,7 +119,8 @@ export function IndicatorModal({ onSave, onCancel, ...props }) {
               style={{display: "inline"}}
               label="Fecha de inicio">
               <DateField
-                id="startDate" />
+                id="startDate"
+                fullWidth />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -127,7 +129,8 @@ export function IndicatorModal({ onSave, onCancel, ...props }) {
               style={{display: "inline"}}
               label="Fecha fin">
               <DateField
-                id="endDate" />
+                id="endDate"
+                fullWidth />
             </Form.Item>
           </Col>
           <Col span={12}>
