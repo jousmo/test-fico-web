@@ -1,6 +1,6 @@
 import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input } from "antd"
-import { DateField, SelectField } from "../../../shared"
+import { DateField, SelectField, MultipleTextField } from "../../../shared"
 import { getSelectValue } from "../../../../helpers/getSelectValue"
 import {
   measurementPeriodicityTypes
@@ -154,6 +154,24 @@ export function IndicatorModal({ onSave, onCancel, ...props }) {
               <Input
                 id="place"
                 type="text" />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              name="inputs"
+              style={{display: "inline"}}
+              label="Insumos">
+              <MultipleTextField
+                addLabel="Agregar insumo" />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              name="products"
+              style={{display: "inline"}}
+              label="Productos">
+              <MultipleTextField
+                addLabel="Agregar producto" />
             </Form.Item>
           </Col>
         </Row>
