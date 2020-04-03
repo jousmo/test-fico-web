@@ -221,7 +221,7 @@ function ConsultantForm({
                                   name="amount"
                                   onChange={updateItem(index)}
                                   defaultValue={item.amount} />
-                                <DeleteButton onClick={() => removeItem(index)} />
+                                <DeleteButton onClick={removeItem(index)} />
                               </Form.Item>
                             </Col>
                           </Row>

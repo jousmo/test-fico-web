@@ -66,7 +66,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
                             autoSize={{minRows: 3}} />
                         </Col>
                         <Col>
-                          <DeleteButton style={{marginLeft: "10px"}} onClick={() => removeItem(index)} />
+                          <DeleteButton style={{marginLeft: "10px"}} onClick={removeItem(index)} />
                         </Col>
                       </Row>
                     </Form.Item>
