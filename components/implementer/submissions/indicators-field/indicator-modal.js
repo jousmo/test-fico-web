@@ -6,12 +6,21 @@ import {
   measurementPeriodicityTypes
 } from "../../../../helpers/selectOptions/implementer/submission"
 
-export function IndicatorModal({ onSave, onCancel, ...props }) {
+export function IndicatorModal({
+  onSave,
+  onCancel,
+  edit,
+  ...props
+}) {
   const [form] = useForm()
 
   const onOk = async () => {
     try {
       const values = await form.getFieldsValue()
+
+      if(edit?.index) {
+        values.index = edit.index
+      }
 
       onSave(values)
       form.resetFields()
