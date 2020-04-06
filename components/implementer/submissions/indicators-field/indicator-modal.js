@@ -5,6 +5,7 @@ import { getSelectValue } from "../../../../helpers/getSelectValue"
 import {
   measurementPeriodicityTypes
 } from "../../../../helpers/selectOptions/implementer/submission"
+import { merge } from "lodash"
 
 export function IndicatorModal({
   onSave,
@@ -16,10 +17,11 @@ export function IndicatorModal({
 
   const onOk = async () => {
     try {
-      const values = await form.getFieldsValue()
+      let values = await form.getFieldsValue()
 
-      if(edit?.index) {
+      if(typeof edit?.index !== "undefined") {
         values.index = edit.index
+        values = merge(edit, values)
       }
 
       onSave(values)
@@ -32,11 +34,11 @@ export function IndicatorModal({
 
   return (
     <Modal
-      title="Agregar indicador"
+      title={`${edit ? "Editar" : "Agregar"} indicador`}
       onOk={onOk}
       onCancel={onCancel}
       width={800}
-      okText="Agregar"
+      okText={`${edit ? "Guardar" : "Agregar"}`}
       cancelText="Cancelar"
       {...props}>
       <Form
