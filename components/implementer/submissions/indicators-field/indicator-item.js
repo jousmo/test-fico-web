@@ -34,7 +34,7 @@ export function IndicatorItem({data, onDelete, onEdit}) {
         {`${methodology}`}
       </Typography.Text>
       <br />
-      <Typography.Text strong>Linea base: </Typography.Text>
+      <Typography.Text strong>Línea base: </Typography.Text>
       <Typography.Text>{baseline}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Meta: </Typography.Text>
