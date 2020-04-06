@@ -14,13 +14,22 @@ export function IndicatorsField({defaultValue, onChange}) {
     setState({ isModalOpen: false })
   }
 
-  const onSave = (addNew) => (values) => {
-    addNew(values)
+  const onSave = (addNew, replaceItemAtIndex) => (values) => {
+    if(!values.index) {
+      addNew(values)
+    }
+    else {
+      const index = values.index
+      delete values.index
+
+      replaceItemAtIndex(index, values)
+    }
     onCancel()
   }
 
-  const onEdit = item => () => {
-    setState({ isModalOpen: true, edit: item })
+  const onEdit = (data, index) => () => {
+    data.index = index
+    setState({ isModalOpen: true, edit: data })
   }
 
   return (
@@ -29,19 +38,19 @@ export function IndicatorsField({defaultValue, onChange}) {
       defaultValue={defaultValue}
       onClickAdd={onClickAdd}
       addLabel="Agregar indicador">
-      {({ items, addNew, removeItem }) =>
+      {({ items, addNew, removeItem, replaceItemAtIndex }) =>
         <div>
           <IndicatorModal
             onCancel={onCancel}
-            onSave={onSave(addNew)}
+            onSave={onSave(addNew, replaceItemAtIndex)}
             visible={state.isModalOpen}
             edit={state.edit} />
           { items.map((item, index) =>
             <IndicatorItem
               data={item}
               key={`indicator_${item.uuid}`}
-              onDelete={removeItem(index)} 
-              onEdit={onEdit(item)} />
+              onDelete={removeItem(index)}
+              onEdit={onEdit(item, index)} />
           ) }
         </div>
       }
