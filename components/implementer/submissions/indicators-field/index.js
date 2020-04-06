@@ -4,7 +4,7 @@ import { useState } from "react"
 import { IndicatorModal } from "./indicator-modal"
 
 export function IndicatorsField({defaultValue, onChange}) {
-  const [state, setState] = useState({ isModalOpen: false })
+  const [state, setState] = useState({ isModalOpen: false, edit: false })
 
   const onClickAdd = () => {
     setState({ isModalOpen: true })
@@ -19,6 +19,10 @@ export function IndicatorsField({defaultValue, onChange}) {
     onCancel()
   }
 
+  const onEdit = item => () => {
+    setState({ isModalOpen: true, edit: item })
+  }
+
   return (
     <CompositeField
       onChange={onChange}
@@ -30,12 +34,14 @@ export function IndicatorsField({defaultValue, onChange}) {
           <IndicatorModal
             onCancel={onCancel}
             onSave={onSave(addNew)}
-            visible={state.isModalOpen} />
+            visible={state.isModalOpen}
+            edit={state.edit} />
           { items.map((item, index) =>
             <IndicatorItem
               data={item}
               key={`indicator_${item.uuid}`}
-              onDelete={removeItem(index)} />
+              onDelete={removeItem(index)} 
+              onEdit={onEdit(item)} />
           ) }
         </div>
       }
