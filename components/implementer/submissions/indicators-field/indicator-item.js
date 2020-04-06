@@ -3,19 +3,19 @@ import { EditButton, DeleteButton } from "../../../shared"
 
 export function IndicatorItem({data, onDelete, onEdit}) {
   const {
-    title,
-    description,
-    methodology,
-    baseline,
-    goal,
-    formula,
+    title="Indicador sin título",
+    description="N/A",
+    methodology="N/A",
+    baseline="N/A",
+    goal="N/A",
+    formula="N/A",
     inputs,
-    meansOfVerification,
+    meansOfVerification="N/A",
     key
   } = data
 
   const formatInputs = inputs => {
-    if(!inputs.length) {
+    if(!inputs?.length) {
       return "N/A"
     }
 
@@ -31,7 +31,7 @@ export function IndicatorItem({data, onDelete, onEdit}) {
       <br />
       <Typography.Text strong>Metodología: </Typography.Text>
       <Typography.Text>
-        {`${methodology}`}
+        {methodology}
       </Typography.Text>
       <br />
       <Typography.Text strong>Línea base: </Typography.Text>
