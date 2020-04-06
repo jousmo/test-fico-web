@@ -65,6 +65,13 @@ export function CompositeField({
     }
   }
 
+  const replaceItemAtIndex = (index, data) => {
+    const newItems = Array.from(state.items)
+    newItems[index] = data
+    setState({ ...state, items: newItems })
+    onChange && onChange(newItems)
+  }
+
   const removeItem = index => {
     return event => {
       const newItems = Array.from(state.items).filter((it, i) => i !== index)
@@ -75,7 +82,15 @@ export function CompositeField({
 
   return (
     <div>
-      { children({items: state.items, updateItem, addNew, removeItem}) }
+      {
+        children({
+          items: state.items,
+          updateItem,
+          addNew,
+          removeItem,
+          replaceItemAtIndex
+        })
+      }
       <Button
         type="dashed"
         icon={<PlusOutlined />}
