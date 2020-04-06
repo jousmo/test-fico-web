@@ -51,7 +51,8 @@ export function IndicatorModal({
               label="Título del indicador">
               <Input
                 id="title"
-                type="text" />
+                type="text"
+                defaultValue={edit?.title} />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -61,7 +62,8 @@ export function IndicatorModal({
               label="Resumen narrativo">
               <Input
                 id="narrativeSummary"
-                type="text" />
+                type="text"
+                defaultValue={edit?.narrativeSummary} />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -71,7 +73,8 @@ export function IndicatorModal({
               label="Metodología">
               <Input
                 id="methodology"
-                type="text" />
+                type="text"
+                defaultValue={edit?.methodology} />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -81,7 +84,8 @@ export function IndicatorModal({
               label="Responsable">
               <Input
                 id="responsible"
-                type="text" />
+                type="text"
+                defaultValue={edit?.responsible} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -91,7 +95,8 @@ export function IndicatorModal({
               label="Fórmula">
               <Input
                 id="formula"
-                type="text" />
+                type="text"
+                defaultValue={edit?.formula} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -101,7 +106,8 @@ export function IndicatorModal({
               label="Medio de verificación">
               <Input
                 id="meansOfVerification"
-                type="text" />
+                type="text"
+                defaultValue={edit?.meansOfVerification} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -111,7 +117,8 @@ export function IndicatorModal({
               label="Línea base">
               <Input
                 id="baseline"
-                type="text" />
+                type="text"
+                defaultValue={edit?.baseline} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -121,7 +128,8 @@ export function IndicatorModal({
               label="Meta">
               <Input
                 id="goal"
-                type="text" />
+                type="text"
+                defaultValue={edit?.goal} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -132,7 +140,8 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="startDate"
-                fullWidth />
+                fullWidth
+                defaultValue={edit?.startDate} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -143,7 +152,8 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="endDate"
-                fullWidth />
+                fullWidth
+                defaultValue={edit?.endDate} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -153,8 +163,9 @@ export function IndicatorModal({
               label="Periodicidad de medición"
               getValueFromEvent={getSelectValue}>
               <SelectField
-                id="preventionLevel"
-                options={measurementPeriodicityTypes} />
+                id="measurementPeriodicity"
+                options={measurementPeriodicityTypes}
+                defaultValue={edit?.measurementPeriodicity} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -164,7 +175,8 @@ export function IndicatorModal({
               label="Lugar de intervención">
               <Input
                 id="place"
-                type="text" />
+                type="text"
+                defaultValue={edit?.place} />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -173,7 +185,8 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label="Insumos">
               <MultipleTextField
-                addLabel="Agregar insumo" />
+                addLabel="Agregar insumo"
+                defaultValue={edit?.inputs} />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -182,7 +195,8 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label="Productos">
               <MultipleTextField
-                addLabel="Agregar producto" />
+                addLabel="Agregar producto"
+                defaultValue={edit?.products} />
             </Form.Item>
           </Col>
         </Row>
