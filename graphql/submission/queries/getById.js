@@ -26,6 +26,7 @@ export const getById = gql`
       hasConsultant
       consultant
       developmentObjectiveIndicators
+      generalObjectiveIndicators
     }
   }
 `
