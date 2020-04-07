@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "antd"
 import { PlusOutlined } from "@ant-design/icons"
 import { v4 as uuid } from "uuid"
@@ -9,6 +9,7 @@ export function CompositeField({
   onClickAdd,
   addLabel,
   defaultValue=[],
+  value,
   maxItems
 }) {
   const genUuid = i => {
@@ -20,6 +21,12 @@ export function CompositeField({
     items: Array.from(defaultValue).map(genUuid),
     maxReached: maxItems && (defaultValue.length >= maxItems)
   })
+
+  useEffect(() => {
+    if(value) {
+      setState({ ...state, items: Array.from(value).map(genUuid) })
+    }
+  }, [value])
 
   const handleMaxReached = (items) => {
     if(typeof maxItems !== "undefined") {
