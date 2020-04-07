@@ -6,6 +6,7 @@ import {
   measurementPeriodicityTypes
 } from "../../../../helpers/selectOptions/implementer/submission"
 import { merge } from "lodash"
+import { useEffect } from "react"
 
 export function IndicatorModal({
   onSave,
@@ -14,6 +15,12 @@ export function IndicatorModal({
   ...props
 }) {
   const [form] = useForm()
+
+  useEffect(() => {
+    if(edit) {
+      form.setFieldsValue(edit)
+    }
+  }, [edit])
 
   const onOk = async () => {
     try {
@@ -32,11 +39,16 @@ export function IndicatorModal({
     }
   }
 
+  const onCancelModal = () => {
+    form.resetFields()
+    onCancel && onCancel()
+  }
+
   return (
     <Modal
       title={`${edit ? "Editar" : "Agregar"} indicador`}
       onOk={onOk}
-      onCancel={onCancel}
+      onCancel={onCancelModal}
       width={800}
       okText={`${edit ? "Guardar" : "Agregar"}`}
       cancelText="Cancelar"
@@ -53,8 +65,7 @@ export function IndicatorModal({
               label="Título del indicador">
               <Input
                 id="title"
-                type="text"
-                defaultValue={edit?.title} />
+                type="text" />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -64,8 +75,7 @@ export function IndicatorModal({
               label="Resumen narrativo">
               <Input
                 id="narrativeSummary"
-                type="text"
-                defaultValue={edit?.narrativeSummary} />
+                type="text" />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -75,8 +85,7 @@ export function IndicatorModal({
               label="Metodología">
               <Input
                 id="methodology"
-                type="text"
-                defaultValue={edit?.methodology} />
+                type="text" />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -86,8 +95,7 @@ export function IndicatorModal({
               label="Responsable">
               <Input
                 id="responsible"
-                type="text"
-                defaultValue={edit?.responsible} />
+                type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -97,8 +105,7 @@ export function IndicatorModal({
               label="Fórmula">
               <Input
                 id="formula"
-                type="text"
-                defaultValue={edit?.formula} />
+                type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -108,8 +115,7 @@ export function IndicatorModal({
               label="Medio de verificación">
               <Input
                 id="meansOfVerification"
-                type="text"
-                defaultValue={edit?.meansOfVerification} />
+                type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -119,8 +125,7 @@ export function IndicatorModal({
               label="Línea base">
               <Input
                 id="baseline"
-                type="text"
-                defaultValue={edit?.baseline} />
+                type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -130,8 +135,7 @@ export function IndicatorModal({
               label="Meta">
               <Input
                 id="goal"
-                type="text"
-                defaultValue={edit?.goal} />
+                type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -142,8 +146,7 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="startDate"
-                fullWidth
-                defaultValue={edit?.startDate} />
+                fullWidth />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -154,8 +157,7 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="endDate"
-                fullWidth
-                defaultValue={edit?.endDate} />
+                fullWidth />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -166,8 +168,7 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <SelectField
                 id="measurementPeriodicity"
-                options={measurementPeriodicityTypes}
-                defaultValue={edit?.measurementPeriodicity} />
+                options={measurementPeriodicityTypes} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -177,8 +178,7 @@ export function IndicatorModal({
               label="Lugar de intervención">
               <Input
                 id="place"
-                type="text"
-                defaultValue={edit?.place} />
+                type="text" />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -187,8 +187,7 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label="Insumos">
               <MultipleTextField
-                addLabel="Agregar insumo"
-                defaultValue={edit?.inputs} />
+                addLabel="Agregar insumo" />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -197,8 +196,7 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label="Productos">
               <MultipleTextField
-                addLabel="Agregar producto"
-                defaultValue={edit?.products} />
+                addLabel="Agregar producto" />
             </Form.Item>
           </Col>
         </Row>
