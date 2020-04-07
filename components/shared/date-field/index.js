@@ -7,7 +7,8 @@ export function DateField({
   onChange,
   placeholder="Selecciona fecha...",
   defaultValue,
-  fullWidth
+  fullWidth,
+  value
 }) {
   const onDateChange = value => {
     onChange && onChange({
@@ -25,6 +26,7 @@ export function DateField({
       style={fullWidth && {width: "100%"}}
       defaultValue={defaultValue && moment(defaultValue)}
       placeholder={placeholder}
-      onChange={onDateChange} />
+      onChange={onDateChange}
+      value={value && moment(value)} />
   )
 }
