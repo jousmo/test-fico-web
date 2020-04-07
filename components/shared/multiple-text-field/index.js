@@ -7,7 +7,8 @@ import { itemGenUuid } from "../../../helpers"
 export function MultipleTextField({
   onChange,
   addLabel="Agregar elemento",
-  defaultValue=[]
+  defaultValue=[],
+  value=[]
 }) {
   const onCompositeFieldChange = value => {
     onChange && onChange(value.map(i => i.value))
@@ -22,6 +23,7 @@ export function MultipleTextField({
       onChange={onCompositeFieldChange}
       addLabel={addLabel}
       defaultValue={defaultValue.map(transformDefaultValue).map(itemGenUuid)}
+      value={value.map(transformDefaultValue).map(itemGenUuid)}
       onClickAdd={addNew => addNew({ value: "", uuid: uuid() })}>
       {({items, removeItem, updateItem}) =>
         <div>
@@ -32,7 +34,7 @@ export function MultipleTextField({
                   <Input
                     name="value"
                     defaultValue={item.value}
-                    onChange={updateItem(index)}
+                    onBlur={updateItem(index)}
                     defaultValue={item.value} />
                 </Col>
                 <Col>
