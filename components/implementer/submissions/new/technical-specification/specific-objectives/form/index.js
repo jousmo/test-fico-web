@@ -1,31 +1,39 @@
-import { withForm } from "../../../../../../../helpers/withForm"
-import { Form } from "antd"
-import { IndicatorsField } from "../../../../indicators-field"
+import { Section } from "../../../../../../shared"
+import { v4 as uuid } from "uuid"
+import { Skeleton, Alert } from "antd"
 
-function SpecificObjectivesForm({data, onChange}) {
-  const onIndicatorsChange = newIndicators => {
-    onChange && onChange({
-      currentTarget: {
-        id: "specificObjectives",
-        value: newIndicators
-      }
-    })
+export default function SpecificObjectiveForm({
+  data,
+  onChange,
+  error,
+  isLoading
+}) {
+  if(isLoading) {
+    return <Section><Skeleton active /></Section>
   }
 
+  if(!data || error) {
+    return (
+      <Section>
+        <Alert
+          message="Error"
+          description="Ha ocurrido un error al cargar los datos de esta sección,
+          por favor actualiza la página."
+          type="error"
+          showIcon />
+      </Section>
+    )
+  }
+
+  const specificObjectives = data?.Submission?.specificObjectives || []
+
   return (
-    <Form
-      name="project-details"
-      layout="vertical">
-      <Form.Item>
-        {data?.Submission?.generalObjective}
-      </Form.Item>
-      <Form.Item label="Indicadores">
-        <IndicatorsField
-          defaultValue={data?.Submission?.generalObjectiveIndicators}
-          onChange={onIndicatorsChange} />
-      </Form.Item>
-    </Form>
+    <>
+      { specificObjectives.map((objective, index) =>
+        <Section title={`Objetivo ${index + 1}`} key={uuid()}>
+          {objective.description}
+        </Section>
+      ) }
+    </>
   )
 }
-
-export default withForm(GeneralObjectiveForm)
