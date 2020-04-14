@@ -2,8 +2,7 @@ import { useContext } from "react"
 import {
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/new/context"
-import SpecificObjectivesForm from "./form"
-import { Section } from "../../../../../shared"
+import SpecificObjectiveForm from "./form"
 
 export function SpecificObjectives() {
   const {
@@ -21,12 +20,10 @@ export function SpecificObjectives() {
   }
 
   return (
-    <Section title="Objetivo general">
-      <SpecificObjectivesForm
-        isLoading={loading}
-        error={error}
-        data={data}
-        onChange={onChange} />
-    </Section>
+    <SpecificObjectiveForm
+      isLoading={loading}
+      error={error}
+      data={data}
+      onChange={onChange} />
   )
 }
