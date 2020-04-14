@@ -67,7 +67,7 @@ function TechnicalSpecification({ client }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 1 })}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
-        <Layout fullHeight>
+        <Layout>
           <DevelopmentObjective />
           <GeneralObjective />
           <SpecificObjectives />
