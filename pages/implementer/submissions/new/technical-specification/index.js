@@ -10,7 +10,8 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
 import {
   DevelopmentObjective,
-  GeneralObjective
+  GeneralObjective,
+  SpecificObjectives
 } from "../../../../../components/implementer/submissions/new/technical-specification"
 
 
@@ -69,6 +70,7 @@ function TechnicalSpecification({ client }) {
         <Layout fullHeight>
           <DevelopmentObjective />
           <GeneralObjective />
+          <SpecificObjectives />
         </Layout>
       </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
