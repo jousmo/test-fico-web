@@ -9,8 +9,9 @@ import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
 import {
-  DevelopmentObjective
-} from "../../../../../components/implementer/submissions/new/technical-specification/development-objective"
+  DevelopmentObjective,
+  GeneralObjective
+} from "../../../../../components/implementer/submissions/new/technical-specification"
 
 
 function TechnicalSpecification({ client }) {
@@ -67,6 +68,7 @@ function TechnicalSpecification({ client }) {
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout fullHeight>
           <DevelopmentObjective />
+          <GeneralObjective />
         </Layout>
       </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
