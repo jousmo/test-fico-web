@@ -1,5 +1,5 @@
 import { Col, Form, Input, Radio, Row, Empty } from "antd"
-import { selectOptions, withForm } from "../../../../../../helpers"
+import { selectOptions, withForm } from "../../../../../../../helpers"
 import {
   UploadButton,
   DateField,
@@ -7,7 +7,7 @@ import {
   DeleteButton,
   RadioField,
   Visibility
-} from "../../../../../shared"
+} from "../../../../../../shared"
 
 function ConsultantForm({
   data,

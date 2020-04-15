@@ -1,13 +1,28 @@
 import { Steps as ASteps } from "antd"
 
-export function Steps() {
+export function Steps({current = 0}) {
   return (
-    <ASteps current={0}>
-      <ASteps.Step key="general-information" title="Inf. General" />
-      <ASteps.Step key="technical-specs" title="Ficha T" />
-      <ASteps.Step key="budget" title="Presupuesto" />
-      <ASteps.Step key="timetable" title="Cronograma" />
-      <ASteps.Step key="human-resources" title="Recursos humanos" />
+    <ASteps current={current}>
+      <ASteps.Step
+        key="general-information"
+        title="Inf. General"
+        status="wait" />
+      <ASteps.Step
+        key="technical-specs"
+        title="Ficha T"
+        status="wait" />
+      <ASteps.Step
+        key="budget"
+        title="Presupuesto"
+        status="wait" />
+      <ASteps.Step
+        key="timetable"
+        title="Cronograma"
+        status="wait" />
+      <ASteps.Step
+        key="human-resources"
+        title="Recursos humanos"
+        status="wait" />
     </ASteps>
   )
 }

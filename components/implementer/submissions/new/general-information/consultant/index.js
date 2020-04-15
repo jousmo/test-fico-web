@@ -1,6 +1,6 @@
 import { useContext } from "react"
-import { ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
-import { Section } from "../../../../shared"
+import { ImplementerSubmissionContext } from "../../../../../../contexts/implementer/submissions/new"
+import { Section } from "../../../../../shared"
 import ConsultantForm from "./form"
 
 export function Consultant() {

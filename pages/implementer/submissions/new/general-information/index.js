@@ -2,7 +2,8 @@ import { Layout } from "../../../../../components/implementer/submissions"
 import {
   ProjectDetails,
   DevelopmentObjectives,
-  Beneficiaries
+  Beneficiaries,
+  Consultant
 } from "../../../../../components/implementer/submissions/new/general-information"
 import { data as pageData, ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../contexts/page"
@@ -10,7 +11,6 @@ import { submission } from "../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
-import { Consultant } from "../../../../../components/implementer/submissions/new/consultant"
 
 
 function GeneralInformation({ client }) {
@@ -97,7 +97,7 @@ function GeneralInformation({ client }) {
   }), [state, loading])
 
   return (
-    <PageContext.Provider value={pageData({ save })}>
+    <PageContext.Provider value={pageData({ save, step: 0 })}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
           <ProjectDetails />
