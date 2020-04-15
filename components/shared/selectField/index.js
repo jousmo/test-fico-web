@@ -21,8 +21,8 @@ export function SelectField({
   }
 
   if(mode === "tags") {
-    defaultValue = defaultValue.split(",")
-    value = value.split(",")
+    defaultValue = defaultValue?.split(",") || []
+    value = value?.split(",") || []
   }
 
   return (
