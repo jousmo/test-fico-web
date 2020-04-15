@@ -12,9 +12,9 @@ export function SpecificObjectives() {
     data
   } = useContext(ImplementerSubmissionContext)
 
-  const onChange = ({ currentTarget: { id, value } }) => {
+  const onChange = newSpecificObjectives => {
     const newData = {}
-    newData[id] = value
+    newData.specificObjectives = newSpecificObjectives
 
     updateTechnicalSpecification(newData)
   }
