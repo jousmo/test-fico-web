@@ -40,7 +40,7 @@ function BeneficiariesForm({data, isLoading, onChange, error}) {
                 <BeneficiaryItem
                   key={key}
                   data={item}
-                  onDelete={() => removeItem(key)} />
+                  onDelete={removeItem(key)} />
               ) }
             </div>
           }

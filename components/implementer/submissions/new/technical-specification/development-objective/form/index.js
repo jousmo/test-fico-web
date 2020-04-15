@@ -1,14 +1,13 @@
 import { withForm } from "../../../../../../../helpers/withForm"
-import { Form, Row, Col, Input } from "antd"
-import { CompositeField, DeleteButton } from "../../../../../../shared"
-import { v4 as uuid } from "uuid"
+import { Form } from "antd"
+import { IndicatorsField } from "../../../../indicators-field"
 
 function DevelopmentObjectiveForm({data, onChange}) {
-  const onSpecificObjectivesChange = (newObjectives) => {
+  const onIndicatorsChange = newIndicators => {
     onChange && onChange({
       currentTarget: {
-        id: "specificObjectives",
-        value: newObjectives
+        id: "developmentObjectiveIndicators",
+        value: newIndicators
       }
     })
   }
@@ -17,9 +16,14 @@ function DevelopmentObjectiveForm({data, onChange}) {
     <Form
       name="project-details"
       layout="vertical">
-      <Row gutter={[10, 8]} justify="start">
-        <Col span={24}>{data?.Submission?.developmentObjective}</Col>
-      </Row>
+      <Form.Item>
+        {data?.Submission?.developmentObjective}
+      </Form.Item>
+      <Form.Item label="Indicadores">
+        <IndicatorsField
+          defaultValue={data?.Submission?.developmentObjectiveIndicators}
+          onChange={onIndicatorsChange} />
+      </Form.Item>
     </Form>
   )
 }

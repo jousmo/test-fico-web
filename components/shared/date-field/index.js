@@ -13,7 +13,7 @@ export function DateField({
     onChange && onChange({
       currentTarget: {
         id: id,
-        value: value.format()
+        value: value?.format()
       }
     })
   }
