@@ -5,13 +5,31 @@ import { getSelectValue } from "../../../../helpers/getSelectValue"
 import {
   measurementPeriodicityTypes
 } from "../../../../helpers/selectOptions/implementer/submission"
+import { merge } from "lodash"
+import { useEffect } from "react"
 
-export function IndicatorModal({ onSave, onCancel, ...props }) {
+export function IndicatorModal({
+  onSave,
+  onCancel,
+  edit,
+  ...props
+}) {
   const [form] = useForm()
+
+  useEffect(() => {
+    if(edit) {
+      form.setFieldsValue(edit)
+    }
+  }, [edit])
 
   const onOk = async () => {
     try {
-      const values = await form.getFieldsValue()
+      let values = await form.getFieldsValue()
+
+      if(typeof edit?.index !== "undefined") {
+        values.index = edit.index
+        values = merge(edit, values)
+      }
 
       onSave(values)
       form.resetFields()
@@ -21,13 +39,18 @@ export function IndicatorModal({ onSave, onCancel, ...props }) {
     }
   }
 
+  const onCancelModal = () => {
+    form.resetFields()
+    onCancel && onCancel()
+  }
+
   return (
     <Modal
-      title="Agregar indicador"
+      title={`${edit ? "Editar" : "Agregar"} indicador`}
       onOk={onOk}
-      onCancel={onCancel}
+      onCancel={onCancelModal}
       width={800}
-      okText="Agregar"
+      okText={`${edit ? "Guardar" : "Agregar"}`}
       cancelText="Cancelar"
       {...props}>
       <Form
@@ -144,7 +167,7 @@ export function IndicatorModal({ onSave, onCancel, ...props }) {
               label="Periodicidad de medición"
               getValueFromEvent={getSelectValue}>
               <SelectField
-                id="preventionLevel"
+                id="measurementPeriodicity"
                 options={measurementPeriodicityTypes} />
             </Form.Item>
           </Col>

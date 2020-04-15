@@ -4,19 +4,32 @@ import { useState } from "react"
 import { IndicatorModal } from "./indicator-modal"
 
 export function IndicatorsField({defaultValue, onChange}) {
-  const [state, setState] = useState({ isModalOpen: false })
+  const [state, setState] = useState({ isModalOpen: false, edit: undefined })
 
   const onClickAdd = () => {
     setState({ isModalOpen: true })
   }
 
   const onCancel = () => {
-    setState({ isModalOpen: false })
+    setState({ isModalOpen: false, edit: undefined })
   }
 
-  const onSave = (addNew) => (values) => {
-    addNew(values)
+  const onSave = (addNew, replaceItemAtIndex) => (values) => {
+    if(typeof values.index === "undefined") {
+      addNew(values)
+    }
+    else {
+      const index = values.index
+      delete values.index
+
+      replaceItemAtIndex(index, values)
+    }
     onCancel()
+  }
+
+  const onEdit = (data, index) => () => {
+    data.index = index
+    setState({ isModalOpen: true, edit: data })
   }
 
   return (
@@ -25,17 +38,19 @@ export function IndicatorsField({defaultValue, onChange}) {
       defaultValue={defaultValue}
       onClickAdd={onClickAdd}
       addLabel="Agregar indicador">
-      {({ items, addNew, removeItem }) =>
+      {({ items, addNew, removeItem, replaceItemAtIndex }) =>
         <div>
           <IndicatorModal
             onCancel={onCancel}
-            onSave={onSave(addNew)}
-            visible={state.isModalOpen} />
+            onSave={onSave(addNew, replaceItemAtIndex)}
+            visible={state.isModalOpen}
+            edit={state.edit} />
           { items.map((item, index) =>
             <IndicatorItem
               data={item}
               key={`indicator_${item.uuid}`}
-              onDelete={removeItem(index)} />
+              onDelete={removeItem(index)}
+              onEdit={onEdit(item, index)} />
           ) }
         </div>
       }
