@@ -1,5 +1,9 @@
 import { Card, Typography } from "antd"
 import { EditButton, DeleteButton } from "../../../shared"
+import * as Moment from "moment"
+import { extendMoment } from "moment-range"
+const moment = extendMoment(Moment)
+moment.locale("es")
 
 export function ActivityItem({data, onDelete, onEdit}) {
   const {
@@ -12,6 +16,16 @@ export function ActivityItem({data, onDelete, onEdit}) {
     months="N/A",
     key
   } = data
+
+  let formattedMonths = months
+
+  if(Array.isArray(months)) {
+    const range = Array
+      .from(moment.range(months[0], months[1]).by("month"))
+      .map(r => r.format("MMMM YYYY"))
+
+    formattedMonths = `${range.join(", ")}.`
+  }
 
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
@@ -33,7 +47,7 @@ export function ActivityItem({data, onDelete, onEdit}) {
       <Typography.Text>{place}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Mes de implementación: </Typography.Text>
-      <Typography.Text>{months}</Typography.Text>
+      <Typography.Text>{formattedMonths}</Typography.Text>
       <DeleteButton
         onClick={onDelete}
         style={{marginLeft: "8px"}} />
