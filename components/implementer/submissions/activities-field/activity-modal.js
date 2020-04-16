@@ -1,10 +1,7 @@
 import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input } from "antd"
-import { DateField, SelectField, MultipleTextField } from "../../../shared"
+import { DateField } from "../../../shared"
 import { getSelectValue } from "../../../../helpers/getSelectValue"
-import {
-  measurementPeriodicityTypes
-} from "../../../../helpers/selectOptions/implementer/submission"
 import { merge } from "lodash"
 import { useEffect } from "react"
 
@@ -62,49 +59,19 @@ export function ActivityModal({
             <Form.Item
               name="title"
               style={{display: "inline"}}
-              label="Título del indicador">
+              label="Descripción de la actividad">
               <Input
-                id="title"
-                type="text" />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              name="narrativeSummary"
-              style={{display: "inline"}}
-              label="Resumen narrativo">
-              <Input
-                id="narrativeSummary"
-                type="text" />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              name="methodology"
-              style={{display: "inline"}}
-              label="Metodología">
-              <Input
-                id="methodology"
-                type="text" />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              name="responsible"
-              style={{display: "inline"}}
-              label="Responsable">
-              <Input
-                id="responsible"
+                id="description"
                 type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              name="formula"
+              name="narrativeSummary"
               style={{display: "inline"}}
-              label="Fórmula">
+              label="Responsable">
               <Input
-                id="formula"
+                id="narrativeSummary"
                 type="text" />
             </Form.Item>
           </Col>
@@ -140,39 +107,6 @@ export function ActivityModal({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="startDate"
-              style={{display: "inline"}}
-              label="Fecha de inicio"
-              getValueFromEvent={getSelectValue}>
-              <DateField
-                id="startDate"
-                fullWidth />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="endDate"
-              style={{display: "inline"}}
-              label="Fecha fin"
-              getValueFromEvent={getSelectValue}>
-              <DateField
-                id="endDate"
-                fullWidth />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="measurementPeriodicity"
-              style={{display: "inline"}}
-              label="Periodicidad de medición"
-              getValueFromEvent={getSelectValue}>
-              <SelectField
-                id="measurementPeriodicity"
-                options={measurementPeriodicityTypes} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
               name="place"
               style={{display: "inline"}}
               label="Lugar de intervención">
@@ -181,22 +115,17 @@ export function ActivityModal({
                 type="text" />
             </Form.Item>
           </Col>
-          <Col span={24}>
+          <Col span={12}>
             <Form.Item
-              name="inputs"
+              name="months"
               style={{display: "inline"}}
-              label="Insumos">
-              <MultipleTextField
-                addLabel="Agregar insumo" />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              name="products"
-              style={{display: "inline"}}
-              label="Productos">
-              <MultipleTextField
-                addLabel="Agregar producto" />
+              label="Mes de implementación"
+              getValueFromEvent={getSelectValue}>
+              <DateField
+                id="months"
+                picker="month"
+                range
+                fullWidth />
             </Form.Item>
           </Col>
         </Row>
