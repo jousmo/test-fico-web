@@ -57,7 +57,7 @@ export function ActivityModal({
         <Row gutter={[10, 8]} justify="start">
           <Col span={24}>
             <Form.Item
-              name="title"
+              name="description"
               style={{display: "inline"}}
               label="Descripción de la actividad">
               <Input
@@ -67,11 +67,11 @@ export function ActivityModal({
           </Col>
           <Col span={12}>
             <Form.Item
-              name="narrativeSummary"
+              name="responsible"
               style={{display: "inline"}}
               label="Responsable">
               <Input
-                id="narrativeSummary"
+                id="responsible"
                 type="text" />
             </Form.Item>
           </Col>
