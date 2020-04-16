@@ -4,7 +4,7 @@ import { EditButton, DeleteButton } from "../../../shared"
 export function IndicatorItem({data, onDelete, onEdit}) {
   const {
     title="Indicador sin título",
-    description="N/A",
+    narrativeSummary="N/A",
     methodology="N/A",
     baseline="N/A",
     goal="N/A",
@@ -26,7 +26,7 @@ export function IndicatorItem({data, onDelete, onEdit}) {
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
       <Typography.Title level={4}>{title}</Typography.Title>
       <Typography.Text type="secondary">
-        {description}
+        {narrativeSummary}
       </Typography.Text>
       <br />
       <Typography.Text strong>Metodología: </Typography.Text>
