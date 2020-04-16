@@ -1,7 +1,7 @@
-import { IndicatorItem } from "./indicator-item"
+import { ActivityItem } from "./activity-item"
 import { CompositeField } from "../../../shared"
 import { useState } from "react"
-import { IndicatorModal } from "./indicator-modal"
+import { ActivityModal } from "./activity-modal"
 
 export function ActivitiesField({defaultValue, onChange}) {
   const [state, setState] = useState({ isModalOpen: false, edit: undefined })
