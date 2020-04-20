@@ -2,6 +2,7 @@ import { Section } from "../../../../../../shared"
 import { v4 as uuid } from "uuid"
 import { Skeleton, Alert, Form } from "antd"
 import { IndicatorsField } from "../../../../indicators-field"
+import { ActivitiesField } from "../../../../activities-field"
 
 export default function SpecificObjectiveForm({
   data,
@@ -28,10 +29,10 @@ export default function SpecificObjectiveForm({
 
   const specificObjectives = data?.Submission?.specificObjectives || []
   
-  const onSpecificObjectiveIndicatorsChange = (index) => (indicators) => {
+  const onSpecificObjectiveItemsChange = (index, type) => (indicators) => {
     const newSpecificObjectives = Array.from(specificObjectives)
 
-    newSpecificObjectives[index].indicators = indicators
+    newSpecificObjectives[index][type] = indicators
 
     onChange && onChange(newSpecificObjectives)
   }
@@ -47,9 +48,14 @@ export default function SpecificObjectiveForm({
               {objective.description}
             </Form.Item>
             <Form.Item label="Indicadores">
-            <IndicatorsField
-              onChange={onSpecificObjectiveIndicatorsChange(index)}
-              defaultValue={objective.indicators} />
+              <IndicatorsField
+                onChange={onSpecificObjectiveItemsChange(index, "indicators")}
+                defaultValue={objective.indicators} />
+            </Form.Item>
+            <Form.Item label="Actividades">
+              <ActivitiesField
+                onChange={onSpecificObjectiveItemsChange(index, "activities")}
+                defaultValue={objective.activities} />
             </Form.Item>
           </Form>
         </Section>
