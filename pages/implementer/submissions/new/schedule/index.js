@@ -8,6 +8,9 @@ import { submission } from "../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
+import {
+  Description,
+} from "../../../../../components/implementer/submissions/new/schedule"
 
 function Schedule({ client }) {
   const [state, setState] = useState({
@@ -58,7 +61,7 @@ function Schedule({ client }) {
     <PageContext.Provider value={pageData({ save, step: 3 })}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
-
+          <Description/>
         </Layout>
       </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
