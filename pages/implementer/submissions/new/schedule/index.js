@@ -10,6 +10,7 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
 import {
   Description,
+  ActivitiesSchedule
 } from "../../../../../components/implementer/submissions/new/schedule"
 
 function Schedule({ client }) {
@@ -62,6 +63,7 @@ function Schedule({ client }) {
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
           <Description/>
+          <ActivitiesSchedule/>
         </Layout>
       </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
