@@ -8,25 +8,7 @@ function ActivitiesTable({ data }) {
   const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
   const currentYear = new Date().getFullYear()
 
-  //const activities = data?.Submission?.specificObjectives?.activities
-  const activities = [
-    {
-      name: 'Actividad 1',
-      description: 'Esto es la descripción',
-      goal: '120',
-      meansOfVerification: 'Medio de Verificación',
-      amount: '12000',
-      months: ['Enero', 'Marzo', 'Abril']
-    },
-    {
-      name: 'Actividad 2',
-      description: 'Esto es la descripción',
-      goal: '100',
-      meansOfVerification: 'Medio de Verificación',
-      amount: '10000',
-      months: ['Junio', 'Agosto', 'Octubre']
-    },
-  ]
+  const activities = data?.Submission?.specificObjectives?.activities
 
   const getLabel = (record) => {
     const activity = activities.find(element => element.name === record.activity)
