@@ -8,10 +8,10 @@ function ActivitiesTable({ data }) {
   const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
   const currentYear = new Date().getFullYear()
 
-  const activities = data?.Submission?.specificObjectives?.activities || []
+  const activities = data?.Submission?.specificObjectives.map(objective => objective.activities.flat()).flat() || []
 
-  const getLabel = (record) => {
-    const activity = activities.find(element => element.name === record.activity)
+  const getLabel = (record, index) => {
+    const activity = activities[index]
 
     return (
       <FieldLabel helpText={<ActivityTooltip activity={activity} />}>{record.activity}</FieldLabel>
@@ -23,7 +23,7 @@ function ActivitiesTable({ data }) {
       title: 'Actividad',
       dataIndex: 'activity',
       key: 'activity',
-      render: (text, record) => getLabel(record)
+      render: (text, record, index) => getLabel(record, index)
     },
   ].concat(months.map(month => ({
       title: `${month} ${currentYear}`,
@@ -31,10 +31,10 @@ function ActivitiesTable({ data }) {
       key: month,
   })))
 
-  const dataSource = activities.map(activity => {
+  const dataSource = activities.map((activity, index) => {
     let result = {
-      key: activity.name,
-      activity: activity.name
+      key: index,
+      activity: `Actividad ${index + 1}`
     }
     activity.months.forEach(month => (
       result[month.substring(0,3)] = <ActivityBox />
