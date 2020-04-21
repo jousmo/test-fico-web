@@ -1,5 +1,5 @@
 import { withForm } from "../../../../../../../helpers/withForm"
-import { Table, Typography } from "antd"
+import { Table } from "antd"
 import { FieldLabel } from "../../../../../../shared/field-label";
 import ActivityTooltip from "./activityTooltip"
 import ActivityBox from "./activityBox"
@@ -8,7 +8,7 @@ function ActivitiesTable({ data }) {
   const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
   const currentYear = new Date().getFullYear()
 
-  const activities = data?.Submission?.specificObjectives?.activities
+  const activities = data?.Submission?.specificObjectives?.activities || []
 
   const getLabel = (record) => {
     const activity = activities.find(element => element.name === record.activity)
