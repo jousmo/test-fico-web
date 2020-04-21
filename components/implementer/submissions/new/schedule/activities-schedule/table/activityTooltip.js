@@ -10,7 +10,7 @@ function ActivityTooltip({ activity }) {
       <Typography.Text strong>Medida de Verificación</Typography.Text><br/>
       <Typography.Text type="secondary">{activity.meansOfVerification}</Typography.Text><br/>
       <Typography.Text strong>Presupuesto designado</Typography.Text><br/>
-      <Typography.Text type="secondary">${activity.amount}</Typography.Text><br/>
+      <Typography.Text type="secondary">${activity.baseline}</Typography.Text><br/>
     </div>
   )
 }
