@@ -1,7 +1,7 @@
 import { Section } from "../../../../../shared"
 import { Typography } from 'antd';
 
-export function Subtitle() {
+export function Heading() {
   return (
     <Section>
       <Typography.Text>Cronograma</Typography.Text>

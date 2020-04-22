@@ -9,7 +9,7 @@ import { useState, useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
 import {
-  Subtitle,
+  Heading,
   ActivitiesSchedule
 } from "../../../../../components/implementer/submissions/new/schedule"
 
@@ -34,7 +34,7 @@ function Schedule({ client }) {
     <PageContext.Provider value={pageData({ step: 3 })}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
-          <Subtitle />
+          <Heading />
           <ActivitiesSchedule />
         </Layout>
       </ImplementerSubmissionContext.Provider>

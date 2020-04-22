@@ -1,2 +1,2 @@
-export * from "./subtitle"
+export * from "./heading"
 export * from "./activities-schedule"
