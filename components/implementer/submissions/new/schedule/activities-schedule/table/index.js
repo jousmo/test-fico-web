@@ -1,5 +1,5 @@
 import { withForm } from "../../../../../../../helpers/withForm"
-import { FieldLabel } from "../../../../../../shared/field-label";
+import { FieldLabel } from "../../../../../../shared/field-label"
 import { Table } from "antd"
 import Moment from "moment"
 import { extendMoment } from "moment-range"
@@ -10,7 +10,7 @@ import ActivityBox from "./activityBox"
 function ActivitiesTable({ data }) {
   const activities = data?.Submission?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []
-  ) || [];
+  ) || []
 
   const getLabel = (record, index) => {
     const activity = activities[index]
@@ -28,17 +28,17 @@ function ActivitiesTable({ data }) {
       key: index,
       activity: `Actividad ${index + 1}`
     }
-    const range = moment.range(activity.months[0], activity.months[1]);
+    const range = moment.range(activity.months[0], activity.months[1])
     const months = Array.from(range.by('month')).map(
       m => m.format('YYYYMM')
     )
     months.forEach(month => {
       monthsColumns.add(month)
-      result[month] = <ActivityBox/>
+      result[month] = <ActivityBox />
     })
     return result
   })
-  const columns = Array.from(monthsColumns);
+  const columns = Array.from(monthsColumns)
 
   return (
     <Table dataSource={dataSource} pagination={false} scroll={{ x: true }}>
@@ -46,6 +46,7 @@ function ActivitiesTable({ data }) {
         dataIndex="activity"
         render={(text, record, index) => getLabel(record, index)}
         title="Actividad" />
+
       {columns.map((month, index) => {
         const column = moment(month, "YYYYMM").format("MMM YYYY")
         return (
