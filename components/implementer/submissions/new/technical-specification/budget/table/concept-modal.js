@@ -2,6 +2,7 @@ import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input } from "antd"
 import { merge } from "lodash"
 import { useEffect } from "react"
+import { implementer } from "../../../../../../../helpers/selectOptions"
 
 export function ConceptModal({
   onSave,
@@ -55,11 +56,11 @@ export function ConceptModal({
         <Row gutter={[10, 8]} justify="start">
           <Col span={24}>
             <Form.Item
-              name="description"
+              name="name"
               style={{display: "inline"}}
               label="Descripción">
               <Input
-                id="description"
+                id="name"
                 type="text" />
             </Form.Item>
           </Col>
@@ -68,9 +69,12 @@ export function ConceptModal({
               name="region"
               style={{display: "inline"}}
               label="Región">
-              <Input
+              <SelectField
                 id="region"
-                type="text" />
+                name="region"
+                onChange={onChange}
+                defaultValue={edit?.region}
+                options={implementer.submission.regions} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -78,9 +82,12 @@ export function ConceptModal({
               name="type"
               style={{display: "inline"}}
               label="Tipo de gasto">
-              <Input
+              <SelectField
                 id="type"
-                type="text" />
+                name="type"
+                onChange={onChange}
+                defaultValue={edit?.type}
+                options={implementer.submission.conceptTypes} />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -100,7 +107,8 @@ export function ConceptModal({
               label="Costo unitario">
               <Input
                 id="unitCost"
-                type="text" />
+                type="text"
+                prefix="$" />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -111,19 +119,6 @@ export function ConceptModal({
               <Input
                 id="unitAmmount"
                 type="text" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="months"
-              style={{display: "inline"}}
-              label="Mes de implementación"
-              getValueFromEvent={getSelectValue}>
-              <DateField
-                id="months"
-                picker="month"
-                range
-                fullWidth />
             </Form.Item>
           </Col>
         </Row>
