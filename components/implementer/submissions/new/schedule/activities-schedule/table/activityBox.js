@@ -2,7 +2,7 @@ import "./style.sass"
 
 function ActivityBox() {
   return (
-    <div className="fico schedule activities-table box"/>
+    <div className="fico schedule activities-table box" />
   )
 }
 
