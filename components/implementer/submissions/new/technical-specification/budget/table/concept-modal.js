@@ -7,6 +7,7 @@ import {
   MonthlyDistributionField,
   InvestmentDistributionField
 } from "../fields"
+import { SelectField } from "../../../../../../shared"
 
 export function ConceptModal({
   onSave,
@@ -76,7 +77,6 @@ export function ConceptModal({
               <SelectField
                 id="region"
                 name="region"
-                onChange={onChange}
                 defaultValue={edit?.region}
                 options={implementer.submission.regions} />
             </Form.Item>
@@ -89,7 +89,6 @@ export function ConceptModal({
               <SelectField
                 id="type"
                 name="type"
-                onChange={onChange}
                 defaultValue={edit?.type}
                 options={implementer.submission.conceptTypes} />
             </Form.Item>
