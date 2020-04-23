@@ -3,9 +3,10 @@ import { Input, Row, Col } from "antd"
 import { createRef } from "react"
 
 export function MonthlyDistributionField({
-  defaultValue=[],
-  months=[],
-  unitCost=1.0
+  defaultValue = [],
+  months = [],
+  unitCost = 1.0,
+  onChange
 }) {
   const rows = months.map((label, index) => {
     const data = {}
