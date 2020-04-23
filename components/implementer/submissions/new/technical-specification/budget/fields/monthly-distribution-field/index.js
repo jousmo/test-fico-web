@@ -39,7 +39,7 @@ export function MonthlyDistributionField({
               ref={r.inputRef} />
           </Col>
           <Col span={6}>
-            { unitCost * Number(r.inputRef.value()) }
+            { unitCost * Number(r.inputRef.current?.value || 0) }
           </Col>
         </Row>
       )}

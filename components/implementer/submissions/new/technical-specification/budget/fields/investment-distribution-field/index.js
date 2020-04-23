@@ -1,4 +1,5 @@
 import { Row, Col, Input } from "antd"
+import { createRef } from "react"
 
 export function InvestmentDistributionField({
   defaultValue = [
@@ -16,7 +17,9 @@ export function InvestmentDistributionField({
     return r
   })
 
-  const calculatePercentage = (percentage) => {
+  const calculatePercentage = (percentage = 0) => {
+    percentage = Number(percentage)
+
     const total = unitCost * unitTotal
 
     return percentage * total / 100
@@ -41,7 +44,7 @@ export function InvestmentDistributionField({
               ref={r.inputRef} />
           </Col>
           <Col span={6}>
-            { calculatePercentage(Number(r.inputRef.value())) }
+            { calculatePercentage(r.inputRef.current?.value) }
           </Col>
         </Row>
       )}
