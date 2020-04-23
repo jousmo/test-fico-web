@@ -3,6 +3,10 @@ import { Modal, Form, Row, Col, Input } from "antd"
 import { merge } from "lodash"
 import { useEffect } from "react"
 import { implementer } from "../../../../../../../helpers/selectOptions"
+import {
+  MonthlyDistributionField,
+  InvestmentDistributionField
+} from "../fields"
 
 export function ConceptModal({
   onSave,
@@ -119,6 +123,20 @@ export function ConceptModal({
               <Input
                 id="unitAmmount"
                 type="text" />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              name="monthlyDistribution"
+              style={{display: "inline"}}
+              label="Distribución mensual">
+              <MonthlyDistributionField />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              name="investmentDistribution">
+              <InvestmentDistributionField />
             </Form.Item>
           </Col>
         </Row>
