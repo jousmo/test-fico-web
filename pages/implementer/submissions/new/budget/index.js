@@ -63,7 +63,7 @@ function Budget({ client }) {
   }), [state, loading])
 
   return (
-    <PageContext.Provider value={pageData({ save, step: 3 })}>
+    <PageContext.Provider value={pageData({ save, step: 2 })}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
           <BudgetTable />
