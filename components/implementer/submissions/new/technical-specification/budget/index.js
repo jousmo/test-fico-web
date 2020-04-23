@@ -4,6 +4,7 @@ import {
 import { useContext } from "react"
 import { Section } from "../../../../../shared"
 import BudgetTable from "./table"
+import { Typography } from "antd"
 
 
 export function Budget() {
@@ -22,7 +23,7 @@ export function Budget() {
   }
 
   return (
-    <Section title="Objetivo de desarrollo">
+    <Section title="Presupuesto">
       <BudgetTable
         isLoading={loading}
         error={error}
