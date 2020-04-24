@@ -10,6 +10,7 @@ import {
 import { SelectField, FieldLabel } from "../../../../../../shared"
 import Moment from "moment"
 import { extendMoment } from "moment-range"
+import { getSelectValue } from "../../../../../../../helpers"
 const moment = extendMoment(Moment)
 moment.locale("es")
 
@@ -49,7 +50,7 @@ export function ConceptModal({
       }
 
       onSave(values)
-      form.resetFields()
+      onCancel()
     }
     catch(e) {
       console.error(e)
@@ -94,7 +95,8 @@ export function ConceptModal({
             <Form.Item
               name="region"
               style={{display: "inline"}}
-              label="Región">
+              label="Región"
+              getValueFromEvent={getSelectValue}>
               <SelectField
                 id="region"
                 name="region"
@@ -106,7 +108,8 @@ export function ConceptModal({
             <Form.Item
               name="type"
               style={{display: "inline"}}
-              label="Tipo de gasto">
+              label="Tipo de gasto"
+              getValueFromEvent={getSelectValue}>
               <SelectField
                 id="type"
                 name="type"
