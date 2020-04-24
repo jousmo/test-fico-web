@@ -1,139 +1,140 @@
 import { withForm } from "../../../../../../../helpers/withForm"
-import { Table, Button, Input } from "antd"
-import {
-  PaperClipOutlined,
-  UserOutlined
-} from "@ant-design/icons"
-import { SelectField } from "../../../../../../shared/selectField"
+import { Button, Col, Form, Input, Row, Upload } from "antd"
+import { PaperClipOutlined, UserOutlined } from "@ant-design/icons"
+import { CompositeField, SelectField } from "../../../../../../shared"
 import {
   benefits,
   contractTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
+import { HumanResourcesColumns } from "./form-columns"
 
 function HumanResourcesTable({ data }) {
-  const humanResources = data?.Submission?.concepts?.map(
-    concept => concept.type === "HUMAN_RESOURCE"
-  ) || []
-
-  const getInput = (record, fieldName, index) => {
-    const value = record[fieldName]
-    const id = `${fieldName}-${index}`
-    return <Input key={id} id={id} type="text" value={value} />
-  }
+  const humanResources = data?.Submission?.concepts?.map((concept, index) =>
+    concept.type === "HUMAN_RESOURCE" && {key: index, ...concept.humanResource}
+  ).filter(e => e !== false) || []
 
   return (
-    <Table
-      dataSource={humanResources}
-      pagination={false}
-      scroll={{ x: "max-content" }}>
-      <Table.Column
-        align="center"
-        key="userIcon"
-        title=""
-        render={(text, record, index) => (
-          <span key={`userIcon-${index}`}>&nbsp;<UserOutlined /></span>
-        )}
-        width={50} />
-
-      <Table.Column
-        title="Puesto"
-        key="puesto"
-        render={(text, record, index) => (
-          getInput(record, "puesto", index)
-        )}
-        width={200} />
-
-      <Table.Column
-        title="Nombre"
-        key="name"
-        render={(text, record, index) => (
-          getInput(record, "name", index)
-        )}
-        width={200} />
-
-      <Table.Column
-        title="Funciones"
-        key="functions"
-        render={(text, record, index) => (
-          getInput(record, "functions", index)
-        )}
-        width={250} />
-
-      <Table.Column
-        title="Supervisa a"
-        key="supervises"
-        render={(text, record, index) => (
-          getInput(record, "supervises", index)
-        )}
-        width={200} />
-
-      <Table.Column
-        title="Horas"
-        key="hours"
-        render={(text, record, index) => (
-          getInput(record, "hours", index)
-        )}
-        width={150} />
-
-      <Table.Column
-        title="Contratación"
-        key="contract_type"
-        render={(text, record, index) => (
-          <SelectField
-            id={`contract_type-${index}`}
-            key={`contract_type-${index}`}
-            options={contractTypes}
-            value={record["contract_type"]} />
-        )}
-        width={150} />
-
-      <Table.Column
-        title="Sueldo"
-        key="salary"
-        render={(text, record, index) => (
-          getInput(record, "salary", index)
-        )}
-        width={150} />
-
-      <Table.Column
-        title="Prestaciones"
-        key="benefits"
-        render={(text, record, index) => (
-          <SelectField
-            id={`benefits-${index}`}
-            key={`benefits-${index}`}
-            options={benefits}
-            value={record["benefits"]} />
-        )}
-        width={150} />
-
-      <Table.Column
-        title="IVA"
-        key="taxes"
-        render={(text, record, index) => (
-          getInput(record, "taxes", index)
-        )}
-        width={150} />
-
-      <Table.Column
-        title="Total"
-        key="total"
-        render={(text, record, index) => (
-          getInput(record, "total", index)
-        )}
-        width={150} />
-
-      <Table.Column
-        align="center"
-        key="documents"
-        title="Documentos"
-        render={(text, record, index) => (
-          <Button
-            icon={<PaperClipOutlined />}
-            key={`documents-${index}`}
-            shape="circle" />
-        )} />
-    </Table>
+    <Form
+      name="human-resources"
+      layout="vertical">
+      <Col>
+        <Form.Item>
+          <CompositeField
+            defaultValue={humanResources}>
+            {({items, updateItem}) =>
+              <div style={{overflowX: "auto"}}>
+                <div style={{width: "1630px"}}>
+                  <HumanResourcesColumns />
+                  {items.map((item, index) =>
+                    <Row gutter={[10, 8]} justify="start" key={index}>
+                      <Col flex="30px">
+                        <span key={`userIcon-${index}`}>
+                          &nbsp;<UserOutlined />
+                        </span>
+                      </Col>
+                      <Col flex="150px">
+                        <Input
+                          id="position"
+                          name="position"
+                          defaultValue={item.position}
+                          onChange={updateItem(index)}
+                          type="text" />
+                      </Col>
+                      <Col flex="150px">
+                        <Input
+                          id="name"
+                          name="name"
+                          defaultValue={item.name}
+                          onChange={updateItem(index)}
+                          type="text" />
+                      </Col>
+                      <Col flex="180px">
+                        <Input
+                          id="tasks"
+                          name="tasks"
+                          onChange={updateItem(index)}
+                          defaultValue={item.tasks}
+                          type="text" />
+                      </Col>
+                      <Col flex="150px">
+                        <Input
+                          id="oversees"
+                          name="oversees"
+                          onChange={updateItem(index)}
+                          defaultValue={item.oversees}
+                          type="text" />
+                      </Col>
+                      <Col flex="80px">
+                        <Input
+                          id="hours"
+                          name="hours"
+                          onChange={updateItem(index)}
+                          defaultValue={item.hours}
+                          type="text" />
+                      </Col>
+                      <Col flex="150px">
+                        <SelectField
+                          id="contract_type"
+                          name="contract_type"
+                          options={contractTypes}
+                          onChange={updateItem(index)}
+                          defaultValue={item.contract_type} />
+                      </Col>
+                      <Col flex="150px">
+                        <Input
+                          addonBefore="$"
+                          id="salary"
+                          name="salary"
+                          onChange={updateItem(index)}
+                          defaultValue={item.salary}
+                          type="text" />
+                      </Col>
+                      <Col flex="150px">
+                        <SelectField
+                          id="benefits"
+                          name="benefits"
+                          options={benefits}
+                          onChange={updateItem(index)}
+                          defaultValue={item.benefits} />
+                      </Col>
+                      <Col flex="150px">
+                        <Input
+                          addonBefore="$"
+                          id="taxes"
+                          name="taxes"
+                          onChange={updateItem(index)}
+                          defaultValue={item.taxes}
+                          type="text" />
+                      </Col>
+                      <Col flex="150px">
+                        <Input
+                          addonBefore="$"
+                          id="total"
+                          name="total"
+                          onChange={updateItem(index)}
+                          defaultValue={item.total}
+                          type="text" />
+                      </Col>
+                      <Col flex="150px">
+                        <Upload
+                          id="documents"
+                          name="documents"
+                          onChange={updateItem(index)}
+                          defaultValue={item.documents}>
+                          <Button
+                            icon={<PaperClipOutlined />}
+                            shape="circle" />
+                        </Upload>
+                      </Col>
+                    </Row>
+                  )}
+                </div>
+              </div>
+            }
+          </CompositeField>
+        </Form.Item>
+      </Col>
+    </Form>
   )
 }
 
