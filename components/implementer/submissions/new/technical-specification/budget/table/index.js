@@ -17,7 +17,9 @@ function BudgetTable({data, onChange}) {
 
   return (
     <>
-      <ConceptModal visible={state.isModalOpen} />
+      <ConceptModal
+        visible={state.isModalOpen}
+        submission={data?.Submission} />
       <CompositeField
         onClickAdd={onClickAdd}
         onChange={onConceptsChange}
