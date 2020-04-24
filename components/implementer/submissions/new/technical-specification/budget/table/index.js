@@ -11,21 +11,28 @@ function BudgetTable({data, onChange}) {
     setState({ ...state, isModalOpen: true })
   }
 
-  const onConceptsChange = (concepts) => {
-    console.log(concepts)
+  const onCancel = () => {
+    setState({ ...state, isModalOpen: false })
+  }
+
+  const onSave = (addNew) => (concept) => {
+    addNew(concept)
   }
 
   return (
     <>
-      <ConceptModal
-        visible={state.isModalOpen}
-        submission={data?.Submission} />
       <CompositeField
         onClickAdd={onClickAdd}
-        onChange={onConceptsChange}
-        addLabel="Agregar concepto">
-        {({ items }) =>
+        onChange={onChange}
+        addLabel="Agregar concepto"
+        defaultValue={data?.Submission?.concepts}>
+        {({ items, addNew }) =>
           <>
+            <ConceptModal
+              visible={state.isModalOpen}
+              submission={data?.Submission}
+              onCancel={onCancel}
+              onSave={onSave(addNew)} />
             {items.map(i =>
               <Row>
                 <Col>{JSON.stringify(i)}</Col>
