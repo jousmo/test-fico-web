@@ -8,10 +8,26 @@ import {
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { HumanResourcesColumns } from "./form-columns"
 
-function HumanResourcesTable({ data }) {
-  const humanResources = data?.Submission?.concepts?.map((concept, index) =>
+function HumanResourcesTable({ data, onChange }) {
+  const concepts = data?.Submission?.concepts || []
+  const humanResources = concepts?.map((concept, index) =>
     concept.type === "HUMAN_RESOURCE" && {key: index, ...concept.humanResource}
   ).filter(e => e !== false) || []
+
+
+  const onConceptsChange = (newHumanResources) => {
+    const newConcepts = [...concepts]
+    newHumanResources?.forEach(humanResource => (
+      newConcepts[humanResource.key] = humanResource
+    ))
+
+    onChange && onChange({
+      currentTarget: {
+        id: "concepts",
+        value: newConcepts
+      }
+    })
+  }
 
   return (
     <Form
@@ -20,6 +36,7 @@ function HumanResourcesTable({ data }) {
       <Col>
         <Form.Item>
           <CompositeField
+            onChange={onConceptsChange}
             defaultValue={humanResources}>
             {({items, updateItem}) =>
               <div style={{overflowX: "auto"}}>
@@ -118,9 +135,7 @@ function HumanResourcesTable({ data }) {
                       <Col flex="150px">
                         <Upload
                           id="documents"
-                          name="documents"
-                          onChange={updateItem(index)}
-                          defaultValue={item.documents}>
+                          name="documents">
                           <Button
                             icon={<PaperClipOutlined />}
                             shape="circle" />
