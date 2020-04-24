@@ -1,5 +1,5 @@
 import { useForm } from "antd/lib/form/util"
-import { Modal, Form, Row, Col, Input } from "antd"
+import { Modal, Form, Row, Col, Input, Typography } from "antd"
 import { merge } from "lodash"
 import { useEffect, useState } from "react"
 import { implementer } from "../../../../../../../helpers/selectOptions"
@@ -7,7 +7,7 @@ import {
   MonthlyDistributionField,
   InvestmentDistributionField
 } from "../fields"
-import { SelectField } from "../../../../../../shared"
+import { SelectField, FieldLabel } from "../../../../../../shared"
 import Moment from "moment"
 import { extendMoment } from "moment-range"
 const moment = extendMoment(Moment)
@@ -131,7 +131,7 @@ export function ConceptModal({
               label="Costo unitario">
               <Input
                 id="unitCost"
-                type="text"
+                type="number"
                 prefix="$" />
             </Form.Item>
           </Col>
@@ -142,14 +142,21 @@ export function ConceptModal({
               label="Total de unidades">
               <Input
                 id="unitAmmount"
-                type="text" />
+                type="number" />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
               name="monthlyDistribution"
               style={{display: "inline"}}
-              label="Distribución mensual">
+              label={<FieldLabel>
+                Distribución mensual
+                <br />
+                <Typography.Text type="secondary">
+                  Selecciona el número de unidades que utilizarás por mes. 20
+                  unidades máximo por mes.
+                </Typography.Text>
+              </FieldLabel>}>
               <MonthlyDistributionField
                 unitCost={state.unitCost}
                 months={projectMonths} />
@@ -157,8 +164,18 @@ export function ConceptModal({
           </Col>
           <Col span={24}>
             <Form.Item
-              name="investmentDistribution">
-              <InvestmentDistributionField />
+              name="investmentDistribution"
+              style={{display: "inline"}}
+              label={<FieldLabel>
+                Distribución de la inversión
+                <br />
+                <Typography.Text type="secondary">
+                  Distribuye el monto de inversión de cada entidad involucrada.
+                </Typography.Text>
+              </FieldLabel>}>
+              <InvestmentDistributionField
+                unitCost={state.unitCost}
+                unitAmmount={state.unitAmmount} />
             </Form.Item>
           </Col>
         </Row>
