@@ -1,5 +1,7 @@
 import { Row, Col, Input } from "antd"
 import { createRef } from "react"
+import { CompositeField } from "../../../../../../../shared"
+import numeral from "numeral"
 
 export function InvestmentDistributionField({
   defaultValue = [
@@ -7,47 +9,57 @@ export function InvestmentDistributionField({
     { type: "FICOSEC", label: "FICOSEC", percentage: undefined },
     { type: "ALLIED", label: "Aliado (s)", percentage: undefined }
   ],
-  unitCost = 1.0,
-  unitTotal = 1,
+  unitCost = 0.0,
+  unitAmmount = 0,
   onChange
 }) {
-  const rows = defaultValue.map(r => {
-    r.inputRef = createRef()
-
-    return r
-  })
-
-  const calculatePercentage = (percentage = 0) => {
+  const displayPercentage = (percentage = 0) => {
     percentage = Number(percentage)
 
-    const total = unitCost * unitTotal
+    const total = Number(unitCost) * Number(unitAmmount)
 
-    return percentage * total / 100
+    if(total <= 0) {
+      return numeral(0).format("$0,0.00")
+    }
+
+    return numeral(percentage * total / 100).format("$0,0.00")
   }
 
   return (
-    <>
-      <Row>
-        <Col span={12}>Inversor</Col>
-        <Col span={6}>Porcentage</Col>
-        <Col span={6}>Total</Col>
-      </Row>
+    <CompositeField
+      defaultValue={defaultValue}
+      isAddDisabled
+      onChange={onChange}>
+      {({ items, updateItem }) =>
+        <>
+          <Row gutter={[10, 8]}>
+            <Col span={12}>Inversor</Col>
+            <Col span={6}>Porcentaje</Col>
+            <Col span={6}>Total</Col>
+          </Row>
 
-      {rows.map((r, i) =>
-        <Row key={`investment-${i}`}>
-          <Col span={12}>{ r.label }</Col>
-          <Col span={6}>
-            <Input
-              type="text"
-              name={`investment-${i}`}
-              defaultValue={r.value}
-              ref={r.inputRef} />
-          </Col>
-          <Col span={6}>
-            { calculatePercentage(r.inputRef.current?.value) }
-          </Col>
-        </Row>
-      )}
-    </>
+          {items.map((item, index) =>
+            <Row
+              gutter={[10, 8]}
+              key={`investment-${item.uuid}`}>
+              <Col span={12}>{ item.label }</Col>
+              <Col span={6}>
+                <Input
+                  type="number"
+                  name="percentage"
+                  defaultValue={item.percentage}
+                  onChange={updateItem(index)}
+                  suffix="%"
+                  max={100}
+                  min={0} />
+              </Col>
+              <Col span={6}>
+                { displayPercentage(item.percentage) }
+              </Col>
+            </Row>
+          )}
+        </>
+      }
+    </CompositeField>
   )
 }
