@@ -1,5 +1,5 @@
 import * as _ from "lodash"
-import { Input, Row, Col } from "antd"
+import { InputNumber, Row, Col, Alert } from "antd"
 import { CompositeField } from "../../../../../../../shared"
 import numeral from "numeral"
 
@@ -19,7 +19,21 @@ export function MonthlyDistributionField({
   })
 
   const displayMonthTotal = (value) =>
-    numeral(unitCost * Number(value || 0)).format("$0,0.00") 
+    numeral(unitCost * Number(value || 0)).format("$0,0.00")
+
+  if(!rows.length) {
+    return (
+      <Alert
+        message={<>
+          Para poder completar esta información debes definir primero
+          una <strong>fecha de inicio</strong> y <strong>conclusión</strong> del
+          proyecto en la sección de <strong>información general</strong> de
+          la solicitud
+        </>}
+        type="warning"
+        showIcon />
+    )
+  }
 
   return (
     <CompositeField
@@ -42,11 +56,12 @@ export function MonthlyDistributionField({
               key={`monthly-distribution-${item.uuid}`}>
               <Col span={12}>{ item.label }</Col>
               <Col span={6}>
-                <Input
+                <InputNumber
                   type="text"
-                  name="value"
                   defaultValue={item.value}
-                  onChange={updateItem(index)} />
+                  onChange={updateItem(index)}
+                  max={20}
+                  min={0} />
               </Col>
               <Col span={6}>
                 { displayMonthTotal(item.value) }
