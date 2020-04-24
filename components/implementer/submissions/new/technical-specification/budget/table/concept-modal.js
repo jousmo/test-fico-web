@@ -1,21 +1,37 @@
 import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input } from "antd"
 import { merge } from "lodash"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import {
   MonthlyDistributionField,
   InvestmentDistributionField
 } from "../fields"
 import { SelectField } from "../../../../../../shared"
+import Moment from "moment"
+import { extendMoment } from "moment-range"
+const moment = extendMoment(Moment)
+moment.locale("es")
 
 export function ConceptModal({
   onSave,
   onCancel,
   edit,
+  submission,
   ...props
 }) {
   const [form] = useForm()
+  const [state, setState] = useState({})
+
+  const projectMonths = Array
+      .from(
+        moment
+          .range(
+            moment(submission?.startDate) || moment(),
+            moment(submission?.endDate) || moment())
+          .by("month")
+      )
+      .map(r => r.format("MMMM YYYY"))
 
   useEffect(() => {
     if(edit) {
@@ -45,6 +61,10 @@ export function ConceptModal({
     onCancel && onCancel()
   }
 
+  const onFormChange = () => {
+    setState(form.getFieldsValue())
+  }
+
   return (
     <Modal
       title={`${edit ? "Editar" : "Agregar"} concepto`}
@@ -56,6 +76,7 @@ export function ConceptModal({
       {...props}>
       <Form
         form={form}
+        onChange={onFormChange}
         name="indicator-form"
         layout="vertical">
         <Row gutter={[10, 8]} justify="start">
@@ -129,7 +150,9 @@ export function ConceptModal({
               name="monthlyDistribution"
               style={{display: "inline"}}
               label="Distribución mensual">
-              <MonthlyDistributionField />
+              <MonthlyDistributionField
+                unitCost={state.unitCost}
+                months={projectMonths} />
             </Form.Item>
           </Col>
           <Col span={24}>
