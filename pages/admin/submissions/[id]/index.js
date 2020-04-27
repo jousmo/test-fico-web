@@ -2,7 +2,10 @@ import { Layout } from "../../../../components/shared"
 import { PageContext } from "../../../../contexts/page"
 import { useRouter } from "next/router"
 import {
-  GeneralInformation
+  AgreementDocumentsContainer,
+  Attachments,
+  GeneralInformation,
+  SignedAgreement
 } from "../../../../components/admin/submissions/show"
 import {
   data as contextData,
@@ -34,6 +37,9 @@ function Submission({ client }) {
       <PageContext.Provider value={contextData(injectActions)}>
         <Layout>
           <GeneralInformation />
+          <AgreementDocumentsContainer />
+          <Attachments />
+          <SignedAgreement />
         </Layout>
       </PageContext.Provider>
     </AdminSubmissionContext.Provider>
