@@ -9,17 +9,16 @@ import { Typography } from "antd"
 
 export function Budget() {
   const {
-    updateTechnicalSpecification,
+    updateBudget,
     loading,
     error,
     data
   } = useContext(ImplementerSubmissionContext)
 
-  const onChange = ({ currentTarget: { id, value } }) => {
-    const newData = {}
-    newData[id] = value
-
-    updateTechnicalSpecification(newData)
+  const onChange = (concepts) => {
+    const newConcepts = Array.from(concepts)
+    
+    updateBudget({ concepts: newConcepts })
   }
 
   return (
