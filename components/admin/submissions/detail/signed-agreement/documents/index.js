@@ -3,8 +3,6 @@ import { Typography } from "antd"
 import { UploadButton } from "../../../../../shared"
 
 function SubmissionAgreement({ data }) {
-  const signedAgreement = null
-
   return (
     <div>
       <Typography.Text>
