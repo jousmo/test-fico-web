@@ -3,7 +3,7 @@ import {
 } from "../../../../../../contexts/implementer"
 import { useContext } from "react"
 import { Section } from "../../../../../shared"
-import BudgetTable from "./table"
+import BudgetForm from "./form"
 import { Typography } from "antd"
 
 
@@ -24,7 +24,7 @@ export function Budget() {
 
   return (
     <Section title="Presupuesto">
-      <BudgetTable
+      <BudgetForm
         isLoading={loading}
         error={error}
         data={data}

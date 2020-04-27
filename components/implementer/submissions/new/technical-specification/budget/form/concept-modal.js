@@ -24,6 +24,12 @@ export function ConceptModal({
   const [form] = useForm()
   const [state, setState] = useState({})
 
+  useEffect(() => {
+    if(edit) {
+      form.setFieldsValue(edit)
+    }
+  }, [edit])
+
   const projectMonths = Array
       .from(
         moment
@@ -33,12 +39,6 @@ export function ConceptModal({
           .by("month")
       )
       .map(r => r.format("MMMM YYYY"))
-
-  useEffect(() => {
-    if(edit) {
-      form.setFieldsValue(edit)
-    }
-  }, [edit])
 
   const onOk = async () => {
     try {
