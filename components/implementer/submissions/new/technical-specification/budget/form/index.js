@@ -17,8 +17,15 @@ function BudgetForm({data, onChange}) {
     setState({ ...state, isModalOpen: false, edit: false })
   }
 
-  const onSave = (addNew) => (concept) => {
-    addNew(concept)
+  const onSave = (addNew, replaceItemAtIndex) => (concept) => {
+    if(concept.index !== undefined) {
+      replaceItemAtIndex(concept.index, concept)
+    }
+    else {
+      addNew(concept)
+    }
+
+    onCancel()
   }
 
   const onEdit = (item, index) => {
@@ -33,13 +40,13 @@ function BudgetForm({data, onChange}) {
         onChange={onChange}
         addLabel="Agregar concepto"
         defaultValue={data?.Submission?.concepts}>
-        {({ items, addNew, removeItem }) =>
+        {({ items, addNew, removeItem, replaceItemAtIndex }) =>
           <>
             <ConceptModal
               visible={state.isModalOpen}
               submission={data?.Submission}
               onCancel={onCancel}
-              onSave={onSave(addNew)}
+              onSave={onSave(addNew, replaceItemAtIndex)}
               edit={state.edit} />
             <ScrollableView contentWidth="1500px">
               <Table

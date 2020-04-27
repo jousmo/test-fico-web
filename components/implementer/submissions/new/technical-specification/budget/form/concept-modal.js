@@ -51,7 +51,6 @@ export function ConceptModal({
       }
 
       onSave(values)
-      onCancel()
     }
     catch(e) {
       console.error(e)
