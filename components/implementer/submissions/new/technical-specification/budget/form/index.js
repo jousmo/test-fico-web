@@ -93,10 +93,10 @@ function BudgetForm({data, onChange}) {
                   dataIndex="name"
                   render={renderInvestment("FICOSEC")} />
                 <Table.Column
-                  title="Aliado(s)"
+                  title="Aliado (s)"
                   key="allied"
                   dataIndex="name"
-                  render={renderInvestment("Aliado(s)")} />
+                  render={renderInvestment("Aliado (s)")} />
                 <Table.Column
                   title="Unidades"
                   key="totalUnits"
