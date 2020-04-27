@@ -2,8 +2,10 @@ import { withForm } from "../../../../../../helpers/withForm"
 import { Col, Row, Typography } from "antd"
 
 function SubmissionObjectives({ data }) {
-  const generalObjective = data?.generalObjective
-  const specificObjectives = data?.specificObjectives
+  const {
+    generalObjective = "N/A",
+    specificObjectives = []
+  } = data
 
   return (
     <div>
