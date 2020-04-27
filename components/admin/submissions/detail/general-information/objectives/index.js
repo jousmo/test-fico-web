@@ -1,20 +1,9 @@
 import { withForm } from "../../../../../../helpers/withForm"
-import { Alert, Col, Row, Typography } from "antd"
+import { Col, Row, Typography } from "antd"
 
-function SubmissionObjectives({ data, error }) {
-  if(!data.Submission || error) {
-    return (
-      <Alert
-        message="Error"
-        description="Ha ocurrido un error al cargar los datos de esta sección,
-        por favor actualiza la página."
-        type="error"
-        showIcon />
-    )
-  }
-
-  const generalObjective = data?.Submission?.generalObjective
-  const specificObjectives = data?.Submission?.specificObjectives
+function SubmissionObjectives({ data }) {
+  const generalObjective = data?.generalObjective
+  const specificObjectives = data?.specificObjectives
 
   return (
     <div>
