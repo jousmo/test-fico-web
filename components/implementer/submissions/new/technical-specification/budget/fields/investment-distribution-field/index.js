@@ -5,15 +5,15 @@ import numeral from "numeral"
 
 export function InvestmentDistributionField({
   defaultValue = [
-    { type: "IMPLEMENTER", label: "Implementadora", percentage: undefined },
-    { type: "FICOSEC", label: "FICOSEC", percentage: undefined },
-    { type: "ALLIED", label: "Aliado (s)", percentage: undefined }
+    { type: "IMPLEMENTER", name: "Implementadora", percentage: undefined },
+    { type: "FICOSEC", name: "FICOSEC", percentage: undefined },
+    { type: "ALLIED", name: "Aliado (s)", percentage: undefined }
   ],
   unitCost = 0.0,
   unitAmmount = 0,
   onChange
 }) {
-  const displayPercentage = (percentage = 0) => {
+  const displayTotal = (percentage = 0) => {
     percentage = Number(percentage)
 
     const total = Number(unitCost) * Number(unitAmmount)
@@ -42,7 +42,7 @@ export function InvestmentDistributionField({
             <Row
               gutter={[10, 8]}
               key={`investment-${item.uuid}`}>
-              <Col span={12}>{ item.label }</Col>
+              <Col span={12}>{ item.name }</Col>
               <Col span={6}>
                 <Input
                   type="number"
@@ -54,7 +54,7 @@ export function InvestmentDistributionField({
                   min={0} />
               </Col>
               <Col span={6}>
-                { displayPercentage(item.percentage) }
+                { displayTotal(item.percentage) }
               </Col>
             </Row>
           )}
