@@ -6,7 +6,7 @@ export const actions = (onEdit, onDelete) => (text, record, index) => {
     <Row>
       <Col flex="auto">{text}</Col>
       <Col flex="auto">
-        <DeleteButton onClick={() => onDelete(index)} />
+        <DeleteButton onClick={onDelete(index)} />
         <EditButton onClick={() => onEdit(record, index)} />
       </Col>
     </Row>
