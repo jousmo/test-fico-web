@@ -12,7 +12,7 @@ function SubmissionObjectives({ data }) {
       <Row gutter={[10, 8]}>
         <Col span={24}>
           <Typography.Text type="secondary">
-            Objetivo General
+            Objetivo general
           </Typography.Text>
         </Col>
         <Col>
@@ -24,7 +24,7 @@ function SubmissionObjectives({ data }) {
       <Row gutter={[10, 8]}>
         <Col span={24}>
           <Typography.Text type="secondary">
-            Objetivos Especificos
+            Objetivos específicos
           </Typography.Text>
         </Col>
         <Col>
