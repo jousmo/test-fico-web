@@ -22,7 +22,9 @@ export function Budget() {
   }
 
   return (
-    <Section title="Presupuesto">
+    <Section
+      title="Presupuesto"
+      fullWidth>
       <BudgetForm
         isLoading={loading}
         error={error}
