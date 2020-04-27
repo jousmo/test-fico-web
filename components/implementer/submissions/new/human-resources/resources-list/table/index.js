@@ -37,6 +37,7 @@ function HumanResourcesTable({ data, onChange }) {
         <Form.Item>
           <CompositeField
             onChange={onConceptsChange}
+            isAddDisabled
             defaultValue={humanResources}>
             {({items, updateItem}) =>
               <div style={{overflowX: "auto"}}>
