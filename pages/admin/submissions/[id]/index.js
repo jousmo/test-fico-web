@@ -1,17 +1,17 @@
-import { Layout } from "../../../../../components/shared"
-import { PageContext } from "../../../../../contexts/page"
+import { Layout } from "../../../../components/shared"
+import { PageContext } from "../../../../contexts/page"
 import { useRouter } from "next/router"
 import {
   GeneralInformation
-} from "../../../../../components/admin/submissions/detail"
+} from "../../../../components/admin/submissions/show"
 import {
   data as contextData,
   AdminSubmissionContext
-} from "../../../../../contexts/admin/submissions/detail"
-import { submission } from "../../../../../graphql/submission"
+} from "../../../../contexts/admin/submissions/show"
+import { submission } from "../../../../graphql/submission"
 import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../helpers/withApollo"
+import { withApollo } from "../../../../helpers/withApollo"
 
 function Submission({ client }) {
   const router = useRouter()
