@@ -13,11 +13,8 @@ export function ResourcesList() {
     data
   } = useContext(ImplementerSubmissionContext)
 
-  const onChange = newHumanResources => {
-    const newData = {}
-    newData.humanResources = newHumanResources
-
-    updateHumanResources(newData)
+  const onChange = newConcepts => {
+    updateHumanResources({ concepts: newConcepts })
   }
 
   return (
