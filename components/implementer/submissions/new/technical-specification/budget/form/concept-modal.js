@@ -24,6 +24,13 @@ export function ConceptModal({
   const [form] = useForm()
   const [state, setState] = useState({})
 
+  useEffect(() => {
+    if(edit) {
+      form.setFieldsValue(edit)
+      setState(edit)
+    }
+  }, [edit])
+
   const projectMonths = Array
       .from(
         moment
@@ -33,12 +40,6 @@ export function ConceptModal({
           .by("month")
       )
       .map(r => r.format("MMMM YYYY"))
-
-  useEffect(() => {
-    if(edit) {
-      form.setFieldsValue(edit)
-    }
-  }, [edit])
 
   const onOk = async () => {
     try {
@@ -50,7 +51,6 @@ export function ConceptModal({
       }
 
       onSave(values)
-      onCancel()
     }
     catch(e) {
       console.error(e)
@@ -124,6 +124,7 @@ export function ConceptModal({
               label="Unidad de medida">
               <Input
                 id="measurementUnit"
+                defaultValue={edit?.measurementUnit}
                 type="text" />
             </Form.Item>
           </Col>
@@ -134,17 +135,19 @@ export function ConceptModal({
               label="Costo unitario">
               <Input
                 id="unitCost"
+                defaultValue={edit?.unitCost}
                 type="number"
                 prefix="$" />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
-              name="unitAmmount"
+              name="totalUnits"
               style={{display: "inline"}}
               label="Total de unidades">
               <Input
-                id="unitAmmount"
+                id="totalUnits"
+                defaultValue={edit?.totalUnits}
                 type="number" />
             </Form.Item>
           </Col>
@@ -161,6 +164,7 @@ export function ConceptModal({
                 </Typography.Text>
               </FieldLabel>}>
               <MonthlyDistributionField
+                defaultValue={edit?.monthlyDistribution}
                 unitCost={state.unitCost}
                 months={projectMonths} />
             </Form.Item>
@@ -177,8 +181,9 @@ export function ConceptModal({
                 </Typography.Text>
               </FieldLabel>}>
               <InvestmentDistributionField
+                defaultValue={edit?.investmentDistribution}
                 unitCost={state.unitCost}
-                unitAmmount={state.unitAmmount} />
+                unitAmmount={state.totalUnits} />
             </Form.Item>
           </Col>
         </Row>

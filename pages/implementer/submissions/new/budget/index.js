@@ -37,7 +37,7 @@ function Budget({ client }) {
     setState({
       ...state,
       dirty: true,
-      budget: budget
+      budget: newBudget
     })
   })
 
