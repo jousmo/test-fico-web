@@ -24,7 +24,6 @@ export const getById = gql`
       incomesAndExpenses
       councilMembers
       projects
-      generalObjective
     }
   }
 `

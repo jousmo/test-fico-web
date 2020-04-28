@@ -10,7 +10,8 @@ export function CompositeField({
   addLabel,
   defaultValue=[],
   value,
-  maxItems
+  maxItems,
+  isAddDisabled=false
 }) {
   const genUuid = i => {
     i.uuid = uuid()
@@ -98,14 +99,16 @@ export function CompositeField({
           replaceItemAtIndex
         })
       }
-      <Button
-        type="dashed"
-        icon={<PlusOutlined />}
-        onClick={() => onClickAdd && onClickAdd(addNew)}
-        disabled={state.maxReached}
-        block>
-        {addLabel}
-      </Button>
+      { !isAddDisabled ? 
+        <Button
+          type="dashed"
+          icon={<PlusOutlined />}
+          onClick={() => onClickAdd && onClickAdd(addNew)}
+          disabled={state.maxReached}
+          block>
+          {addLabel}
+        </Button>
+      : null }
     </div>
   )
 }
