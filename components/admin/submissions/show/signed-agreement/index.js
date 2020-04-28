@@ -1,8 +1,8 @@
-import { Section } from "../../../../../components/shared"
+import { Section } from "../../../../shared"
 import { useContext } from "react"
 import {
   AdminSubmissionContext
-} from "../../../../../contexts/admin/submissions/detail"
+} from "../../../../../contexts/admin/submissions/show"
 import SubmissionAgreement from "./documents"
 
 export function SignedAgreement() {

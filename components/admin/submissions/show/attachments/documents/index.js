@@ -3,8 +3,6 @@ import { Typography } from "antd"
 import { DownloadButton } from "../../../../../shared"
 
 function SubmissionAttachments({ data }) {
-  const documents = null
-
   return (
     <div>
       <Typography.Text>
