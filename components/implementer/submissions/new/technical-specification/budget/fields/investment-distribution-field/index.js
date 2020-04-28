@@ -10,13 +10,13 @@ export function InvestmentDistributionField({
     { type: "ALLIED", name: "Aliado (s)", percentage: undefined }
   ],
   unitCost = 0.0,
-  unitAmmount = 0,
+  totalUnits = 0.0,
   onChange
 }) {
   const displayTotal = (percentage = 0) => {
     percentage = Number(percentage)
 
-    const total = Number(unitCost) * Number(unitAmmount)
+    const total = Number(unitCost) * Number(totalUnits)
 
     if(total <= 0) {
       return numeral(0).format("$0,0.00")

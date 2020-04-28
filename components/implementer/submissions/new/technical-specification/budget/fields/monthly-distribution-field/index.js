@@ -1,5 +1,5 @@
 import * as _ from "lodash"
-import { InputNumber, Row, Col, Alert } from "antd"
+import { Input, Row, Col, Alert } from "antd"
 import { CompositeField } from "../../../../../../../shared"
 import numeral from "numeral"
 
@@ -56,8 +56,9 @@ export function MonthlyDistributionField({
               key={`monthly-distribution-${item.uuid}`}>
               <Col span={12}>{ item.label }</Col>
               <Col span={6}>
-                <InputNumber
-                  type="text"
+                <Input
+                  type="number"
+                  name="value"
                   defaultValue={item.value}
                   onChange={updateItem(index)}
                   max={20}
