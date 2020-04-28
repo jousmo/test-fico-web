@@ -18,15 +18,10 @@ function HumanResourcesTable({ data, onChange }) {
   const onConceptsChange = (newHumanResources) => {
     const newConcepts = [...concepts]
     newHumanResources?.forEach(humanResource => (
-      newConcepts[humanResource.key] = humanResource
+      newConcepts[humanResource.key].humanResource = humanResource
     ))
 
-    onChange && onChange({
-      currentTarget: {
-        id: "concepts",
-        value: newConcepts
-      }
-    })
+    onChange && onChange(newConcepts)
   }
 
   return (
