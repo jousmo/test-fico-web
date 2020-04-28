@@ -10,8 +10,7 @@ function SubmissionAttachments({ data }) {
         descargar los anexos de la solicitud.
       </Typography.Text>
       <br />
-      <DownloadButton
-        style={{margin: "5px", backgroundColor: "#c68e8f", color: "white"}}>
+      <DownloadButton outlined style={{margin: "5px"}}>
         Descargar anexos
       </DownloadButton>
     </div>
