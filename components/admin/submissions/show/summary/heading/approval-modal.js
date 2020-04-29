@@ -43,7 +43,7 @@ export function ApprovalModal({ onSave, onCancel, ...props }) {
             <Typography.Text type="secondary" style={{fontSize: "10.5px"}}>
               En caso de que el consejo directivo necesite tomar en cuenta
               algunos puntos especiales para la aprobación de la solicitud
-              describelo a continuación
+              descríbelo a continuación
             </Typography.Text>
             <Form.Item
               name="technical_opinion"
