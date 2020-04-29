@@ -7,7 +7,9 @@ import {
   SignedAgreement,
   SubmissionSummary
 } from "../../../../components/admin/submissions/show"
+import { PageContext } from "../../../../contexts/page"
 import {
+  data as contextData,
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
 import { submission } from "../../../../graphql/submission"
@@ -33,12 +35,14 @@ function Submission({ client }) {
 
   return (
     <AdminSubmissionContext.Provider value={injectActions}>
-      <Layout subheader={<SubmissionSummary />}>
-        <GeneralInformation />
-        <AgreementDocumentsContainer />
-        <Attachments />
-        <SignedAgreement />
-      </Layout>
+      <PageContext.Provider value={contextData(injectActions)}>
+        <Layout subheader={<SubmissionSummary />}>
+          <GeneralInformation />
+          <AgreementDocumentsContainer />
+          <Attachments />
+          <SignedAgreement />
+        </Layout>
+      </PageContext.Provider>
     </AdminSubmissionContext.Provider>
   )
 }

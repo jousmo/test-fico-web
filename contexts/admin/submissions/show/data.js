@@ -1,7 +1,12 @@
 
-export const data = () => {
+export const data = ({ data }) => {
   return {
-    title: "Resumen de aplicación",
-    actions: <></>
+    home: {label: "Solicitudes", url: "/admin/submissions"},
+    itemsList: [
+      {
+        label: data?.Submission?.name,
+        url: `/admin/submissions/${data?.Submission?.id}`
+      }
+    ]
   }
 }

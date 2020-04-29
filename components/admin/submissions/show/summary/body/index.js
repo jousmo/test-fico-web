@@ -1,11 +1,14 @@
 import { withForm } from "../../../../../../helpers/withForm"
-import { Col, Row, Typography } from 'antd'
+import { Col, Row, Typography } from "antd"
 import { EyeOutlined } from "@ant-design/icons"
-import Link from 'next/link'
+import Link from "next/link"
 import {
   preventionLevelTypes,
   scopeTypes
 } from "../../../../../../helpers/selectOptions/implementer/submission"
+import {
+  getReadableValue
+} from "../../../../../../helpers/selectOptions/getReadableValue"
 
 function SummaryBody({ data }) {
   const {
@@ -29,20 +32,16 @@ function SummaryBody({ data }) {
       <Row className="prevention">
         <Col>
           <Typography.Text strong>
-            Ámbito
-            {" "}
-            {scopeTypes.find(type => (
-              type.value === scope
-            )).label.toLocaleLowerCase()}
+            Ámbito {getReadableValue(scopeTypes, scope).toLowerCase()}
           </Typography.Text>
         </Col>
         <Col offset={1}>
           <Typography.Text strong>
-            Nivel de prevención
-            {" "}
-            {preventionLevelTypes.find(type => (
-              type.value === preventionLevel
-            )).label.toLowerCase()}
+            {"Nivel de prevención "}
+            {
+              getReadableValue(preventionLevelTypes, preventionLevel)
+                .toLowerCase()
+            }
           </Typography.Text>
         </Col>
       </Row>
