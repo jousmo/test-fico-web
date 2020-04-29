@@ -183,7 +183,7 @@ export function ConceptModal({
               <InvestmentDistributionField
                 defaultValue={edit?.investmentDistribution}
                 unitCost={state.unitCost}
-                unitAmmount={state.totalUnits} />
+                totalUnits={state.totalUnits} />
             </Form.Item>
           </Col>
         </Row>
