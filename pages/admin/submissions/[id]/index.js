@@ -1,14 +1,13 @@
 import { Layout } from "../../../../components/shared"
-import { PageContext } from "../../../../contexts/page"
 import { useRouter } from "next/router"
 import {
   AgreementDocumentsContainer,
   Attachments,
   GeneralInformation,
-  SignedAgreement
+  SignedAgreement,
+  SubmissionSummary
 } from "../../../../components/admin/submissions/show"
 import {
-  data as contextData,
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
 import { submission } from "../../../../graphql/submission"
@@ -34,14 +33,12 @@ function Submission({ client }) {
 
   return (
     <AdminSubmissionContext.Provider value={injectActions}>
-      <PageContext.Provider value={contextData(injectActions)}>
-        <Layout>
-          <GeneralInformation />
-          <AgreementDocumentsContainer />
-          <Attachments />
-          <SignedAgreement />
-        </Layout>
-      </PageContext.Provider>
+      <Layout subheader={<SubmissionSummary />}>
+        <GeneralInformation />
+        <AgreementDocumentsContainer />
+        <Attachments />
+        <SignedAgreement />
+      </Layout>
     </AdminSubmissionContext.Provider>
   )
 }
