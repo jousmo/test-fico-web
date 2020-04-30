@@ -1,12 +1,13 @@
 import { Layout } from "../../../../components/shared"
-import { PageContext } from "../../../../contexts/page"
 import { useRouter } from "next/router"
 import {
   AgreementDocumentsContainer,
   Attachments,
   GeneralInformation,
-  SignedAgreement
+  SignedAgreement,
+  SubmissionSummary
 } from "../../../../components/admin/submissions/show"
+import { PageContext } from "../../../../contexts/page"
 import {
   data as contextData,
   AdminSubmissionContext
@@ -35,7 +36,7 @@ function Submission({ client }) {
   return (
     <AdminSubmissionContext.Provider value={injectActions}>
       <PageContext.Provider value={contextData(injectActions)}>
-        <Layout>
+        <Layout subheader={<SubmissionSummary />}>
           <GeneralInformation />
           <AgreementDocumentsContainer />
           <Attachments />
