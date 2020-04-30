@@ -1,5 +1,5 @@
 import { withForm } from "../../../../../../helpers/withForm"
-import { Typography } from "antd"
+import { Descriptions } from "antd"
 import moment from "moment"
 import {
   getReadableValue
@@ -10,19 +10,23 @@ import {
 
 function StatusBody({ status }) {
   return (
-    <>
-      <Typography.Text>
+    <Descriptions>
+      <Descriptions.Item span={3}>
         {getReadableValue(statusOptions, status?.value)}
-      </Typography.Text>
-      <br />
-      {status?.date ? (
-        <Typography.Text type="secondary">
+      </Descriptions.Item>
+      <Descriptions.Item label={<small>Fecha de estatus</small>}>
+        <small>
+          {moment(status?.date).format("MM/DD/YYYY HH:MM")}
+        </small>
+      </Descriptions.Item>
+      {status?.limit ? (
+        <Descriptions.Item label={<small>Fecha límite de revisión</small>}>
           <small>
-            {moment(status?.date).format("MM/DD/YYYY HH:MM")}
+            {moment(status?.limit).format("MM/DD/YYYY HH:MM")}
           </small>
-        </Typography.Text>
+        </Descriptions.Item>
       ) : null}
-    </>
+    </Descriptions>
   )
 }
 
