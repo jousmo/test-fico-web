@@ -1,5 +1,5 @@
 import { withForm } from "../../../../../../helpers/withForm"
-import { Col, Row, Typography } from "antd"
+import { Descriptions, Typography } from "antd"
 import { EyeOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import {
@@ -20,37 +20,24 @@ function SummaryBody({ data }) {
   } = data
 
   return (
-    <div>
-      <Typography.Title level={3}>
-        {name}
-      </Typography.Title>
-      <Row>
-        <Typography.Text>
-          {description}
-        </Typography.Text>
-      </Row>
-      <Row className="prevention">
-        <Col>
-          <Typography.Text strong>
-            Ámbito {getReadableValue(scopeTypes, scope).toLowerCase()}
-          </Typography.Text>
-        </Col>
-        <Col offset={1}>
-          <Typography.Text strong>
-            {"Nivel de prevención "}
-            {
-              getReadableValue(preventionLevelTypes, preventionLevel)
-                .toLowerCase()
-            }
-          </Typography.Text>
-        </Col>
-      </Row>
-      <Row align="middle">
+    <Descriptions
+      size="small"
+      title={<Typography.Title level={3}>{name}</Typography.Title>}>
+      <Descriptions.Item span={3}>
+        {description}
+      </Descriptions.Item>
+      <Descriptions.Item label="Ámbito">
+        {getReadableValue(scopeTypes, scope)}
+      </Descriptions.Item>
+      <Descriptions.Item  span={2} label="Nivel de prevención">
+        {getReadableValue(preventionLevelTypes, preventionLevel)}
+      </Descriptions.Item>
+      <Descriptions.Item>
         <Link href={`/admin/submissions/${id}/`}>
           <a><EyeOutlined /> Ver la solicitud</a>
         </Link>
-      </Row>
-    </div>
+      </Descriptions.Item>
+    </Descriptions>
   )
 }
 
