@@ -5,7 +5,8 @@ import {
   Attachments,
   GeneralInformation,
   SignedAgreement,
-  SubmissionSummary
+  SubmissionSummary,
+  Status
 } from "../../../../components/admin/submissions/show"
 import { PageContext } from "../../../../contexts/page"
 import {
@@ -37,6 +38,7 @@ function Submission({ client }) {
     <AdminSubmissionContext.Provider value={injectActions}>
       <Layout subheader={<SubmissionSummary />}>
         <GeneralInformation />
+        <Status />
         <AgreementDocumentsContainer />
         <Attachments />
         <SignedAgreement />
