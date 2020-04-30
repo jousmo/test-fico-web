@@ -15,13 +15,13 @@ export function BreadcrumbHeading({ extra }) {
               <a>{home.label}</a>
             </Link>
           </Breadcrumb.Item>
-          { itemsList?.map((item, index) => (
+          { itemsList?.map((item, index) =>
             <Breadcrumb.Item key={index}>
               <Link href={item.url}>
                 <a>{item.label}</a>
               </Link>
             </Breadcrumb.Item>
-          ))}
+          )}
         </Breadcrumb>
       </Col>
       {extra}
