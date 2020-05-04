@@ -38,11 +38,7 @@ function SummaryBody({ data, isAdmin }) {
             <a><EyeOutlined /> Ver la solicitud</a>
           </Link>
         </Descriptions.Item>
-      ) : (
-        <Descriptions.Item label="Próximo monitoreo">
-          {}
-        </Descriptions.Item>
-      )}
+      ) : null}
     </Descriptions>
   )
 }
