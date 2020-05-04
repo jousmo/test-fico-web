@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons"
 import { BreadcrumbHeading } from "../../../../shared/breadcrum-heading"
 import { ApprovalModal } from "./approval-modal"
-import SummaryBody from "./body"
+import SummaryBody from "../../../../shared/submission-summary-body"
 import "./style.sass"
 
 export function SubmissionSummary() {
@@ -70,6 +70,7 @@ export function SubmissionSummary() {
       <SummaryBody
         data={data?.Submission}
         error={error}
+        isAdmin
         isLoading={loading} />
     </div>
   )
