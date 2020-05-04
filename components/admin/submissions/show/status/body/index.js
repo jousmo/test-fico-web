@@ -1,5 +1,5 @@
 import { withForm } from "../../../../../../helpers/withForm"
-import { Descriptions } from "antd"
+import { Button, Descriptions } from "antd"
 import moment from "moment"
 import {
   getReadableValue
@@ -7,8 +7,16 @@ import {
 import {
   statusOptions
 } from "../../../../../../helpers/selectOptions/shared/statusOptions"
+import { getSelectValue } from "../../../../../../helpers/getSelectValue"
+import { DateField } from "../../../../../shared/date-field"
 
-function StatusBody({ status }) {
+function StatusBody({ isSaveHidden, onChange, onSave, status }) {
+
+  const onDateChange = dateObject => {
+    const newLimitDate = getSelectValue(dateObject)
+    onChange(newLimitDate)
+  }
+
   return (
     <Descriptions>
       <Descriptions.Item span={3}>
@@ -20,11 +28,19 @@ function StatusBody({ status }) {
         </small>
       </Descriptions.Item>
       {status?.limit ? (
-        <Descriptions.Item label={<small>Fecha límite de revisión</small>}>
-          <small>
-            {moment(status?.limit).format("MM/DD/YYYY HH:MM")}
-          </small>
-        </Descriptions.Item>
+        <>
+          <Descriptions.Item label={<small>Fecha límite de revisión</small>}>
+            &nbsp;
+            <DateField
+              id="limit"
+              defaultValue={status?.limit}
+              onChange={onDateChange}
+              size="small" />
+          </Descriptions.Item>
+          <Descriptions.Item>
+            <Button onClick={onSave} hidden={isSaveHidden}>Guardar</Button>
+          </Descriptions.Item>
+        </>
       ) : null}
     </Descriptions>
   )
