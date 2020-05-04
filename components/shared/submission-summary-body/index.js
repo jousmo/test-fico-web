@@ -1,16 +1,16 @@
-import { withForm } from "../../../../../../helpers/withForm"
+import { withForm } from "../../../helpers/withForm"
 import { Descriptions, Typography } from "antd"
 import { EyeOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import {
   preventionLevelTypes,
   scopeTypes
-} from "../../../../../../helpers/selectOptions/implementer/submission"
+} from "../../../helpers/selectOptions/implementer/submission"
 import {
   getReadableValue
-} from "../../../../../../helpers/selectOptions/getReadableValue"
+} from "../../../helpers/selectOptions/getReadableValue"
 
-function SummaryBody({ data }) {
+function SummaryBody({ data, isAdmin }) {
   const {
     id,
     name,
@@ -32,11 +32,17 @@ function SummaryBody({ data }) {
       <Descriptions.Item  span={2} label="Nivel de prevención">
         {getReadableValue(preventionLevelTypes, preventionLevel)}
       </Descriptions.Item>
-      <Descriptions.Item>
-        <Link href={`/admin/submissions/${id}/`}>
-          <a><EyeOutlined /> Ver la solicitud</a>
-        </Link>
-      </Descriptions.Item>
+      {isAdmin ? (
+        <Descriptions.Item>
+          <Link href={`/admin/submissions/${id}/`}>
+            <a><EyeOutlined /> Ver la solicitud</a>
+          </Link>
+        </Descriptions.Item>
+      ) : (
+        <Descriptions.Item label="Próximo monitoreo">
+          {}
+        </Descriptions.Item>
+      )}
     </Descriptions>
   )
 }
