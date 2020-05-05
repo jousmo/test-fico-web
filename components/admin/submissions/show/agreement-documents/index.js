@@ -3,7 +3,7 @@ import { useContext } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import AgreementDocuments from "./documents"
+import { AgreementDocuments } from "../../../../shared/submission-show"
 
 export function AgreementDocumentsContainer() {
   const {
