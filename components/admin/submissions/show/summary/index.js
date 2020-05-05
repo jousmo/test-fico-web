@@ -76,6 +76,13 @@ export function SubmissionSummary() {
         onSave={onSave}
         visible={state.isModalOpen} />
       <BreadcrumbHeading
+        home={{ label: "Solicitudes", url: "/admin/submissions" }}
+        itemsList={[
+          {
+            label: data?.Submission?.name,
+            url: `/admin/submissions/${data?.Submission?.id}`
+          }
+        ]}
         extra={headingButtons} />
       <SummaryBody
         data={data?.Submission}

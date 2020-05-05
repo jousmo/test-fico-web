@@ -35,14 +35,12 @@ function Submission({ client }) {
 
   return (
     <AdminSubmissionContext.Provider value={injectActions}>
-      <PageContext.Provider value={contextData(injectActions)}>
-        <Layout subheader={<SubmissionSummary />}>
-          <GeneralInformation />
-          <AgreementDocumentsContainer />
-          <Attachments />
-          <SignedAgreement />
-        </Layout>
-      </PageContext.Provider>
+      <Layout subheader={<SubmissionSummary />}>
+        <GeneralInformation />
+        <AgreementDocumentsContainer />
+        <Attachments />
+        <SignedAgreement />
+      </Layout>
     </AdminSubmissionContext.Provider>
   )
 }
