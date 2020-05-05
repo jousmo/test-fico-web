@@ -31,10 +31,8 @@ function Submission({ client }) {
 
   return (
     <ImplementerSubmissionContext.Provider value={injectActions}>
-      <PageContext.Provider value={contextData(injectActions)}>
-        <Layout subheader={<SubmissionSummary />}>
-        </Layout>
-      </PageContext.Provider>
+      <Layout subheader={<SubmissionSummary />}>
+      </Layout>
     </ImplementerSubmissionContext.Provider>
   )
 }

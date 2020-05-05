@@ -17,7 +17,14 @@ export function SubmissionSummary() {
 
   return (
     <div className="fico submission summary implementer">
-      <BreadcrumbHeading />
+      <BreadcrumbHeading
+        home={{ label: "Solicitudes", url: "/implementer/submissions" }}
+        itemsList={[
+          {
+            label: data?.Submission?.name,
+            url: `/implementer/submissions/${data?.Submission?.id}`
+          }
+        ]} />
       <SummaryBody
         data={data?.Submission}
         error={error}
