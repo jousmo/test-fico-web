@@ -1,4 +1,4 @@
-import { withForm } from "../../../../../../helpers/withForm"
+import { withForm } from "../../../helpers/withForm"
 import { Typography } from "antd"
 
 function AgreementDocuments({ data }) {
