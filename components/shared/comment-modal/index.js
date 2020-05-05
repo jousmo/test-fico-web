@@ -1,0 +1,39 @@
+import { Modal, Form, Input } from "antd"
+import { useForm } from "antd/lib/form/util"
+
+export function CommentModal({onCancel, onSave, ...props}) {
+  const [form] = useForm()
+
+  const onOk = async () => {
+    try {
+      const values = await form.getFieldsValue()
+      onSave(values)
+      form.resetFields()
+    }
+    catch(e) {
+      console.error(e)
+    }
+  }
+
+  return (
+    <Modal
+      title="Comentarios para revisión"
+      onOk={onOk}
+      okText="Guardar"
+      onCancel={onCancel}
+      cancelText="Cancelar"
+      width={800}
+      {...props}>
+      <Form
+        form={form}
+        layout="vertical">
+        <Form.Item
+          name="comment">
+          <Input.TextArea
+            id="comment"
+            placeholder="Describe los puntos a corregir" />
+        </Form.Item>
+      </Form>
+    </Modal>
+  )
+}
