@@ -1,7 +1,5 @@
 import { withForm } from "../../../helpers/withForm"
 import { Descriptions, Typography } from "antd"
-import { EyeOutlined } from "@ant-design/icons"
-import Link from "next/link"
 import {
   preventionLevelTypes,
   scopeTypes
@@ -10,9 +8,8 @@ import {
   getReadableValue
 } from "../../../helpers/selectOptions/getReadableValue"
 
-function SummaryBody({ data, isAdmin }) {
+function SummaryBody({ data, extra }) {
   const {
-    id,
     name,
     scope,
     description,
@@ -32,13 +29,7 @@ function SummaryBody({ data, isAdmin }) {
       <Descriptions.Item  span={2} label="Nivel de prevención">
         {getReadableValue(preventionLevelTypes, preventionLevel)}
       </Descriptions.Item>
-      {isAdmin ? (
-        <Descriptions.Item>
-          <Link href={`/admin/submissions/${id}/`}>
-            <a><EyeOutlined /> Ver la solicitud</a>
-          </Link>
-        </Descriptions.Item>
-      ) : null}
+      {extra}
     </Descriptions>
   )
 }

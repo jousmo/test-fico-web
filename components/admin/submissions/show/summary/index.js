@@ -2,7 +2,9 @@ import { useContext, useState } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import { Button, Col } from "antd"
+import { Button, Col, Descriptions } from "antd"
+import { EyeOutlined } from "@ant-design/icons"
+import Link from "next/link"
 import {
   CloseOutlined,
   RetweetOutlined,
@@ -59,6 +61,14 @@ export function SubmissionSummary() {
     </Col>
   )
 
+  const goToSubmission = (
+    <Descriptions.Item>
+      <Link href={`/admin/submissions/${data?.Submission.id}/`}>
+        <a><EyeOutlined /> Ver la solicitud</a>
+      </Link>
+    </Descriptions.Item>
+  )
+
   return (
     <div className="fico submission summary">
       <ApprovalModal
@@ -70,7 +80,7 @@ export function SubmissionSummary() {
       <SummaryBody
         data={data?.Submission}
         error={error}
-        isAdmin
+        extra={goToSubmission}
         isLoading={loading} />
     </div>
   )
