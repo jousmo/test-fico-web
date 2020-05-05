@@ -1,11 +1,7 @@
-import { PageContext } from "../../../contexts/page"
-import { useContext } from "react"
 import Link from "next/link"
 import { Breadcrumb, Col, Row } from "antd"
 
-export function BreadcrumbHeading({ extra }) {
-  const { home, itemsList } = useContext(PageContext)
-
+export function BreadcrumbHeading({ extra, home, itemsList }) {
   return (
     <Row justify="space-between" align="middle">
       <Col>

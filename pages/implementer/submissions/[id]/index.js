@@ -1,17 +1,13 @@
 import { Layout } from "../../../../components/shared"
 import { useRouter } from "next/router"
 import {
-  AgreementDocumentsContainer,
-  Attachments,
-  GeneralInformation,
-  SignedAgreement,
   SubmissionSummary
-} from "../../../../components/admin/submissions/show"
+} from "../../../../components/implementer/submissions/show"
 import { PageContext } from "../../../../contexts/page"
 import {
   data as contextData,
-  AdminSubmissionContext
-} from "../../../../contexts/admin/submissions/show"
+  ImplementerSubmissionContext
+} from "../../../../contexts/implementer/submissions/show"
 import { submission } from "../../../../graphql/submission"
 import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
@@ -34,14 +30,10 @@ function Submission({ client }) {
   }), [state, loading])
 
   return (
-    <AdminSubmissionContext.Provider value={injectActions}>
+    <ImplementerSubmissionContext.Provider value={injectActions}>
       <Layout subheader={<SubmissionSummary />}>
-        <GeneralInformation />
-        <AgreementDocumentsContainer />
-        <Attachments />
-        <SignedAgreement />
       </Layout>
-    </AdminSubmissionContext.Provider>
+    </ImplementerSubmissionContext.Provider>
   )
 }
 

@@ -2,7 +2,9 @@ import { useContext, useState } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import { Button, Col } from "antd"
+import { Button, Col, Descriptions } from "antd"
+import { EyeOutlined } from "@ant-design/icons"
+import Link from "next/link"
 import {
   CloseOutlined,
   RetweetOutlined,
@@ -11,7 +13,7 @@ import {
 } from "@ant-design/icons"
 import { BreadcrumbHeading } from "../../../../shared/breadcrum-heading"
 import { ApprovalModal } from "./approval-modal"
-import SummaryBody from "./body"
+import SummaryBody from "../../../../shared/submission-summary-body"
 import "./style.sass"
 
 export function SubmissionSummary() {
@@ -59,6 +61,14 @@ export function SubmissionSummary() {
     </Col>
   )
 
+  const goToSubmission = (
+    <Descriptions.Item>
+      <Link href={`/admin/submissions/${data?.Submission.id}/`}>
+        <a><EyeOutlined /> Ver la solicitud</a>
+      </Link>
+    </Descriptions.Item>
+  )
+
   return (
     <div className="fico submission summary">
       <ApprovalModal
@@ -66,10 +76,18 @@ export function SubmissionSummary() {
         onSave={onSave}
         visible={state.isModalOpen} />
       <BreadcrumbHeading
+        home={{ label: "Solicitudes", url: "/admin/submissions" }}
+        itemsList={[
+          {
+            label: data?.Submission?.name,
+            url: `/admin/submissions/${data?.Submission?.id}`
+          }
+        ]}
         extra={headingButtons} />
       <SummaryBody
         data={data?.Submission}
         error={error}
+        extra={goToSubmission}
         isLoading={loading} />
     </div>
   )
