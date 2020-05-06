@@ -6,5 +6,5 @@ export const statusOptions = [
   { label: "Revisión 3", value: "THIRD_FEEDBACK" },
   { label: "Solicitud rechazada", value: "REJECTED" },
   { label: "En convenio", value: "ON_AGREEMENT" },
-  { label: "Aprobada", value: "APROVED" }
+  { label: "Aprobada", value: "APPROVED" }
 ]
