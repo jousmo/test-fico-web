@@ -10,30 +10,30 @@ import {
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 import { DateField } from "../../../../../shared/date-field"
 
-function StatusBody({ isSaveHidden, onChange, onSave, status }) {
+function StatusBody({ data, isSaveHidden, onChange, onSave }) {
 
   const onDateChange = dateObject => {
-    const newLimitDate = getSelectValue(dateObject)
-    onChange(newLimitDate)
+    const newDeadline = getSelectValue(dateObject)
+    onChange(newDeadline)
   }
 
   return (
     <Descriptions>
       <Descriptions.Item span={3}>
-        {getReadableValue(statusOptions, status?.value)}
+        {getReadableValue(statusOptions, data?.status)}
       </Descriptions.Item>
       <Descriptions.Item label={<small>Fecha de estatus</small>}>
         <small>
-          {moment(status?.date).format("MM/DD/YYYY HH:MM")}
+          {moment(data?.statusChangedAt).format("MM/DD/YYYY HH:MM")}
         </small>
       </Descriptions.Item>
-      {status?.limit ? (
+      {data?.deadline ? (
         <>
           <Descriptions.Item label={<small>Fecha límite de revisión</small>}>
             &nbsp;
             <DateField
-              id="limit"
-              defaultValue={status?.limit}
+              id="deadline"
+              defaultValue={data?.deadline}
               onChange={onDateChange}
               size="small" />
           </Descriptions.Item>

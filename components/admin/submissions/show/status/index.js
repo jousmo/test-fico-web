@@ -15,10 +15,10 @@ export function Status() {
     data
   } = useContext(AdminSubmissionContext)
 
-  const onChange = newLimitDate => {
+  const onChange = newDeadline => {
     setIsSaveHidden(false)
     const newSubmission = {...data?.Submission}
-    newSubmission.status.limit = newLimitDate
+    newSubmission.deadline = newDeadline
     updateSubmissionDetail(newSubmission)
   }
 
