@@ -15,10 +15,12 @@ export function SignedAgreement() {
     data
   } = useContext(AdminSubmissionContext)
 
-  const onChange = newContractSignDate => {
+  const onChange = newSignedContractAt => {
     setIsSaveHidden(false)
-    const newSubmission = {...data?.Submission}
-    newSubmission.contractSignDate = newContractSignDate
+    const newSubmission = {
+      ...data?.Submission,
+      signedContractAt: newSignedContractAt
+    }
     updateSubmissionDetail(newSubmission)
   }
 

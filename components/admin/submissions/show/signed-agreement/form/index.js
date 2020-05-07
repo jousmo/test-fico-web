@@ -23,8 +23,8 @@ function SubmissionAgreementForm({ isSaveHidden, data, onChange, onSave }) {
           style={{marginBottom: "10px"}}
           label="Fecha de firma de convenio">
           <DateField
-            id="contractSignDate"
-            defaultValue={data?.contractSignDate}
+            id="signedContractAt"
+            defaultValue={data?.signedContractAt}
             onChange={onDateChange} />
           &nbsp;
           <Button
