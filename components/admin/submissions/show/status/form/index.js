@@ -10,7 +10,7 @@ import {
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 import { DateField } from "../../../../../shared/date-field"
 
-function StatusBody({ data, isSaveHidden, onChange, onSave }) {
+function StatusForm({ data, isSaveHidden, onChange, onSave }) {
 
   const onDateChange = dateObject => {
     const newDeadline = getSelectValue(dateObject)
@@ -46,4 +46,4 @@ function StatusBody({ data, isSaveHidden, onChange, onSave }) {
   )
 }
 
-export default withForm(StatusBody)
+export default withForm(StatusForm)

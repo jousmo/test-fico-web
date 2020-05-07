@@ -3,7 +3,7 @@ import { useContext, useState } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import StatusBody from "./body"
+import StatusForm from "./form"
 
 export function Status() {
   const [ isSaveHidden, setIsSaveHidden] = useState(true)
@@ -24,7 +24,7 @@ export function Status() {
 
   return (
     <Section title="Estatus de solicitud">
-      <StatusBody
+      <StatusForm
         data={data?.Submission}
         error={error}
         isLoading={loading}
