@@ -20,13 +20,11 @@ function SubmissionAgreementForm({ isSaveHidden, data, onChange, onSave }) {
           <DateField
             id="contractSignDate"
             defaultValue={data?.contractSignDate}
-            onChange={onDateChange}
-            size="small" />
+            onChange={onDateChange} />
           &nbsp;
           <Button
             onClick={onSave}
-            hidden={isSaveHidden}
-            size="small">
+            hidden={isSaveHidden}>
             Guardar
           </Button>
         </Descriptions.Item>
