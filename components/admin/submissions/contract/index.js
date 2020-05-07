@@ -1,4 +1,4 @@
-import { Section } from "../../../shared"
+import { SearchField, Section } from "../../../shared"
 import { useContext } from "react"
 import {
   AdminSubmissionContext
@@ -14,6 +14,7 @@ export function Contracts() {
 
   return (
     <Section>
+      <SearchField />
       <ContractsTable
         data={data?.Submission}
         error={error}
