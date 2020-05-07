@@ -1,10 +1,9 @@
 import { withForm } from "../../../../../../helpers/withForm"
-import { Button, Form, Typography } from "antd"
+import { Button, Form } from "antd"
 import { DateField, UploadButton, Visibility } from "../../../../../shared"
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 
-function SubmissionAgreementForm({ isSaveHidden, data, onChange, onSave }) {
-
+function SubmissionAgreementForm({ data, onChange, onSave }) {
   const onDateChange = dateObject => {
     const newSignDate = getSelectValue(dateObject)
     onChange(newSignDate)
@@ -15,30 +14,28 @@ function SubmissionAgreementForm({ isSaveHidden, data, onChange, onSave }) {
   return (
     <Form
       name="submission-agreement">
-      <Typography.Paragraph>
+      <Form.Item style={{marginBottom: "5px"}}>
         Anexa el convenio firmado
-      </Typography.Paragraph>
+      </Form.Item>
       <Visibility visible={onAgreement}>
-        <Form.Item
-          style={{marginBottom: "10px"}}
-          label="Fecha de firma de convenio">
+        <Form.Item label="Fecha de firma de convenio">
           <DateField
             id="signedContractAt"
             defaultValue={data?.signedContractAt}
             onChange={onDateChange} />
           &nbsp;
           <Button
-            onClick={onSave}
-            hidden={isSaveHidden}>
+            onClick={onSave}>
             Guardar
           </Button>
         </Form.Item>
       </Visibility>
-      <UploadButton
-        style={{margin: "5px"}}
-        disabled={!data?.Submission?.contractSignDate}>
-        Subir convenio firmado
-      </UploadButton>
+      <Form.Item style={{marginBottom: "5px"}}>
+        <UploadButton
+          disabled={!data?.Submission?.signedContractAt}>
+          Subir convenio firmado
+        </UploadButton>
+      </Form.Item>
     </Form>
   )
 }
