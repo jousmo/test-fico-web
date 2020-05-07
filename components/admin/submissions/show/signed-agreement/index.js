@@ -3,7 +3,7 @@ import { useContext, useState } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import SubmissionAgreement from "./documents"
+import SubmissionAgreementForm from "./form"
 
 export function SignedAgreement() {
   const [ isSaveHidden, setIsSaveHidden] = useState(true)
@@ -24,7 +24,7 @@ export function SignedAgreement() {
 
   return (
     <Section title="Convenio firmado">
-      <SubmissionAgreement
+      <SubmissionAgreementForm
         data={data?.Submission}
         error={error}
         isLoading={loading}

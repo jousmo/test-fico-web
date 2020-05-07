@@ -3,7 +3,7 @@ import { Button, Descriptions } from "antd"
 import { DateField, UploadButton } from "../../../../../shared"
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 
-function SubmissionAgreement({ isSaveHidden, data, onChange, onSave }) {
+function SubmissionAgreementForm({ isSaveHidden, data, onChange, onSave }) {
 
   const onDateChange = dateObject => {
     const newSignDate = getSelectValue(dateObject)
@@ -42,4 +42,4 @@ function SubmissionAgreement({ isSaveHidden, data, onChange, onSave }) {
   )
 }
 
-export default withForm(SubmissionAgreement)
+export default withForm(SubmissionAgreementForm)
