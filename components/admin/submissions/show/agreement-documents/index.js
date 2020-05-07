@@ -3,9 +3,9 @@ import { useContext } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import AgreementDocuments from "./documents"
+import AgreementDocumentsForm from "./form"
 
-export function AgreementDocumentsContainer() {
+export function AgreementDocuments() {
   const {
     loading,
     error,
@@ -14,7 +14,7 @@ export function AgreementDocumentsContainer() {
 
   return (
     <Section title="Documentos de convenio">
-      <AgreementDocuments
+      <AgreementDocumentsForm
         data={data?.Submission}
         error={error}
         isLoading={loading} />

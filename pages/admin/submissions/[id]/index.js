@@ -1,7 +1,7 @@
 import { Layout } from "../../../../components/shared"
 import { useRouter } from "next/router"
 import {
-  AgreementDocumentsContainer,
+  AgreementDocuments,
   Attachments,
   GeneralInformation,
   SignedAgreement,
@@ -72,7 +72,7 @@ function Submission({ client }) {
       <Layout subheader={<SubmissionSummary />}>
         <GeneralInformation />
         <Status />
-        <AgreementDocumentsContainer />
+        <AgreementDocuments />
         <Attachments />
         <SignedAgreement />
       </Layout>
