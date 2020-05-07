@@ -1,5 +1,5 @@
 import { withForm } from "../../../../../../helpers/withForm"
-import { Button, Descriptions } from "antd"
+import { Button, Form } from "antd"
 import moment from "moment"
 import {
   getReadableValue
@@ -8,9 +8,9 @@ import {
   statusOptions
 } from "../../../../../../helpers/selectOptions/shared/statusOptions"
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
-import { DateField } from "../../../../../shared/date-field"
+import { DateField, Visibility } from "../../../../../shared"
 
-function StatusForm({ data, isSaveHidden, onChange, onSave }) {
+function StatusForm({ data, onChange, onSave }) {
 
   const onDateChange = dateObject => {
     const newDeadline = getSelectValue(dateObject)
@@ -18,31 +18,29 @@ function StatusForm({ data, isSaveHidden, onChange, onSave }) {
   }
 
   return (
-    <Descriptions>
-      <Descriptions.Item span={3}>
+    <Form
+      layout="horizontal"
+      name="submission-status">
+      <Form.Item style={{marginBottom: "10px"}}>
         {getReadableValue(statusOptions, data?.status)}
-      </Descriptions.Item>
-      <Descriptions.Item label={<small>Fecha de estatus</small>}>
-        <small>
-          {moment(data?.statusChangedAt).format("MM/DD/YYYY HH:MM")}
-        </small>
-      </Descriptions.Item>
-      {data?.deadline ? (
-        <>
-          <Descriptions.Item label={<small>Fecha límite de revisión</small>}>
-            &nbsp;
-            <DateField
-              id="deadline"
-              defaultValue={data?.deadline}
-              onChange={onDateChange}
-              size="small" />
-          </Descriptions.Item>
-          <Descriptions.Item>
-            <Button onClick={onSave} hidden={isSaveHidden}>Guardar</Button>
-          </Descriptions.Item>
-        </>
-      ) : null}
-    </Descriptions>
+      </Form.Item>
+      <Form.Item
+        label="Fecha de estatus"
+        style={{marginBottom: "5px"}}>
+        {moment(data?.statusChangedAt).format("MM/DD/YYYY HH:MM")}
+      </Form.Item>
+      <Visibility visible={data?.deadline !== undefined}>
+        <Form.Item
+          label="Fecha límite de revisión">
+          <DateField
+            id="deadline"
+            defaultValue={data?.deadline}
+            onChange={onDateChange} />
+          &nbsp;
+          <Button onClick={onSave}>Guardar</Button>
+        </Form.Item>
+      </Visibility>
+    </Form>
   )
 }
 

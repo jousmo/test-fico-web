@@ -1,12 +1,11 @@
 import { Section } from "../../../../shared"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
 import StatusForm from "./form"
 
 export function Status() {
-  const [ isSaveHidden, setIsSaveHidden] = useState(true)
   const {
     updateSubmissionDetail,
     save,
@@ -16,9 +15,10 @@ export function Status() {
   } = useContext(AdminSubmissionContext)
 
   const onChange = newDeadline => {
-    setIsSaveHidden(false)
-    const newSubmission = {...data?.Submission}
-    newSubmission.deadline = newDeadline
+    const newSubmission = {
+      ...data?.Submission,
+      deadline: newDeadline
+    }
     updateSubmissionDetail(newSubmission)
   }
 
@@ -28,7 +28,6 @@ export function Status() {
         data={data?.Submission}
         error={error}
         isLoading={loading}
-        isSaveHidden={isSaveHidden}
         onChange={onChange}
         onSave={save} />
     </Section>
