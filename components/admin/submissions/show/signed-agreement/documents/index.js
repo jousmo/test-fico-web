@@ -9,7 +9,9 @@ function SubmissionAgreement({ data }) {
         Anexa el convenio firmado
       </Typography.Text>
       <br />
-      <UploadButton style={{margin: "5px"}}>
+      <UploadButton
+        style={{margin: "5px"}}
+        disabled={!data?.Submission?.contractSignDate}>
         Subir convenio firmado
       </UploadButton>
     </div>
