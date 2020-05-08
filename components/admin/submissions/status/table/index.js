@@ -9,6 +9,7 @@ function ListByStatusTable({ data }) {
       <Table.Column
         title={<MinusSquareTwoTone />} />
       <Table.Column
+        dataIndex="name"
         render={(text, record) =>
           <Link href={`/admin/submissions/${record.id}`}><a>{text}</a></Link>
         }

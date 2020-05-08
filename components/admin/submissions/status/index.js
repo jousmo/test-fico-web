@@ -16,7 +16,7 @@ export function ListByStatus() {
     <Section>
       <SearchField />
       <ListByStatusTable
-        data={data?.Submission}
+        data={data?.allSubmissions}
         error={error}
         isLoading={loading} />
     </Section>
