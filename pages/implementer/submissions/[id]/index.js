@@ -2,7 +2,7 @@ import { Layout } from "../../../../components/shared"
 import { useRouter } from "next/router"
 import {
   SubmissionSummary,
-  AgreementDocumentsContainer
+  AgreementDocuments
 } from "../../../../components/implementer/submissions/show"
 import {
   ImplementerSubmissionContext
@@ -31,7 +31,7 @@ function Submission({ client }) {
   return (
     <ImplementerSubmissionContext.Provider value={injectActions}>
       <Layout subheader={<SubmissionSummary />}>
-        <AgreementDocumentsContainer />
+        <AgreementDocuments />
       </Layout>
     </ImplementerSubmissionContext.Provider>
   )

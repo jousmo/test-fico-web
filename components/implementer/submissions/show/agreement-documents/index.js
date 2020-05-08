@@ -5,7 +5,7 @@ import {
 } from "../../../../../contexts/implementer/submissions/show"
 import AgreementDocumentsForm from "./form"
 
-export function AgreementDocumentsContainer() {
+export function AgreementDocuments() {
   const {
     loading,
     error,
