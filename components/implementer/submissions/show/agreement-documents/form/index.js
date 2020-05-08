@@ -8,7 +8,7 @@ function AgreementDocumentsForm({ data }) {
     return (
       <Alert
         message="Cuando se apruebe el proyecto de la implementadora se podrán
-        subir los anexos de la solicitud."
+        subir los documentos de la solicitud."
         type="warning"
       />
     )

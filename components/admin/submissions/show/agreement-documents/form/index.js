@@ -15,8 +15,8 @@ function AgreementDocumentsForm({ data }) {
   if (data?.Submission?.status !== "ON_AGREEMENT"){
     return (
       <Alert
-        message="Cuando se apruebe el proyecto de la implementadora se podrá
-        descargar los anexos de la solicitud."
+        message="Cuando se apruebe el proyecto de la implementadora se podrán
+        descargar los documentos de la solicitud."
         type="warning"
       />
     )
