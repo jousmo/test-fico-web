@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Table } from "antd"
 import { MinusSquareTwoTone } from "@ant-design/icons"
 
-function ContractsTable({ data }) {
+function ListByStatusTable({ data }) {
   return (
     <Table dataSource={data}>
       <Table.Column
@@ -17,4 +17,4 @@ function ContractsTable({ data }) {
   )
 }
 
-export default withForm(ContractsTable)
+export default withForm(ListByStatusTable)
