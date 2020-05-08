@@ -27,7 +27,10 @@ export const updateById = gql`
     $consultant: JSON,
     $developmentObjectiveIndicators: JSON,
     $generalObjectiveIndicators: JSON,
-    $concepts: JSON){
+    $concepts: JSON,
+    $status: String,
+    $statusChangedAt: String,
+    $deadline: String){
       updateSubmission(
         id: $id,
         implementerId: $implementerId,
@@ -54,7 +57,10 @@ export const updateById = gql`
         consultant: $consultant,
         developmentObjectiveIndicators: $developmentObjectiveIndicators,
         generalObjectiveIndicators: $generalObjectiveIndicators,
-        concepts: $concepts
+        concepts: $concepts,
+        status: $status,
+        statusChangedAt: $statusChangedAt,
+        deadline: $deadline
       ) {
         id
       }
