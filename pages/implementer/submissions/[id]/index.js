@@ -1,11 +1,10 @@
 import { Layout } from "../../../../components/shared"
 import { useRouter } from "next/router"
 import {
-  SubmissionSummary
+  SubmissionSummary,
+  AgreementDocuments
 } from "../../../../components/implementer/submissions/show"
-import { PageContext } from "../../../../contexts/page"
 import {
-  data as contextData,
   ImplementerSubmissionContext
 } from "../../../../contexts/implementer/submissions/show"
 import { submission } from "../../../../graphql/submission"
@@ -32,6 +31,7 @@ function Submission({ client }) {
   return (
     <ImplementerSubmissionContext.Provider value={injectActions}>
       <Layout subheader={<SubmissionSummary />}>
+        <AgreementDocuments />
       </Layout>
     </ImplementerSubmissionContext.Provider>
   )

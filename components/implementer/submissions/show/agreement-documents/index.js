@@ -1,8 +1,8 @@
 import { Section } from "../../../../shared"
 import { useContext } from "react"
 import {
-  AdminSubmissionContext
-} from "../../../../../contexts/admin/submissions/show"
+  ImplementerSubmissionContext
+} from "../../../../../contexts/implementer/submissions/show"
 import AgreementDocumentsForm from "./form"
 
 export function AgreementDocuments() {
@@ -10,7 +10,7 @@ export function AgreementDocuments() {
     loading,
     error,
     data
-  } = useContext(AdminSubmissionContext)
+  } = useContext(ImplementerSubmissionContext)
 
   return (
     <Section title="Documentos de convenio">
