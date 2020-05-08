@@ -7,6 +7,7 @@ function ListByStatusTable({ data }) {
   return (
     <Table dataSource={data}>
       <Table.Column
+        width={1}
         title={<MinusSquareTwoTone />} />
       <Table.Column
         dataIndex="name"
