@@ -3,9 +3,9 @@ import { useContext } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
-import ContractsTable from "./table"
+import ListByStatusTable from "./table"
 
-export function Contracts() {
+export function ListByStatus() {
   const {
     loading,
     error,
@@ -15,7 +15,7 @@ export function Contracts() {
   return (
     <Section>
       <SearchField />
-      <ContractsTable
+      <ListByStatusTable
         data={data?.Submission}
         error={error}
         isLoading={loading} />
