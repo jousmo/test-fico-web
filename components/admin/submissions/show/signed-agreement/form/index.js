@@ -9,7 +9,7 @@ function SubmissionAgreementForm({ data, onChange, onSave }) {
     onChange(newSignDate)
   }
 
-  const onAgreement = data?.Submission?.status === "ON_AGREEMENT"
+  const onAgreement = data?.status === "ON_AGREEMENT"
 
   return (
     <Form
