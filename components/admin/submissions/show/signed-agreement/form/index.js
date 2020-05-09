@@ -32,7 +32,7 @@ function SubmissionAgreementForm({ data, onChange, onSave }) {
       </Visibility>
       <Form.Item style={{marginBottom: "5px"}}>
         <UploadButton
-          disabled={!data?.Submission?.signedContractAt}>
+          disabled={!data?.signedContractAt}>
           Subir convenio firmado
         </UploadButton>
       </Form.Item>
