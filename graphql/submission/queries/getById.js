@@ -28,6 +28,9 @@ export const getById = gql`
       developmentObjectiveIndicators
       generalObjectiveIndicators
       concepts
+      status
+      statusChangedAt
+      deadline
     }
   }
 `

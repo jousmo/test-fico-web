@@ -4,7 +4,7 @@ import { FileInput } from "../../../../profile/legal-documents/form/fileInput"
 
 function AgreementDocumentsForm({ data }) {
 
-  if (data?.Submission?.status !== "ON_AGREEMENT"){
+  if (data?.status !== "ON_AGREEMENT"){
     return (
       <Alert
         message="Cuando se apruebe el proyecto de la implementadora se podrán
