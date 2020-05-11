@@ -1,11 +1,11 @@
 import { useRouter } from "next/router"
 import {
-  TechnicalSpecificationPDF
+  GeneralInformationPDF
 } from "../../../../../../components/implementer/submissions/pdf"
 import {
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/show"
-import { submission } from "../../../../../../graphql/submission"
+import { submission } from "../../../../../../graphql"
 import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
@@ -28,8 +28,8 @@ function ViewPDF({ client }) {
   }), [state])
 
   let sectionComponent
-  if (router.query.section === "technical-specification"){
-    sectionComponent = <TechnicalSpecificationPDF />
+  if (router.query.section === "general-information"){
+    sectionComponent = <GeneralInformationPDF />
   }
 
   return (
