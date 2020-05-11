@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import {
-  TechnicalSpecification
+  TechnicalSpecificationPDF
 } from "../../../../../../components/implementer/submissions/pdf"
 import {
   ImplementerSubmissionContext
@@ -29,7 +29,7 @@ function ViewPDF({ client }) {
 
   let sectionComponent
   if (router.query.section === "technical-specification"){
-    sectionComponent = TechnicalSpecification
+    sectionComponent = <TechnicalSpecificationPDF />
   }
 
   return (
