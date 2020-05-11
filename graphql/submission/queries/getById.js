@@ -31,6 +31,7 @@ export const getById = gql`
       status
       statusChangedAt
       deadline
+      signedContractAt
     }
   }
 `
