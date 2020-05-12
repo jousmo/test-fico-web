@@ -1,8 +1,8 @@
-import { Button, Descriptions, Typography } from "antd"
+import { Descriptions, Typography } from "antd"
 import { useContext } from "react"
 import {
-  ImplementerSubmissionContext
-} from "../../../../../contexts/implementer/submissions/show"
+  AdminSubmissionContext
+} from "../../../../../contexts/admin/submissions/show"
 import { getReadableValue } from "../../../../../helpers/selectOptions"
 import {
   ageRanges,
@@ -11,36 +11,25 @@ import {
   preventionLevelTypes,
   scopeTypes,
   submissionTypes
-} from "../../../../../helpers/selectOptions/implementer/submission/"
+} from "../../../../../helpers/selectOptions/implementer/submission"
+import PDFHeading from "../heading"
 import "../style.sass"
 
 export function GeneralInformationPDF() {
   const {
     implementerResult,
     submissionResult
-  } = useContext(ImplementerSubmissionContext)
+  } = useContext(AdminSubmissionContext)
 
   const implementer = implementerResult?.data?.Implementer
   const submission = submissionResult?.data?.Submission
-
-  const title = (
-    <>
-      Información General &nbsp;
-      <Button
-        className="export-button"
-        onClick={() => window.print()}
-        type="primary">
-        Exportar
-      </Button>
-    </>
-  )
 
   return (
     <div className="fico pdf general-information">
       <Descriptions
         bordered
         column={1}
-        title={title}>
+        title={<PDFHeading title="Información General" />}>
         <Descriptions.Item label="Implementadora">
           {implementer?.name}
         </Descriptions.Item>
