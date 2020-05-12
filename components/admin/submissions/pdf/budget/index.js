@@ -45,7 +45,9 @@ export function BudgetPDF() {
                 .find(investor => (
                   investor.name === "Aliado(s)"
                 )).percentage
-              return (row.unitCost * row.totalUnits) * percentageAllies / 100
+              const total = (row.unitCost * row.totalUnits) *
+                percentageAllies / 100
+              return <>${total}&nbsp;<Tag>100%</Tag></>
             }}
             title="TOTAL" />
         </Table.Column>
