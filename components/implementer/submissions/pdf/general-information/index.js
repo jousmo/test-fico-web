@@ -112,16 +112,16 @@ export function GeneralInformationPDF() {
         <Descriptions.Item label="Convocatoria a la que aplica">
           {submission?.applyingCall}
         </Descriptions.Item>
-        <Descriptions.Item label="Eje estretegico Ficosec">
+        <Descriptions.Item label="Eje estratégico Ficosec">
           {submission?.strategicAxis}
         </Descriptions.Item>
         <Descriptions.Item label="Nivel de prevención que atiende">
           {getReadableValue(preventionLevelTypes, submission?.preventionLevel)}
         </Descriptions.Item>
-        <Descriptions.Item label="Ambitos de invervención del proyecto">
+        <Descriptions.Item label="Ámbitos de intervención del proyecto">
           {getReadableValue(scopeTypes, submission?.scope)}
         </Descriptions.Item>
-        <Descriptions.Item label="Problematica a tratar">
+        <Descriptions.Item label="Problemática a tratar">
           {submission?.issueDescription}
         </Descriptions.Item>
         <Descriptions.Item label="Justificación">
@@ -130,16 +130,16 @@ export function GeneralInformationPDF() {
         <Descriptions.Item label="Breve descripción del proyecto">
           {submission?.description}
         </Descriptions.Item>
-        <Descriptions.Item label="Objetivo desarrollo/Fin">
+        <Descriptions.Item label="Objetivo desarrollo / fin">
           {submission?.developmentObjective}
         </Descriptions.Item>
-        <Descriptions.Item label="Objetivo general / proposito">
+        <Descriptions.Item label="Objetivo general / propósito">
           {submission?.generalObjective}
         </Descriptions.Item>
         { submission?.specificObjectives?.map((objective, index) =>
           <Descriptions.Item
             key={index}
-            label={`Objetivo especifico ${index + 1}`}>
+            label={`Objetivo específico ${index + 1}`}>
             {objective.description}
           </Descriptions.Item>
         )}
