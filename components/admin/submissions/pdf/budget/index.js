@@ -1,4 +1,4 @@
-import { Table } from "antd"
+import { Table, Tag } from "antd"
 import { useContext } from "react"
 import {
   AdminSubmissionContext
@@ -40,7 +40,13 @@ export function BudgetPDF() {
           <Table.Column
             title="OSC" />
           <Table.Column
-            render={(text, row) => row.unitCost * row.totalUnits}
+            render={(text, row) => {
+              const percentageAllies = row.investmentDistribution
+                .find(investor => (
+                  investor.name === "Aliado(s)"
+                )).percentage
+              return (row.unitCost * row.totalUnits) * percentageAllies / 100
+            }}
             title="TOTAL" />
         </Table.Column>
       </Table>
