@@ -1,10 +1,10 @@
 import { useRouter } from "next/router"
 import {
   GeneralInformationPDF
-} from "../../../../../../components/implementer/submissions/pdf"
+} from "../../../../../../components/admin/submissions/pdf"
 import {
-  ImplementerSubmissionContext
-} from "../../../../../../contexts/implementer/submissions/show"
+  AdminSubmissionContext
+} from "../../../../../../contexts/admin/submissions/show"
 import { submission, implementer } from "../../../../../../graphql"
 import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
@@ -37,9 +37,9 @@ function ViewPDF({ client }) {
   }
 
   return (
-    <ImplementerSubmissionContext.Provider value={injectActions}>
+    <AdminSubmissionContext.Provider value={injectActions}>
       {sectionComponent}
-    </ImplementerSubmissionContext.Provider>
+    </AdminSubmissionContext.Provider>
   )
 }
 
