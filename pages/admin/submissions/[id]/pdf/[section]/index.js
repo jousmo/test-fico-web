@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
 import {
+  BudgetPDF,
   GeneralInformationPDF,
   ReportsPDF,
   TechnicalSpecificationPDF
@@ -34,12 +35,15 @@ function ViewPDF({ client }) {
   }), [state, submissionResult.loading])
 
   let sectionComponent
-  if (router.query.section === "general-information"){
+  const section = router.query.section
+  if (section === "general-information"){
     sectionComponent = <GeneralInformationPDF />
-  } else if (router.query.section === "reports"){
+  } else if (section === "reports"){
     sectionComponent = <ReportsPDF />
-  } else if (router.query.section === "technical-specification"){
+  } else if (section === "technical-specification"){
     sectionComponent = <TechnicalSpecificationPDF />
+  } else if (section === "budget"){
+    sectionComponent = <BudgetPDF />
   }
 
   return (
