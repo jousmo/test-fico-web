@@ -20,8 +20,8 @@ export function GeneralInformationPDF() {
     submissionResult
   } = useContext(ImplementerSubmissionContext)
 
-  const implementer = implementerResult?.Implementer
-  const submission = submissionResult?.Submission
+  const implementer = implementerResult?.data?.Implementer
+  const submission = submissionResult?.data?.Submission
 
   const title = (
     <>
