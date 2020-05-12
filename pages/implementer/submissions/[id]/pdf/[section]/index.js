@@ -5,7 +5,7 @@ import {
 import {
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/show"
-import { submission } from "../../../../../../graphql"
+import { submission, implementer } from "../../../../../../graphql"
 import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
@@ -16,16 +16,20 @@ function ViewPDF({ client }) {
     viewPDF: {}
   })
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const submissionResult = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: router.query.id }
   })
 
+  const implementerResult = useQuery(implementer.queries.getById, {
+    client: client,
+    variables: { id: 1 }
+  })
+
   const injectActions = useMemo(() => ({
-    loading,
-    error,
-    data
-  }), [state])
+    implementerResult,
+    submissionResult
+  }), [state, submissionResult.loading])
 
   let sectionComponent
   if (router.query.section === "general-information"){
