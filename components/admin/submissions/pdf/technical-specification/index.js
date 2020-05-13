@@ -3,7 +3,7 @@ import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
 import PDFHeading from "../heading"
-import DevelopmentObjectivePDF from "./development-objective"
+import ObjectivePDF from "./objective"
 import "../style.sass"
 
 export function TechnicalSpecificationPDF(){
@@ -16,9 +16,14 @@ export function TechnicalSpecificationPDF(){
   return (
     <div className="fico pdf technical-specification">
       <PDFHeading title="Especificación técnica" />
-      <DevelopmentObjectivePDF
+      <ObjectivePDF
         description={submission?.developmentObjective}
-        indicators={submission?.developmentObjectiveIndicators} />
+        indicators={submission?.developmentObjectiveIndicators}
+        title="Objetivo de desarrollo" />
+      <ObjectivePDF
+        description={submission?.generalObjective}
+        indicators={submission?.generalObjectiveIndicators}
+        title="Objetivo general" />
     </div>
   )
 }
