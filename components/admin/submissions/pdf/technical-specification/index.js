@@ -4,6 +4,7 @@ import {
 } from "../../../../../contexts/admin/submissions/show"
 import PDFHeading from "../heading"
 import ObjectivePDF from "./objective"
+import SpecificObjectivePDF from "./specific-objectives"
 import "../style.sass"
 
 export function TechnicalSpecificationPDF(){
@@ -24,6 +25,12 @@ export function TechnicalSpecificationPDF(){
         description={submission?.generalObjective}
         indicators={submission?.generalObjectiveIndicators}
         title="Objetivo general" />
+      {submission?.specificObjectives?.map((objective, index) => (
+        <SpecificObjectivePDF
+          key={index}
+          index={index + 1}
+          objective={objective} />
+      ))}
     </div>
   )
 }
