@@ -1,10 +1,10 @@
 import { Typography } from "antd"
 import { Section } from "../../../../../shared"
-import DevelopmentObjectiveIndicatorPDF from "./indicators"
+import ObjectiveIndicatorPDF from "./indicators"
 
-export default function DevelopmentObjectivePDF({ description, indicators }){
+export default function ObjectivePDF({ description, indicators, title }){
   return (
-    <Section title="Objetivo de desarrollo">
+    <Section title={title}>
       <Typography.Text>
         {description}
       </Typography.Text>
@@ -12,7 +12,7 @@ export default function DevelopmentObjectivePDF({ description, indicators }){
         Indicadores
       </Typography.Title>
       {indicators?.map((indicator, index) => (
-        <DevelopmentObjectiveIndicatorPDF indicator={indicator} key={index} />
+        <ObjectiveIndicatorPDF indicator={indicator} key={index} />
       ))}
     </Section>
   )

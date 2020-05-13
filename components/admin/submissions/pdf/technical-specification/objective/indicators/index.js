@@ -1,6 +1,6 @@
 import { Descriptions, Card, List, Typography } from "antd"
 
-export default function DevelopmentObjectiveIndicatorPDF({ indicator }){
+export default function ObjectiveIndicatorPDF({ indicator }){
   return (
     <Card>
       <Typography.Title level={4}>
