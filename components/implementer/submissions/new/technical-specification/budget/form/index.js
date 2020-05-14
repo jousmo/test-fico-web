@@ -93,10 +93,17 @@ function BudgetForm({data, onChange}) {
                   dataIndex="name"
                   render={renderInvestment("FICOSEC")} />
                 <Table.Column
-                  title="Aliado (s)"
-                  key="allied"
+                  title={data?.Submission?.allies[0]}
+                  key="first ally"
                   dataIndex="name"
-                  render={renderInvestment("Aliado (s)")} />
+                  render={renderInvestment(data?.Submission?.allies[0])} />
+                {data?.Submission?.allies[1] && (
+                  <Table.Column
+                    title={data?.Submission?.allies[1]}
+                    key="second ally"
+                    dataIndex="name"
+                    render={renderInvestment(data?.Submission?.allies[1])} />
+                )}
                 <Table.Column
                   title="Unidades"
                   key="totalUnits"
