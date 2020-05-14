@@ -9,6 +9,7 @@ export const getById = gql`
       type
       applyingCall
       region
+      allies
       implementationPlace
       responsible
       startDate
