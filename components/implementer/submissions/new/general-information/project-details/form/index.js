@@ -1,4 +1,4 @@
-import { Row, Form, DatePicker, Col, Alert, Skeleton, Input } from "antd"
+import { Row, Form, DatePicker, Col, Alert, Skeleton, Input, Select } from "antd"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers/withForm"
@@ -10,6 +10,10 @@ function ProjectDetailsForm({
   onChange,
   isCall
 }) {
+  const onAddAlly = (value) => {
+    onChange({currentTarget: { id: "ally", value: value }})
+  }
+
   return (
     <Form
       name="project-details"
@@ -67,13 +71,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Aliado del proyecto">
-            <Input
+            label="Aliados del proyecto (Máximo 2)">
+            <Select
               id="ally"
               name="ally"
               defaultValue={data?.Submission?.ally}
-              onChange={onChange}
-              type="text" />
+              mode="tags"
+              onChange={onAddAlly} />
           </Form.Item>
         </Col>
         <Col span={12}>
