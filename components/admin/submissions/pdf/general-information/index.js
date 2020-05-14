@@ -138,7 +138,7 @@ export function GeneralInformationPDF() {
             label={`Perfil del Beneficiario ${index + 1}`}>
             Descripción: {beneficiary.description}
             <br />
-            Numero de beneficiarios: {beneficiary.number}
+            Número de beneficiarios: {beneficiary.number}
             <br />
             Sexo: {getReadableValue(genderTypes, beneficiary.gender)}
             <br />
