@@ -1,4 +1,4 @@
-import { Table, Tag } from "antd"
+import { Table, Tag, Typography } from "antd"
 import { useContext } from "react"
 import {
   AdminSubmissionContext
@@ -14,12 +14,63 @@ export function BudgetPDF() {
   const {
     submissionResult
   } = useContext(AdminSubmissionContext)
+  const submission = submissionResult?.data?.Submission
 
   const getAmount = (row, percentage) => {
     return (row.unitCost * row.totalUnits) * percentage / 100
   }
 
-  const submission = submissionResult?.data?.Submission
+  const getPercentage = (total, amount) => {
+    return (amount * 100) / total
+  }
+
+  const getSummary = (concepts) => {
+    const firstAlly = submission?.allies[0]
+    const secondAlly = submission?.allies[1]
+
+    let totalAllies = 0
+    let totalFirstAlly = 0
+    let totalSecondAlly = 0
+    let absoluteTotal = 0
+
+    concepts.forEach(concept => {
+      const totalCost = concept.totalUnits * concept.unitCost
+
+      const firstAllyPercentage = concept.investmentDistribution
+        .find(e => e.name === firstAlly).percentage
+      const secondAllyPercentage = secondAlly ? concept.investmentDistribution
+        .find(e => e.name === secondAlly).percentage : 0
+      
+      absoluteTotal += totalCost
+      totalFirstAlly += getAmount(concept, firstAllyPercentage)
+      totalSecondAlly += secondAlly ? getAmount(concept, secondAllyPercentage) : 0
+      totalAllies += (totalCost * firstAllyPercentage / 100) +
+        (totalCost * secondAllyPercentage / 100)
+    });
+
+    return (
+      <>
+        <Table.Summary.Row>
+          <Table.Summary.Cell>Totales</Table.Summary.Cell>
+          <Table.Summary.Cell/>
+          <Table.Summary.Cell/>
+          <Table.Summary.Cell>
+            ${totalFirstAlly}&nbsp;<Tag>{getPercentage(totalAllies, totalFirstAlly)}%</Tag>
+          </Table.Summary.Cell>
+          {submission?.allies[1] && (
+            <Table.Summary.Cell>
+              ${totalSecondAlly}&nbsp;<Tag>{getPercentage(totalAllies, totalSecondAlly)}%</Tag>
+            </Table.Summary.Cell>
+          )}
+          <Table.Summary.Cell>
+            <Typography.Text>
+              ${totalAllies}&nbsp;<Tag>{getPercentage(absoluteTotal, totalAllies)}%</Tag>
+            </Typography.Text>
+          </Table.Summary.Cell>
+        </Table.Summary.Row>
+      </>
+    )
+  }
 
   return (
     <div className="fico pdf budget">
@@ -27,7 +78,8 @@ export function BudgetPDF() {
       <Table
         dataSource={submission?.concepts}
         pagination={false}
-        rowKey={(row, index) => index}>
+        rowKey={(row, index) => index}
+        summary={pageData => getSummary(pageData)}>
         <Table.Column
           render={(text, row, index) => index + 1}
           title="#" />
