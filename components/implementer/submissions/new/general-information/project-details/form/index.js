@@ -11,6 +11,7 @@ function ProjectDetailsForm({
   isCall
 }) {
   const onAddAlly = (value) => {
+    value.length = 2
     onChange({currentTarget: { id: "allies", value: value }})
   }
 
