@@ -48,7 +48,7 @@ function BudgetForm({data, onChange}) {
               onCancel={onCancel}
               onSave={onSave(addNew, replaceItemAtIndex)}
               edit={state.edit} />
-            <ScrollableView contentWidth="1500px">
+            <ScrollableView contentWidth="1600px">
               <Table
                 dataSource={items}
                 pagination={false}
@@ -93,10 +93,17 @@ function BudgetForm({data, onChange}) {
                   dataIndex="name"
                   render={renderInvestment("FICOSEC")} />
                 <Table.Column
-                  title="Aliado (s)"
-                  key="allied"
+                  title={data?.Submission?.allies[0]}
+                  key="firstAlly"
                   dataIndex="name"
-                  render={renderInvestment("Aliado (s)")} />
+                  render={renderInvestment(data?.Submission?.allies[0])} />
+                {data?.Submission?.allies[1] && (
+                  <Table.Column
+                    title={data?.Submission?.allies[1]}
+                    key="secondAlly"
+                    dataIndex="name"
+                    render={renderInvestment(data?.Submission?.allies[1])} />
+                )}
                 <Table.Column
                   title="Unidades"
                   key="totalUnits"

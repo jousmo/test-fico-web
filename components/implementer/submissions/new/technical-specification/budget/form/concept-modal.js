@@ -181,6 +181,7 @@ export function ConceptModal({
                 </Typography.Text>
               </FieldLabel>}>
               <InvestmentDistributionField
+                allies={submission?.allies}
                 defaultValue={edit?.investmentDistribution}
                 unitCost={state.unitCost}
                 totalUnits={state.totalUnits} />
