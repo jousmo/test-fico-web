@@ -11,7 +11,7 @@ function ProjectDetailsForm({
   isCall
 }) {
   const onAddAlly = (value) => {
-    onChange({currentTarget: { id: "ally", value: value }})
+    onChange({currentTarget: { id: "allies", value: value }})
   }
 
   return (
@@ -73,9 +73,10 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label="Aliados del proyecto (Máximo 2)">
             <Select
-              id="ally"
-              name="ally"
-              defaultValue={data?.Submission?.ally}
+              id="allies"
+              name="allies"
+              defaultValue={data?.Submission?.allies}
+              maxTagCount={2}
               mode="tags"
               onChange={onAddAlly} />
           </Form.Item>
