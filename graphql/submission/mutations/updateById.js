@@ -8,7 +8,7 @@ export const updateById = gql`
     $type: String,
     $applyingCall: String,
     $region: String,
-    $allies: JSON,
+    $allies: [String],
     $implementationPlace: String,
     $responsible: String,
     $startDate: String,
