@@ -15,11 +15,17 @@ export function BudgetPDF() {
     submissionResult
   } = useContext(AdminSubmissionContext)
 
+  const getAmount = (row, percentage) => {
+    return (row.unitCost * row.totalUnits) * percentage / 100
+  }
+
+  const submission = submissionResult?.data?.Submission
+
   return (
     <div className="fico pdf budget">
       <PDFHeading title="Presupuesto" />
       <Table
-        dataSource={submissionResult?.data?.Submission?.concepts}
+        dataSource={submission?.concepts}
         pagination={false}
         rowKey={(row, index) => index}>
         <Table.Column
@@ -33,23 +39,29 @@ export function BudgetPDF() {
           render={text => getReadableValue(conceptTypes, text)}
           title="Tipo" />
         <Table.Column title="Aportaciones">
-          <Table.Column
-            title="FF AC" />
-          <Table.Column
-            title="FECHAC" />
-          <Table.Column
-            title="OSC" />
+          {submission?.allies?.map(ally => (
+            <Table.Column
+              render={(text, row) => {
+                const percentage = row.investmentDistribution
+                  .find(e => e.name === ally).percentage
+                const total = getAmount(row, percentage)
+                return <>${total}&nbsp;<Tag>{percentage}%</Tag></>
+              }}
+              title={ally} />
+          ))}
           <Table.Column
             render={(text, row) => {
-              const percentageAllies = row.investmentDistribution
-                .find(investor => (
-                  investor.name === "Aliado(s)"
-                )).percentage
-              const total = (row.unitCost * row.totalUnits) *
-                percentageAllies / 100
-              return <>${total}&nbsp;<Tag>100%</Tag></>
+              const allies = row.investmentDistribution
+                .filter(e => e.type === "ALLIED")
+              let totalPercentage = 0
+              let totalAmount = 0
+              allies.forEach(ally => {
+                totalPercentage += ally.percentage
+                totalAmount += getAmount(row, ally.percentage)
+              })
+              return <>${totalAmount}&nbsp;<Tag>{totalPercentage}%</Tag></>
             }}
-            title="TOTAL" />
+            title="TOTAL"/>
         </Table.Column>
       </Table>
     </div>
