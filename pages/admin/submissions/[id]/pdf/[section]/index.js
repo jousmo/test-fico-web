@@ -1,7 +1,8 @@
 import { useRouter } from "next/router"
 import {
   GeneralInformationPDF,
-  ReportsPDF
+  ReportsPDF,
+  TechnicalSpecificationPDF
 } from "../../../../../../components/admin/submissions/pdf"
 import {
   AdminSubmissionContext
@@ -37,6 +38,8 @@ function ViewPDF({ client }) {
     sectionComponent = <GeneralInformationPDF />
   } else if (router.query.section === "reports"){
     sectionComponent = <ReportsPDF />
+  } else if (router.query.section === "technical-specification"){
+    sectionComponent = <TechnicalSpecificationPDF />
   }
 
   return (
