@@ -2,6 +2,7 @@ import { useRouter } from "next/router"
 import {
   BudgetPDF,
   GeneralInformationPDF,
+  MinistrationsPDF,
   ReportsPDF,
   TechnicalSpecificationPDF
 } from "../../../../../../components/admin/submissions/pdf"
@@ -44,6 +45,8 @@ function ViewPDF({ client }) {
     sectionComponent = <TechnicalSpecificationPDF />
   } else if (section === "budget"){
     sectionComponent = <BudgetPDF />
+  } else if (section === "ministrations"){
+    sectionComponent = <MinistrationsPDF />
   }
 
   return (
