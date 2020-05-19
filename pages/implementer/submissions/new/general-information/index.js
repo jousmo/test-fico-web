@@ -11,6 +11,7 @@ import { submission } from "../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
+import { CommentsProvider } from "../../../../../contexts/admin/submissions/review/comments"
 
 
 function GeneralInformation({ client }) {
@@ -98,14 +99,16 @@ function GeneralInformation({ client }) {
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
-      <ImplementerSubmissionContext.Provider value={injectActions}>
-        <Layout>
-          <ProjectDetails />
-          <Consultant />
-          <DevelopmentObjectives />
-          <Beneficiaries />
-        </Layout>
-      </ImplementerSubmissionContext.Provider>
+      <CommentsProvider>
+        <ImplementerSubmissionContext.Provider value={injectActions}>
+          <Layout>
+            <ProjectDetails />
+            <Consultant />
+            <DevelopmentObjectives />
+            <Beneficiaries />
+          </Layout>
+        </ImplementerSubmissionContext.Provider>
+      </CommentsProvider>
     </PageContext.Provider>
   )
 }

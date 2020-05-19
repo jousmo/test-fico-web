@@ -1,4 +1,4 @@
-import { Row, Form, DatePicker, Col, Alert, Skeleton, Input, Select } from "antd"
+import { Row, Form, Col, Input, Select } from "antd"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers/withForm"
@@ -25,7 +25,14 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Tipo de solicitud">
+            label="Tipo de solicitud"
+            label={
+              <FieldLabel comentable={{
+                name: "type",
+                section: "projectDetails"}}>
+                Tipo de solicitud
+              </FieldLabel>
+            }>
             <SelectField
               id="type"
               name="type"
