@@ -3,12 +3,15 @@ export const investmentDecorator = (concept, month, index, investments) => {
     const cost = concept.unitCost * concept.monthlyDistribution[index]
     const investment = (cost * investor.percentage) / 100
 
-    if (investments[investor.name] === undefined) {
-      investments[investor.name] = [];
+    if (!investments[month.format("YYYY")]){
+      investments[month.format("YYYY")] = {}
     }
-    const totalInvestment = investments[investor.name][index]
+    if (!investments[month.format("YYYY")][investor.name]){
+      investments[month.format("YYYY")][investor.name] = [];
+    }
+    const totalInvestment = investments[month.format("YYYY")][investor.name][index]
 
-    investments[investor.name][index] = totalInvestment ?
+    investments[month.format("YYYY")][investor.name][index] = totalInvestment ?
       totalInvestment + investment :
       investment
   })
