@@ -31,6 +31,39 @@ export function MinistrationsPDF(){
     )
   }
 
+  const getMonthlySummary = (pageData) => {
+    const totalMonthly = []
+    let total = 0
+
+    pageData.forEach(row => {
+      total += row["total"]
+      Object.keys(row).forEach((key, index) => {
+        if (key !== "name" && key !== "total"){
+          if (!totalMonthly[index]){
+            totalMonthly[index] = 0
+          }
+          totalMonthly[index] += row[key]
+        }
+      })
+    })
+
+    return (
+      <Table.Summary.Row>
+        <Table.Summary.Cell>
+          Total
+        </Table.Summary.Cell>
+        {totalMonthly.map(amount =>
+          <Table.Summary.Cell>
+            {money(amount).children}
+          </Table.Summary.Cell>
+        )}
+        <Table.Summary.Cell>
+          {money(total).children}
+        </Table.Summary.Cell>
+      </Table.Summary.Row>
+    )
+  }
+
   const range = moment.range(moment(submission?.startDate),
     moment(submission?.endDate))
   const months = Array.from(range.by("month"))
@@ -52,6 +85,7 @@ export function MinistrationsPDF(){
               dataSource={dataSource.yearly[year]}
               key={yearIndex}
               pagination={false}
+              summary={pageData => getMonthlySummary(pageData)}
               rowKey={(row, index) => `${yearIndex}-${index}`}>
               <Table.Column
                 dataIndex="name"
@@ -93,7 +127,7 @@ export function MinistrationsPDF(){
             pageData.forEach(({ total }) => {
               totalSum += total;
             });
-            console.log(money(totalSum))
+
             return (
               <Table.Summary.Row>
                 <Table.Summary.Cell>
