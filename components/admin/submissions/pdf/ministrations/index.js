@@ -7,6 +7,8 @@ import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
 import PDFHeading from "../heading"
+import { conceptsDecorator } from "./helpers"
+import { money } from "../../../../../helpers/cellFormat"
 import "../style.sass"
 
 export function MinistrationsPDF(){
@@ -23,7 +25,7 @@ export function MinistrationsPDF(){
         </Typography.Text>
         <br/>
         <Typography.Text type="secondary">
-          {month.format("DD/MM/YYYY")} - {month.add(1, "month").format("DD/MM/YYYY")}
+          {month.format("MMMM YYYY")}
         </Typography.Text>
       </>
     )
@@ -34,31 +36,47 @@ export function MinistrationsPDF(){
   const years = Array.from(range.by("year"))
   const months = Array.from(range.by("month"))
 
+  const investments = {}
+  conceptsDecorator(submission?.concepts, months, investments)
+  const dataSource = Object.keys(investments)?.map(key => {
+    return {
+      name: key,
+      ...investments[key]
+    }
+  })
+
   return (
     <div className="fico pdf ministrations">
       <PDFHeading title="Ministración" />
       { years.map((year, index) =>
-        <Table
-          dataSource={submission?.concepts}
-          key={index}
-          pagination={false}
-          rowKey={(row, index) => index}>
-          <Table.Column
-            title="Aportante" />
-          <Table.Column title={year.format("YYYY")}>
-            {months.map((month, index) => {
-              if (month.isSame(year, "year")){
-                return (
-                  <Table.Column
-                    key={index}
-                    title={getPeriodTitle(month, index)}/>
-                )
-              }
-            })}
+        <>
+          <Table
+            dataSource={dataSource}
+            key={index}
+            pagination={false}
+            rowKey={(row, index) => index}>
             <Table.Column
-              title="Total"/>
-          </Table.Column>
-        </Table>
+              dataIndex="name"
+              title="Aportante" />
+            <Table.Column title={year.format("YYYY")}>
+              {months.map((month, index) => {
+                if (month.isSame(year, "year")){
+                  return (
+                    <Table.Column
+                      key={index}
+                      render={(text, row) => (
+                        money(row[index])
+                      )}
+                      title={getPeriodTitle(month, index)}/>
+                  )
+                }
+              })}
+              <Table.Column
+                title="Total"/>
+            </Table.Column>
+          </Table>
+          <br />
+        </>
       )}
     </div>
   )

@@ -23,8 +23,14 @@
 
   &.ministrations
     .ant-table-thead
-      .ant-table-cell
-        text-align: center
+      tr:nth-child(n+2)
+        .ant-table-cell
+          text-align: center
+
+    .ant-table-tbody
+      .ant-table-row
+        .ant-table-cell:nth-child(n+2)
+          text-align: center
 
   .export-button
     float: right
