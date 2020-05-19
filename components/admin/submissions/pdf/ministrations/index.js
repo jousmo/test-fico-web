@@ -33,22 +33,31 @@ export function MinistrationsPDF(){
 
   const range = moment.range(moment(submission?.startDate),
     moment(submission?.endDate))
-  const years = Array.from(range.by("year"))
   const months = Array.from(range.by("month"))
+
+  const yearsSet = new Set()
+  months.forEach(m => yearsSet.add(m.format("YYYY")))
 
   const investments = {}
   conceptsDecorator(submission?.concepts, months, investments)
   const dataSource = Object.keys(investments)?.map(key => {
     return {
       name: key,
-      ...investments[key]
+      ...investments[key],
+      total: investments[key].reduce((a, b) => {
+        if (isNaN(b)){
+          return a + 0
+        } else {
+          return a + b
+        }
+      }, 0)
     }
   })
 
   return (
     <div className="fico pdf ministrations">
       <PDFHeading title="Ministración" />
-      { years.map((year, index) =>
+      { Array.from(yearsSet).map((year, index) =>
         <>
           <Table
             dataSource={dataSource}
@@ -58,9 +67,9 @@ export function MinistrationsPDF(){
             <Table.Column
               dataIndex="name"
               title="Aportante" />
-            <Table.Column title={year.format("YYYY")}>
+            <Table.Column title={year}>
               {months.map((month, index) => {
-                if (month.isSame(year, "year")){
+                if (month.isSame(moment(year), "year")){
                   return (
                     <Table.Column
                       key={index}
@@ -72,6 +81,8 @@ export function MinistrationsPDF(){
                 }
               })}
               <Table.Column
+                dataIndex="total"
+                render={text => money(text)}
                 title="Total"/>
             </Table.Column>
           </Table>
