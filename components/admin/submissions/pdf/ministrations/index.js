@@ -88,6 +88,23 @@ export function MinistrationsPDF(){
         <Table
           dataSource={dataSource.total}
           pagination={false}
+          summary={pageData => {
+            let totalSum = 0
+            pageData.forEach(({ total }) => {
+              totalSum += total;
+            });
+            console.log(money(totalSum))
+            return (
+              <Table.Summary.Row>
+                <Table.Summary.Cell>
+                  Total
+                </Table.Summary.Cell>
+                <Table.Summary.Cell>
+                  {money(totalSum).children}
+                </Table.Summary.Cell>
+              </Table.Summary.Row>
+            )
+          }}
           rowKey={(row, index) => `total-${index}`}>
           <Table.Column
             dataIndex="name"
