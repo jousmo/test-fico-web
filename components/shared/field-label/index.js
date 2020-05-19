@@ -1,14 +1,21 @@
 import { QuestionCircleFilled } from "@ant-design/icons";
 import { Popover } from "antd";
+import { CommentButton } from "../../admin/submissions/review";
 
-export function FieldLabel({helpText, children}) {
-  if(!helpText)
-    return <div>{children}</div>
-
+export function FieldLabel({helpText, children, comentable}) {
   return (
-    <Popover content={helpText}>
+    <Popover
+      overlayStyle={!helpText && {display: "none"}}
+      content={helpText}>
       {children}&nbsp;
-      <QuestionCircleFilled />
+      { helpText ?
+        <QuestionCircleFilled />
+      : null }
+      { comentable ?
+        <CommentButton
+          name={comentable?.name}
+          section={comentable?.section} />
+      : null }
     </Popover>
   )
 }
