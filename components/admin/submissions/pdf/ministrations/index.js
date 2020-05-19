@@ -17,11 +17,11 @@ export function MinistrationsPDF(){
   } = useContext(AdminSubmissionContext)
   const submission = submissionResult?.data?.Submission
 
-  const getPeriodTitle = (month, index) => {
+  const getPeriodTitle = (month, period) => {
     return (
       <>
         <Typography.Text>
-          Periodo {index + 1}
+          Periodo {period}
         </Typography.Text>
         <br/>
         <Typography.Text type="secondary">
@@ -38,12 +38,13 @@ export function MinistrationsPDF(){
   const yearsSet = new Set()
   months.forEach(m => yearsSet.add(m.format("YYYY")))
 
+  const totalTableData = []
+
   const investments = {}
   conceptsDecorator(submission?.concepts, months, investments)
   const dataSource = Object.keys(investments)?.map(key => {
-    return {
+    totalTableData.push({
       name: key,
-      ...investments[key],
       total: investments[key].reduce((a, b) => {
         if (isNaN(b)){
           return a + 0
@@ -51,44 +52,70 @@ export function MinistrationsPDF(){
           return a + b
         }
       }, 0)
+    })
+
+    return {
+      name: key,
+      ...investments[key]
     }
   })
+
+  let periodCounter = 0
 
   return (
     <div className="fico pdf ministrations">
       <PDFHeading title="Ministración" />
-      { Array.from(yearsSet).map((year, index) =>
-        <>
-          <Table
-            dataSource={dataSource}
-            key={index}
-            pagination={false}
-            rowKey={(row, index) => index}>
-            <Table.Column
-              dataIndex="name"
-              title="Aportante" />
-            <Table.Column title={year}>
-              {months.map((month, index) => {
-                if (month.isSame(moment(year), "year")){
-                  return (
-                    <Table.Column
-                      key={index}
-                      render={(text, row) => (
-                        money(row[index])
-                      )}
-                      title={getPeriodTitle(month, index)}/>
-                  )
-                }
-              })}
+      { Array.from(yearsSet).map((year, yearIndex) => {
+        return(
+          <>
+            <Table
+              dataSource={dataSource}
+              key={yearIndex}
+              pagination={false}
+              rowKey={(row, index) => index}>
               <Table.Column
-                dataIndex="total"
-                render={text => money(text)}
-                title="Total"/>
-            </Table.Column>
-          </Table>
-          <br />
-        </>
-      )}
+                dataIndex="name"
+                title="Aportante" />
+              <Table.Column title={year}>
+                {months.map((month, monthIndex) => {
+                  if (month.isSame(moment(year), "year")){
+                    periodCounter++
+                    return (
+                      <Table.Column
+                        key={monthIndex}
+                        render={(text, row) => (
+                          money(row[index])
+                        )}
+                        title={getPeriodTitle(month, periodCounter)}/>
+                    )
+                  } else {
+                    periodCounter = 0
+                  }
+                })}
+                <Table.Column
+                  dataIndex="total"
+                  render={text => money(text)}
+                  title="Total"/>
+              </Table.Column>
+            </Table>
+            <br />
+          </>
+        )
+      })}
+      <br/>
+      <div className="total-table">
+        <Table
+          dataSource={totalTableData}
+          pagination={false}>
+          <Table.Column
+            dataIndex="name"
+            title="Aportante"/>
+          <Table.Column
+            dataIndex="total"
+            render={text => money(text)}
+            title="TOTAL MINISTRADO"/>
+        </Table>
+      </div>
     </div>
   )
 }
