@@ -1,1 +1,1 @@
-export * from "./conceptsDecorator"
+export * from "./dataDecorator"

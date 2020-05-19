@@ -7,7 +7,7 @@ import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
 import PDFHeading from "../heading"
-import { conceptsDecorator } from "./helpers"
+import { dataDecorator } from "./helpers"
 import { money } from "../../../../../helpers/cellFormat"
 import "../style.sass"
 
@@ -38,27 +38,7 @@ export function MinistrationsPDF(){
   const yearsSet = new Set()
   months.forEach(m => yearsSet.add(m.format("YYYY")))
 
-  const totalTableData = []
-
-  const investments = {}
-  conceptsDecorator(submission?.concepts, months, investments)
-  const dataSource = Object.keys(investments)?.map(key => {
-    totalTableData.push({
-      name: key,
-      total: investments[key].reduce((a, b) => {
-        if (isNaN(b)){
-          return a + 0
-        } else {
-          return a + b
-        }
-      }, 0)
-    })
-
-    return {
-      name: key,
-      ...investments[key]
-    }
-  })
+  const dataSource = dataDecorator(submission?.concepts, months)
 
   let periodCounter = 0
 
@@ -69,10 +49,10 @@ export function MinistrationsPDF(){
         return(
           <>
             <Table
-              dataSource={dataSource}
+              dataSource={dataSource.yearly[year]}
               key={yearIndex}
               pagination={false}
-              rowKey={(row, index) => index}>
+              rowKey={(row, index) => `${yearIndex}-${index}`}>
               <Table.Column
                 dataIndex="name"
                 title="Aportante" />
@@ -82,9 +62,9 @@ export function MinistrationsPDF(){
                     periodCounter++
                     return (
                       <Table.Column
-                        key={monthIndex}
+                        key={`${yearIndex}-${monthIndex}`}
                         render={(text, row) => (
-                          money(row[index])
+                          money(row[monthIndex])
                         )}
                         title={getPeriodTitle(month, periodCounter)}/>
                     )
@@ -94,6 +74,7 @@ export function MinistrationsPDF(){
                 })}
                 <Table.Column
                   dataIndex="total"
+                  key={`total-${yearIndex}`}
                   render={text => money(text)}
                   title="Total"/>
               </Table.Column>
@@ -105,8 +86,9 @@ export function MinistrationsPDF(){
       <br/>
       <div className="total-table">
         <Table
-          dataSource={totalTableData}
-          pagination={false}>
+          dataSource={dataSource.total}
+          pagination={false}
+          rowKey={(row, index) => `total-${index}`}>
           <Table.Column
             dataIndex="name"
             title="Aportante"/>
