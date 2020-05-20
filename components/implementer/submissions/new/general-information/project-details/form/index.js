@@ -28,7 +28,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "type",
-                section: "projectDetails"}}>
+                section: "submission"}}>
                 Tipo de solicitud
               </FieldLabel>
             }>
@@ -46,7 +46,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "applyingCall",
-                section: "projectDetails"}}>
+                section: "submission"}}>
                 Convocatoria a la que aplica
               </FieldLabel>
             }>
@@ -65,7 +65,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "name",
-                section: "projectDetails"}}>
+                section: "submission"}}>
                 Nombre del proyecto
               </FieldLabel>
             }>
@@ -83,7 +83,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "region",
-                section: "projectDetails"}}>
+                section: "submission"}}>
                 Región
               </FieldLabel>
             }>
@@ -101,7 +101,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "allies",
-                section: "projectDetails"}}>
+                section: "submission"}}>
                 Aliados del proyecto (Máximo 2)
               </FieldLabel>
             }>
@@ -154,7 +154,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "startDate",
-                section: "projectDetails"}}>
+                section: "submission"}}>
                 Fecha de inicio
               </FieldLabel>
             }>
@@ -172,7 +172,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "endDate",
-                section: "projectDetails"}}>
+                section: "submission"}}>
                 Fecha de conclusión
               </FieldLabel>
             }>
@@ -190,7 +190,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "strategicAxis",
-                section: "projectDetails"}}>
+                section: "submission"}}>
                 Eje estratégico
               </FieldLabel>
             }>
@@ -210,7 +210,7 @@ function ProjectDetailsForm({
                 helpText={<PreventionLevelsText />}
                 comentable={{
                   name: "preventionLevel",
-                  section: "projectDetails"}}>
+                  section: "submission"}}>
                 Nivel de prevención
               </FieldLabel>
             }>
