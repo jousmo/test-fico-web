@@ -4,7 +4,7 @@ import {
 } from "../../../../../components/admin/submissions/review"
 import { useCallback, useState } from "react"
 
-export function CommentsProvider({ revision, children }) {
+export function CommentsProvider({ revision, children, readOnly }) {
   const [state, setState] = useState({ isModalOpen: false, field: {} })
 
   const openCommentsModal = useCallback(() => {
@@ -43,6 +43,7 @@ export function CommentsProvider({ revision, children }) {
         onCancel={onCancel}
         visible={state.isModalOpen}
         revision={revision}
+        readOnly={readOnly}
         fieldSection={state.field.section}
         fieldName={state.field.name} />
       { children }

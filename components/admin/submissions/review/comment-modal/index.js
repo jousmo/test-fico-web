@@ -6,6 +6,7 @@ export function CommentModal({
   onCancel,
   onSave,
   revision,
+  readOnly,
   fieldName,
   fieldSection,
   ...props
@@ -38,16 +39,18 @@ export function CommentModal({
       cancelText="Cancelar"
       width={800}
       {...props}>
-      <Form
-        form={form}
-        layout="vertical">
-        <Form.Item
-          name="comment">
-          <Input.TextArea
-            id="comment"
-            placeholder="Describe los puntos a corregir" />
-        </Form.Item>
-      </Form>
+      { !readOnly && (
+        <Form
+          form={form}
+          layout="vertical">
+          <Form.Item
+            name="comment">
+            <Input.TextArea
+              id="comment"
+              placeholder="Describe los puntos a corregir" />
+          </Form.Item>
+        </Form>
+      )}
     </Modal>
   )
 }
