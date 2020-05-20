@@ -1,6 +1,6 @@
-export const investmentDecorator = (concept, month, index, investments) => {
+export const investmentDecorator = (concept, month, monthIndex, investments) => {
   concept.investmentDistribution?.forEach(investor => {
-    const cost = concept.unitCost * concept.monthlyDistribution[index]
+    const cost = concept.unitCost * concept.monthlyDistribution[monthIndex]
     const investment = (cost * investor.percentage) / 100
 
     if (!investments[month.format("YYYY")]){
@@ -9,9 +9,9 @@ export const investmentDecorator = (concept, month, index, investments) => {
     if (!investments[month.format("YYYY")][investor.name]){
       investments[month.format("YYYY")][investor.name] = [];
     }
-    const totalInvestment = investments[month.format("YYYY")][investor.name][index]
+    const totalInvestment = investments[month.format("YYYY")][investor.name][monthIndex]
 
-    investments[month.format("YYYY")][investor.name][index] = totalInvestment ?
+    investments[month.format("YYYY")][investor.name][monthIndex] = totalInvestment ?
       totalInvestment + investment :
       investment
   })
