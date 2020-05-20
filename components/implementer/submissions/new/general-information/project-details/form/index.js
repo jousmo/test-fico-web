@@ -25,7 +25,6 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Tipo de solicitud"
             label={
               <FieldLabel comentable={{
                 name: "type",
@@ -44,7 +43,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Convocatoria a la que aplica">
+            label={
+              <FieldLabel comentable={{
+                name: "applyingCall",
+                section: "projectDetails"}}>
+                Convocatoria a la que aplica
+              </FieldLabel>
+            }>
             <Input
               id="applyingCall"
               name="applyingCall"
@@ -57,7 +62,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Nombre del proyecto">
+            label={
+              <FieldLabel comentable={{
+                name: "name",
+                section: "projectDetails"}}>
+                Nombre del proyecto
+              </FieldLabel>
+            }>
             <Input
               id="name"
               name="name"
@@ -69,7 +80,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Región">
+            label={
+              <FieldLabel comentable={{
+                name: "region",
+                section: "projectDetails"}}>
+                Región
+              </FieldLabel>
+            }>
             <SelectField
               id="region"
               name="region"
@@ -81,7 +98,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Aliados del proyecto (Máximo 2)">
+            label={
+              <FieldLabel comentable={{
+                name: "allies",
+                section: "projectDetails"}}>
+                Aliados del proyecto (Máximo 2)
+              </FieldLabel>
+            }>
             <Select
               id="allies"
               name="allies"
@@ -128,7 +151,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Fecha de inicio">
+            label={
+              <FieldLabel comentable={{
+                name: "startDate",
+                section: "projectDetails"}}>
+                Fecha de inicio
+              </FieldLabel>
+            }>
             <DateField
               id="startDate"
               name="startDate"
@@ -140,7 +169,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Fecha de conclusión">
+            label={
+              <FieldLabel comentable={{
+                name: "endDate",
+                section: "projectDetails"}}>
+                Fecha de conclusión
+              </FieldLabel>
+            }>
             <DateField
               id="endDate"
               name="endDate"
@@ -152,7 +187,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Eje estratégico">
+            label={
+              <FieldLabel comentable={{
+                name: "strategicAxis",
+                section: "projectDetails"}}>
+                Eje estratégico
+              </FieldLabel>
+            }>
             <SelectField
               id="strategicAxis"
               name="strategicAxis"
@@ -165,9 +206,14 @@ function ProjectDetailsForm({
           <Form.Item
             style={{display: "inline"}}
             label={
-              <FieldLabel helpText={<PreventionLevelsText />}>
+              <FieldLabel
+                helpText={<PreventionLevelsText />}
+                comentable={{
+                  name: "preventionLevel",
+                  section: "projectDetails"}}>
                 Nivel de prevención
-              </FieldLabel>}>
+              </FieldLabel>
+            }>
             <SelectField
               id="preventionLevel"
               name="preventionLevel"
