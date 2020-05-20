@@ -8,7 +8,7 @@ import {
 import { data as pageData, ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../contexts/page"
 import { submission } from "../../../../../graphql/submission"
-import { useState, useMemo } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
 import {
@@ -37,16 +37,25 @@ function GeneralInformation({ client }) {
     variables: { id: "1" }
   })
 
-  const updateGeneralInformation = setUpdateGeneralInformation(state, setState)
+  const updateGeneralInformation = useCallback(generalInformation => {
+    setUpdateGeneralInformation(generalInformation, state, setState)
+  }, [state, setState])
 
-  const save = setSave(state, updateSubmission)
+  const save = useCallback(async () => {
+    await setSave(state, updateSubmission)
+  }, [state, updateSubmission])
 
-  const isCall = getIsCall(data, state)
+  const isCall = useCallback(() => {
+    return getIsCall(data, state)
+  }, [data, state])
 
-  const hasConsultant = getHasConsultant(data, state)
+  const hasConsultant = useCallback(() => {
+    return getHasConsultant(data, state)
+  }, [data, state])
 
-  const hadConsultantReceivedSupports =
-    getHasConsultantReceivedSuppors(data, state)
+  const hadConsultantReceivedSupports = useCallback(() => {
+    return getHasConsultantReceivedSuppors(data, state)
+  }, [data, state])
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,

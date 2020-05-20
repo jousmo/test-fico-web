@@ -1,15 +1,15 @@
 import { useCallback } from "react"
 
-export const setUpdateGeneralInformation = (state, setState) => useCallback(generalInformation => {
+export const setUpdateGeneralInformation = (generalInformation, state, setState) => {
   const newGeneralInformation = {
     ...state.generalInformation,
     ...generalInformation
   }
 
   setState({...state, dirty: true, generalInformation: newGeneralInformation})
-})
+}
 
-export const setSave = (state, updateSubmission) => useCallback(async () => {
+export const setSave = async (state, updateSubmission) => {
   try {
     const updatedSubmission = await updateSubmission({
       variables: { ...state.generalInformation, id: "1" }
@@ -20,14 +20,14 @@ export const setSave = (state, updateSubmission) => useCallback(async () => {
   catch(e) {
     console.error(e)
   }
-})
+}
 
-export const getIsCall = (data, state) => useCallback(() => {
+export const getIsCall = (data, state) => {
   return state.generalInformation.type === "CALL" ||
     data?.Submission?.type === "CALL"
-})
+}
 
-export const getHasConsultant = (data, state) => useCallback(() => {
+export const getHasConsultant = (data, state) => {
   const hasConsultant = state
     .generalInformation
     .hasConsultant
@@ -38,9 +38,9 @@ export const getHasConsultant = (data, state) => useCallback(() => {
 
   return hasConsultant === true ||
     (hasConsultantData === true && !state.dirty)
-})
+}
 
-export const getHasConsultantReceivedSuppors = (data, state) => useCallback(() => {
+export const getHasConsultantReceivedSuppors = (data, state) => {
   const hadReceivedSupports = state
     .generalInformation
     .consultant
@@ -53,5 +53,4 @@ export const getHasConsultantReceivedSuppors = (data, state) => useCallback(() =
 
   return hadReceivedSupports === true ||
     (hadReceivedSupportsData === true && !state.dirty)
-
-})
+}
