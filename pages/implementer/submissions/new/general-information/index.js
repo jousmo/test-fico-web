@@ -21,7 +21,7 @@ function GeneralInformation({ client }) {
     },
     dirty: false
   })
-  
+
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
   )
@@ -62,7 +62,7 @@ function GeneralInformation({ client }) {
     const hasConsultant = state
       .generalInformation
       .hasConsultant
-    
+
     const hasConsultantData = data
       ?.Submission
       ?.hasConsultant
@@ -76,7 +76,7 @@ function GeneralInformation({ client }) {
       .generalInformation
       .consultant
       .hadReceivedSupports
-    
+
     const hadReceivedSupportsData = data
       ?.Submission
       ?.consultant
@@ -99,7 +99,7 @@ function GeneralInformation({ client }) {
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
-      <CommentsProvider>
+      <CommentsProvider readOnly>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <ProjectDetails />
