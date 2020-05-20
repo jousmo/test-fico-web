@@ -8,10 +8,16 @@ import {
 import { data as pageData, ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../contexts/page"
 import { submission } from "../../../../../graphql/submission"
-import { useState, useCallback, useMemo } from "react"
+import { useState, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
-import { CommentsProvider } from "../../../../../contexts/admin/submissions/review/comments"
+import {
+  getIsCall,
+  getHasConsultant,
+  getHasConsultantReceivedSuppors,
+  setSave,
+  setUpdateGeneralInformation
+} from "../../helpers"
 
 
 function GeneralInformation({ client }) {
@@ -31,60 +37,16 @@ function GeneralInformation({ client }) {
     variables: { id: "1" }
   })
 
-  const updateGeneralInformation = useCallback(generalInformation => {
-    const newGeneralInformation = {
-      ...state.generalInformation,
-      ...generalInformation
-    }
+  const updateGeneralInformation = setUpdateGeneralInformation(state, setState)
 
-    setState({...state, dirty: true, generalInformation: newGeneralInformation})
-  })
+  const save = setSave(state, updateSubmission)
 
-  const save = useCallback(async () => {
-    try {
-      const updatedSubmission = await updateSubmission({
-        variables: { ...state.generalInformation, id: "1" }
-      })
+  const isCall = getIsCall(data, state)
 
-      /* TODO: Show feedback to the user */
-    }
-    catch(e) {
-      console.error(e)
-    }
-  })
+  const hasConsultant = getHasConsultant(data, state)
 
-  const isCall = useCallback(() => {
-    return state.generalInformation.type === "CALL" ||
-      data?.Submission?.type === "CALL"
-  })
-
-  const hasConsultant = useCallback(() => {
-    const hasConsultant = state
-      .generalInformation
-      .hasConsultant
-
-    const hasConsultantData = data
-      ?.Submission
-      ?.hasConsultant
-
-    return hasConsultant === true ||
-      (hasConsultantData === true && !state.dirty)
-  })
-
-  const hadConsultantReceivedSupports = useCallback(() => {
-    const hadReceivedSupports = state
-      .generalInformation
-      .consultant
-      .hadReceivedSupports
-
-    const hadReceivedSupportsData = data
-      ?.Submission
-      ?.consultant
-      ?.hadReceivedSupports
-
-    return hadReceivedSupports === true ||
-      (hadReceivedSupportsData === true && !state.dirty)
-  })
+  const hadConsultantReceivedSupports =
+    getHasConsultantReceivedSuppors(data, state)
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
@@ -99,16 +61,14 @@ function GeneralInformation({ client }) {
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
-      <CommentsProvider readOnly>
-        <ImplementerSubmissionContext.Provider value={injectActions}>
-          <Layout>
-            <ProjectDetails />
-            <Consultant />
-            <DevelopmentObjectives />
-            <Beneficiaries />
-          </Layout>
-        </ImplementerSubmissionContext.Provider>
-      </CommentsProvider>
+      <ImplementerSubmissionContext.Provider value={injectActions}>
+        <Layout>
+          <ProjectDetails />
+          <Consultant />
+          <DevelopmentObjectives />
+          <Beneficiaries />
+        </Layout>
+      </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
   )
 }
