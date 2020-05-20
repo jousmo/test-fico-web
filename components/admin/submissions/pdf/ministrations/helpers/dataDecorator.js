@@ -10,10 +10,9 @@ export const dataDecorator = (concepts, months) => {
     dataSource[year] = Object.keys(investments[year]).map(investor => {
       const anualTotal = investments[year][investor].reduce((a, b) => {
         if (isNaN(b)){
-          return a + 0
-        } else {
-          return a + b
+          return a
         }
+        return a + b
       }, 0)
 
       const total = totalPerInvestor[investor]
