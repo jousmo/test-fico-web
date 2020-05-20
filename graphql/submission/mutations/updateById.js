@@ -31,7 +31,8 @@ export const updateById = gql`
     $status: String,
     $statusChangedAt: String,
     $deadline: String,
-    $signedContractAt: String){
+    $signedContractAt: String,
+    $comments: JSON){
       updateSubmission(
         id: $id,
         implementerId: $implementerId,
@@ -62,7 +63,8 @@ export const updateById = gql`
         status: $status,
         statusChangedAt: $statusChangedAt,
         deadline: $deadline,
-        signedContractAt: $signedContractAt
+        signedContractAt: $signedContractAt,
+        comments: $comments
       ) {
         id
       }
