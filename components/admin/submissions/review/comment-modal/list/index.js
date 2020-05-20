@@ -15,14 +15,19 @@ export function CommentListing({ comments }){
       }>
       {comments.map((element, index) =>
         <List.Item key={index}>
-          <Typography.Text>
-            {element.comment}
-          </Typography.Text>
-          <Typography.Text type="secondary">
-            {getReadableValue(statusOptions, element.revision)} -
-            &nbsp;
-            {moment(element.createdAt).format("DD/MM/YYYY HH:MM")}
-          </Typography.Text>
+          <List.Item.Meta
+            title={
+              <Typography.Text>
+                {element.comment}
+              </Typography.Text>
+            }
+            description={
+              <Typography.Text type="secondary">
+                {getReadableValue(statusOptions, element.revision)} -
+                &nbsp;
+                {moment(element.createdAt).format("DD/MM/YYYY HH:MM")}
+              </Typography.Text>
+            } />
         </List.Item>
       )}
     </List>
