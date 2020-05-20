@@ -1,10 +1,12 @@
 import { CommentsContext } from "./context"
+import moment from "moment"
 import {
   CommentModal
 } from "../../../../../components/admin/submissions/review"
 import { useCallback, useState } from "react"
 
-export function CommentsProvider({ revision, children, readOnly }) {
+export function CommentsProvider({ children, submission, readOnly, update }) {
+  const revision = submission?.status
   const [state, setState] = useState({ isModalOpen: false, field: {} })
 
   const openCommentsModal = useCallback(() => {
@@ -22,9 +24,21 @@ export function CommentsProvider({ revision, children, readOnly }) {
   }
 
   const onSave = values => {
-    /* Here use `values`, `revision`, `state.field.name`,
-     * `state.field.section` to set the location to save the comment
-     * depending the case */
+    const section = state.field.section
+    if (section === "submission"){
+      const comments = submission?.comments || []
+      const newComments = [
+        ...comments,
+        {
+          fieldName: state.field.name,
+          revision: revision,
+          comment: values.comment,
+          type: section,
+          createdAt: moment().format()
+        }
+      ]
+      update({ comments: newComments })
+    }
   }
 
   const onCancel = () => {
