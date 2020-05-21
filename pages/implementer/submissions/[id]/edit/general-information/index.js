@@ -14,7 +14,7 @@ import {
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useCallback } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
 import {
@@ -26,7 +26,7 @@ import {
   getHasConsultantReceivedSuppors,
   setSave,
   setUpdateGeneralInformation
-} from "../../../helpers"
+} from "../../../../../../helpers/submissionFunctions/general-information"
 
 
 function GeneralInformation({ client }) {
@@ -47,16 +47,25 @@ function GeneralInformation({ client }) {
     variables: { id: router.query.id }
   })
 
-  const updateGeneralInformation = setUpdateGeneralInformation(state, setState)
+  const updateGeneralInformation = useCallback(generalInformation => {
+    setUpdateGeneralInformation(generalInformation, state, setState)
+  }, [state, setState])
 
-  const save = setSave(state, updateSubmission)
+  const save = useCallback(async () => {
+    await setSave(state, updateSubmission, router.query.id)
+  }, [state])
 
-  const isCall = getIsCall(data, state)
+  const isCall = useCallback(() => {
+    return getIsCall(data, state)
+  }, [data, state])
 
-  const hasConsultant = getHasConsultant(data, state)
+  const hasConsultant = useCallback(() => {
+    return getHasConsultant(data, state)
+  }, [data, state])
 
-  const hadConsultantReceivedSupports =
-    getHasConsultantReceivedSuppors(data, state)
+  const hadConsultantReceivedSupports = useCallback(() => {
+    return getHasConsultantReceivedSuppors(data, state)
+  }, [data, state])
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,

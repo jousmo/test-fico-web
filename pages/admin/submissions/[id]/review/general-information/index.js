@@ -26,7 +26,7 @@ import {
   getHasConsultantReceivedSuppors,
   setSave,
   setUpdateGeneralInformation
-} from "../../../../../implementer/submissions/helpers"
+} from "../../../../../../helpers/submissionFunctions/general-information"
 
 
 function GeneralInformation({ client }) {
@@ -52,7 +52,7 @@ function GeneralInformation({ client }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission)
+    await setSave(state, updateSubmission, router.query.id)
   }, [state])
 
   const isCall = useCallback(() => {

@@ -1,4 +1,3 @@
-import { useCallback } from "react"
 
 export const setUpdateGeneralInformation = (generalInformation, state, setState) => {
   const newGeneralInformation = {
@@ -9,10 +8,10 @@ export const setUpdateGeneralInformation = (generalInformation, state, setState)
   setState({...state, dirty: true, generalInformation: newGeneralInformation})
 }
 
-export const setSave = async (state, updateSubmission) => {
+export const setSave = async (state, updateSubmission, id) => {
   try {
     const updatedSubmission = await updateSubmission({
-      variables: { ...state.generalInformation, id: "1" }
+      variables: { ...state.generalInformation, id: id }
     })
 
     /* TODO: Show feedback to the user */

@@ -17,7 +17,7 @@ import {
   getHasConsultantReceivedSuppors,
   setSave,
   setUpdateGeneralInformation
-} from "../../helpers"
+} from "../../../../../helpers/submissionFunctions/general-information"
 
 
 function GeneralInformation({ client }) {
@@ -42,7 +42,7 @@ function GeneralInformation({ client }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission)
+    await setSave(state, updateSubmission, 1)
   }, [state, updateSubmission])
 
   const isCall = useCallback(() => {
