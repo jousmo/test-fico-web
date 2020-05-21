@@ -1,5 +1,5 @@
 import { Button } from "antd"
-import { PlusCircleOutlined } from "@ant-design/icons"
+import { MessageOutlined, PlusCircleOutlined } from "@ant-design/icons"
 import { useContext, useEffect, useState } from "react"
 import {
   CommentsContext
@@ -14,23 +14,39 @@ export function CommentButton({name, section}) {
     return null
   }
 
+  const field = {name: name, section: section}
+
   const {
-    openCommentsModal,
-    setField,
     readOnly,
+    openCommentsModal,
     getCommentsNumber
   } = commentsContext
 
   useEffect(() => {
-    setField({name: name, section: section})
-    /* implement getCommentsNumber to get the result and assign to the state
-     * to print the comments number */
-
-     /* setState({ commentsNumber: getCommentsNumber() }) */
+    const comments = getCommentsNumber(field)
+    setState({ commentsNumber: comments })
   }, [name, section])
 
   const onClick = () => {
-    openCommentsModal()
+    openCommentsModal(field)
+  }
+
+  if (state.commentsNumber > 0){
+    return (
+      <Button
+        size="small"
+        shape="round"
+        style={
+          { float: "right",
+            backgroundColor: "#d54650",
+            color: "white"
+          }
+        }
+        onClick={onClick}
+        icon={<MessageOutlined />}>
+        {state.commentsNumber}
+      </Button>
+    )
   }
 
   const buttonText = readOnly ? "Comentarios" : "Comentar"
