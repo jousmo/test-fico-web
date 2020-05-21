@@ -7,16 +7,29 @@ import { useCallback, useState } from "react"
 
 export function CommentsProvider({ children, submission, readOnly, update }) {
   const revision = submission?.status
-  const [state, setState] = useState({ isModalOpen: false, field: {} })
+  const [state, setState] = useState({
+    isModalOpen: false, field: {}, comments: []
+  })
 
-  const openCommentsModal = useCallback(() => {
-    setState({ ...state, isModalOpen: true })
+  const openCommentsModal = useCallback((field) => {
+    const newComments = getComments(field)
+    setState({ field: field, isModalOpen: true, comments: newComments})
   }, [state])
 
-  const getCommentsNumber = useCallback(() => {
-    /** use state.field.name and state.field.section to
-     * retrieve the comments number */
-  }, [state, revision])
+  const getCommentsNumber = (field) => {
+    return getComments(field).length
+  }
+
+  const getComments = (field) => {
+    const { section, name } = field
+    let comments = []
+    if (section === "submission"){
+      comments = submission?.comments?.filter(comment => (
+        comment.type === section && comment.fieldName === name
+      ))
+    }
+    return comments
+  }
 
   const setField = field => {
     setState({ ...state, field: field })
@@ -25,7 +38,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
   const onSave = values => {
     const section = state.field.section
     if (section === "submission"){
-      const comments = submission?.comments || []
+      const comments = state.comments || []
       const newComments = [
         ...comments,
         {
@@ -36,6 +49,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
           createdAt: moment().format()
         }
       ]
+      setState({...state, comments: newComments})
       update({ comments: newComments })
     }
   }
@@ -58,6 +72,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
         visible={state.isModalOpen}
         revision={revision}
         readOnly={readOnly}
+        comments={state.comments}
         fieldSection={state.field.section}
         fieldName={state.field.name} />
       { children }

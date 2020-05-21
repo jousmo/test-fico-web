@@ -1,22 +1,18 @@
 import { Modal, Form, Input } from "antd"
 import { useForm } from "antd/lib/form/util"
-import { useEffect } from "react"
+import { CommentListing } from "./list"
 
 export function CommentModal({
   onCancel,
   onSave,
   revision,
   readOnly,
+  comments,
   fieldName,
   fieldSection,
   ...props
 }) {
   const [form] = useForm()
-
-  useEffect(() => {
-    /* Here use `revision`, `fieldSection`, `fieldName` to retrieve the saved
-    * comments for listing */
-  }, [revision, fieldName, fieldSection])
 
   const onOk = async () => {
     try {
@@ -62,6 +58,7 @@ export function CommentModal({
           </Form.Item>
         </Form>
       )}
+      <CommentListing comments={comments} />
     </Modal>
   )
 }
