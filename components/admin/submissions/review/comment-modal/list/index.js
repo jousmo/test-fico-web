@@ -11,9 +11,9 @@ export function CommentListing({ comments }){
   return (
     <List
       header={
-        <Typography.Text>Comentarios ({comments.length})</Typography.Text>
+        <Typography.Text>Comentarios ({comments?.length})</Typography.Text>
       }>
-      {comments.map((element, index) =>
+      {comments?.map((element, index) =>
         <List.Item key={index}>
           <List.Item.Meta
             title={
