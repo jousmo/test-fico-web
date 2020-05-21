@@ -11,7 +11,7 @@ export function CommentListing({ comments }){
   return (
     <List
       header={
-        <Typography.Text>Comentarios ({comments?.length})</Typography.Text>
+        <Typography.Text>Comentarios ({comments?.length || 0})</Typography.Text>
       }>
       {comments?.map((element, index) =>
         <List.Item key={index}>
