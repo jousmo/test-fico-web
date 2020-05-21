@@ -10,7 +10,6 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
   const [state, setState] = useState({ isModalOpen: false, field: {} })
 
   const openCommentsModal = useCallback(() => {
-    console.log(state)
     setState({ ...state, isModalOpen: true })
   }, [state])
 
