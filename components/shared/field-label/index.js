@@ -9,7 +9,7 @@ export function FieldLabel({helpText, children, comentable}) {
       content={helpText}>
       {children}&nbsp;
       { helpText ?
-        <QuestionCircleFilled />
+        <><QuestionCircleFilled />&nbsp;</>
       : null }
       { comentable ?
         <CommentButton
