@@ -80,7 +80,9 @@ function GeneralInformation({ client }) {
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
-      <CommentsProvider readOnly>
+      <CommentsProvider
+        readOnly
+        submission={data?.Submission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <ProjectDetails />

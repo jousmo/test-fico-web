@@ -39,6 +39,7 @@ export function CommentModal({
         footer={false}
         width={800}
         {...props}>
+        <CommentListing comments={state.comments} />
       </Modal>
     )
   }
