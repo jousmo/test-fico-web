@@ -241,7 +241,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Problemática a tratar">
+            label={
+              <FieldLabel comentable={{
+                name: "issueDescription",
+                section: "submission"}}>
+                Problemática a tratar
+              </FieldLabel>
+            }>
             <Input
               id="issueDescription"
               name="issueDescription"
@@ -253,7 +259,13 @@ function ProjectDetailsForm({
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Descripción del proyecto">
+            label={
+              <FieldLabel comentable={{
+                name: "description",
+                section: "submission"}}>
+                Descripción del proyecto
+              </FieldLabel>
+            }>
             <Input.TextArea
               id="description"
               name="description"
