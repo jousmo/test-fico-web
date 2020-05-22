@@ -12,24 +12,28 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
   })
 
   const openCommentsModal = useCallback((field) => {
-    const newComments = getComments(field)
-    setState({ field: field, isModalOpen: true, comments: newComments})
+    setState({ ...state, field: field, isModalOpen: true})
   }, [state])
 
-  const getCommentsNumber = (field) => {
-    return getComments(field).length
-  }
-
-  const getComments = (field) => {
-    const { section, name } = field
+  const commentsFromLocation = (section, name) => {
     let comments = []
     if (section === "submission"){
       comments = submission?.comments?.filter(comment => (
-        comment.type === section && comment.fieldName === name
+        comment.type === section
+        && comment.fieldName === name
       ))
     }
     return comments
   }
+
+  const getCommentsNumber = (field) => {
+    const { section, name } = field
+    return commentsFromLocation(section, name).length
+  }
+
+  const getComments = useCallback(() => {
+    return commentsFromLocation(state.field.section, state.field.name)
+  }, [state])
 
   const setField = field => {
     setState({ ...state, field: field })
@@ -37,20 +41,28 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
 
   const onSave = values => {
     const section = state.field.section
+    const newComment = {
+      fieldName: state.field.name,
+      revision: revision,
+      comment: values.comment,
+      type: section,
+      createdAt: moment().format()
+    }
+
     if (section === "submission"){
-      const comments = state.comments || []
-      const newComments = [
-        ...comments,
-        {
-          fieldName: state.field.name,
-          revision: revision,
-          comment: values.comment,
-          type: section,
-          createdAt: moment().format()
-        }
+      const fieldComments = state.comments || []
+      const submissionComments = submission?.comments
+      const newFieldComments = [
+        ...fieldComments,
+        newComment
       ]
-      setState({...state, comments: newComments})
+      const newComments = [
+        ...submissionComments,
+        newComment
+      ]
+      setState({...state, comments: newFieldComments})
       update({ comments: newComments })
+      return newFieldComments
     }
   }
 
@@ -72,7 +84,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
         visible={state.isModalOpen}
         revision={revision}
         readOnly={readOnly}
-        comments={state.comments}
+        getComments={getComments}
         fieldSection={state.field.section}
         fieldName={state.field.name} />
       { children }

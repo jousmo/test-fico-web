@@ -1,29 +1,35 @@
 import { Modal, Form, Input } from "antd"
 import { useForm } from "antd/lib/form/util"
 import { CommentListing } from "./list"
+import { useEffect, useState } from "react"
 
 export function CommentModal({
   onCancel,
   onSave,
   revision,
   readOnly,
-  comments,
+  getComments,
   fieldName,
   fieldSection,
   ...props
 }) {
+  const [state, setState] = useState({ comments: [] })
   const [form] = useForm()
 
   const onOk = async () => {
     try {
       const values = await form.getFieldsValue()
-      onSave(values)
+      setState({ comments: onSave(values) })
       form.resetFields()
     }
     catch(e) {
       console.error(e)
     }
   }
+
+  useEffect(() => {
+    setState({ comments: getComments() })
+  }, [fieldName])
 
   if (readOnly){
     return (
@@ -41,9 +47,9 @@ export function CommentModal({
     <Modal
       title="Comentarios para revisión"
       onOk={onOk}
-      okText="Guardar"
+      okText="Agregar"
       onCancel={onCancel}
-      cancelText="Cancelar"
+      cancelText="Cerrar"
       width={800}
       {...props}>
       { !readOnly && (
@@ -58,7 +64,7 @@ export function CommentModal({
           </Form.Item>
         </Form>
       )}
-      <CommentListing comments={comments} />
+      <CommentListing comments={state.comments} />
     </Modal>
   )
 }
