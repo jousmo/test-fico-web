@@ -29,6 +29,17 @@ export function CommentModal({
     }
   }
 
+  if (readOnly){
+    return (
+      <Modal
+        title="Comentarios para revisión"
+        onCancel={onCancel}
+        footer={false}
+        width={800}
+        {...props}>
+      </Modal>
+    )
+  }
 
   return (
     <Modal
