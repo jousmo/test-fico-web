@@ -1,6 +1,11 @@
 import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input } from "antd"
-import { DateField, SelectField, MultipleTextField } from "../../../shared"
+import {
+  DateField,
+  FieldLabel,
+  SelectField,
+  MultipleTextField
+} from "../../../shared"
 import { getSelectValue } from "../../../../helpers/getSelectValue"
 import {
   measurementPeriodicityTypes
@@ -62,7 +67,13 @@ export function IndicatorModal({
             <Form.Item
               name="title"
               style={{display: "inline"}}
-              label="Título del indicador">
+              label={
+                <FieldLabel comentable={{
+                  name: "title",
+                  section: "developmentIndicator"}}>
+                  Título del indicador
+                </FieldLabel>
+              }>
               <Input
                 id="title"
                 type="text" />
@@ -72,7 +83,13 @@ export function IndicatorModal({
             <Form.Item
               name="narrativeSummary"
               style={{display: "inline"}}
-              label="Resumen narrativo">
+              label={
+                <FieldLabel comentable={{
+                  name: "narrativeSummary",
+                  section: "developmentIndicator"}}>
+                  Resumen narrativo
+                </FieldLabel>
+              }>
               <Input
                 id="narrativeSummary"
                 type="text" />
@@ -82,7 +99,13 @@ export function IndicatorModal({
             <Form.Item
               name="methodology"
               style={{display: "inline"}}
-              label="Metodología">
+              label={
+                <FieldLabel comentable={{
+                  name: "methodology",
+                  section: "developmentIndicator"}}>
+                  Metodología
+                </FieldLabel>
+              }>
               <Input
                 id="methodology"
                 type="text" />
@@ -102,7 +125,13 @@ export function IndicatorModal({
             <Form.Item
               name="formula"
               style={{display: "inline"}}
-              label="Fórmula">
+              label={
+                <FieldLabel comentable={{
+                  name: "formula",
+                  section: "developmentIndicator"}}>
+                  Fórmula
+                </FieldLabel>
+              }>
               <Input
                 id="formula"
                 type="text" />
@@ -112,7 +141,13 @@ export function IndicatorModal({
             <Form.Item
               name="meansOfVerification"
               style={{display: "inline"}}
-              label="Medio de verificación">
+              label={
+                <FieldLabel comentable={{
+                  name: "meansOfVerification",
+                  section: "developmentIndicator"}}>
+                  Medio de verificación
+                </FieldLabel>
+              }>
               <Input
                 id="meansOfVerification"
                 type="text" />
@@ -122,7 +157,13 @@ export function IndicatorModal({
             <Form.Item
               name="baseline"
               style={{display: "inline"}}
-              label="Línea base">
+              label={
+                <FieldLabel comentable={{
+                  name: "baseline",
+                  section: "developmentIndicator"}}>
+                  Línea base
+                </FieldLabel>
+              }>
               <Input
                 id="baseline"
                 type="text" />
@@ -132,7 +173,13 @@ export function IndicatorModal({
             <Form.Item
               name="goal"
               style={{display: "inline"}}
-              label="Meta">
+              label={
+                <FieldLabel comentable={{
+                  name: "goal",
+                  section: "developmentIndicator"}}>
+                  Meta
+                </FieldLabel>
+              }>
               <Input
                 id="goal"
                 type="text" />
