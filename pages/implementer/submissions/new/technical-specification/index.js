@@ -9,6 +9,10 @@ import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
 import {
+  setSave,
+  setUpdateTechnicalSpecification
+} from "../../../../../helpers/submissionFunctions/technical-specification"
+import {
   DevelopmentObjective,
   GeneralObjective,
   SpecificObjectives
@@ -31,30 +35,12 @@ function TechnicalSpecification({ client }) {
   })
 
   const updateTechnicalSpecification = useCallback(technicalSpecification => {
-    const newTechnicalSpecification = {
-      ...state.technicalSpecification,
-      ...technicalSpecification
-    }
-
-    setState({
-      ...state,
-      dirty: true,
-      technicalSpecification: technicalSpecification
-    })
-  })
+    setUpdateTechnicalSpecification(technicalSpecification, state, setState)
+  }, [state])
 
   const save = useCallback(async () => {
-    try {
-      const updatedSubmission = await updateSubmission({
-        variables: { ...state.technicalSpecification, id: "1" }
-      })
-
-      /* TODO: Show feedback to the user */
-    }
-    catch(e) {
-      console.error(e)
-    }
-  })
+    await setSave(state, updateSubmission, "1")
+  }, [state])
 
   const injectActions = useMemo(() => ({
     updateTechnicalSpecification,
