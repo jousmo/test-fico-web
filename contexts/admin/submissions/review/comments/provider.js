@@ -32,7 +32,9 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
   }
 
   const getComments = useCallback(() => {
-    return commentsFromLocation(state.field.section, state.field.name)
+    const comments = commentsFromLocation(state.field.section, state.field.name)
+    setState({ ...state, comments: comments })
+    return comments
   }, [state])
 
   const setField = field => {
