@@ -18,11 +18,13 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
   const commentsFromLocation = (section, name) => {
     let comments = []
     if (section === "submission"){
-      comments = submission?.comments?.filter(comment => (
-        comment.fieldName === name
-      ))
+      comments = submission?.comments
+    } else if (section === "consultant"){
+      comments = submission?.consultant?.comments
     }
-    return comments
+    return comments?.filter(comment => (
+      comment.fieldName === name
+    ))
   }
 
   const getCommentsNumber = (field) => {
@@ -38,12 +40,23 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
 
   const onDelete = index => {
     const { section } = state.field
+    let newComments = []
     if (section === "submission"){
-      const newComments = [...submission?.comments].filter((e, i) =>
+      newComments = [...submission?.comments].filter((e, i) =>
         i !== index
       )
       setState({ ...state, comments: newComments })
       update({ comments: newComments })
+    } else if(section === "consultant"){
+      const consultant = submission?.consultant
+      newComments = [...consultant?.comments].filter((e, i) =>
+        i !== index
+      )
+      const newConsultant = {
+        ...consultant,
+        comments: newComments
+      }
+      update({ consultant: newConsultant })
     }
   }
 
@@ -57,21 +70,34 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
       createdAt: moment().format()
     }
 
+    const fieldComments = state.comments || []
+    const newFieldComments = [
+      ...fieldComments,
+      newComment
+    ]
+    setState({...state, comments: newFieldComments})
+
     if (section === "submission"){
-      const fieldComments = state.comments || []
       const submissionComments = submission?.comments
-      const newFieldComments = [
-        ...fieldComments,
-        newComment
-      ]
       const newComments = [
         ...submissionComments,
         newComment
       ]
-      setState({...state, comments: newFieldComments})
       update({ comments: newComments })
-      return newFieldComments
+    } else if (section === "consultant"){
+      const consultant = submission?.consultant
+      const consultantComments = consultant?.comments || []
+      const newConsultantComments = [
+        ...consultantComments,
+        newComment
+      ]
+      const newConsultant = {
+        ...consultant,
+        comments: newConsultantComments
+      }
+      update({ consultant: newConsultant })
     }
+    return newFieldComments
   }
 
   const onCancel = () => {
