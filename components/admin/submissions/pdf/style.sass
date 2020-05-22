@@ -21,6 +21,28 @@
         .ant-list
           margin: 10px 0
 
+  &.ministrations
+    .ant-table-thead
+      tr:nth-child(n+2)
+        .ant-table-cell
+          text-align: center
+
+    .ant-table-tbody
+      .ant-table-row
+        .ant-table-cell:nth-child(n+2)
+          text-align: center
+
+    .ant-table-summary
+      tr
+        .ant-table-cell:nth-child(n+2)
+          text-align: center
+
+    .total-table
+      width: 50%
+      .ant-table-thead
+        .ant-table-cell:nth-child(n+2)
+          text-align: center
+
   .export-button
     float: right
 
