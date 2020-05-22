@@ -19,8 +19,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     let comments = []
     if (section === "submission"){
       comments = submission?.comments?.filter(comment => (
-        comment.type === section
-        && comment.fieldName === name
+        comment.fieldName === name
       ))
     }
     return comments
