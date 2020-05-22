@@ -49,7 +49,8 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
         revision,
         openCommentsModal,
         setField,
-        getCommentsNumber
+        getCommentsNumber,
+        readOnly
       }}>
       <CommentModal
         onSave={onSave}

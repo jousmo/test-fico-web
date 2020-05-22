@@ -17,6 +17,7 @@ export function CommentButton({name, section}) {
   const {
     openCommentsModal,
     setField,
+    readOnly,
     getCommentsNumber
   } = commentsContext
 
@@ -32,14 +33,16 @@ export function CommentButton({name, section}) {
     openCommentsModal()
   }
 
+  const buttonText = readOnly ? "Comentarios" : "Comentar"
+
   return (
     <Button
       size="small"
       shape="round"
       style={{float: "right"}}
       onClick={onClick}
-      icon={<PlusCircleOutlined />}>
-      Comentar
+      icon={readOnly ? null : <PlusCircleOutlined />}>
+      {buttonText}
     </Button>
   )
 }
