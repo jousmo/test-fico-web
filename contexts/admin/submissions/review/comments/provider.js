@@ -28,7 +28,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
 
   const getCommentsNumber = (field) => {
     const { section, name } = field
-    return commentsFromLocation(section, name).length
+    return commentsFromLocation(section, name)?.length
   }
 
   const getComments = useCallback(() => {
