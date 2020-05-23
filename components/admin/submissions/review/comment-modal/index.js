@@ -19,6 +19,11 @@ export function CommentModal({
   const onOk = async () => {
     try {
       const values = await form.getFieldsValue()
+
+      if (values.comment === undefined || values.comment.trim() === ""){
+        return
+      }
+
       setState({ comments: onSave(values) })
       form.resetFields()
     }
