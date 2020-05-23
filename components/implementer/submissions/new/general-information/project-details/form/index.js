@@ -1,4 +1,4 @@
-import { Row, Form, DatePicker, Col, Alert, Skeleton, Input, Select } from "antd"
+import { Row, Form, Col, Input, Select } from "antd"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers/withForm"
@@ -25,7 +25,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Tipo de solicitud">
+            label={
+              <FieldLabel comentable={{
+                name: "type",
+                section: "submission"}}>
+                Tipo de solicitud
+              </FieldLabel>
+            }>
             <SelectField
               id="type"
               name="type"
@@ -37,7 +43,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Convocatoria a la que aplica">
+            label={
+              <FieldLabel comentable={{
+                name: "applyingCall",
+                section: "submission"}}>
+                Convocatoria a la que aplica
+              </FieldLabel>
+            }>
             <Input
               id="applyingCall"
               name="applyingCall"
@@ -50,7 +62,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Nombre del proyecto">
+            label={
+              <FieldLabel comentable={{
+                name: "name",
+                section: "submission"}}>
+                Nombre del proyecto
+              </FieldLabel>
+            }>
             <Input
               id="name"
               name="name"
@@ -62,7 +80,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Región">
+            label={
+              <FieldLabel comentable={{
+                name: "region",
+                section: "submission"}}>
+                Región
+              </FieldLabel>
+            }>
             <SelectField
               id="region"
               name="region"
@@ -74,7 +98,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Aliados del proyecto (Máximo 2)">
+            label={
+              <FieldLabel comentable={{
+                name: "allies",
+                section: "submission"}}>
+                Aliados del proyecto (Máximo 2)
+              </FieldLabel>
+            }>
             <Select
               id="allies"
               name="allies"
@@ -121,7 +151,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Fecha de inicio">
+            label={
+              <FieldLabel comentable={{
+                name: "startDate",
+                section: "submission"}}>
+                Fecha de inicio
+              </FieldLabel>
+            }>
             <DateField
               id="startDate"
               name="startDate"
@@ -133,7 +169,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Fecha de conclusión">
+            label={
+              <FieldLabel comentable={{
+                name: "endDate",
+                section: "submission"}}>
+                Fecha de conclusión
+              </FieldLabel>
+            }>
             <DateField
               id="endDate"
               name="endDate"
@@ -145,7 +187,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Eje estratégico">
+            label={
+              <FieldLabel comentable={{
+                name: "strategicAxis",
+                section: "submission"}}>
+                Eje estratégico
+              </FieldLabel>
+            }>
             <SelectField
               id="strategicAxis"
               name="strategicAxis"
@@ -158,9 +206,14 @@ function ProjectDetailsForm({
           <Form.Item
             style={{display: "inline"}}
             label={
-              <FieldLabel helpText={<PreventionLevelsText />}>
+              <FieldLabel
+                helpText={<PreventionLevelsText />}
+                comentable={{
+                  name: "preventionLevel",
+                  section: "submission"}}>
                 Nivel de prevención
-              </FieldLabel>}>
+              </FieldLabel>
+            }>
             <SelectField
               id="preventionLevel"
               name="preventionLevel"
@@ -188,7 +241,13 @@ function ProjectDetailsForm({
         <Col span={12}>
           <Form.Item
             style={{display: "inline"}}
-            label="Problemática a tratar">
+            label={
+              <FieldLabel comentable={{
+                name: "issueDescription",
+                section: "submission"}}>
+                Problemática a tratar
+              </FieldLabel>
+            }>
             <Input
               id="issueDescription"
               name="issueDescription"
@@ -200,7 +259,13 @@ function ProjectDetailsForm({
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Descripción del proyecto">
+            label={
+              <FieldLabel comentable={{
+                name: "description",
+                section: "submission"}}>
+                Descripción del proyecto
+              </FieldLabel>
+            }>
             <Input.TextArea
               id="description"
               name="description"

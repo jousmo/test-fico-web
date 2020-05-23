@@ -33,6 +33,7 @@ export const getById = gql`
       statusChangedAt
       deadline
       signedContractAt
+      comments
     }
   }
 `

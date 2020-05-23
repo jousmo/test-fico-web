@@ -1,26 +1,36 @@
-import { Layout } from "../../../../../components/implementer/submissions"
+import { Layout } from "../../../../../../components/implementer/submissions"
+import { useRouter } from "next/router"
 import {
   ProjectDetails,
   DevelopmentObjectives,
   Beneficiaries,
   Consultant
-} from "../../../../../components/implementer/submissions/new/general-information"
-import { data as pageData, ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
-import { PageContext } from "../../../../../contexts/page"
-import { submission } from "../../../../../graphql/submission"
+} from "../../../../../../components/implementer/submissions/new/general-information"
+import {
+  data as pageData
+} from "../../../../../../contexts/admin/submissions/review"
+import {
+  ImplementerSubmissionContext
+} from "../../../../../../contexts/implementer/submissions/new"
+import { PageContext } from "../../../../../../contexts/page"
+import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../helpers/withApollo"
+import { withApollo } from "../../../../../../helpers/withApollo"
+import {
+  CommentsProvider
+} from "../../../../../../contexts/admin/submissions/review/comments"
 import {
   getIsCall,
   getHasConsultant,
   getHasConsultantReceivedSuppors,
   setSave,
   setUpdateGeneralInformation
-} from "../../../../../helpers/submissionFunctions/general-information"
+} from "../../../../../../helpers/submissionFunctions/general-information"
 
 
 function GeneralInformation({ client }) {
+  const router = useRouter()
   const [state, setState] = useState({
     generalInformation: {
       consultant: {}
@@ -34,7 +44,7 @@ function GeneralInformation({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: "1" }
+    variables: { id: router.query.id }
   })
 
   const updateGeneralInformation = useCallback(generalInformation => {
@@ -42,8 +52,8 @@ function GeneralInformation({ client }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, 1)
-  }, [state, updateSubmission])
+    await setSave(state, updateSubmission, router.query.id)
+  }, [state])
 
   const isCall = useCallback(() => {
     return getIsCall(data, state)
@@ -70,14 +80,18 @@ function GeneralInformation({ client }) {
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
-      <ImplementerSubmissionContext.Provider value={injectActions}>
-        <Layout>
-          <ProjectDetails />
-          <Consultant />
-          <DevelopmentObjectives />
-          <Beneficiaries />
-        </Layout>
-      </ImplementerSubmissionContext.Provider>
+      <CommentsProvider
+        submission={data?.Submission}
+        update={updateGeneralInformation}>
+        <ImplementerSubmissionContext.Provider value={injectActions}>
+          <Layout>
+            <ProjectDetails />
+            <Consultant />
+            <DevelopmentObjectives />
+            <Beneficiaries />
+          </Layout>
+        </ImplementerSubmissionContext.Provider>
+      </CommentsProvider>
     </PageContext.Provider>
   )
 }
