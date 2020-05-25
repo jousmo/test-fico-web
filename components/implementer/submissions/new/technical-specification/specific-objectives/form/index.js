@@ -28,7 +28,7 @@ export default function SpecificObjectiveForm({
   }
 
   const specificObjectives = data?.Submission?.specificObjectives || []
-  
+
   const onSpecificObjectiveItemsChange = (index, type) => (indicators) => {
     const newSpecificObjectives = Array.from(specificObjectives)
 
@@ -50,6 +50,7 @@ export default function SpecificObjectiveForm({
             <Form.Item label="Indicadores">
               <IndicatorsField
                 onChange={onSpecificObjectiveItemsChange(index, "indicators")}
+                indicatorType="specificIndicator"
                 defaultValue={objective.indicators} />
             </Form.Item>
             <Form.Item label="Actividades">
