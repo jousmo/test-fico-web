@@ -14,6 +14,7 @@ import { merge } from "lodash"
 import { useEffect } from "react"
 
 export function IndicatorModal({
+  indicatorType,
   onSave,
   onCancel,
   edit,
@@ -70,7 +71,8 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   name: "title",
-                  section: "developmentIndicator"}}>
+                  section: indicatorType,
+                  index: edit?.index}}>
                   Título del indicador
                 </FieldLabel>
               }>
@@ -86,7 +88,8 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   name: "narrativeSummary",
-                  section: "developmentIndicator"}}>
+                  section: indicatorType,
+                  index: edit?.index}}>
                   Resumen narrativo
                 </FieldLabel>
               }>
@@ -102,7 +105,8 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   name: "methodology",
-                  section: "developmentIndicator"}}>
+                  section: indicatorType,
+                  index: edit?.index}}>
                   Metodología
                 </FieldLabel>
               }>
@@ -128,7 +132,8 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   name: "formula",
-                  section: "developmentIndicator"}}>
+                  section: indicatorType,
+                  index: edit?.index}}>
                   Fórmula
                 </FieldLabel>
               }>
@@ -144,7 +149,8 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   name: "meansOfVerification",
-                  section: "developmentIndicator"}}>
+                  section: indicatorType,
+                  index: edit?.index}}>
                   Medio de verificación
                 </FieldLabel>
               }>
@@ -160,7 +166,8 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   name: "baseline",
-                  section: "developmentIndicator"}}>
+                  section: indicatorType,
+                  index: edit?.index}}>
                   Línea base
                 </FieldLabel>
               }>
@@ -176,7 +183,8 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   name: "goal",
-                  section: "developmentIndicator"}}>
+                  section: indicatorType,
+                  index: edit?.index}}>
                   Meta
                 </FieldLabel>
               }>
