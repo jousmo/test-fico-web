@@ -19,8 +19,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     let comments = []
     if (section === "submission"){
       comments = submission?.comments?.filter(comment => (
-        comment.type === section
-        && comment.fieldName === name
+        comment.fieldName === name
       ))
     }
     return comments
@@ -37,8 +36,15 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     return comments
   }, [state])
 
-  const setField = field => {
-    setState({ ...state, field: field })
+  const onDelete = index => {
+    const { section } = state.field
+    if (section === "submission"){
+      const newComments = [...submission?.comments].filter((e, i) =>
+        i !== index
+      )
+      setState({ ...state, comments: newComments })
+      update({ comments: newComments })
+    }
   }
 
   const onSave = values => {
@@ -76,13 +82,13 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     <CommentsContext.Provider value={{
         revision,
         openCommentsModal,
-        setField,
         getCommentsNumber,
         readOnly
       }}>
       <CommentModal
         onSave={onSave}
         onCancel={onCancel}
+        onDelete={onDelete}
         visible={state.isModalOpen}
         revision={revision}
         readOnly={readOnly}

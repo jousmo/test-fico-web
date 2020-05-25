@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 export function CommentModal({
   onCancel,
   onSave,
+  onDelete,
   revision,
   readOnly,
   getComments,
@@ -30,6 +31,12 @@ export function CommentModal({
     catch(e) {
       console.error(e)
     }
+  }
+
+  const onDeleteComment = (index) => {
+    const newComments = [...state.comments].filter((e, i) => i !== index)
+    setState({...state, comments: newComments})
+    onDelete(index)
   }
 
   useEffect(() => {
@@ -70,7 +77,10 @@ export function CommentModal({
           </Form.Item>
         </Form>
       )}
-      <CommentListing comments={state.comments} />
+      <CommentListing
+        comments={state.comments}
+        onDelete={onDeleteComment}
+        revision={revision} />
     </Modal>
   )
 }
