@@ -15,12 +15,15 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     setState({ ...state, field: field, isModalOpen: true})
   }, [state])
 
-  const commentsFromLocation = (section, name) => {
+  const commentsFromLocation = (index, section, name) => {
     let comments = []
     if (section === "submission"){
       comments = submission?.comments
     } else if (section === "consultant"){
       comments = submission?.consultant?.comments
+    } else if (section === "developmentIndicator"){
+      comments =
+        submission?.developmentObjectiveIndicators[index]?.comments
     }
     return comments?.filter(comment => (
       comment.fieldName === name
@@ -28,12 +31,14 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
   }
 
   const getCommentsNumber = (field) => {
-    const { section, name } = field
-    return commentsFromLocation(section, name)?.length
+    const { index, section, name } = field
+    return commentsFromLocation(index, section, name)?.length
   }
 
   const getComments = useCallback(() => {
-    const comments = commentsFromLocation(state.field.section, state.field.name)
+    const { field } = state
+    const comments =
+      commentsFromLocation(field.index, field.section, field.name)
     setState({ ...state, comments: comments })
     return comments
   }, [state])
@@ -56,6 +61,19 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
         comments: newComments
       }
       update({ consultant: newConsultant })
+    } else if(section === "developmentIndicator"){
+      const developmentIndicators =
+        [...submission?.developmentObjectiveIndicators]
+      const indicator = developmentIndicators[state.field.index]
+      newComments = [...indicator?.comments].filter((e, i) =>
+        i !== index
+      )
+      const newIndicator = {
+        ...indicator,
+        comments: newComments
+      }
+      developmentIndicators[state.field.index] = newIndicator
+      update({ developmentObjectiveIndicators: developmentIndicators })
     }
     setState({ ...state, comments: newComments })
   }
@@ -96,6 +114,21 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
         comments: newConsultantComments
       }
       update({ consultant: newConsultant })
+    } else if (section === "developmentIndicator"){
+      const developmentIndicators =
+        [...submission?.developmentObjectiveIndicators]
+      const indicator = developmentIndicators[state.field.index]
+      const indicatorComments = indicator?.comments || []
+      const newComments = [
+        ...indicatorComments,
+        newComment
+      ]
+      const newIndicator = {
+        ...indicator,
+        comments: newComments
+      }
+      developmentIndicators[state.field.index] = newIndicator
+      update({ developmentObjectiveIndicators: developmentIndicators })
     }
     return newFieldComments
   }
