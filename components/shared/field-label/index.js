@@ -13,6 +13,7 @@ export function FieldLabel({helpText, children, comentable}) {
       : null }
       { comentable ?
         <CommentButton
+          index={comentable?.index}
           name={comentable?.name}
           section={comentable?.section} />
       : null }
