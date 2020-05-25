@@ -45,7 +45,6 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
       newComments = [...submission?.comments].filter((e, i) =>
         i !== index
       )
-      setState({ ...state, comments: newComments })
       update({ comments: newComments })
     } else if(section === "consultant"){
       const consultant = submission?.consultant
@@ -58,6 +57,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
       }
       update({ consultant: newConsultant })
     }
+    setState({ ...state, comments: newComments })
   }
 
   const onSave = values => {
