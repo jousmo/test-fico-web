@@ -42,6 +42,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
       const newComments = [...submission?.comments].filter((e, i) =>
         i !== index
       )
+      setState({ ...state, comments: newComments })
       update({ comments: newComments })
     }
   }
