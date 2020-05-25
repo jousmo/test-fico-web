@@ -12,6 +12,10 @@ import {
   Heading,
   ResourcesList
 } from "../../../../../components/implementer/submissions/new/human-resources"
+import {
+  setSave,
+  setUpdateHumanResources
+} from "../../../../../helpers/submissionFunctions/human-resources"
 
 
 function HumanResources({ client }) {
@@ -30,30 +34,12 @@ function HumanResources({ client }) {
   })
 
   const updateHumanResources = useCallback(humanResource => {
-    const newHumanResources = {
-      ...state.humanResources,
-      ...humanResource
-    }
-
-    setState({
-      ...state,
-      dirty: true,
-      humanResources: newHumanResources
-    })
-  })
+    setUpdateHumanResources(humanResource, state, setState)
+  }, [state])
 
   const save = useCallback(async () => {
-    try {
-      const updatedSubmission = await updateSubmission({
-        variables: { ...state.humanResources, id: "1" }
-      })
-
-      /* TODO: Show feedback to the user */
-    }
-    catch(e) {
-      console.error(e)
-    }
-  })
+    await setSave(state, updateSubmission, "1")
+  }, [state])
 
   const injectActions = useMemo(() => ({
     updateHumanResources,
