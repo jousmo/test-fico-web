@@ -51,5 +51,24 @@ export const onSaveHelper = (comment, index, section, submission, update) => {
       }
       update({ developmentObjectiveIndicators: developmentIndicators })
       break
+    case "humanResource":
+      const concepts = [...submission?.concepts]
+      const concept = concepts[index]
+      const humanResource = concept?.humanResource
+      const humanResourceComments = humanResource?.comments || []
+      const newHumanResourceComments = [
+        ...humanResourceComments,
+        comment
+      ]
+      const newHumanResource = {
+        ...humanResource,
+        comments: newHumanResourceComments
+      }
+      concepts[index] = {
+        ...concept,
+        humanResource: newHumanResource
+      }
+      update({ concepts: concepts })
+      break
   }
 }
