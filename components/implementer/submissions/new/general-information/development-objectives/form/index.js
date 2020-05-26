@@ -1,6 +1,6 @@
 import { withForm } from "../../../../../../../helpers/withForm"
 import { Form, Row, Col, Input } from "antd"
-import { CompositeField, DeleteButton } from "../../../../../../shared"
+import { CompositeField, DeleteButton, FieldLabel } from "../../../../../../shared"
 import { v4 as uuid } from "uuid"
 
 function DevelopmentObjectivesForm({data, onChange}) {
@@ -21,7 +21,13 @@ function DevelopmentObjectivesForm({data, onChange}) {
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Objetivo de desarrollo">
+            label={
+              <FieldLabel comentable={{
+                name: "developmentObjective",
+                section: "submission"}}>
+                Objetivo de desarrollo
+              </FieldLabel>
+            }>
             <Input.TextArea
               id="developmentObjective"
               name="developmentObjective"
@@ -33,7 +39,13 @@ function DevelopmentObjectivesForm({data, onChange}) {
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Objetivo general">
+            label={
+              <FieldLabel comentable={{
+                name: "generalObjective",
+                section: "submission"}}>
+                Objetivo general
+              </FieldLabel>
+            }>
             <Input.TextArea
               id="generalObjective"
               name="generalObjective"
@@ -52,9 +64,9 @@ function DevelopmentObjectivesForm({data, onChange}) {
               defaultValue={data?.Submission?.specificObjectives || []}
               addLabel="Agregar objetivo específico"
               onClickAdd={(addNew) => addNew({description: "", uuid: uuid()})}>
-              {({ items, updateItem, removeItem }) => 
+              {({ items, updateItem, removeItem }) =>
                 <div>
-                  { items.map((item, index) => 
+                  { items.map((item, index) =>
                     <Form.Item key={`specific_objective_${item.uuid}`}>
                       <Row>
                         <Col flex="auto">
