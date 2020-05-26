@@ -3,6 +3,7 @@ import {Col, Row, Typography} from "antd"
 export function HumanResourcesColumns() {
   return (
     <Row gutter={[10, 8]} justify="start">
+      <Col flex="50px" />
       <Col flex="30px" />
       <Col flex="150px">
         <Typography.Text>Puesto</Typography.Text>
@@ -34,7 +35,7 @@ export function HumanResourcesColumns() {
       <Col flex="150px">
         <Typography.Text>Total</Typography.Text>
       </Col>
-      <Col flex="150px">
+      <Col flex="250px">
         <Typography.Text>Documentos</Typography.Text>
       </Col>
     </Row>
