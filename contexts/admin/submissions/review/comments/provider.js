@@ -4,7 +4,7 @@ import {
   CommentModal
 } from "../../../../../components/admin/submissions/review"
 import { useCallback, useState } from "react"
-import { onSaveHelper } from "./helpers"
+import { onDeleteHelper, onSaveHelper } from "./helpers"
 
 export function CommentsProvider({ children, submission, readOnly, update }) {
   const revision = submission?.status
@@ -49,47 +49,9 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
 
   const onDelete = index => {
     const { section } = state.field
-    let newComments = []
-    if (section === "submission"){
-      newComments = [...submission?.comments].filter((e, i) =>
-        i !== index
-      )
-      update({ comments: newComments })
-    } else if(section === "consultant"){
-      const consultant = submission?.consultant
-      newComments = [...consultant?.comments].filter((e, i) =>
-        i !== index
-      )
-      const newConsultant = {
-        ...consultant,
-        comments: newComments
-      }
-      update({ consultant: newConsultant })
-    } else if(section === "generalIndicator"){
-      const generalIndicators =
-        [...submission?.generalObjectiveIndicators]
-      const indicator = generalIndicators[state.field.index]
-      newComments = [...indicator?.comments].filter((e, i) =>
-        i !== index
-      )
-      generalIndicators[state.field.index] = {
-        ...indicator,
-        comments: newComments
-      }
-      update({ generalObjectiveIndicators: generalIndicators })
-    } else if(section === "developmentIndicator"){
-      const developmentIndicators =
-        [...submission?.developmentObjectiveIndicators]
-      const indicator = developmentIndicators[state.field.index]
-      newComments = [...indicator?.comments].filter((e, i) =>
-        i !== index
-      )
-      developmentIndicators[state.field.index] = {
-        ...indicator,
-        comments: newComments
-      }
-      update({ developmentObjectiveIndicators: developmentIndicators })
-    }
+
+    const newComments =
+      onDeleteHelper(state.field.index, section, submission, index, update)
     setState({ ...state, comments: newComments })
   }
 
