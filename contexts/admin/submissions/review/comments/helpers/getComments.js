@@ -14,6 +14,9 @@ export const getCommentsHelper = (index, name, section, submission) => {
       comments =
         submission?.developmentObjectiveIndicators[index]?.comments
       break
+    case "budget":
+      comments = submission?.concepts[index]?.comments
+      break
     case "humanResource":
       comments = submission?.concepts[index]?.humanResource?.comments
       break
