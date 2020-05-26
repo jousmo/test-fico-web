@@ -3,7 +3,7 @@ import { Typography } from "antd"
 
 export function Heading() {
   return (
-    <Section>
+    <Section fullWidth>
       <Typography.Text>Recursos Humanos</Typography.Text>
       <br />
       <Typography.Text type="secondary">
