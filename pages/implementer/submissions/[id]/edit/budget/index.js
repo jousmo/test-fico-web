@@ -1,4 +1,5 @@
 import { Layout } from "../../../../../../components/implementer/submissions"
+import { useRouter } from "next/router"
 import {
   editData as pageData
 } from "../../../../../../contexts/implementer/submissions/new"
@@ -23,6 +24,7 @@ import {
 
 
 function Budget({ client }) {
+  const router = useRouter()
   const [state, setState] = useState({
     budget: {},
     dirty: false
@@ -34,7 +36,7 @@ function Budget({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: "1" }
+    variables: { id: router.query.id }
   })
 
   const updateBudget = useCallback(budget => {
@@ -42,7 +44,7 @@ function Budget({ client }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, 1)
+    await setSave(state, updateSubmission, router.query.id)
   }, [state, updateSubmission])
 
   const injectActions = useMemo(() => ({
