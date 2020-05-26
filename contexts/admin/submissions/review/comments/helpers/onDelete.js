@@ -66,6 +66,18 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       }
       update({ developmentObjectiveIndicators: developmentIndicators })
       break
+    case "budget":
+      const budgetConcepts = [...submission?.concepts]
+      const budgetConcept = budgetConcepts[index]
+      newComments = [...budgetConcept.comments].filter((e, i) =>
+        i !== toDelete
+      )
+      budgetConcepts[index] = {
+        ...budgetConcept,
+        comments: newComments
+      }
+      update({ concepts: budgetConcepts })
+      break
     case "humanResource":
       const concepts = [...submission?.concepts]
       const concept = concepts[index]
