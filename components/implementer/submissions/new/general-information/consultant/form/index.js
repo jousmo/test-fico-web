@@ -1,11 +1,12 @@
-import { Col, Form, Input, Radio, Row, Empty } from "antd"
+import { Col, Form, Input, Row, Empty } from "antd"
 import { selectOptions, withForm } from "../../../../../../../helpers"
 import {
-  UploadButton,
-  DateField,
   CompositeField,
+  DateField,
   DeleteButton,
+  FieldLabel,
   RadioField,
+  UploadButton,
   Visibility
 } from "../../../../../../shared"
 
@@ -68,7 +69,13 @@ function ConsultantForm({
           <Col span={12}>
             <Form.Item
               style={{display: "inline"}}
-              label="Nombre comercial">
+              label={
+                <FieldLabel comentable={{
+                  name: "commercialName",
+                  section: "consultant"}}>
+                  Nombre comercial
+                </FieldLabel>
+              }>
               <Input
                 id="commercialName"
                 name="commercialName"
@@ -80,7 +87,13 @@ function ConsultantForm({
           <Col span={12}>
             <Form.Item
               style={{display: "inline"}}
-              label="Dirección comercial">
+              label={
+                <FieldLabel comentable={{
+                  name: "commercialAddress",
+                  section: "consultant"}}>
+                  Dirección comercial
+                </FieldLabel>
+              }>
               <Input
                 id="commercialAddress"
                 name="commercialAddress"
@@ -92,7 +105,13 @@ function ConsultantForm({
           <Col span={12}>
             <Form.Item
               style={{display: "inline"}}
-              label="Contacto responsable">
+              label={
+                <FieldLabel comentable={{
+                  name: "contactName",
+                  section: "consultant"}}>
+                  Contacto responsable
+                </FieldLabel>
+              }>
               <Input
                 id="contactName"
                 name="contactName"
@@ -104,7 +123,13 @@ function ConsultantForm({
           <Col span={12}>
             <Form.Item
               style={{display: "inline"}}
-              label="Número de teléfono">
+              label={
+                <FieldLabel comentable={{
+                  name: "phone",
+                  section: "consultant"}}>
+                  Número de teléfono
+                </FieldLabel>
+              }>
               <Input
                 id="phone"
                 name="phone"
@@ -116,7 +141,13 @@ function ConsultantForm({
           <Col span={12}>
             <Form.Item
               style={{display: "inline"}}
-              label="RFC">
+              label={
+                <FieldLabel comentable={{
+                  name: "phone",
+                  section: "consultant"}}>
+                  RFC
+                </FieldLabel>
+              }>
               <Input
                 id="rfc"
                 name="rfc"
@@ -128,7 +159,13 @@ function ConsultantForm({
           <Col span={12}>
             <Form.Item
               style={{display: "inline"}}
-              label="Dirección fiscal">
+              label={
+                <FieldLabel comentable={{
+                  name: "fiscalAddress",
+                  section: "consultant"}}>
+                  Dirección fiscal
+                </FieldLabel>
+              }>
               <Input
                 id="fiscalAddress"
                 name="fiscalAddress"
@@ -181,9 +218,9 @@ function ConsultantForm({
                   defaultValue={data?.Submission?.consultant?.supports}
                   onClickAdd={onAddSupport}
                   addLabel="Agregar apoyo">
-                  {({ items, updateItem, removeItem }) => 
+                  {({ items, updateItem, removeItem }) =>
                     <div>
-                      { items.map((item, index) => 
+                      { items.map((item, index) =>
                         <>
                           <Row gutter={[10, 8]} justify="start">
                             <Col span={8}>
