@@ -7,6 +7,7 @@ import {
   preventionLevelTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission/"
 import { DeleteButton } from "../../../../../../shared"
+import { CommentButton } from "../../../../../../admin/submissions/review"
 
 export function BeneficiaryItem({ data, onDelete, key }) {
   const { description, number } = data
@@ -33,7 +34,13 @@ export function BeneficiaryItem({ data, onDelete, key }) {
 
   return (
     <Card key={`beneficiary_${key}`} style={{marginBottom: "20px"}}>
-      <Typography.Title level={4}>{description}</Typography.Title>
+      <Typography.Title level={4}>
+        {description}
+        <CommentButton
+          name={`beneficiary_${key}`}
+          index={key}
+          section="beneficiary" />
+      </Typography.Title>
       <Typography.Text type="secondary">
         {number} beneficiarios
       </Typography.Text>
