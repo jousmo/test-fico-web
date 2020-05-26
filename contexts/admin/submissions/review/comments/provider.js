@@ -4,7 +4,7 @@ import {
   CommentModal
 } from "../../../../../components/admin/submissions/review"
 import { useCallback, useState } from "react"
-import { onDeleteHelper, onSaveHelper } from "./helpers"
+import { getCommentsHelper, onDeleteHelper, onSaveHelper } from "./helpers"
 
 export function CommentsProvider({ children, submission, readOnly, update }) {
   const revision = submission?.status
@@ -16,33 +16,15 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     setState({ ...state, field: field, isModalOpen: true})
   }, [state])
 
-  const commentsFromLocation = (index, section, name) => {
-    let comments = []
-    if (section === "submission"){
-      comments = submission?.comments
-    } else if (section === "consultant"){
-      comments = submission?.consultant?.comments
-    } else if (section === "generalIndicator"){
-      comments =
-        submission?.generalObjectiveIndicators[index]?.comments
-    } else if (section === "developmentIndicator"){
-      comments =
-        submission?.developmentObjectiveIndicators[index]?.comments
-    }
-    return comments?.filter(comment => (
-      comment.fieldName === name
-    ))
-  }
-
   const getCommentsNumber = (field) => {
     const { index, section, name } = field
-    return commentsFromLocation(index, section, name)?.length
+    return getCommentsHelper(index, name, section, submission)?.length
   }
 
   const getComments = useCallback(() => {
     const { field } = state
     const comments =
-      commentsFromLocation(field.index, field.section, field.name)
+      getCommentsHelper(field.index, field.name, field.section, submission)
     setState({ ...state, comments: comments })
     return comments
   }, [state])
