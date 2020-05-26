@@ -72,6 +72,20 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
       }
       update({ developmentObjectiveIndicators: developmentIndicators })
       break
+    case "budget":
+      const budgetConcepts = [...submission?.concepts]
+      const budgetConcept = budgetConcepts[index]
+      const conceptComments = budgetConcept?.comments || []
+      const newConceptComments = [
+        ...conceptComments,
+        comment
+      ]
+      budgetConcepts[index] = {
+        ...budgetConcept,
+        comments: newConceptComments
+      }
+      update({ concepts: budgetConcepts })
+      break
     case "humanResource":
       const concepts = [...submission?.concepts]
       const concept = concepts[index]
