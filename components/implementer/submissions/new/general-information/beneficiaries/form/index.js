@@ -30,15 +30,16 @@ function BeneficiariesForm({data, isLoading, onChange, error}) {
           defaultValue={data?.Submission?.beneficiaries}
           onClickAdd={onClickAdd}
           addLabel="Agregar beneficiario">
-          {({ items, addNew, removeItem }) => 
+          {({ items, addNew, removeItem }) =>
             <div>
               <BeneficiaryModal
                 onSave={onSave(addNew)}
                 visible={state.isModalOpen}
                 onCancel={onCancel} />
-              { items.map((item, key) => 
+              { items.map((item, key) =>
                 <BeneficiaryItem
                   key={key}
+                  index={key}
                   data={item}
                   onDelete={removeItem(key)} />
               ) }
