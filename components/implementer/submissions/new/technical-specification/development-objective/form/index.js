@@ -22,6 +22,7 @@ function DevelopmentObjectiveForm({data, onChange}) {
       <Form.Item label="Indicadores">
         <IndicatorsField
           defaultValue={data?.Submission?.developmentObjectiveIndicators}
+          indicatorType="developmentIndicator"
           onChange={onIndicatorsChange} />
       </Form.Item>
     </Form>

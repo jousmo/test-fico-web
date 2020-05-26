@@ -22,6 +22,7 @@ function GeneralObjectiveForm({data, onChange}) {
       <Form.Item label="Indicadores">
         <IndicatorsField
           defaultValue={data?.Submission?.generalObjectiveIndicators}
+          indicatorType="generalIndicator"
           onChange={onIndicatorsChange} />
       </Form.Item>
     </Form>

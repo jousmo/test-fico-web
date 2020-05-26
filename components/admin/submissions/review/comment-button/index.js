@@ -5,7 +5,7 @@ import {
   CommentsContext
 } from "../../../../../contexts/admin/submissions/review/comments/context"
 
-export function CommentButton({name, section}) {
+export function CommentButton({index, name, section}) {
   const [state, setState] = useState({ commentsNumber: 0 })
 
   const commentsContext = useContext(CommentsContext)
@@ -14,7 +14,7 @@ export function CommentButton({name, section}) {
     return null
   }
 
-  const field = {name: name, section: section}
+  const field = {index: index, name: name, section: section}
 
   const {
     readOnly,

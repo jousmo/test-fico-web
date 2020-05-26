@@ -3,7 +3,7 @@ import { CompositeField } from "../../../shared"
 import { useState } from "react"
 import { IndicatorModal } from "./indicator-modal"
 
-export function IndicatorsField({defaultValue, onChange}) {
+export function IndicatorsField({defaultValue, indicatorType, onChange}) {
   const [state, setState] = useState({ isModalOpen: false, edit: undefined })
 
   const onClickAdd = () => {
@@ -41,6 +41,7 @@ export function IndicatorsField({defaultValue, onChange}) {
       {({ items, addNew, removeItem, replaceItemAtIndex }) =>
         <div>
           <IndicatorModal
+            indicatorType={indicatorType}
             onCancel={onCancel}
             onSave={onSave(addNew, replaceItemAtIndex)}
             visible={state.isModalOpen}
