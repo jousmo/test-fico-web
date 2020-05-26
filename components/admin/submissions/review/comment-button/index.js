@@ -5,7 +5,7 @@ import {
   CommentsContext
 } from "../../../../../contexts/admin/submissions/review/comments/context"
 
-export function CommentButton({index, name, section}) {
+export function CommentButton({index, name, section, ...props}) {
   const [state, setState] = useState({ commentsNumber: 0 })
 
   const commentsContext = useContext(CommentsContext)
@@ -46,6 +46,16 @@ export function CommentButton({index, name, section}) {
         icon={<MessageOutlined />}>
         {state.commentsNumber}
       </Button>
+    )
+  }
+
+  if (props.small){
+    return (
+      <Button
+        size="small"
+        shape="round"
+        onClick={onClick}
+        icon={<MessageOutlined />} />
     )
   }
 
