@@ -4,6 +4,7 @@ import {
   CommentModal
 } from "../../../../../components/admin/submissions/review"
 import { useCallback, useState } from "react"
+import { onSaveHelper } from "./helpers"
 
 export function CommentsProvider({ children, submission, readOnly, update }) {
   const revision = submission?.status
@@ -109,54 +110,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     ]
     setState({...state, comments: newFieldComments})
 
-    if (section === "submission"){
-      const submissionComments = submission?.comments
-      const newComments = [
-        ...submissionComments,
-        newComment
-      ]
-      update({ comments: newComments })
-    } else if (section === "consultant"){
-      const consultant = submission?.consultant
-      const consultantComments = consultant?.comments || []
-      const newConsultantComments = [
-        ...consultantComments,
-        newComment
-      ]
-      const newConsultant = {
-        ...consultant,
-        comments: newConsultantComments
-      }
-      update({ consultant: newConsultant })
-    } else if (section === "generalIndicator"){
-      const generalIndicators =
-        [...submission?.generalObjectiveIndicators]
-      const indicator = generalIndicators[state.field.index]
-      const indicatorComments = indicator?.comments || []
-      const newComments = [
-        ...indicatorComments,
-        newComment
-      ]
-      generalIndicators[state.field.index] = {
-        ...indicator,
-        comments: newComments
-      }
-      update({ generalObjectiveIndicators: generalIndicators })
-    } else if (section === "developmentIndicator"){
-      const developmentIndicators =
-        [...submission?.developmentObjectiveIndicators]
-      const indicator = developmentIndicators[state.field.index]
-      const indicatorComments = indicator?.comments || []
-      const newComments = [
-        ...indicatorComments,
-        newComment
-      ]
-      developmentIndicators[state.field.index] = {
-        ...indicator,
-        comments: newComments
-      }
-      update({ developmentObjectiveIndicators: developmentIndicators })
-    }
+    onSaveHelper(newComment, state.field.index, section, submission, update)
     return newFieldComments
   }
 
