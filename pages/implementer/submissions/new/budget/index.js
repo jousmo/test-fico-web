@@ -11,6 +11,10 @@ import { withApollo } from "../../../../../helpers/withApollo"
 import {
   Budget as BudgetTable
 } from "../../../../../components/implementer/submissions/new/technical-specification"
+import {
+  setSave,
+  setUpdateBudget
+} from "../../../../../helpers/submissionFunctions/budget"
 
 
 function Budget({ client }) {
@@ -29,30 +33,12 @@ function Budget({ client }) {
   })
 
   const updateBudget = useCallback(budget => {
-    const newBudget = {
-      ...state.budget,
-      ...budget
-    }
-
-    setState({
-      ...state,
-      dirty: true,
-      budget: newBudget
-    })
-  })
+    setUpdateBudget(budget, state, setState)
+  }, [state, setState])
 
   const save = useCallback(async () => {
-    try {
-      const updatedSubmission = await updateSubmission({
-        variables: { ...state.budget, id: "1" }
-      })
-
-      /* TODO: Show feedback to the user */
-    }
-    catch(e) {
-      console.error(e)
-    }
-  })
+    await setSave(state, updateSubmission, 1)
+  }, [state, updateSubmission])
 
   const injectActions = useMemo(() => ({
     updateBudget,
