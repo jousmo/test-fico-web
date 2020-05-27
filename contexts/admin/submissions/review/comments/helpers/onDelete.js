@@ -53,7 +53,7 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       const developmentIndicators =
         [...submission?.developmentObjectiveIndicators]
       const developmentIndicator = developmentIndicators[index]
-      newComments = [...developmentIndicator?.comments].filter((e, i) =>
+      newComments = developmentIndicator?.comments?.filter((e, i) =>
         i !== toDelete
       )
       developmentIndicators[index] = {
@@ -66,11 +66,27 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       }
       update({ developmentObjectiveIndicators: developmentIndicators })
       break
+    case "budget":
+      const budgetConcepts = [...submission?.concepts]
+      const budgetConcept = budgetConcepts[index]
+      newComments = budgetConcept?.comments?.filter((e, i) =>
+        i !== toDelete
+      )
+      budgetConcepts[index] = {
+        ...budgetConcept,
+        comments: newComments
+      }
+      newSubmission = {
+        ...submission,
+        concepts: budgetConcepts
+      }
+      update({ concepts: budgetConcepts })
+      break
     case "humanResource":
       const concepts = [...submission?.concepts]
       const concept = concepts[index]
       const humanResource = concept?.humanResource
-      newComments = [...humanResource.comments].filter((e, i) =>
+      newComments = humanResource?.comments?.filter((e, i) =>
         i !== toDelete
       )
       concepts[index] = {

@@ -1,10 +1,11 @@
 import { withForm, cellFormat } from "../../../../../../../helpers"
 import { CompositeField, ScrollableView } from "../../../../../../shared"
-import { Empty, Table, Typography } from "antd"
+import { Empty, Table } from "antd"
 import { useState } from "react"
 import { ConceptModal } from "./concept-modal"
 import { conceptTypes } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { renderInvestment, renderTotal } from "./helpers"
+import { CommentButton } from "../../../../../../admin/submissions/review"
 
 function BudgetForm({data, onChange}) {
   const [state, setState] = useState({ isModalOpen: false, edit: false })
@@ -54,6 +55,16 @@ function BudgetForm({data, onChange}) {
                 pagination={false}
                 locale={{emptyText: <Empty description="Agrega todos los conceptos
                 que serán utilizados durante el proyecto" />}}>
+                <Table.Column
+                  key="comments"
+                  render={(text, row, index) => (
+                    <CommentButton
+                      index={index}
+                      name={`concept_${index}`}
+                      section="budget"
+                      small />
+                  )
+                  }/>
                 <Table.Column
                   title="Concepto"
                   key="name"
