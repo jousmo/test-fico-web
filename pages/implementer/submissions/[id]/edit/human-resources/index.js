@@ -59,8 +59,8 @@ function HumanResources({ client }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
-        submission={data?.Submission}
-        update={updateHumanResources}>
+        readOnly
+        submission={data?.Submission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <Heading />
