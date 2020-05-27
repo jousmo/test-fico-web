@@ -18,7 +18,7 @@ export function ResourcesList() {
   }
 
   return (
-    <Section>
+    <Section fullWidth>
       <HumanResourcesTable
         isLoading={loading}
         error={error}

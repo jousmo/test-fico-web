@@ -2,6 +2,7 @@ import { withForm } from "../../../../../../../helpers/withForm"
 import { Button, Col, Form, Input, Row, Upload } from "antd"
 import { PaperClipOutlined, UserOutlined } from "@ant-design/icons"
 import { CompositeField, SelectField } from "../../../../../../shared"
+import { CommentButton } from "../../../../../../admin/submissions/review";
 import {
   benefits,
   contractTypes
@@ -36,10 +37,17 @@ function HumanResourcesTable({ data, onChange }) {
             defaultValue={humanResources}>
             {({items, updateItem}) =>
               <div style={{overflowX: "auto"}}>
-                <div style={{width: "1630px"}}>
+                <div style={{width: "1780px"}}>
                   <HumanResourcesColumns />
                   {items.map((item, index) =>
                     <Row gutter={[10, 8]} justify="start" key={index}>
+                      <Col flex="50px">
+                        <CommentButton
+                          index={item.key}
+                          name={item.name}
+                          small
+                          section="humanResource" />
+                      </Col>
                       <Col flex="30px">
                         <span key={`userIcon-${index}`}>
                           &nbsp;<UserOutlined />
