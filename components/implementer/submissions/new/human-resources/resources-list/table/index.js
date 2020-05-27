@@ -43,8 +43,8 @@ function HumanResourcesTable({ data, onChange }) {
                     <Row gutter={[10, 8]} justify="start" key={index}>
                       <Col flex="50px">
                         <CommentButton
-                          name={item.name}
                           index={item.key}
+                          name={item.name}
                           small
                           section="humanResource" />
                       </Col>
