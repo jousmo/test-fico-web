@@ -131,6 +131,24 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
       }
       update({ concepts: concepts })
       break
+    case "specificObjective":
+      const specificObjectives = [...submission?.specificObjectives]
+      const specificObjective = specificObjectives[index]
+      const specificObjectiveComments = specificObjective?.comments || []
+      const newSpecificObjectiveComments = [
+        ...specificObjectiveComments,
+        comment
+      ]
+      specificObjectives[index] = {
+        ...specificObjective,
+        comments: newSpecificObjectiveComments
+      }
+      newSubmission = {
+        ...submission,
+        specificObjectives: specificObjectives
+      }
+      update({ specificObjectives: specificObjectives })
+      break
   }
   setState({ ...state, submission: newSubmission, comments: newFieldComments })
 }
