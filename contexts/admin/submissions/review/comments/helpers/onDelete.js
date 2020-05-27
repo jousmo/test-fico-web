@@ -1,20 +1,34 @@
-export const onDeleteHelper = (index, section, submission, toDelete, update) => {
+export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
+  const { index, section } = state.field
+  const { submission } = state
+
+  let newSubmission = {}
   let newComments = []
+
   switch (section){
     case "submission":
-      newComments = [...submission?.comments].filter((e, i) =>
-        i !== toDelete
+      newComments = submission?.comments?.filter(e =>
+        (e.comment !== comment.comment && e.createdAt !== comment.createdAt)
       )
+      newSubmission = {
+        ...submission,
+        comments: newComments
+      }
       update({ comments: newComments })
+      newComments = newComments.filter(e => e.fieldName === state.field.name)
       break
     case "consultant":
       const consultant = submission?.consultant
-      newComments = [...consultant?.comments].filter((e, i) =>
+      newComments = consultant?.comments?.filter((e, i) =>
         i !== toDelete
       )
       const newConsultant = {
         ...consultant,
         comments: newComments
+      }
+      newSubmission = {
+        ...submission,
+        consultant: newConsultant
       }
       update({ consultant: newConsultant })
       break
@@ -22,12 +36,16 @@ export const onDeleteHelper = (index, section, submission, toDelete, update) => 
       const generalIndicators =
         [...submission?.generalObjectiveIndicators]
       const generalIndicator = generalIndicators[index]
-      newComments = [...generalIndicator?.comments].filter((e, i) =>
+      newComments = generalIndicator?.comments?.filter((e, i) =>
         i !== toDelete
       )
       generalIndicators[index] = {
         ...generalIndicator,
         comments: newComments
+      }
+      newSubmission = {
+        ...submission,
+        generalObjectiveIndicators: generalIndicators
       }
       update({ generalObjectiveIndicators: generalIndicators })
       break
@@ -41,6 +59,10 @@ export const onDeleteHelper = (index, section, submission, toDelete, update) => 
       developmentIndicators[index] = {
         ...developmentIndicator,
         comments: newComments
+      }
+      newSubmission = {
+        ...submission,
+        developmentObjectiveIndicators: developmentIndicators
       }
       update({ developmentObjectiveIndicators: developmentIndicators })
       break
@@ -58,8 +80,12 @@ export const onDeleteHelper = (index, section, submission, toDelete, update) => 
           comments: newComments
         }
       }
+      newSubmission = {
+        ...submission,
+        concepts: concepts
+      }
       update({ concepts: concepts })
       break
   }
-  return newComments
+  setState({ ...state, submission: newSubmission, comments: newComments })
 }

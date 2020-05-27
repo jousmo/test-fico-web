@@ -3,7 +3,7 @@ import moment from "moment"
 import {
   CommentModal
 } from "../../../../../components/admin/submissions/review"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { getCommentsHelper, onDeleteHelper, onSaveHelper } from "./helpers"
 
 export function CommentsProvider({ children, submission, readOnly, update }) {
@@ -11,6 +11,10 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
   const [state, setState] = useState({
     isModalOpen: false, field: {}, comments: [], submission: submission
   })
+
+  useEffect(() => {
+    setState({ ...state, submission: submission })
+  }, [submission])
 
   const openCommentsModal = useCallback((field) => {
     setState({ ...state, field: field, isModalOpen: true})
@@ -29,13 +33,9 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     return comments
   }, [state])
 
-  const onDelete = index => {
-    const { section } = state.field
-
-    const newComments =
-      onDeleteHelper(state.field.index, section, submission, index, update)
-    setState({ ...state, comments: newComments })
-  }
+  const onDelete = useCallback((comment, index) => {
+    onDeleteHelper(comment, state, setState, index, update)
+  }, [state])
 
   const onSave = useCallback(values => {
     const { field } = state

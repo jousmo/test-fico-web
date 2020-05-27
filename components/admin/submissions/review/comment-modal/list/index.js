@@ -17,7 +17,7 @@ export function CommentListing({ comments, onDelete, revision }){
       {comments?.map((element, index) => {
         let action = []
         if (element.revision === revision){
-          action.push(<DeleteButton onClick={() => onDelete(index)}/>)
+          action.push(<DeleteButton onClick={() => onDelete(element, index)}/>)
         }
         return (
           <List.Item key={index} actions={action}>

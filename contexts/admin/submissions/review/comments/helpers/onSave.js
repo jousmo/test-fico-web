@@ -1,7 +1,9 @@
 export const onSaveHelper = (comment, update, state, setState, newFieldComments) => {
   const { index, section } = state.field
   const { submission } = state
-  let newSubmission
+
+  let newSubmission = {}
+
   switch (section){
     case "submission":
       const submissionComments = submission?.comments
