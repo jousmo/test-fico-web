@@ -84,6 +84,10 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
         ...budgetConcept,
         comments: newConceptComments
       }
+      newSubmission = {
+        ...submission,
+        concepts: budgetConcepts
+      }
       update({ concepts: budgetConcepts })
       break
     case "humanResource":
