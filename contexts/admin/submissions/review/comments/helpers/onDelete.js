@@ -118,6 +118,22 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       }
       update({ concepts: concepts })
       break
+    case "specificObjective":
+      const specificObjectives = [...submission?.specificObjectives]
+      const specificObjective = specificObjectives[index]
+      newComments = specificObjective?.comments?.filter((e, i) =>
+        i !== toDelete
+      )
+      specificObjectives[index] = {
+        ...specificObjective,
+        comments: newComments
+      }
+      newSubmission = {
+        ...submission,
+        specificObjectives: specificObjectives
+      }
+      update({ specificObjectives: specificObjectives })
+      break
   }
   setState({ ...state, submission: newSubmission, comments: newComments })
 }
