@@ -1,4 +1,7 @@
-export const onSaveHelper = (comment, index, section, submission, update) => {
+export const onSaveHelper = (comment, update, state, setState, newFieldComments) => {
+  const { index, section } = state.field
+  const { submission } = state
+  let newSubmission
   switch (section){
     case "submission":
       const submissionComments = submission?.comments
@@ -6,6 +9,10 @@ export const onSaveHelper = (comment, index, section, submission, update) => {
         ...submissionComments,
         comment
       ]
+      newSubmission = {
+        ...submission,
+        comments: newSubmissionComments
+      }
       update({ comments: newSubmissionComments })
       break
     case "consultant":
@@ -18,6 +25,10 @@ export const onSaveHelper = (comment, index, section, submission, update) => {
       const newConsultant = {
         ...consultant,
         comments: newConsultantComments
+      }
+      newSubmission = {
+        ...submission,
+        consultant: newConsultant
       }
       update({ consultant: newConsultant })
       break
@@ -34,6 +45,10 @@ export const onSaveHelper = (comment, index, section, submission, update) => {
         ...generalIndicator,
         comments: generalComments
       }
+      newSubmission = {
+        ...submission,
+        generalObjectiveIndicators: generalIndicators
+      }
       update({ generalObjectiveIndicators: generalIndicators })
       break
     case "developmentIndicator":
@@ -48,6 +63,10 @@ export const onSaveHelper = (comment, index, section, submission, update) => {
       developmentIndicators[index] = {
         ...developmentIndicator,
         comments: developmentComments
+      }
+      newSubmission = {
+        ...submission,
+        developmentObjectiveIndicators: developmentIndicators
       }
       update({ developmentObjectiveIndicators: developmentIndicators })
       break
@@ -68,7 +87,12 @@ export const onSaveHelper = (comment, index, section, submission, update) => {
         ...concept,
         humanResource: newHumanResource
       }
+      newSubmission = {
+        ...submission,
+        concepts: concepts
+      }
       update({ concepts: concepts })
       break
   }
+  setState({ ...state, submission: newSubmission, comments: newFieldComments })
 }

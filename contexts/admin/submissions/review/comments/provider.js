@@ -9,7 +9,7 @@ import { getCommentsHelper, onDeleteHelper, onSaveHelper } from "./helpers"
 export function CommentsProvider({ children, submission, readOnly, update }) {
   const revision = submission?.status
   const [state, setState] = useState({
-    isModalOpen: false, field: {}, comments: []
+    isModalOpen: false, field: {}, comments: [], submission: submission
   })
 
   const openCommentsModal = useCallback((field) => {
@@ -22,7 +22,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
   }
 
   const getComments = useCallback(() => {
-    const { field } = state
+    const { field, submission } = state
     const comments =
       getCommentsHelper(field.index, field.name, field.section, submission)
     setState({ ...state, comments: comments })
@@ -37,13 +37,13 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     setState({ ...state, comments: newComments })
   }
 
-  const onSave = values => {
-    const section = state.field.section
+  const onSave = useCallback(values => {
+    const { field } = state
     const newComment = {
-      fieldName: state.field.name,
+      fieldName: field.name,
       revision: revision,
       comment: values.comment,
-      type: section,
+      type: field.section,
       createdAt: moment().format()
     }
 
@@ -52,11 +52,10 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
       ...fieldComments,
       newComment
     ]
-    setState({...state, comments: newFieldComments})
 
-    onSaveHelper(newComment, state.field.index, section, submission, update)
+    onSaveHelper(newComment, update, state, setState, newFieldComments)
     return newFieldComments
-  }
+  }, [state])
 
   const onCancel = () => {
     setState({ ...state, isModalOpen: false })
