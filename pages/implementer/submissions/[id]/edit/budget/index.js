@@ -58,8 +58,8 @@ function Budget({ client }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 2 })}>
       <CommentsProvider
-        submission={data?.Submission}
-        update={updateBudget}>
+        readOnly
+        submission={data?.Submission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <BudgetTable />
