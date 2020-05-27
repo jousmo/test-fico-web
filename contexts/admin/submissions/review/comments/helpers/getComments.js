@@ -23,6 +23,9 @@ export const getCommentsHelper = (index, name, section, submission) => {
     case "humanResource":
       comments = submission?.concepts[index]?.humanResource?.comments
       break
+    case "specificObjective":
+      comments = submission?.specificObjectives[index]?.comments
+      break
   }
   return comments?.filter(comment => (
     comment.fieldName === name
