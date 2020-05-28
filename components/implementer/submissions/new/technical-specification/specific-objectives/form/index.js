@@ -68,6 +68,7 @@ export default function SpecificObjectiveForm({
             </Form.Item>
             <Form.Item label="Actividades">
               <ActivitiesField
+                activityType="specificActivity"
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}
                 defaultValue={objective.activities} />
             </Form.Item>
