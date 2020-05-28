@@ -119,8 +119,8 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       update({ concepts: concepts })
       break
     case "specificObjective":
-      const specificObjectives = [...submission?.specificObjectives]
-      const specificObjective = specificObjectives[index]
+      let specificObjectives = [...submission?.specificObjectives]
+      let specificObjective = specificObjectives[index]
       newComments = specificObjective?.comments?.filter((e, i) =>
         i !== toDelete
       )
@@ -133,6 +133,31 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
         specificObjectives: specificObjectives
       }
       update({ specificObjectives: specificObjectives })
+      break
+    case "specificIndicator":
+      const indices = index.split("-")
+      specificObjectives = [...submission?.specificObjectives]
+      specificObjective = specificObjectives[indices[0]]
+      const specificIndicators = specificObjective?.indicators
+      const specificIndicator = specificIndicators[indices[1]]
+      newComments = specificIndicator?.comments?.filter((e, i) =>
+        i !== toDelete
+      )
+      specificIndicators[indices[1]] = {
+        ...specificIndicator,
+        comments: newComments
+      }
+      specificObjectives[indices[0]] = {
+        ...specificObjective,
+        indicators: specificIndicators
+      }
+      newSubmission = {
+        ...submission,
+        specificObjectives: specificObjectives
+      }
+      update({ specificObjectives: specificObjectives })
+      break
+    case "specificActivity":
       break
   }
   setState({ ...state, submission: newSubmission, comments: newComments })
