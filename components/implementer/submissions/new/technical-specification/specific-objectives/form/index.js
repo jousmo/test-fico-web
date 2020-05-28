@@ -64,11 +64,13 @@ export default function SpecificObjectiveForm({
               <IndicatorsField
                 onChange={onSpecificObjectiveItemsChange(index, "indicators")}
                 indicatorType="specificIndicator"
+                objectiveIndex={index}
                 defaultValue={objective.indicators} />
             </Form.Item>
             <Form.Item label="Actividades">
               <ActivitiesField
                 activityType="specificActivity"
+                objectiveIndex={index}
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}
                 defaultValue={objective.activities} />
             </Form.Item>

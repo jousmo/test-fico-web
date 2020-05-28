@@ -7,6 +7,7 @@ import { useEffect } from "react"
 
 export function ActivityModal({
   activityType,
+  objectiveIndex,
   onSave,
   onCancel,
   edit,
@@ -42,6 +43,8 @@ export function ActivityModal({
     onCancel && onCancel()
   }
 
+  const commentIndex = `${objectiveIndex}-${edit?.index}`
+
   return (
     <Modal
       title={`${edit ? "Editar" : "Agregar"} indicador`}
@@ -64,7 +67,7 @@ export function ActivityModal({
                 <FieldLabel comentable={{
                   name: "description",
                   section: activityType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Descripción de la actividad
                 </FieldLabel>
               }>
@@ -81,7 +84,7 @@ export function ActivityModal({
                 <FieldLabel comentable={{
                   name: "responsible",
                   section: activityType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Responsable
                 </FieldLabel>
               }>
@@ -98,7 +101,7 @@ export function ActivityModal({
                 <FieldLabel comentable={{
                   name: "meansOfVerification",
                   section: activityType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Medio de verificación
                 </FieldLabel>
               }>
@@ -115,7 +118,7 @@ export function ActivityModal({
                 <FieldLabel comentable={{
                   name: "baseline",
                   section: activityType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Línea base
                 </FieldLabel>
               }>
@@ -132,7 +135,7 @@ export function ActivityModal({
                 <FieldLabel comentable={{
                   name: "goal",
                   section: activityType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Meta
                 </FieldLabel>
               }>
@@ -149,7 +152,7 @@ export function ActivityModal({
                 <FieldLabel comentable={{
                   name: "place",
                   section: activityType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Lugar de intervención
                 </FieldLabel>
               }>
@@ -166,7 +169,7 @@ export function ActivityModal({
                 <FieldLabel comentable={{
                   name: "months",
                   section: activityType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Mes de implementación
                 </FieldLabel>
               }
