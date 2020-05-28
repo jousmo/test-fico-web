@@ -27,16 +27,20 @@ export const getCommentsHelper = (index, name, section, submission) => {
       comments = submission?.specificObjectives[index]?.comments
       break
     case "specificIndicator":
-      let objectiveIndex = index.split("-")[0]
-      const indicatorIndex = index.split("-")[1]
+      let indices = index.split("-")
+      if (indices[1] === `undefined`){
+        break
+      }
       comments =
-        submission?.specificObjectives[objectiveIndex].indicators[indicatorIndex]
+        submission?.specificObjectives[indices[0]]?.indicators[indices[1]]?.comments
       break
     case "specificActivity":
-      objectiveIndex = index.split("-")[0]
-      const activityIndex = index.split("-")[1]
+      indices = index.split("-")
+      if (indices[1] === `undefined`){
+        break
+      }
       comments =
-        submission?.specificObjectives[objectiveIndex].activities[activityIndex]
+        submission?.specificObjectives[objectiveIndex]?.activities[activityIndex]?.comments
       break
   }
   return comments?.filter(comment => (
