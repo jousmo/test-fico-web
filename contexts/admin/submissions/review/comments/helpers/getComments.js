@@ -40,7 +40,7 @@ export const getCommentsHelper = (index, name, section, submission) => {
         break
       }
       comments =
-        submission?.specificObjectives[objectiveIndex]?.activities[activityIndex]?.comments
+        submission?.specificObjectives[indices[0]]?.activities[indices[1]]?.comments
       break
   }
   return comments?.filter(comment => (
