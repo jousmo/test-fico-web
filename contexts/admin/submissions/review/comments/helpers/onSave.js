@@ -149,6 +149,36 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
       }
       update({ specificObjectives: specificObjectives })
       break
+    case "specificIndicator":
+      const indices = index.split("-")
+      if(indices[1] === `undefined`){
+        newSubmission = { ...submission }
+        break
+      }
+
+      const specificInObjectives = [...submission?.specificObjectives]
+      const specificInObjective = specificInObjectives[indices[0]]
+      const specificIndicators = specificInObjective?.indicators
+      const specificIndicator = specificIndicators[indices[1]]
+      const specificIndicatorComments = specificIndicator?.comments || []
+
+      specificIndicators[indices[1]] = {
+        ...specificIndicator,
+        comments: [
+          ...specificIndicatorComments,
+          comment
+        ]
+      }
+      specificInObjectives[indices[0]] = {
+        ...specificInObjective,
+        indicators: specificIndicators
+      }
+      newSubmission = {
+        ...submission,
+        specificObjectives: specificInObjectives
+      }
+      update({ specificObjectives: specificInObjectives })
+      break
   }
   setState({ ...state, submission: newSubmission, comments: newFieldComments })
 }
