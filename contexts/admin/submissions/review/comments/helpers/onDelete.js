@@ -42,6 +42,10 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
         ...beneficiary,
         comments: newComments
       }
+      newSubmission = {
+        ...submission,
+        beneficiaries: beneficiaries
+      }
       update({ beneficiaries: beneficiaries })
       break
     case "generalIndicator":

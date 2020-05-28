@@ -46,6 +46,10 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
         ...beneficiary,
         comments: newBeneficiaryComments
       }
+      newSubmission = {
+        ...submission,
+        beneficiaries: beneficiaries
+      }
       update({ beneficiaries: beneficiaries })
       break
     case "generalIndicator":
