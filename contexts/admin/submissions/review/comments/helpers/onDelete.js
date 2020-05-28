@@ -32,6 +32,22 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       }
       update({ consultant: newConsultant })
       break
+    case "beneficiary":
+      const beneficiaries = [...submission?.beneficiaries]
+      const beneficiary = beneficiaries[index]
+      newComments = [...beneficiary?.comments].filter((e, i) =>
+        i !== toDelete
+      )
+      beneficiaries[index] = {
+        ...beneficiary,
+        comments: newComments
+      }
+      newSubmission = {
+        ...submission,
+        beneficiaries: beneficiaries
+      }
+      update({ beneficiaries: beneficiaries })
+      break
     case "generalIndicator":
       const generalIndicators =
         [...submission?.generalObjectiveIndicators]

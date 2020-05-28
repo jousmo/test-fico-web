@@ -34,6 +34,24 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
       }
       update({ consultant: newConsultant })
       break
+    case "beneficiary":
+      const beneficiaries = [...submission?.beneficiaries]
+      const beneficiary = beneficiaries[index]
+      const beneficiaryComments = beneficiary?.comments || []
+      const newBeneficiaryComments = [
+        ...beneficiaryComments,
+        comment
+      ]
+      beneficiaries[index] = {
+        ...beneficiary,
+        comments: newBeneficiaryComments
+      }
+      newSubmission = {
+        ...submission,
+        beneficiaries: beneficiaries
+      }
+      update({ beneficiaries: beneficiaries })
+      break
     case "generalIndicator":
       const generalIndicators =
         [...submission?.generalObjectiveIndicators]

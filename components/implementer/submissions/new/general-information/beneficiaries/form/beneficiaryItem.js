@@ -7,8 +7,9 @@ import {
   preventionLevelTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission/"
 import { DeleteButton } from "../../../../../../shared"
+import { CommentButton } from "../../../../../../admin/submissions/review"
 
-export function BeneficiaryItem({ data, onDelete, key }) {
+export function BeneficiaryItem({ data, onDelete, index }) {
   const { description, number } = data
 
   const educationLevel = getReadableValue(
@@ -32,8 +33,14 @@ export function BeneficiaryItem({ data, onDelete, key }) {
   )
 
   return (
-    <Card key={`beneficiary_${key}`} style={{marginBottom: "20px"}}>
-      <Typography.Title level={4}>{description}</Typography.Title>
+    <Card key={`beneficiary_${index}`} style={{marginBottom: "20px"}}>
+      <Typography.Title level={4}>
+        {description}
+        <CommentButton
+          name={`beneficiary_${index}`}
+          index={index}
+          section="beneficiary" />
+      </Typography.Title>
       <Typography.Text type="secondary">
         {number} beneficiarios
       </Typography.Text>
