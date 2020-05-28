@@ -119,8 +119,8 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       update({ concepts: concepts })
       break
     case "specificObjective":
-      let specificObjectives = [...submission?.specificObjectives]
-      let specificObjective = specificObjectives[index]
+      const specificObjectives = [...submission?.specificObjectives]
+      const specificObjective = specificObjectives[index]
       newComments = specificObjective?.comments?.filter((e, i) =>
         i !== toDelete
       )
@@ -136,10 +136,16 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       break
     case "specificIndicator":
       const indices = index.split("-")
-      specificObjectives = [...submission?.specificObjectives]
-      specificObjective = specificObjectives[indices[0]]
-      const specificIndicators = specificObjective?.indicators
+      if(indices[1] === `undefined`){
+        newSubmission = { ...submission }
+        break
+      }
+
+      const specificInObjectives = [...submission?.specificObjectives]
+      const specificInObjective = specificInObjectives[indices[0]]
+      const specificIndicators = specificInObjective?.indicators
       const specificIndicator = specificIndicators[indices[1]]
+
       newComments = specificIndicator?.comments?.filter((e, i) =>
         i !== toDelete
       )
@@ -147,15 +153,15 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
         ...specificIndicator,
         comments: newComments
       }
-      specificObjectives[indices[0]] = {
-        ...specificObjective,
+      specificInObjectives[indices[0]] = {
+        ...specificInObjective,
         indicators: specificIndicators
       }
       newSubmission = {
         ...submission,
-        specificObjectives: specificObjectives
+        specificObjectives: specificInObjectives
       }
-      update({ specificObjectives: specificObjectives })
+      update({ specificObjectives: specificInObjectives })
       break
     case "specificActivity":
       break
