@@ -179,6 +179,37 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
       }
       update({ specificObjectives: specificInObjectives })
       break
+    case "specificActivity":
+      const activityIndices = index.split("-")
+      if(activityIndices[1] === `undefined`){
+        newSubmission = { ...submission }
+        break
+      }
+
+      const specificAcObjectives = [...submission?.specificObjectives]
+      const specificAcObjective = specificAcObjectives[activityIndices[0]]
+      const specificActivities = specificAcObjective?.activities
+      const specificActivity = specificActivities[activityIndices[1]]
+      const specificActivityComments = specificActivity?.comments || []
+
+      specificActivities[activityIndices[1]] = {
+        ...specificActivity,
+        comments: [
+          ...specificActivityComments,
+          comment
+        ]
+      }
+      specificAcObjectives[activityIndices[0]] = {
+        ...specificAcObjective,
+        activities: specificActivities
+      }
+      newSubmission = {
+        ...submission,
+        specificObjectives: specificAcObjectives
+      }
+      update({ specificObjectives: specificAcObjectives })
+
+      break
   }
   setState({ ...state, submission: newSubmission, comments: newFieldComments })
 }
