@@ -164,6 +164,33 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       update({ specificObjectives: specificInObjectives })
       break
     case "specificActivity":
+      const activityIndices = index.split("-")
+      if(activityIndices[1] === `undefined`){
+        newSubmission = { ...submission }
+        break
+      }
+
+      const specificAcObjectives = [...submission?.specificObjectives]
+      const specificAcObjective = specificAcObjectives[activityIndices[0]]
+      const specificActivities = specificAcObjective?.activities
+      const specificActivity = specificActivities[activityIndices[1]]
+
+      newComments = specificActivity?.comments?.filter((e, i) =>
+        i !== toDelete
+      )
+      specificActivities[activityIndices[1]] = {
+        ...specificActivity,
+        comments: newComments
+      }
+      specificAcObjectives[activityIndices[0]] = {
+        ...specificAcObjective,
+        activities: specificActivities
+      }
+      newSubmission = {
+        ...submission,
+        specificObjectives: specificAcObjectives
+      }
+      update({ specificObjectives: specificAcObjectives })
       break
   }
   setState({ ...state, submission: newSubmission, comments: newComments })
