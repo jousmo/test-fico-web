@@ -1,3 +1,15 @@
+import {
+  addSubmissionComment,
+  addConsultantComment,
+  addGeneralIComment,
+  addDevelopmentIComment,
+  addBudgetComment,
+  addHRComment,
+  addSpecificOComment,
+  addSpecificIComment,
+  addSpecificAComment
+} from "./sections"
+
 export const onSaveHelper = (comment, update, state, setState, newFieldComments) => {
   const { index, section } = state.field
   const { submission } = state
@@ -5,29 +17,17 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
   let newSubmission = {}
 
   switch (section){
-    case "submission":
-      const submissionComments = submission?.comments
-      const newSubmissionComments = [
-        ...submissionComments,
-        comment
-      ]
+    case "submission": {
+      const newComments = addSubmissionComment(submission, comment)
       newSubmission = {
         ...submission,
-        comments: newSubmissionComments
+        comments: newComments
       }
-      update({ comments: newSubmissionComments })
+      update({ comments: newComments })
       break
+    }
     case "consultant":
-      const consultant = submission?.consultant
-      const consultantComments = consultant?.comments || []
-      const newConsultantComments = [
-        ...consultantComments,
-        comment
-      ]
-      const newConsultant = {
-        ...consultant,
-        comments: newConsultantComments
-      }
+      const newConsultant = addConsultantComment(submission, comment)
       newSubmission = {
         ...submission,
         consultant: newConsultant
@@ -52,164 +52,79 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
       }
       update({ beneficiaries: beneficiaries })
       break
-    case "generalIndicator":
-      const generalIndicators =
-        [...submission?.generalObjectiveIndicators]
-      const generalIndicator = generalIndicators[index]
-      const generalIndicatorComments = generalIndicator?.comments || []
-      const generalComments = [
-        ...generalIndicatorComments,
-        comment
-      ]
-      generalIndicators[index] = {
-        ...generalIndicator,
-        comments: generalComments
-      }
+    case "generalIndicator": {
+      const indicators = addGeneralIComment(submission, comment, index)
       newSubmission = {
         ...submission,
-        generalObjectiveIndicators: generalIndicators
+        generalObjectiveIndicators: indicators
       }
-      update({ generalObjectiveIndicators: generalIndicators })
+      update({ generalObjectiveIndicators: indicators })
       break
-    case "developmentIndicator":
-      const developmentIndicators =
-        [...submission?.developmentObjectiveIndicators]
-      const developmentIndicator = developmentIndicators[index]
-      const developmentIndicatorComments = developmentIndicator?.comments || []
-      const developmentComments = [
-        ...developmentIndicatorComments,
-        comment
-      ]
-      developmentIndicators[index] = {
-        ...developmentIndicator,
-        comments: developmentComments
-      }
+    }
+    case "developmentIndicator": {
+      const indicators = addDevelopmentIComment(submission, comment, index)
       newSubmission = {
         ...submission,
-        developmentObjectiveIndicators: developmentIndicators
+        developmentObjectiveIndicators: indicators
       }
-      update({ developmentObjectiveIndicators: developmentIndicators })
+      update({ developmentObjectiveIndicators: indicators })
       break
-    case "budget":
-      const budgetConcepts = [...submission?.concepts]
-      const budgetConcept = budgetConcepts[index]
-      const conceptComments = budgetConcept?.comments || []
-      const newConceptComments = [
-        ...conceptComments,
-        comment
-      ]
-      budgetConcepts[index] = {
-        ...budgetConcept,
-        comments: newConceptComments
-      }
-      newSubmission = {
-        ...submission,
-        concepts: budgetConcepts
-      }
-      update({ concepts: budgetConcepts })
-      break
-    case "humanResource":
-      const concepts = [...submission?.concepts]
-      const concept = concepts[index]
-      const humanResource = concept?.humanResource
-      const humanResourceComments = humanResource?.comments || []
-      const newHumanResourceComments = [
-        ...humanResourceComments,
-        comment
-      ]
-      const newHumanResource = {
-        ...humanResource,
-        comments: newHumanResourceComments
-      }
-      concepts[index] = {
-        ...concept,
-        humanResource: newHumanResource
-      }
+    }
+    case "budget": {
+      const concepts = addBudgetComment(submission, comment, index)
       newSubmission = {
         ...submission,
         concepts: concepts
       }
       update({ concepts: concepts })
       break
-    case "specificObjective":
-      const specificObjectives = [...submission?.specificObjectives]
-      const specificObjective = specificObjectives[index]
-      const specificObjectiveComments = specificObjective?.comments || []
-      const newSpecificObjectiveComments = [
-        ...specificObjectiveComments,
-        comment
-      ]
-      specificObjectives[index] = {
-        ...specificObjective,
-        comments: newSpecificObjectiveComments
-      }
+    }
+    case "humanResource": {
+      const concepts = addHRComment(submission, comment, index)
       newSubmission = {
         ...submission,
-        specificObjectives: specificObjectives
+        concepts: concepts
       }
-      update({ specificObjectives: specificObjectives })
+      update({ concepts: concepts })
       break
-    case "specificIndicator":
-      const indices = index.split("-")
-      if(indices[1] === `undefined`){
+    }
+    case "specificObjective": {
+      const objectives = addSpecificOComment(submission, comment, index)
+      newSubmission = {
+        ...submission,
+        specificObjectives: objectives
+      }
+      update({ specificObjectives: objectives })
+      break
+    }
+    case "specificIndicator": {
+      const objectives = addSpecificIComment(submission, comment, index)
+      if (objectives === false) {
         newSubmission = { ...submission }
         break
       }
 
-      const specificInObjectives = [...submission?.specificObjectives]
-      const specificInObjective = specificInObjectives[indices[0]]
-      const specificIndicators = specificInObjective?.indicators
-      const specificIndicator = specificIndicators[indices[1]]
-      const specificIndicatorComments = specificIndicator?.comments || []
-
-      specificIndicators[indices[1]] = {
-        ...specificIndicator,
-        comments: [
-          ...specificIndicatorComments,
-          comment
-        ]
-      }
-      specificInObjectives[indices[0]] = {
-        ...specificInObjective,
-        indicators: specificIndicators
-      }
       newSubmission = {
         ...submission,
-        specificObjectives: specificInObjectives
+        specificObjectives: objectives
       }
-      update({ specificObjectives: specificInObjectives })
+      update({ specificObjectives: objectives })
       break
-    case "specificActivity":
-      const activityIndices = index.split("-")
-      if(activityIndices[1] === `undefined`){
+    }
+    case "specificActivity": {
+      const objectives = addSpecificAComment(submission, comment, index)
+      if (objectives === false) {
         newSubmission = { ...submission }
         break
       }
-
-      const specificAcObjectives = [...submission?.specificObjectives]
-      const specificAcObjective = specificAcObjectives[activityIndices[0]]
-      const specificActivities = specificAcObjective?.activities
-      const specificActivity = specificActivities[activityIndices[1]]
-      const specificActivityComments = specificActivity?.comments || []
-
-      specificActivities[activityIndices[1]] = {
-        ...specificActivity,
-        comments: [
-          ...specificActivityComments,
-          comment
-        ]
-      }
-      specificAcObjectives[activityIndices[0]] = {
-        ...specificAcObjective,
-        activities: specificActivities
-      }
       newSubmission = {
         ...submission,
-        specificObjectives: specificAcObjectives
+        specificObjectives: objectives
       }
-      update({ specificObjectives: specificAcObjectives })
+      update({ specificObjectives: objectives })
 
       break
+    }
   }
   setState({ ...state, submission: newSubmission, comments: newFieldComments })
 }
