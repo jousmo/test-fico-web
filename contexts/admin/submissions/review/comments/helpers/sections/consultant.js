@@ -8,3 +8,16 @@ export const deleteConsultantComments = (submission, toDelete) => {
     comments: newComments
   }
 }
+
+export const addConsultantComment = (submission, comment) => {
+  const consultant = submission?.consultant
+  const consultantComments = consultant?.comments || []
+  const newComments = [
+    ...consultantComments,
+    comment
+  ]
+  return {
+    ...consultant,
+    comments: newComments
+  }
+}
