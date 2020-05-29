@@ -1,6 +1,7 @@
 import {
   deleteSubmissionComments,
   deleteConsultantComments,
+  deleteBeneficiaryComments,
   deleteGeneralIComments,
   deleteDevelopmentIComments,
   deleteBudgetComments,
@@ -38,15 +39,8 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       break
     }
     case "beneficiary": {
-      const beneficiaries = [...submission?.beneficiaries]
-      const beneficiary = beneficiaries[index]
-      newComments = [...beneficiary?.comments].filter((e, i) =>
-        i !== toDelete
-      )
-      beneficiaries[index] = {
-        ...beneficiary,
-        comments: newComments
-      }
+      const beneficiaries =
+        deleteBeneficiaryComments(submission, toDelete, index)
       newSubmission = {
         ...submission,
         beneficiaries: beneficiaries
