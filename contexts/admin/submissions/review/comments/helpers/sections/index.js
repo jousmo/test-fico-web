@@ -1,3 +1,4 @@
+export * from "./beneficiary"
 export * from "./budget"
 export * from "./consultant"
 export * from "./developmentIndicator"
