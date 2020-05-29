@@ -1,3 +1,16 @@
+import {
+  deleteSubmissionComments,
+  deleteConsultantComments,
+  deleteBeneficiaryComments,
+  deleteGeneralIComments,
+  deleteDevelopmentIComments,
+  deleteBudgetComments,
+  deleteHRComments,
+  deleteSpecificOComments,
+  deleteSpecificIComments,
+  deleteSpecificAComments
+} from "./sections"
+
 export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
   const { index, section } = state.field
   const { submission } = state
@@ -6,10 +19,8 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
   let newComments = []
 
   switch (section){
-    case "submission":
-      newComments = submission?.comments?.filter(e =>
-        (e.comment !== comment.comment && e.createdAt !== comment.createdAt)
-      )
+    case "submission": {
+      newComments = deleteSubmissionComments(submission, comment)
       newSubmission = {
         ...submission,
         comments: newComments
@@ -17,106 +28,99 @@ export const onDeleteHelper = (comment, state, setState, toDelete, update) => {
       update({ comments: newComments })
       newComments = newComments.filter(e => e.fieldName === state.field.name)
       break
-    case "consultant":
-      const consultant = submission?.consultant
-      newComments = consultant?.comments?.filter((e, i) =>
-        i !== toDelete
-      )
-      const newConsultant = {
-        ...consultant,
-        comments: newComments
-      }
+    }
+    case "consultant": {
+      const newConsultant = deleteConsultantComments(submission, toDelete)
       newSubmission = {
         ...submission,
         consultant: newConsultant
       }
       update({ consultant: newConsultant })
       break
-    case "beneficiary":
-      const beneficiaries = [...submission?.beneficiaries]
-      const beneficiary = beneficiaries[index]
-      newComments = [...beneficiary?.comments].filter((e, i) =>
-        i !== toDelete
-      )
-      beneficiaries[index] = {
-        ...beneficiary,
-        comments: newComments
-      }
+    }
+    case "beneficiary": {
+      const beneficiaries =
+        deleteBeneficiaryComments(submission, toDelete, index)
       newSubmission = {
         ...submission,
         beneficiaries: beneficiaries
       }
       update({ beneficiaries: beneficiaries })
       break
-    case "generalIndicator":
-      const generalIndicators =
-        [...submission?.generalObjectiveIndicators]
-      const generalIndicator = generalIndicators[index]
-      newComments = generalIndicator?.comments?.filter((e, i) =>
-        i !== toDelete
-      )
-      generalIndicators[index] = {
-        ...generalIndicator,
-        comments: newComments
-      }
+    }
+    case "generalIndicator": {
+      const indicators = deleteGeneralIComments(submission, toDelete, index)
       newSubmission = {
         ...submission,
-        generalObjectiveIndicators: generalIndicators
+        generalObjectiveIndicators: indicators
       }
-      update({ generalObjectiveIndicators: generalIndicators })
+      update({ generalObjectiveIndicators: indicators })
       break
-    case "developmentIndicator":
-      const developmentIndicators =
-        [...submission?.developmentObjectiveIndicators]
-      const developmentIndicator = developmentIndicators[index]
-      newComments = developmentIndicator?.comments?.filter((e, i) =>
-        i !== toDelete
-      )
-      developmentIndicators[index] = {
-        ...developmentIndicator,
-        comments: newComments
-      }
+    }
+    case "developmentIndicator": {
+      const indicators = deleteDevelopmentIComments(submission, toDelete, index)
       newSubmission = {
         ...submission,
-        developmentObjectiveIndicators: developmentIndicators
+        developmentObjectiveIndicators: indicators
       }
-      update({ developmentObjectiveIndicators: developmentIndicators })
+      update({ developmentObjectiveIndicators: indicators })
       break
-    case "budget":
-      const budgetConcepts = [...submission?.concepts]
-      const budgetConcept = budgetConcepts[index]
-      newComments = budgetConcept?.comments?.filter((e, i) =>
-        i !== toDelete
-      )
-      budgetConcepts[index] = {
-        ...budgetConcept,
-        comments: newComments
-      }
-      newSubmission = {
-        ...submission,
-        concepts: budgetConcepts
-      }
-      update({ concepts: budgetConcepts })
-      break
-    case "humanResource":
-      const concepts = [...submission?.concepts]
-      const concept = concepts[index]
-      const humanResource = concept?.humanResource
-      newComments = humanResource?.comments?.filter((e, i) =>
-        i !== toDelete
-      )
-      concepts[index] = {
-        ...concept,
-        humanResource: {
-          ...humanResource,
-          comments: newComments
-        }
-      }
+    }
+    case "budget": {
+      const concepts = deleteBudgetComments(submission, toDelete, index)
       newSubmission = {
         ...submission,
         concepts: concepts
       }
       update({ concepts: concepts })
+      break
+    }
+    case "humanResource": {
+      const concepts = deleteHRComments(submission, toDelete, index)
+      newSubmission = {
+        ...submission,
+        concepts: concepts
+      }
+      update({ concepts: concepts })
+      break
+    }
+    case "specificObjective": {
+      const objectives = deleteSpecificOComments(submission, toDelete, index)
+      newSubmission = {
+        ...submission,
+        specificObjectives: objectives
+      }
+      update({ specificObjectives: objectives })
+      break
+    }
+    case "specificIndicator": {
+      const objectives = deleteSpecificIComments(submission, toDelete, index)
+      if (objectives === false) {
+        newSubmission = { ...submission }
+        break
+      }
+
+      newSubmission = {
+        ...submission,
+        specificObjectives: objectives
+      }
+      update({ specificObjectives: objectives })
+      break
+    }
+    case "specificActivity": {
+      const objectives = deleteSpecificAComments(submission, toDelete, index)
+      if (objectives === false) {
+        newSubmission = { ...submission }
+        break
+      }
+      newSubmission = {
+        ...submission,
+        specificObjectives: objectives
+      }
+      update({ specificObjectives: objectives })
+      break
+    }
+    default:
       break
   }
   setState({ ...state, submission: newSubmission, comments: newComments })

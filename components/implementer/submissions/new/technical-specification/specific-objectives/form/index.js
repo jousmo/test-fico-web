@@ -3,6 +3,9 @@ import { v4 as uuid } from "uuid"
 import { Skeleton, Alert, Form } from "antd"
 import { IndicatorsField } from "../../../../indicators-field"
 import { ActivitiesField } from "../../../../activities-field"
+import {
+  CommentButton
+} from "../../../../../../admin/submissions/review/comment-button"
 
 export default function SpecificObjectiveForm({
   data,
@@ -40,7 +43,17 @@ export default function SpecificObjectiveForm({
   return (
     <>
       { specificObjectives.map((objective, index) =>
-        <Section title={`Objetivo ${index + 1}`} key={uuid()}>
+        <Section
+          title={
+            <>
+              {`Objetivo ${index + 1}`}
+              <CommentButton
+                name={`specificObjective_${index}`}
+                index={index}
+                section="specificObjective" />
+            </>
+          }
+          key={uuid()}>
           <Form
             name="specific-objective-indicators"
             layout="vertical">
@@ -51,10 +64,13 @@ export default function SpecificObjectiveForm({
               <IndicatorsField
                 onChange={onSpecificObjectiveItemsChange(index, "indicators")}
                 indicatorType="specificIndicator"
+                objectiveIndex={index}
                 defaultValue={objective.indicators} />
             </Form.Item>
             <Form.Item label="Actividades">
               <ActivitiesField
+                activityType="specificActivity"
+                objectiveIndex={index}
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}
                 defaultValue={objective.activities} />
             </Form.Item>

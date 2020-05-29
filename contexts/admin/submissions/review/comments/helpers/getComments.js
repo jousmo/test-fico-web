@@ -23,6 +23,25 @@ export const getCommentsHelper = (index, name, section, submission) => {
     case "humanResource":
       comments = submission?.concepts[index]?.humanResource?.comments
       break
+    case "specificObjective":
+      comments = submission?.specificObjectives[index]?.comments
+      break
+    case "specificIndicator":
+      let indices = index.split("-")
+      if (indices[1] === `undefined`){
+        break
+      }
+      comments =
+        submission?.specificObjectives[indices[0]]?.indicators[indices[1]]?.comments
+      break
+    case "specificActivity":
+      indices = index.split("-")
+      if (indices[1] === `undefined`){
+        break
+      }
+      comments =
+        submission?.specificObjectives[indices[0]]?.activities[indices[1]]?.comments
+      break
   }
   return comments?.filter(comment => (
     comment.fieldName === name

@@ -1,11 +1,13 @@
 import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input } from "antd"
-import { DateField } from "../../../shared"
+import { DateField, FieldLabel } from "../../../shared"
 import { getSelectValue } from "../../../../helpers/getSelectValue"
 import { merge } from "lodash"
 import { useEffect } from "react"
 
 export function ActivityModal({
+  activityType,
+  objectiveIndex,
   onSave,
   onCancel,
   edit,
@@ -41,6 +43,8 @@ export function ActivityModal({
     onCancel && onCancel()
   }
 
+  const commentIndex = `${objectiveIndex}-${edit?.index}`
+
   return (
     <Modal
       title={`${edit ? "Editar" : "Agregar"} indicador`}
@@ -59,7 +63,14 @@ export function ActivityModal({
             <Form.Item
               name="description"
               style={{display: "inline"}}
-              label="Descripción de la actividad">
+              label={
+                <FieldLabel comentable={{
+                  name: "description",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Descripción de la actividad
+                </FieldLabel>
+              }>
               <Input
                 id="description"
                 type="text" />
@@ -69,7 +80,14 @@ export function ActivityModal({
             <Form.Item
               name="responsible"
               style={{display: "inline"}}
-              label="Responsable">
+              label={
+                <FieldLabel comentable={{
+                  name: "responsible",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Responsable
+                </FieldLabel>
+              }>
               <Input
                 id="responsible"
                 type="text" />
@@ -79,7 +97,14 @@ export function ActivityModal({
             <Form.Item
               name="meansOfVerification"
               style={{display: "inline"}}
-              label="Medio de verificación">
+              label={
+                <FieldLabel comentable={{
+                  name: "meansOfVerification",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Medio de verificación
+                </FieldLabel>
+              }>
               <Input
                 id="meansOfVerification"
                 type="text" />
@@ -89,7 +114,14 @@ export function ActivityModal({
             <Form.Item
               name="baseline"
               style={{display: "inline"}}
-              label="Línea base">
+              label={
+                <FieldLabel comentable={{
+                  name: "baseline",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Línea base
+                </FieldLabel>
+              }>
               <Input
                 id="baseline"
                 type="text" />
@@ -99,7 +131,14 @@ export function ActivityModal({
             <Form.Item
               name="goal"
               style={{display: "inline"}}
-              label="Meta">
+              label={
+                <FieldLabel comentable={{
+                  name: "goal",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Meta
+                </FieldLabel>
+              }>
               <Input
                 id="goal"
                 type="text" />
@@ -109,7 +148,14 @@ export function ActivityModal({
             <Form.Item
               name="place"
               style={{display: "inline"}}
-              label="Lugar de intervención">
+              label={
+                <FieldLabel comentable={{
+                  name: "place",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Lugar de intervención
+                </FieldLabel>
+              }>
               <Input
                 id="place"
                 type="text" />
@@ -119,7 +165,14 @@ export function ActivityModal({
             <Form.Item
               name="months"
               style={{display: "inline"}}
-              label="Mes de implementación"
+              label={
+                <FieldLabel comentable={{
+                  name: "months",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Mes de implementación
+                </FieldLabel>
+              }
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="months"

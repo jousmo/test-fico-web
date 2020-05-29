@@ -15,6 +15,7 @@ import { useEffect } from "react"
 
 export function IndicatorModal({
   indicatorType,
+  objectiveIndex,
   onSave,
   onCancel,
   edit,
@@ -50,6 +51,8 @@ export function IndicatorModal({
     onCancel && onCancel()
   }
 
+  const commentIndex = `${objectiveIndex}-${edit?.index}`
+
   return (
     <Modal
       title={`${edit ? "Editar" : "Agregar"} indicador`}
@@ -72,7 +75,7 @@ export function IndicatorModal({
                 <FieldLabel comentable={{
                   name: "title",
                   section: indicatorType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Título del indicador
                 </FieldLabel>
               }>
@@ -89,7 +92,7 @@ export function IndicatorModal({
                 <FieldLabel comentable={{
                   name: "narrativeSummary",
                   section: indicatorType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Resumen narrativo
                 </FieldLabel>
               }>
@@ -106,7 +109,7 @@ export function IndicatorModal({
                 <FieldLabel comentable={{
                   name: "methodology",
                   section: indicatorType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Metodología
                 </FieldLabel>
               }>
@@ -133,7 +136,7 @@ export function IndicatorModal({
                 <FieldLabel comentable={{
                   name: "formula",
                   section: indicatorType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Fórmula
                 </FieldLabel>
               }>
@@ -150,7 +153,7 @@ export function IndicatorModal({
                 <FieldLabel comentable={{
                   name: "meansOfVerification",
                   section: indicatorType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Medio de verificación
                 </FieldLabel>
               }>
@@ -167,7 +170,7 @@ export function IndicatorModal({
                 <FieldLabel comentable={{
                   name: "baseline",
                   section: indicatorType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Línea base
                 </FieldLabel>
               }>
@@ -184,7 +187,7 @@ export function IndicatorModal({
                 <FieldLabel comentable={{
                   name: "goal",
                   section: indicatorType,
-                  index: edit?.index}}>
+                  index: commentIndex}}>
                   Meta
                 </FieldLabel>
               }>

@@ -3,7 +3,7 @@ import { CompositeField } from "../../../shared"
 import { useState } from "react"
 import { ActivityModal } from "./activity-modal"
 
-export function ActivitiesField({defaultValue, onChange}) {
+export function ActivitiesField({activityType, defaultValue, objectiveIndex, onChange}) {
   const [state, setState] = useState({ isModalOpen: false, edit: undefined })
 
   const onClickAdd = () => {
@@ -41,6 +41,8 @@ export function ActivitiesField({defaultValue, onChange}) {
       {({ items, addNew, removeItem, replaceItemAtIndex }) =>
         <div>
           <ActivityModal
+            activityType={activityType}
+            objectiveIndex={objectiveIndex}
             onCancel={onCancel}
             onSave={onSave(addNew, replaceItemAtIndex)}
             visible={state.isModalOpen}

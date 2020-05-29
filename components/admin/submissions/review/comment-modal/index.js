@@ -64,6 +64,7 @@ export function CommentModal({
       onCancel={onCancel}
       cancelText="Cerrar"
       width={800}
+      zIndex={1020}
       {...props}>
       { !readOnly && (
         <Form
