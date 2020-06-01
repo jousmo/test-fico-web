@@ -51,7 +51,12 @@ export function IndicatorModal({
     onCancel && onCancel()
   }
 
-  const commentIndex = `${objectiveIndex}-${edit?.index}`
+  let commentIndex
+  if (indicatorType === "specificIndicator"){
+    commentIndex = `${objectiveIndex}-${edit?.index}`
+  } else {
+    commentIndex = edit?.index
+  }
 
   return (
     <Modal
