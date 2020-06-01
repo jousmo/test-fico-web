@@ -1,8 +1,8 @@
 export const deleteBeneficiaryComments = (submission, toDelete, index) => {
   const beneficiaries = [...submission?.beneficiaries]
   const beneficiary = beneficiaries[index]
-  const newComments = [...beneficiary?.comments].filter((e, i) =>
-    i !== toDelete
+  const newComments = [...beneficiary?.comments].filter(e =>
+    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
   )
   beneficiaries[index] = {
     ...beneficiary,

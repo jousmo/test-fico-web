@@ -9,8 +9,8 @@ export const deleteSpecificIComments = (submission, toDelete, index) => {
   const indicators = objective?.indicators
   const indicator = indicators[indices[1]]
 
-  const newComments = indicator?.comments?.filter((e, i) =>
-    i !== toDelete
+  const newComments = indicator?.comments?.filter(e =>
+    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
   )
   indicators[indices[1]] = {
     ...indicator,
@@ -20,7 +20,10 @@ export const deleteSpecificIComments = (submission, toDelete, index) => {
     ...objective,
     indicators: indicators
   }
-  return objectives
+  return {
+    objectives,
+    newComments,
+  }
 }
 
 export const addSpecificIComment = (submission, comment, index) => {

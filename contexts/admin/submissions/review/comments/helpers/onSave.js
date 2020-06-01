@@ -27,7 +27,7 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
       update({ comments: newComments })
       break
     }
-    case "consultant":
+    case "consultant": {
       const newConsultant = addConsultantComment(submission, comment)
       newSubmission = {
         ...submission,
@@ -35,6 +35,7 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
       }
       update({ consultant: newConsultant })
       break
+    }
     case "beneficiary": {
       const beneficiaries = addBeneficiaryComment(submission, comment, index)
       newSubmission = {
@@ -117,6 +118,8 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
 
       break
     }
+    default:
+      break
   }
   setState({ ...state, submission: newSubmission, comments: newFieldComments })
 }

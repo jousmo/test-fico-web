@@ -1,8 +1,8 @@
 export const deleteBudgetComments = (submission, toDelete, index) => {
   const concepts = [...submission?.concepts]
   const concept = concepts[index]
-  const newComments = concept?.comments?.filter((e, i) =>
-    i !== toDelete
+  const newComments = concept?.comments?.filter(e =>
+    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
   )
   concepts[index] = {
     ...concept,
