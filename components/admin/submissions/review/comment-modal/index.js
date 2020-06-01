@@ -36,7 +36,7 @@ export function CommentModal({
   const onDeleteComment = (comment, index) => {
     const newComments = state.comments?.filter((e, i) => i !== index)
     setState({...state, comments: newComments})
-    onDelete(comment, index)
+    onDelete(comment)
   }
 
   useEffect(() => {

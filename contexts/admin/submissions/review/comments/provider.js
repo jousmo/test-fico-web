@@ -33,8 +33,8 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
     return comments
   }, [state])
 
-  const onDelete = useCallback((comment, index) => {
-    onDeleteHelper(comment, state, setState, index, update)
+  const onDelete = useCallback((comment) => {
+    onDeleteHelper(comment, state, setState, update)
   }, [state])
 
   const onSave = useCallback(values => {

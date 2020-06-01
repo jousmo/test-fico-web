@@ -9,8 +9,8 @@ export const deleteSpecificAComments = (submission, toDelete, index) => {
   const activities = objective?.activities
   const activity = activities[indices[1]]
 
-  const newComments = activity?.comments?.filter((e, i) =>
-    i !== toDelete
+  const newComments = activity?.comments?.filter(e =>
+    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
   )
   activities[indices[1]] = {
     ...activity,
@@ -20,7 +20,10 @@ export const deleteSpecificAComments = (submission, toDelete, index) => {
     ...objective,
     activities: activities
   }
-  return objectives
+  return {
+    objectives,
+    newComments
+  }
 }
 
 export const addSpecificAComment = (submission, comment, index) => {
