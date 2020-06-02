@@ -114,6 +114,15 @@ export function ConceptModal({
                 id="type"
                 name="type"
                 defaultValue={edit?.type}
+                onChange={(value) => {
+                  if (getSelectValue(value) === "HUMAN_RESOURCE"){
+                    form.setFieldsValue({ measurementUnit: "Mes" })
+                    setState({ isHumanResource: true })
+                  } else {
+                    form.setFieldsValue({ measurementUnit: "" })
+                    setState({ isHumanResource: false })
+                  }
+                }}
                 options={implementer.submission.conceptTypes} />
             </Form.Item>
           </Col>
@@ -124,6 +133,7 @@ export function ConceptModal({
               label="Unidad de medida">
               <Input
                 id="measurementUnit"
+                disabled={state.isHumanResource}
                 defaultValue={edit?.measurementUnit}
                 type="text" />
             </Form.Item>
