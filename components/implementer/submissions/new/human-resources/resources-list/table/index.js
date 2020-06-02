@@ -12,7 +12,11 @@ import { HumanResourcesColumns } from "./form-columns"
 function HumanResourcesTable({ data, onChange }) {
   const concepts = data?.Submission?.concepts || []
   const humanResources = concepts?.map((concept, index) =>
-    concept.type === "HUMAN_RESOURCE" && {key: index, ...concept.humanResource}
+    concept.type === "HUMAN_RESOURCE" &&
+    {
+      key: index,
+      position: concept.name,
+      ...concept.humanResource}
   ).filter(e => e !== false) || []
 
 
