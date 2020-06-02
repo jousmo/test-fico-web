@@ -13,6 +13,7 @@ import { extendMoment } from "moment-range"
 import { getSelectValue } from "../../../../../../../helpers"
 const moment = extendMoment(Moment)
 moment.locale("es")
+import numeral from "numeral"
 
 export function ConceptModal({
   onSave,
@@ -140,7 +141,7 @@ export function ConceptModal({
                 prefix="$" />
             </Form.Item>
           </Col>
-          <Col span={24}>
+          <Col span={12}>
             <Form.Item
               name="totalUnits"
               style={{display: "inline"}}
@@ -150,6 +151,22 @@ export function ConceptModal({
                 defaultValue={edit?.totalUnits}
                 type="number" />
             </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Row gutter={[10, 8]}>
+              <Col span={24}>Costo total</Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Input
+                  disabled
+                  prefix="$"
+                  value={
+                    numeral((state.unitCost * state.totalUnits) || 0)
+                      .format("0,0.00")
+                  }/>
+              </Col>
+            </Row>
           </Col>
           <Col span={24}>
             <Form.Item
