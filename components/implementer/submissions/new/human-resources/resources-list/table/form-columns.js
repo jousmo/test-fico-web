@@ -9,7 +9,7 @@ export function HumanResourcesColumns() {
         <Typography.Text>Puesto</Typography.Text>
       </Col>
       <Col flex="150px">
-        <Typography.Text>Nombre</Typography.Text>
+        <Typography.Text>Nombre completo</Typography.Text>
       </Col>
       <Col flex="180px">
         <Typography.Text>Funciones</Typography.Text>
