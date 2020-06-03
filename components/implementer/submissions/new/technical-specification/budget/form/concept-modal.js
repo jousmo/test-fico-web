@@ -119,7 +119,7 @@ export function ConceptModal({
                     form.setFieldsValue({ measurementUnit: "Mes" })
                     setState({ isHumanResource: true })
                   } else {
-                    form.setFieldsValue({ measurementUnit: "" })
+                    form.setFieldsValue({ measurementUnit: undefined })
                     setState({ isHumanResource: false })
                   }
                 }}
