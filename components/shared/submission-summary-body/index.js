@@ -7,14 +7,20 @@ import {
 import {
   getReadableValue
 } from "../../../helpers/selectOptions/getReadableValue"
+import numeral from "numeral"
 
 function SummaryBody({ data, extra }) {
   const {
     name,
     scope,
+    concepts,
     description,
     preventionLevel
   } = data
+
+  const totalBudget = concepts?.reduce((result, concept) => (
+    result + (concept.unitCost * concept.totalUnits)
+  ), 0)
 
   return (
     <Descriptions
@@ -28,6 +34,9 @@ function SummaryBody({ data, extra }) {
       </Descriptions.Item>
       <Descriptions.Item  span={2} label="Nivel de prevención">
         {getReadableValue(preventionLevelTypes, preventionLevel)}
+      </Descriptions.Item>
+      <Descriptions.Item  span={3} label="Presupuesto total">
+        {numeral(totalBudget).format("$0,0.00")}
       </Descriptions.Item>
       {extra}
     </Descriptions>
