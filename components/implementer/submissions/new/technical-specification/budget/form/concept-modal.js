@@ -67,6 +67,16 @@ export function ConceptModal({
     setState(form.getFieldsValue())
   }
 
+  const onTypeChange = (value) => {
+    if (getSelectValue(value) === "HUMAN_RESOURCE"){
+      form.setFieldsValue({ measurementUnit: "Mes" })
+      setState({ isHumanResource: true })
+    } else {
+      form.setFieldsValue({ measurementUnit: undefined })
+      setState({ isHumanResource: false })
+    }
+  }
+
   return (
     <Modal
       title={`${edit ? "Editar" : "Agregar"} concepto`}
@@ -115,6 +125,7 @@ export function ConceptModal({
                 id="type"
                 name="type"
                 defaultValue={edit?.type}
+                onChange={(value) => onTypeChange(value)}
                 options={implementer.submission.conceptTypes} />
             </Form.Item>
           </Col>
@@ -125,6 +136,7 @@ export function ConceptModal({
               label="Unidad de medida">
               <Input
                 id="measurementUnit"
+                disabled={state.isHumanResource}
                 defaultValue={edit?.measurementUnit}
                 type="text" />
             </Form.Item>
