@@ -105,11 +105,10 @@ function ProjectDetailsForm({
                 Aliados del proyecto (Máximo 2)
               </FieldLabel>
             }>
-            <Select
+            <SelectField
               id="allies"
               name="allies"
               defaultValue={data?.Submission?.allies}
-              maxTagCount={2}
               mode="tags"
               onChange={onAddAlly} />
           </Form.Item>
@@ -218,6 +217,7 @@ function ProjectDetailsForm({
               id="preventionLevel"
               name="preventionLevel"
               onChange={onChange}
+              mode="tags"
               defaultValue={data?.Submission?.preventionLevel}
               options={implementer.submission.preventionLevelTypes} />
           </Form.Item>
