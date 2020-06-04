@@ -46,7 +46,7 @@ export default function SpecificObjectiveForm({
         <Section
           title={
             <>
-              {`Objetivo ${index + 1}`}
+              {`Objetivo específico ${index + 1}`}
               <CommentButton
                 name={`specificObjective_${index}`}
                 index={index}
