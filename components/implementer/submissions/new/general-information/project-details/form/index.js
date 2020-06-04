@@ -4,6 +4,7 @@ import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers/withForm"
 import { PreventionLevelsText } from "./prevention-levels-text"
 import { ScopeText } from "./scope-text"
+import { JustificationText } from "./justification-text"
 
 function ProjectDetailsForm({
   data,
@@ -276,8 +277,12 @@ function ProjectDetailsForm({
         </Col>
         <Col span={24}>
           <Form.Item
-            style={{display: "inline"}}
-            label="Justificación">
+            label={
+              <FieldLabel helpText={<JustificationText />}>
+                Justificación
+              </FieldLabel>
+            }
+            style={{display: "inline"}}>
             <Input.TextArea
               id="justification"
               name="justification"
