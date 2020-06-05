@@ -6,10 +6,10 @@ import {
   ageRanges,
   preventionLevelTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission/"
-import { DeleteButton } from "../../../../../../shared"
+import { DeleteButton, EditButton } from "../../../../../../shared"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 
-export function BeneficiaryItem({ data, onDelete, index }) {
+export function BeneficiaryItem({ data, onEdit, onDelete, index }) {
   const { description, number } = data
 
   const educationLevel = getReadableValue(
@@ -55,7 +55,8 @@ export function BeneficiaryItem({ data, onDelete, index }) {
       &nbsp;
       <Typography.Text strong>Nivel de prevención: </Typography.Text>
       <Typography.Text>{preventionLevel}</Typography.Text>
-      <DeleteButton onClick={onDelete} />
+      <DeleteButton onClick={onDelete} style={{marginLeft: "8px"}} />
+      <EditButton onClick={onEdit} />
     </Card>
   )
 }
