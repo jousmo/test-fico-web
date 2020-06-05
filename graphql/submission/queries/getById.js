@@ -8,6 +8,7 @@ export const getById = gql`
       name
       type
       applyingCall
+      township
       region
       allies
       implementationPlace
