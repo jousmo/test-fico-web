@@ -81,5 +81,11 @@ export const townships = [
       "Santa Isabel",
       "Satevó"
     ]
+  },
+  {
+    region: "Otro",
+    townships: [
+      "Otro"
+    ]
   }
 ]
