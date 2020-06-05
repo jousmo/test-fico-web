@@ -77,6 +77,11 @@ export function ConceptModal({
     }
   }
 
+  let hasRegion = false
+  if (submission?.township !== "Otro") {
+    hasRegion = true
+  }
+
   return (
     <Modal
       title={`${edit ? "Editar" : "Agregar"} concepto`}
@@ -102,19 +107,21 @@ export function ConceptModal({
                 type="text" />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              name="region"
-              style={{display: "inline"}}
-              label="Región"
-              getValueFromEvent={getSelectValue}>
-              <SelectField
-                id="region"
+          { hasRegion && (
+            <Col span={12}>
+              <Form.Item
                 name="region"
-                defaultValue={edit?.region}
-                options={implementer.submission.regions} />
-            </Form.Item>
-          </Col>
+                style={{display: "inline"}}
+                label="Región"
+                getValueFromEvent={getSelectValue}>
+                <SelectField
+                  id="region"
+                  name="region"
+                  defaultValue={edit?.region}
+                  options={implementer.submission.regions} />
+              </Form.Item>
+            </Col>
+          )}
           <Col span={12}>
             <Form.Item
               name="type"
