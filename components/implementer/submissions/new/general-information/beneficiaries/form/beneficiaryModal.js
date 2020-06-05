@@ -1,4 +1,5 @@
 import { Modal, Form, Row, Col, Input } from "antd"
+import { useEffect } from "react"
 import { useForm } from "antd/lib/form/util"
 import { SelectField } from "../../../../../../shared"
 import {
@@ -8,13 +9,25 @@ import {
   educationLevelTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { getSelectValue } from "../../../../../../../helpers/getSelectValue"
+import { merge } from "lodash"
 
-export function BeneficiaryModal({onCancel, onSave, ...props}) {
+export function BeneficiaryModal({edit, onCancel, onSave, ...props}) {
   const [form] = useForm()
+
+  useEffect(() => {
+    if(edit) {
+      form.setFieldsValue(edit)
+    }
+  }, [edit])
 
   const onOk = async () => {
     try {
-      const values = await form.getFieldsValue()
+      let values = await form.getFieldsValue()
+
+      if(typeof edit?.index !== "undefined") {
+        values.index = edit.index
+        values = merge(edit, values)
+      }
 
       onSave(values)
       form.resetFields()
@@ -24,11 +37,18 @@ export function BeneficiaryModal({onCancel, onSave, ...props}) {
     }
   }
 
+  const onCancelModal = () => {
+    form.resetFields()
+    onCancel && onCancel()
+  }
+
   return (
     <Modal
-      title="Agregar beneficiario"
+      title={`${edit ? "Editar" : "Agregar"} beneficiario`}
       onOk={onOk}
-      onCancel={onCancel}
+      onCancel={onCancelModal}
+      okText={`${edit ? "Guardar" : "Agregar"}`}
+      cancelText="Cancelar"
       {...props}>
       <Form
         form={form}
