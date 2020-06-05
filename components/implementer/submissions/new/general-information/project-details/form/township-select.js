@@ -21,13 +21,23 @@ export function TownshipSelect({
       region.townships.includes(value)
     )).region
 
-    setRegion({ region: region })
-    onChange({
-      currentTarget: {
-        id: "region",
-        value: region
-      }
-    })
+    if (region === "Otro"){
+      setRegion({ region: null })
+      onChange({
+        currentTarget: {
+          id: "region",
+          value: undefined
+        }
+      })
+    } else {
+      setRegion({ region: region })
+      onChange({
+        currentTarget: {
+          id: "region",
+          value: region
+        }
+      })
+    }
   }
 
 
