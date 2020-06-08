@@ -1,3 +1,4 @@
+import { useForm } from "antd/lib/form/util"
 import { Row, Form, Col, Input, Select } from "antd"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
@@ -5,12 +6,15 @@ import { withForm } from "../../../../../../../helpers/withForm"
 import { PreventionLevelsText } from "./prevention-levels-text"
 import { ScopeText } from "./scope-text"
 import { JustificationText } from "./justification-text"
+import { TownshipSelect } from "./township-select"
 
 function ProjectDetailsForm({
   data,
   onChange,
   isCall
 }) {
+  const [form] = useForm()
+
   const onAddAlly = (value) => {
     if (value.currentTarget.value.length > 2){
       value.currentTarget.value.length = 2
@@ -20,6 +24,7 @@ function ProjectDetailsForm({
 
   return (
     <Form
+      form={form}
       name="project-details"
       layout="vertical">
       <Row gutter={[10, 8]} justify="start">
@@ -83,6 +88,23 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                name: "township",
+                section: "submission"}}>
+                Municipio
+              </FieldLabel>
+            }>
+            <TownshipSelect
+              defaultValue={data?.Submission?.township}
+              onChange={onChange}
+              setRegion={form.setFieldsValue} />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            name="region"
+            style={{display: "inline"}}
+            label={
+              <FieldLabel comentable={{
                 name: "region",
                 section: "submission"}}>
                 Región
@@ -113,16 +135,6 @@ function ProjectDetailsForm({
               maxTagCount={2}
               mode="tags"
               onChange={onAddAlly} />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item
-            style={{visibility: "hidden"}}
-            label="Aliado del proyecto">
-            <Input
-              id="allyDummy"
-              name="allyDummy"
-              type="text" />
           </Form.Item>
         </Col>
         <Col span={12}>
