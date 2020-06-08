@@ -8,6 +8,7 @@ import {
   contractTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { HumanResourcesColumns } from "./form-columns"
+import { ConfirmUpload } from "./confirm-upload"
 
 function HumanResourcesTable({ data, onChange }) {
   const concepts = data?.Submission?.concepts || []
@@ -141,13 +142,7 @@ function HumanResourcesTable({ data, onChange }) {
                           type="text" />
                       </Col>
                       <Col flex="80px">
-                        <Upload
-                          id="documents"
-                          name="documents">
-                          <Button
-                            icon={<PaperClipOutlined />}
-                            shape="circle" />
-                        </Upload>
+                        <ConfirmUpload />
                       </Col>
                     </Row>
                   )}
