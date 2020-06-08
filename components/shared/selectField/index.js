@@ -9,7 +9,8 @@ export function SelectField({
   mode,
   placeholder="Selecciona...",
   defaultValue,
-  value
+  value,
+  ...props
 }) {
   const onSelectChange = value => {
     onChange && onChange({
@@ -20,11 +21,6 @@ export function SelectField({
     })
   }
 
-  if(mode === "tags") {
-    defaultValue = defaultValue?.split(",") || []
-    value = value?.split(",") || []
-  }
-
   return (
     <Select
       id={id}
@@ -33,9 +29,14 @@ export function SelectField({
       placeholder={placeholder}
       mode={mode}
       defaultValue={defaultValue}
-      value={value}>
-      { options.map((o, i) => 
-        <Select.Option key={kebabCase(`${o.value}-${i}`)} value={o.value}>{o.label}</Select.Option>
+      value={value}
+      {...props}>
+      { options?.map((o, i) =>
+        <Select.Option
+          key={kebabCase(`${o.value}-${i}`)}
+          value={o.value}>
+          {o.label}
+        </Select.Option>
       ) }
     </Select>
   )

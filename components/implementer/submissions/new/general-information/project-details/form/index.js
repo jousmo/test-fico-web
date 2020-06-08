@@ -12,10 +12,10 @@ function ProjectDetailsForm({
   isCall
 }) {
   const onAddAlly = (value) => {
-    if (value.length > 2){
-      value.length = 2
+    if (value.currentTarget.value.length > 2){
+      value.currentTarget.value.length = 2
     }
-    onChange({currentTarget: { id: "allies", value: value }})
+    onChange(value)
   }
 
   return (
@@ -103,10 +103,10 @@ function ProjectDetailsForm({
               <FieldLabel comentable={{
                 name: "allies",
                 section: "submission"}}>
-                Aliados del proyecto (Máximo 2)
+                Aliados del proyecto
               </FieldLabel>
             }>
-            <Select
+            <SelectField
               id="allies"
               name="allies"
               defaultValue={data?.Submission?.allies}
@@ -219,6 +219,7 @@ function ProjectDetailsForm({
               id="preventionLevel"
               name="preventionLevel"
               onChange={onChange}
+              mode="tags"
               defaultValue={data?.Submission?.preventionLevel}
               options={implementer.submission.preventionLevelTypes} />
           </Form.Item>
