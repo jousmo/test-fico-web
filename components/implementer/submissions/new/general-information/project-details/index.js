@@ -15,9 +15,16 @@ export function ProjectDetails() {
     isCall
   } = useContext(ImplementerSubmissionContext)
 
-  const onChange = ({ currentTarget: { id, value } }) => {
+  const onChange = (data) => {
     const newData = {}
-    newData[id] = value
+    if (Array.isArray(data)){
+      data.forEach(e => (
+        newData[e.id] = e.value
+      ))
+    } else {
+      const { currentTarget: { id, value }} = data
+      newData[id] = value
+    }
 
     updateGeneralInformation(newData)
   }
