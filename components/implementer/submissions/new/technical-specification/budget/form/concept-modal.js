@@ -77,10 +77,7 @@ export function ConceptModal({
     }
   }
 
-  let hasRegion = false
-  if (submission?.township !== "Otro") {
-    hasRegion = true
-  }
+  const hasRegion = (submission?.township !== "Otro")
 
   return (
     <Modal
