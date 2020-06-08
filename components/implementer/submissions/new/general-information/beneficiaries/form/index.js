@@ -5,8 +5,11 @@ import { BeneficiaryModal } from "./beneficiaryModal"
 import { BeneficiaryItem } from "./beneficiaryItem"
 import { useState } from "react"
 
-function BeneficiariesForm({data, isLoading, onChange, error}) {
-  const [state, setState] = useState({ isModalOpen: false })
+function BeneficiariesForm({data, onChange}) {
+  const [state, setState] = useState({
+    isModalOpen: false,
+    edit: undefined
+  })
 
   const onClickAdd = () => {
     setState({ isModalOpen: true })
@@ -16,9 +19,22 @@ function BeneficiariesForm({data, isLoading, onChange, error}) {
     setState({ isModalOpen: false })
   }
 
-  const onSave = (addNew) => (values) => {
-    addNew(values)
+  const onSave = (addNew, replaceItemAtIndex) => (values) => {
+    if(typeof values.index === "undefined") {
+      addNew(values)
+    }
+    else {
+      const index = values.index
+      delete values.index
+
+      replaceItemAtIndex(index, values)
+    }
     onCancel()
+  }
+
+  const onEdit = (data, index) => () => {
+    data.index = index
+    setState({ isModalOpen: true, edit: data })
   }
 
   return (
@@ -30,10 +46,11 @@ function BeneficiariesForm({data, isLoading, onChange, error}) {
           defaultValue={data?.Submission?.beneficiaries}
           onClickAdd={onClickAdd}
           addLabel="Agregar beneficiario">
-          {({ items, addNew, removeItem }) =>
+          {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <div>
               <BeneficiaryModal
-                onSave={onSave(addNew)}
+                edit={state.edit}
+                onSave={onSave(addNew, replaceItemAtIndex)}
                 visible={state.isModalOpen}
                 onCancel={onCancel} />
               { items.map((item, key) =>
@@ -41,6 +58,7 @@ function BeneficiariesForm({data, isLoading, onChange, error}) {
                   key={key}
                   index={key}
                   data={item}
+                  onEdit={onEdit(item, key)}
                   onDelete={removeItem(key)} />
               ) }
             </div>
