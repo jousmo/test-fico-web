@@ -35,7 +35,7 @@ export function HumanResourcesColumns() {
       <Col flex="150px">
         <Typography.Text>Total</Typography.Text>
       </Col>
-      <Col flex="250px">
+      <Col flex="80px">
         <Typography.Text>Documentos</Typography.Text>
       </Col>
     </Row>

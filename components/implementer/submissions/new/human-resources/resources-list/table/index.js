@@ -8,6 +8,7 @@ import {
   contractTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { HumanResourcesColumns } from "./form-columns"
+import { ConfirmUpload } from "./confirm-upload"
 
 function HumanResourcesTable({ data, onChange }) {
   const concepts = data?.Submission?.concepts || []
@@ -41,7 +42,7 @@ function HumanResourcesTable({ data, onChange }) {
             defaultValue={humanResources}>
             {({items, updateItem}) =>
               <div style={{overflowX: "auto"}}>
-                <div style={{width: "1780px"}}>
+                <div style={{width: "1650px"}}>
                   <HumanResourcesColumns />
                   {items.map((item, index) =>
                     <Row gutter={[10, 8]} justify="start" key={index}>
@@ -140,14 +141,8 @@ function HumanResourcesTable({ data, onChange }) {
                           defaultValue={item.total}
                           type="text" />
                       </Col>
-                      <Col flex="150px">
-                        <Upload
-                          id="documents"
-                          name="documents">
-                          <Button
-                            icon={<PaperClipOutlined />}
-                            shape="circle" />
-                        </Upload>
+                      <Col flex="80px">
+                        <ConfirmUpload />
                       </Col>
                     </Row>
                   )}
