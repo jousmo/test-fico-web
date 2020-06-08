@@ -41,7 +41,7 @@ function HumanResourcesTable({ data, onChange }) {
             defaultValue={humanResources}>
             {({items, updateItem}) =>
               <div style={{overflowX: "auto"}}>
-                <div style={{width: "1780px"}}>
+                <div style={{width: "1650px"}}>
                   <HumanResourcesColumns />
                   {items.map((item, index) =>
                     <Row gutter={[10, 8]} justify="start" key={index}>
@@ -140,7 +140,7 @@ function HumanResourcesTable({ data, onChange }) {
                           defaultValue={item.total}
                           type="text" />
                       </Col>
-                      <Col flex="150px">
+                      <Col flex="80px">
                         <Upload
                           id="documents"
                           name="documents">
