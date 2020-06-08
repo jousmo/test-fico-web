@@ -11,10 +11,10 @@ function ProjectDetailsForm({
   isCall
 }) {
   const onAddAlly = (value) => {
-    if (value.length > 2){
-      value.length = 2
+    if (value.currentTarget.value.length > 2){
+      value.currentTarget.value.length = 2
     }
-    onChange({currentTarget: { id: "allies", value: value }})
+    onChange(value)
   }
 
   return (
@@ -102,13 +102,14 @@ function ProjectDetailsForm({
               <FieldLabel comentable={{
                 name: "allies",
                 section: "submission"}}>
-                Aliados del proyecto (Máximo 2)
+                Aliados del proyecto
               </FieldLabel>
             }>
             <SelectField
               id="allies"
               name="allies"
               defaultValue={data?.Submission?.allies}
+              maxTagCount={2}
               mode="tags"
               onChange={onAddAlly} />
           </Form.Item>
