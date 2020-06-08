@@ -94,6 +94,7 @@ function ProjectDetailsForm({
               </FieldLabel>
             }>
             <TownshipSelect
+              defaultValue={data?.Submission?.township}
               onChange={onChange}
               setRegion={form.setFieldsValue} />
           </Form.Item>
