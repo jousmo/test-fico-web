@@ -41,7 +41,7 @@ function HumanResourcesTable({ data, onChange }) {
       {hasDuplicates && (
         <Alert
           banner
-          message="El campo posición no debe repetirse."
+          message='El campo "Puesto" no debe repetirse.'
           type="error" />
       )}
       <Col>
