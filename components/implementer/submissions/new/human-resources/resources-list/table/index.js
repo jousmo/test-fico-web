@@ -20,10 +20,9 @@ function HumanResourcesTable({ data, onChange }) {
       ...concept.humanResource}
   ).filter(e => e !== false) || []
 
-  const positions = humanResources.map(resource => resource.position)
-  const hasDuplicates = positions.some((item, index) => (
-    positions.indexOf(item) !== index
-  ))
+  const hasDuplicates = humanResources
+    .map(r => r.position)
+    .some((p, i, a) => a.indexOf(p) !== i)
 
   const onConceptsChange = (newHumanResources) => {
     const newConcepts = [...concepts]
