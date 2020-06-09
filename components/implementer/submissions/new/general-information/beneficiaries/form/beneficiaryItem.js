@@ -27,7 +27,7 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index }) {
       ageRanges,
       age
     )
-  )).join(", ")
+  ))?.join(", ")
 
   const preventionLevel = getReadableValue(
     preventionLevelTypes,
