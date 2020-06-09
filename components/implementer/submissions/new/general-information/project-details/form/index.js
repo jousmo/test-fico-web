@@ -113,6 +113,7 @@ function ProjectDetailsForm({
             <SelectField
               id="region"
               name="region"
+              disabled
               onChange={onChange}
               defaultValue={data?.Submission?.region}
               options={implementer.submission.regions} />

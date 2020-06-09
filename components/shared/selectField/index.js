@@ -5,6 +5,7 @@ export function SelectField({
   options,
   id,
   name,
+  disabled = false,
   onChange,
   mode,
   placeholder="Selecciona...",
@@ -25,6 +26,7 @@ export function SelectField({
     <Select
       id={id}
       name={name}
+      disabled={disabled}
       onChange={onSelectChange}
       placeholder={placeholder}
       mode={mode}
