@@ -1,5 +1,7 @@
 import { useContext } from "react"
-import { ImplementerSubmissionContext } from "../../../../../../contexts/implementer/submissions/new"
+import {
+  ImplementerSubmissionContext
+} from "../../../../../../contexts/implementer/submissions/new"
 import { Section } from "../../../../../shared"
 import ConsultantForm from "./form"
 
@@ -8,20 +10,11 @@ export function Consultant() {
     updateGeneralInformation,
     loading,
     error,
-    data,
-    hasConsultant,
-    hadConsultantReceivedSupports
+    data
   } = useContext(ImplementerSubmissionContext)
 
-  const onChange = ({ currentTarget: { id, value } }) => {
-    let newData = {}
-    newData[id] = value
-
-    if(id !== "hasConsultant") {
-      newData = { consultant: { ...data.Submission.consultant, ...newData } }
-    }
-
-    updateGeneralInformation(newData)
+  const onChange = data => {
+    updateGeneralInformation({ consultants: data })
   }
 
   return (
@@ -30,9 +23,7 @@ export function Consultant() {
         isLoading={loading}
         error={error}
         data={data}
-        onChange={onChange}
-        hasConsultant={hasConsultant()}
-        hadConsultantReceivedSupports={hadConsultantReceivedSupports()} />
+        onChange={onChange} />
     </Section>
   )
 }
