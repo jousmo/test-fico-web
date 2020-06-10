@@ -22,10 +22,12 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index }) {
     data.gender
   )
 
-  const age = getReadableValue(
-    ageRanges,
-    data.age
-  )
+  const ages = data.age?.map(age => (
+    getReadableValue(
+      ageRanges,
+      age
+    )
+  ))?.join(", ")
 
   const preventionLevel = getReadableValue(
     preventionLevelTypes,
@@ -51,7 +53,7 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index }) {
       </Typography.Text>
       <br />
       <Typography.Text strong>Edad: </Typography.Text>
-      <Typography.Text>{age}</Typography.Text>
+      <Typography.Text>{ages}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Nivel de prevención: </Typography.Text>
       <Typography.Text>{preventionLevel}</Typography.Text>

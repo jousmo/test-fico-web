@@ -105,6 +105,7 @@ export function BeneficiaryModal({edit, onCancel, onSave, ...props}) {
               getValueFromEvent={getSelectValue}>
               <SelectField
                 id="age"
+                mode="tags"
                 options={ageRanges} />
             </Form.Item>
           </Col>
