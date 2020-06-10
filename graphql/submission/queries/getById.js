@@ -26,7 +26,7 @@ export const getById = gql`
       specificObjectives
       beneficiaries
       hasConsultant
-      consultant
+      consultants
       developmentObjectiveIndicators
       generalObjectiveIndicators
       concepts
