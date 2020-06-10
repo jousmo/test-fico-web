@@ -3,14 +3,13 @@ import { useRouter } from "next/router"
 import {
   AgreementDocuments,
   Attachments,
+  Beneficiaries,
   GeneralInformation,
   SignedAgreement,
   SubmissionSummary,
   Status
 } from "../../../../components/admin/submissions/show"
-import { PageContext } from "../../../../contexts/page"
 import {
-  data as contextData,
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
 import { submission } from "../../../../graphql/submission"
@@ -71,6 +70,7 @@ function Submission({ client }) {
     <AdminSubmissionContext.Provider value={injectActions}>
       <Layout subheader={<SubmissionSummary />}>
         <GeneralInformation />
+        <Beneficiaries />
         <Status />
         <AgreementDocuments />
         <Attachments />
