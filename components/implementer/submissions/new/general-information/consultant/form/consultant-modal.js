@@ -10,10 +10,7 @@ import {
   UploadButton,
   Visibility
 } from "../../../../../../shared"
-import {
-  selectOptions,
-  getSelectValue
-} from "../../../../../../../helpers"
+import { getSelectValue, selectOptions } from "../../../../../../../helpers"
 import { merge } from "lodash"
 
 export function ConsultantModal({edit, onCancel, onSave, ...props}) {
@@ -30,7 +27,6 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
   const onOk = async () => {
     try {
       let values = await form.getFieldsValue()
-      console.log(values)
 
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
@@ -57,9 +53,6 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
       amount: undefined
     })
   }
-
-  const fiscalPersonTypes = selectOptions.implementer.submission
-    .fiscalPersonTypes
 
   return (
     <Modal
@@ -197,7 +190,8 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               <RadioField
                 id="fiscalPersonType"
                 name="fiscalPersonType"
-                options={fiscalPersonTypes} />
+                options={selectOptions.implementer.submission
+                  .fiscalPersonTypes} />
             </Form.Item>
           </Col>
           <Col span={24}>
