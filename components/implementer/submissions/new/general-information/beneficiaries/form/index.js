@@ -16,7 +16,7 @@ function BeneficiariesForm({data, onChange}) {
   }
 
   const onCancel = () => {
-    setState({ isModalOpen: false })
+    setState({ isModalOpen: false, edit: undefined })
   }
 
   const onSave = (addNew, replaceItemAtIndex) => (values) => {
