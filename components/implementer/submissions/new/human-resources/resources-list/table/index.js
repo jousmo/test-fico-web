@@ -1,6 +1,6 @@
 import { withForm } from "../../../../../../../helpers/withForm"
-import { Button, Col, Form, Input, Row, Upload } from "antd"
-import { PaperClipOutlined, UserOutlined } from "@ant-design/icons"
+import { Alert, Col, Form, Input, Row } from "antd"
+import { UserOutlined } from "@ant-design/icons"
 import { CompositeField, SelectField } from "../../../../../../shared"
 import { CommentButton } from "../../../../../../admin/submissions/review";
 import {
@@ -20,6 +20,9 @@ function HumanResourcesTable({ data, onChange }) {
       ...concept.humanResource}
   ).filter(e => e !== false) || []
 
+  const hasDuplicates = humanResources
+    .map(r => r.position)
+    .some((p, i, a) => a.indexOf(p) !== i)
 
   const onConceptsChange = (newHumanResources) => {
     const newConcepts = [...concepts]
@@ -34,6 +37,12 @@ function HumanResourcesTable({ data, onChange }) {
     <Form
       name="human-resources"
       layout="vertical">
+      {hasDuplicates && (
+        <Alert
+          banner
+          message='El campo "Puesto" no debe repetirse.'
+          type="error" />
+      )}
       <Col>
         <Form.Item>
           <CompositeField
