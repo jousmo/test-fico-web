@@ -5,7 +5,7 @@ export const getCommentsHelper = (index, name, section, submission) => {
       comments = submission?.comments
       break
     case "consultant":
-      comments = submission?.consultant?.comments
+      comments = submission?.consultants[index]?.comments
       break
     case "beneficiary":
       comments = submission?.beneficiaries[index]?.comments
