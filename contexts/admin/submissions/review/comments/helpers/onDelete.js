@@ -29,13 +29,13 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       break
     }
     case "consultant": {
-      const newConsultant = deleteConsultantComments(submission, comment)
-      newComments = newConsultant.comments
+      const consultants = deleteConsultantComments(submission, comment, index)
+      newComments = consultants[index].comments
       newSubmission = {
         ...submission,
-        consultant: newConsultant
+        consultants: consultants
       }
-      update({ consultant: newConsultant })
+      update({ consultants: consultants })
       break
     }
     case "beneficiary": {

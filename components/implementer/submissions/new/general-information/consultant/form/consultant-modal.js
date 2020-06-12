@@ -85,6 +85,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  index: edit?.index,
                   name: "commercialName",
                   section: "consultant"}}>
                   Nombre comercial
@@ -102,6 +103,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  index: edit?.index,
                   name: "commercialAddress",
                   section: "consultant"}}>
                   Dirección comercial
@@ -119,6 +121,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  index: edit?.index,
                   name: "contactName",
                   section: "consultant"}}>
                   Contacto responsable
@@ -136,6 +139,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  index: edit?.index,
                   name: "phone",
                   section: "consultant"}}>
                   Número de teléfono
@@ -153,6 +157,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  index: edit?.index,
                   name: "rfc",
                   section: "consultant"}}>
                   RFC
@@ -170,6 +175,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  index: edit?.index,
                   name: "fiscalAddress",
                   section: "consultant"}}>
                   Dirección fiscal

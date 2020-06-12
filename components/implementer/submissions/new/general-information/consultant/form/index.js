@@ -37,13 +37,15 @@ function ConsultantForm({data, onChange}) {
     setState({ isModalOpen: true, edit: data })
   }
 
+  const consultants = data?.Submission?.consultants || []
+
   return (
     <Form layout="vertical">
       <Form.Item
         style={{display: "inline"}}>
         <CompositeField
           onChange={onChange}
-          defaultValue={data?.Submission?.consultants}
+          defaultValue={consultants}
           onClickAdd={onClickAdd}
           addLabel="Agregar consultor">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>

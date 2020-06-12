@@ -1,23 +1,27 @@
-export const deleteConsultantComments = (submission, toDelete) => {
-  const consultant = submission?.consultant
+export const deleteConsultantComments = (submission, toDelete, index) => {
+  const consultants = [...submission?.consultants]
+  const consultant = consultants[index]
   const newComments = consultant?.comments?.filter(e =>
     (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
   )
-  return {
+  consultants[index] = {
     ...consultant,
     comments: newComments
   }
+  return consultants
 }
 
-export const addConsultantComment = (submission, comment) => {
-  const consultant = submission?.consultant
+export const addConsultantComment = (submission, comment, index) => {
+  const consultants = [...submission?.consultants]
+  const consultant = consultants[index]
   const consultantComments = consultant?.comments || []
   const newComments = [
     ...consultantComments,
     comment
   ]
-  return {
+  consultants[index] = {
     ...consultant,
     comments: newComments
   }
+  return consultants
 }

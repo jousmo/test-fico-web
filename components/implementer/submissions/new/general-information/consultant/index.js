@@ -18,7 +18,7 @@ export function Consultant() {
   }
 
   return (
-    <Section title="2. Consultor">
+    <Section title="2. Consultores">
       <ConsultantForm
         isLoading={loading}
         error={error}
