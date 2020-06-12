@@ -22,8 +22,6 @@ import {
 } from "../../../../../../contexts/admin/submissions/review/comments"
 import {
   getIsCall,
-  getHasConsultant,
-  getHasConsultantReceivedSuppors,
   setSave,
   setUpdateGeneralInformation
 } from "../../../../../../helpers/submissionFunctions/general-information"
@@ -59,20 +57,10 @@ function GeneralInformation({ client }) {
     return getIsCall(data, state)
   }, [data, state])
 
-  const hasConsultant = useCallback(() => {
-    return getHasConsultant(data, state)
-  }, [data, state])
-
-  const hadConsultantReceivedSupports = useCallback(() => {
-    return getHasConsultantReceivedSuppors(data, state)
-  }, [data, state])
-
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
     save,
     isCall,
-    hasConsultant,
-    hadConsultantReceivedSupports,
     loading,
     error,
     data

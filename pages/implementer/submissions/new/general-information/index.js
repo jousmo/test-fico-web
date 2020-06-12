@@ -5,7 +5,10 @@ import {
   Beneficiaries,
   Consultant
 } from "../../../../../components/implementer/submissions/new/general-information"
-import { data as pageData, ImplementerSubmissionContext } from "../../../../../contexts/implementer/submissions/new"
+import {
+  data as pageData,
+  ImplementerSubmissionContext
+} from "../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../contexts/page"
 import { submission } from "../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
@@ -13,8 +16,6 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
 import {
   getIsCall,
-  getHasConsultant,
-  getHasConsultantReceivedSuppors,
   setSave,
   setUpdateGeneralInformation
 } from "../../../../../helpers/submissionFunctions/general-information"
@@ -49,20 +50,10 @@ function GeneralInformation({ client }) {
     return getIsCall(data, state)
   }, [data, state])
 
-  const hasConsultant = useCallback(() => {
-    return getHasConsultant(data, state)
-  }, [data, state])
-
-  const hadConsultantReceivedSupports = useCallback(() => {
-    return getHasConsultantReceivedSuppors(data, state)
-  }, [data, state])
-
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
     save,
     isCall,
-    hasConsultant,
-    hadConsultantReceivedSupports,
     loading,
     error,
     data

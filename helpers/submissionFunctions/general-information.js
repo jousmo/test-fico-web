@@ -25,31 +25,3 @@ export const getIsCall = (data, state) => {
   return state.generalInformation.type === "CALL" ||
     data?.Submission?.type === "CALL"
 }
-
-export const getHasConsultant = (data, state) => {
-  const hasConsultant = state
-    .generalInformation
-    .hasConsultant
-
-  const hasConsultantData = data
-    ?.Submission
-    ?.hasConsultant
-
-  return hasConsultant === true ||
-    (hasConsultantData === true && !state.dirty)
-}
-
-export const getHasConsultantReceivedSuppors = (data, state) => {
-  const hadReceivedSupports = state
-    .generalInformation
-    .consultant
-    .hadReceivedSupports
-
-  const hadReceivedSupportsData = data
-    ?.Submission
-    ?.consultant
-    ?.hadReceivedSupports
-
-  return hadReceivedSupports === true ||
-    (hadReceivedSupportsData === true && !state.dirty)
-}
