@@ -11,7 +11,13 @@ import {
   addSpecificAComment
 } from "./sections"
 
-export const onSaveHelper = (comment, update, state, setState, newFieldComments) => {
+export const onSaveHelper = (
+  comment,
+  update,
+  state,
+  setState,
+  newFieldComments
+) => {
   const { index, section } = state.field
   const { submission } = state
 
@@ -28,12 +34,12 @@ export const onSaveHelper = (comment, update, state, setState, newFieldComments)
       break
     }
     case "consultant": {
-      const newConsultant = addConsultantComment(submission, comment)
+      const consultants = addConsultantComment(submission, comment, index)
       newSubmission = {
         ...submission,
-        consultant: newConsultant
+        consultants: consultants
       }
-      update({ consultant: newConsultant })
+      update({ consultants: consultants })
       break
     }
     case "beneficiary": {
