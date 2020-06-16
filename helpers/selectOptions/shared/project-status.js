@@ -5,7 +5,7 @@ export const projectStatusOptions = [
   { label: "Observaciones de monitoreo emitidas", value: "OBSERVATIONS_SENT" },
   {
     label: "Observaciones de monitoreo atendidas",
-    value: "OBSERVATIONS_REPLIED"
+    value: "OBSERVATIONS_ATTENDED"
   },
   { label: "En evaluación", value: "ON_EVALUATION" },
   { label: "En cierre", value: "ON_CLOSURE" }
