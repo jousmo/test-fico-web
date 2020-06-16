@@ -5,8 +5,8 @@ import {
   getReadableValue
 } from "../../../../../../helpers/selectOptions/getReadableValue"
 import {
-  statusOptions
-} from "../../../../../../helpers/selectOptions/shared/statusOptions"
+  submissionStatusOptions
+} from "../../../../../../helpers/selectOptions/shared/submission-status"
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 import { DateField, Visibility } from "../../../../../shared"
 
@@ -22,7 +22,7 @@ function StatusForm({ data, onChange, onSave }) {
       layout="horizontal"
       name="submission-status">
       <Form.Item style={{marginBottom: "10px"}}>
-        {getReadableValue(statusOptions, data?.status)}
+        {getReadableValue(submissionStatusOptions, data?.status)}
       </Form.Item>
       <Form.Item
         label="Fecha de estatus"
