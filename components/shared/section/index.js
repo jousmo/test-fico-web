@@ -1,11 +1,11 @@
 import "./style.sass"
 import { Row, Col, Card } from "antd";
 
-export function Section({children, title, fullWidth}) {
-  const style = fullWidth ? { maxWidth: "100%" } : undefined
-  
+export function Section({children, title, fullWidth, style = undefined}) {
+  const rowStyle = fullWidth ? { maxWidth: "100%" } : style
+
   return (
-    <Row className="fico section" style={style}>
+    <Row className="fico section" style={rowStyle}>
       <Col span={24}>
         <Card
           bordered={false}
