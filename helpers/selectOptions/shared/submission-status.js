@@ -1,4 +1,4 @@
-export const statusOptions = [
+export const submissionStatusOptions = [
   { label: "Solicitud creada", value: "CREATED" },
   { label: "Revisión", value: "REVIEW" },
   { label: "Revisión 1", value: "REVIEW_1" },

@@ -1,8 +1,8 @@
 import { List, Typography } from "antd"
 import moment from "moment"
 import {
-  statusOptions
-} from "../../../../../../helpers/selectOptions/shared/statusOptions"
+  submissionStatusOptions
+} from "../../../../../../helpers/selectOptions/shared/submission-status"
 import {
   getReadableValue
 } from "../../../../../../helpers/selectOptions/getReadableValue"
@@ -29,7 +29,7 @@ export function CommentListing({ comments, onDelete, revision }){
               }
               description={
                 <Typography.Text type="secondary">
-                  {getReadableValue(statusOptions, element.revision)} -
+                  {getReadableValue(submissionStatusOptions, element.revision)} -
                   &nbsp;
                   {moment(element.createdAt).format("DD/MM/YYYY HH:MM")}
                 </Typography.Text>
