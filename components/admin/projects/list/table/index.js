@@ -6,7 +6,11 @@ import {
   implementer,
   shared
 } from "../../../../../helpers/selectOptions"
-import { getAxisTooltip, getTag } from "./helpers"
+import {
+  getAxisTooltip,
+  getTag,
+  getTotalApproved
+} from "./helpers"
 
 function ProjectListingTable({ data }) {
   const { projectStatusOptions } = shared
@@ -29,8 +33,13 @@ function ProjectListingTable({ data }) {
     {text: option.label, value: option.value}
   ))
 
+  //Todo: Display agreement number and implementer name
+
   return (
-    <Table dataSource={data} size="small">
+    <Table
+      dataSource={data}
+      rowKey={(row, index) => index}
+      size="small">
       <Table.Column
         width={1}
         title={<MinusSquareTwoTone />} />
@@ -64,7 +73,7 @@ function ProjectListingTable({ data }) {
         render={(text) => getAxisTooltip(text, strategicAxisTypes)}
         title="Eje" />
       <Table.Column
-        dataIndex="signedContractAt"
+        render={(text, row) => getTotalApproved(row)}
         title="Aprobado" />
     </Table>
   )
