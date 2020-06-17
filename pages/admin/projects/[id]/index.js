@@ -1,6 +1,9 @@
 import { Layout } from "../../../../components/shared"
 import { useRouter } from "next/router"
 import {
+  ProjectSummary
+} from "../../../../components/admin/projects/show"
+import {
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
 import { submission } from "../../../../graphql/submission"
@@ -27,7 +30,7 @@ function Project({ client }) {
 
   return (
     <AdminSubmissionContext.Provider value={injectActions}>
-      <Layout>
+      <Layout subheader={<ProjectSummary />}>
       </Layout>
     </AdminSubmissionContext.Provider>
   )
