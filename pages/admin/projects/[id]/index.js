@@ -4,6 +4,9 @@ import {
   ProjectSummary
 } from "../../../../components/admin/projects/show"
 import {
+  GeneralInformation
+} from "../../../../components/admin/submissions/show/"
+import {
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
 import { submission } from "../../../../graphql/submission"
@@ -31,6 +34,7 @@ function Project({ client }) {
   return (
     <AdminSubmissionContext.Provider value={injectActions}>
       <Layout subheader={<ProjectSummary />}>
+        <GeneralInformation />
       </Layout>
     </AdminSubmissionContext.Provider>
   )
