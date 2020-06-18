@@ -20,11 +20,15 @@ export function ActivityItem({data, onDelete, onEdit}) {
   let formattedMonths = months
 
   if(Array.isArray(months)) {
-    const range = Array
-      .from(moment.range(months[0], months[1]).by("month"))
-      .map(r => r.format("MMMM YYYY"))
+    let result = "| "
+    months.forEach(({months}) => {
+      const range = Array
+        .from(moment.range(months[0], months[1]).by("month"))
+        .map(r => r.format("MMMM YYYY"))
+      result += `${range.join(", ")} | `
+    })
 
-    formattedMonths = `${range.join(", ")}.`
+    formattedMonths = result
   }
 
   return (
