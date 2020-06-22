@@ -6,7 +6,7 @@ function ProjectClosureForm({ data }) {
   return (
     <div>
       <Typography.Text>
-        Subir el documento firmado de cierro de proyecto en formato .PDF
+        Subir el documento firmado de cierre de proyecto en formato .PDF
       </Typography.Text>
       <br />
       <UploadButton style={{ marginTop: "5px" }}>
