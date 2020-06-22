@@ -18,7 +18,7 @@ export function ProjectListing() {
       <ProjectListingTable
         data={data?.allSubmissions}
         error={error}
-        loading={loading} />
+        isLoading={loading} />
     </Section>
   )
 }
