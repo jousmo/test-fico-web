@@ -1,9 +1,9 @@
 import {
   getReadableValue
-} from "../../../../../../helpers/selectOptions/getReadableValue"
+} from "../../../../../helpers/selectOptions/getReadableValue"
 import { Tooltip } from "antd"
 
-export const getAxisTooltip = (text, options) => {
+export function AxisTooltip({ options, text}){
   const value = getReadableValue(options, text)
   return (
     <Tooltip title={value}>
