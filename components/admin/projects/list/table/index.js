@@ -7,10 +7,12 @@ import {
   shared
 } from "../../../../../helpers/selectOptions"
 import {
-  getAxisTooltip,
   getTag,
   getTotalApproved
 } from "./helpers"
+import {
+  AxisTooltip
+} from "./axis-tooltip"
 
 function ProjectListingTable({ data }) {
   const { projectStatusOptions } = shared
@@ -70,7 +72,9 @@ function ProjectListingTable({ data }) {
         dataIndex="strategicAxis"
         filters={axisFilterOptions}
         onFilter={(value, record) => record.strategicAxis.indexOf(value) === 0}
-        render={(text) => getAxisTooltip(text, strategicAxisTypes)}
+        render={text =>
+          <AxisTooltip options={strategicAxisTypes} text={text} />
+        }
         title="Eje" />
       <Table.Column
         render={(text, row) => getTotalApproved(row)}
