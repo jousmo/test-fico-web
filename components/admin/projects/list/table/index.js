@@ -31,8 +31,6 @@ function ProjectListingTable({ data }) {
     {text: option.label, value: option.value}
   ))
 
-  //Todo: Display agreement number
-
   return (
     <Table
       dataSource={data}
@@ -42,7 +40,7 @@ function ProjectListingTable({ data }) {
         width={1}
         title={<MinusSquareTwoTone />} />
       <Table.Column
-        dataIndex="agreement"
+        dataIndex="agreementNumber"
         render={(text, record) =>
           <Link href={`/admin/submissions/${record.id}`}><a>{text}</a></Link>
         }
