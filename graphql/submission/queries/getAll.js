@@ -4,7 +4,7 @@ export const getAll = gql`
   query SubmissionByStatus($state: String) {
     allSubmissions(filter: {state: $state}) {
       id
-      implementerId
+      implementer
       name
       type
       applyingCall
@@ -34,6 +34,7 @@ export const getAll = gql`
       deadline
       signedContractAt
       comments
+      agreementNumber
     }
   }
 `
