@@ -31,7 +31,7 @@ function ProjectListingTable({ data }) {
     {text: option.label, value: option.value}
   ))
 
-  //Todo: Display agreement number and implementer name
+  //Todo: Display agreement number
 
   return (
     <Table
@@ -59,7 +59,9 @@ function ProjectListingTable({ data }) {
         }
         title="Estado" />
       <Table.Column
-        dataIndex="implementer"
+        render={(text, record) => (
+          record.implementer?.name || "N/A"
+        )}
         title="Implementadora" />
       <Table.Column
         dataIndex="region"
