@@ -6,13 +6,9 @@ import {
   implementer,
   shared
 } from "../../../../../helpers/selectOptions"
-import {
-  getTag,
-  getTotalApproved
-} from "./helpers"
-import {
-  AxisTooltip
-} from "./axis-tooltip"
+import { getTotalApproved } from "./helpers"
+import { AxisTooltip } from "./axis-tooltip"
+import { StatusTag } from "./status-tag"
 
 function ProjectListingTable({ data }) {
   const { projectStatusOptions } = shared
@@ -58,7 +54,9 @@ function ProjectListingTable({ data }) {
         dataIndex="status"
         filters={statusFilterOptions}
         onFilter={(value, record) => record.status.indexOf(value) === 0}
-        render={text => getTag(text, projectStatusOptions)}
+        render={text =>
+          <StatusTag options={projectStatusOptions} value={text} />
+        }
         title="Estado" />
       <Table.Column
         dataIndex="implementer"

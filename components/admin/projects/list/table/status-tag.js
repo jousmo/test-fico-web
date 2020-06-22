@@ -1,15 +1,16 @@
 import {
-  getReadableValue
-} from "../../../../../../helpers/selectOptions/getReadableValue"
-import {
   CheckCircleOutlined,
   ClockCircleOutlined,
   CloseCircleOutlined,
   SyncOutlined
 } from "@ant-design/icons"
 import { Tag } from "antd"
+import {
+  getReadableValue
+} from "../../../../../helpers/selectOptions/getReadableValue"
 
-export const getTag = (value, options) => {
+export function StatusTag({ options, value }){
+
   const tagSetting = {}
 
   switch (value) {
