@@ -4,7 +4,7 @@ export const getById = gql`
   query SubmissionById($id: ID!) {
     Submission(id: $id) {
       id
-      implementerId
+      implementer
       name
       type
       applyingCall
@@ -34,6 +34,7 @@ export const getById = gql`
       deadline
       signedContractAt
       comments
+      agreementNumber
     }
   }
 `
