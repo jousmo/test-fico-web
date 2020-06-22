@@ -42,7 +42,7 @@ function ProjectListingTable({ data }) {
       <Table.Column
         dataIndex="agreementNumber"
         render={(text, record) =>
-          <Link href={`/admin/submissions/${record.id}`}><a>{text}</a></Link>
+          <Link href={`/admin/projects/${record.id}`}><a>{text}</a></Link>
         }
         title="Nº de Acuerdo" />
       <Table.Column
