@@ -10,7 +10,6 @@ import {
 } from "@ant-design/icons"
 import { BreadcrumbHeading } from "../../../../shared/breadcrum-heading"
 import SummaryBody from "../../../../shared/project-summary-body"
-import { getTag } from "../../list/table/helpers"
 import "./style.sass"
 
 export function ProjectSummary() {
@@ -50,7 +49,6 @@ export function ProjectSummary() {
         data={data?.Submission}
         error={error}
         extra={goToProject}
-        getTag={getTag}
         isLoading={loading} />
     </div>
   )

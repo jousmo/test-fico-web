@@ -12,23 +12,24 @@ import {
   getReadableValue
 } from "../../../helpers/selectOptions/getReadableValue"
 import numeral from "numeral"
+import { StatusTag } from "../../admin/projects/list/table/status-tag"
 
-function SummaryBody({ data, extra, getTag }) {
+function SummaryBody({ data, extra }) {
   const {
     name,
     region,
     status,
     concepts,
+    implementer,
     description,
-    preventionLevel,
     strategicAxis,
+    preventionLevel,
+    agreementNumber,
   } = data
 
   const totalBudget = concepts?.reduce((result, concept) => (
     result + (concept.unitCost * concept.totalUnits)
   ), 0)
-
-  /*Todo: Update agreement number and implementer values */
 
   return (
     <Descriptions
@@ -36,13 +37,13 @@ function SummaryBody({ data, extra, getTag }) {
       size="small"
       title={<Typography.Title level={3}>{name}</Typography.Title>}>
       <Descriptions.Item label="Implementadora" span={5}>
-
+        {implementer?.name}
       </Descriptions.Item>
       <Descriptions.Item span={5}>
-        {getTag(status, projectStatusOptions)}
+        <StatusTag options={projectStatusOptions} value={status} />
       </Descriptions.Item>
       <Descriptions.Item label="Acuerdo">
-
+        {agreementNumber}
       </Descriptions.Item>
       <Descriptions.Item label="Nivel de prevención">
         {getReadableValue(preventionLevelTypes, preventionLevel)}
