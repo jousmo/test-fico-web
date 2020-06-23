@@ -50,7 +50,7 @@ export function ActivitiesField({activityType, defaultValue, objectiveIndex, onC
           { items.map((item, index) =>
             <ActivityItem
               data={item}
-              key={`indicator_${item.uuid}`}
+              key={`activity_${index}`}
               onDelete={removeItem(index)}
               onEdit={onEdit(item, index)} />
           ) }
