@@ -50,7 +50,7 @@ export function IndicatorsField({defaultValue, indicatorType, objectiveIndex, on
           { items.map((item, index) =>
             <IndicatorItem
               data={item}
-              key={`indicator_${item.uuid}`}
+              key={`indicator_${index}`}
               onDelete={removeItem(index)}
               onEdit={onEdit(item, index)} />
           ) }
