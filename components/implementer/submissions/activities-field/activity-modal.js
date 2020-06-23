@@ -1,7 +1,11 @@
 import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input } from "antd"
-import { DateField, FieldLabel } from "../../../shared"
-import { getSelectValue } from "../../../../helpers/getSelectValue"
+import {
+  CompositeField,
+  DateField,
+  DeleteButton,
+  FieldLabel
+} from "../../../shared"
 import { merge } from "lodash"
 import { useEffect } from "react"
 
@@ -41,6 +45,10 @@ export function ActivityModal({
   const onCancelModal = () => {
     form.resetFields()
     onCancel && onCancel()
+  }
+
+  const onAddMonths = (addNew) => {
+    addNew({ months: undefined })
   }
 
   const commentIndex = `${objectiveIndex}-${edit?.index}`
@@ -170,15 +178,35 @@ export function ActivityModal({
                   name: "months",
                   section: activityType,
                   index: commentIndex}}>
-                  Mes de implementación
+                  Meses de implementación
                 </FieldLabel>
-              }
-              getValueFromEvent={getSelectValue}>
-              <DateField
-                id="months"
-                picker="month"
-                range
-                fullWidth />
+              }>
+              <CompositeField
+                onClickAdd={onAddMonths}
+                addLabel="Agregar fecha">
+                {({ items, updateItem, removeItem }) =>
+                  <div>
+                    { items.map((item, index) =>
+                      <Row gutter={[10, 8]} justify="start" key={index}>
+                        <Col span={24}>
+                          <Form.Item
+                            style={{display: "inline"}}>
+                            <DateField
+                              defaultValue={item.months}
+                              id="months"
+                              name="months"
+                              onChange={updateItem(index)}
+                              picker="month"
+                              range
+                              style={{width: "90%"}} />
+                            <DeleteButton onClick={removeItem(index)} />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                    ) }
+                  </div>
+                }
+              </CompositeField>
             </Form.Item>
           </Col>
         </Row>
