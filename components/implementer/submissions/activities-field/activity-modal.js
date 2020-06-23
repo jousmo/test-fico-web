@@ -31,6 +31,7 @@ export function ActivityModal({
 
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
+        edit.months = null
         values = merge(edit, values)
       }
 
