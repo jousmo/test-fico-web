@@ -30,6 +30,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
 
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
+        edit.supports = null
         values = merge(edit, values)
       }
 
