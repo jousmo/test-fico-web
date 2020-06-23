@@ -46,7 +46,11 @@ function SummaryBody({ data, extra }) {
         {agreementNumber}
       </Descriptions.Item>
       <Descriptions.Item label="Nivel de prevención">
-        {getReadableValue(preventionLevelTypes, preventionLevel)}
+        {
+          preventionLevel.map(level => (
+            getReadableValue(preventionLevelTypes, level)
+          )).join(", ")
+        }
       </Descriptions.Item>
       <Descriptions.Item label="Región">
         {getReadableValue(regions, region)}
