@@ -3,7 +3,6 @@ import { gql } from "apollo-boost"
 export const updateById = gql`
   mutation UpdateSubmissionById(
     $id: ID!,
-    $implementerId: Int,
     $name: String,
     $type: String,
     $applyingCall: String,
@@ -35,7 +34,6 @@ export const updateById = gql`
     $comments: JSON){
       updateSubmission(
         id: $id,
-        implementerId: $implementerId,
         name: $name,
         type: $type,
         applyingCall: $applyingCall,

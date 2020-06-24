@@ -1,8 +1,8 @@
 import { gql } from "apollo-boost"
 
-export const getById = gql`
-  query SubmissionById($id: ID!) {
-    Submission(id: $id) {
+export const getAll = gql`
+  query SubmissionByStatus($state: String) {
+    allSubmissions(filter: {state: $state}) {
       id
       implementer
       name

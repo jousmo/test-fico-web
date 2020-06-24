@@ -33,7 +33,7 @@ function SubmissionsByStatus({ client }) {
   }), [state, loading])
 
   const pageTitle = selectOptions
-    .getReadableValue(selectOptions.shared.statusOptions, status)
+    .getReadableValue(selectOptions.shared.submissionStatusOptions, status)
 
   return (
     <AdminSubmissionContext.Provider value={injectActions}>

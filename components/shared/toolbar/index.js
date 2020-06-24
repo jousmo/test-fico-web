@@ -11,7 +11,9 @@ function Toolbar({subheader}) {
     subheader({title, actions, step}) :
     subheader
 
-  subheader = subheader || <PageHeader title={title} extra={actions} />
+  if (subheader !== false){
+    subheader = subheader || <PageHeader title={title} extra={actions} />
+  }
 
   return (
     <div>
