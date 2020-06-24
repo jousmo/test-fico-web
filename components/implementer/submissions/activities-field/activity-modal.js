@@ -188,20 +188,20 @@ export function ActivityModal({
                 {({ items, updateItem, removeItem }) =>
                   <div>
                     { items.map((item, index) =>
-                      <Row gutter={[10, 8]} justify="start" key={index}>
+                      <Row
+                        gutter={[10, 8]}
+                        justify="start"
+                        key={`date_${item.uuid}`}>
                         <Col span={24}>
-                          <Form.Item
-                            style={{display: "inline"}}>
-                            <DateField
-                              defaultValue={item.months}
-                              id="months"
-                              name="months"
-                              onChange={updateItem(index)}
-                              picker="month"
-                              range
-                              style={{width: "90%"}} />
-                            <DeleteButton onClick={removeItem(index)} />
-                          </Form.Item>
+                          <DateField
+                            defaultValue={item.months}
+                            id="months"
+                            name="months"
+                            onChange={updateItem(index)}
+                            picker="month"
+                            range
+                            style={{width: "90%"}} />
+                          <DeleteButton onClick={removeItem(index)} />
                         </Col>
                       </Row>
                     ) }
