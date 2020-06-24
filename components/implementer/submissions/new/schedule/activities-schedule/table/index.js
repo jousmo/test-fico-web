@@ -29,13 +29,19 @@ function ActivitiesTable({ data }) {
       key: index,
       activity: `Actividad ${index + 1}`
     }
-    const range = moment.range(activity.months[0], activity.months[1])
-    const months = Array.from(range.by('month')).map(
-      m => m.format('YYYYMM')
-    )
-    months.forEach(month => {
-      monthsColumns.add(month)
-      result[month] = <ActivityBox />
+
+    const ranges = []
+    activity.months.forEach((range, i) => {
+      ranges[i] = moment.range(range.months[0], range.months[1])
+    })
+
+    ranges.forEach(range => {
+      Array.from(range.by('month')).map(
+        m => m.format('YYYYMM')
+      ).forEach(month => {
+        monthsColumns.add(month)
+        result[month] = <ActivityBox />
+      })
     })
     return result
   })
