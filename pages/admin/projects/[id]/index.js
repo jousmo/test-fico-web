@@ -1,7 +1,8 @@
 import { Layout } from "../../../../components/shared"
 import { useRouter } from "next/router"
 import {
-  ProjectSummary
+  ProjectSummary,
+  SignedAgreement
 } from "../../../../components/admin/projects/show"
 import {
   GeneralInformation
@@ -35,6 +36,7 @@ function Project({ client }) {
     <AdminSubmissionContext.Provider value={injectActions}>
       <Layout subheader={<ProjectSummary />}>
         <GeneralInformation />
+        <SignedAgreement />
       </Layout>
     </AdminSubmissionContext.Provider>
   )
