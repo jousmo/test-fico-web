@@ -1,6 +1,7 @@
 import { Layout } from "../../../../components/shared"
 import { useRouter } from "next/router"
 import {
+  ProjectMonitoring,
   ProjectSummary,
   SignedAgreement
 } from "../../../../components/admin/projects/show"
@@ -37,6 +38,7 @@ function Project({ client }) {
       <Layout subheader={<ProjectSummary />}>
         <GeneralInformation />
         <SignedAgreement />
+        <ProjectMonitoring />
       </Layout>
     </AdminSubmissionContext.Provider>
   )
