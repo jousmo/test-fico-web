@@ -4,6 +4,7 @@ import {
   GeneralInformationPDF,
   MinistrationsPDF,
   ReportsPDF,
+  SchedulePDF,
   TechnicalSpecificationPDF
 } from "../../../../../../components/admin/submissions/pdf"
 import {
@@ -47,6 +48,8 @@ function ViewPDF({ client }) {
     sectionComponent = <BudgetPDF />
   } else if (section === "ministrations"){
     sectionComponent = <MinistrationsPDF />
+  } else if (section === "schedule"){
+    sectionComponent = <SchedulePDF />
   }
 
   return (
