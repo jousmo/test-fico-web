@@ -45,7 +45,7 @@ function ActivitiesTable({ data }) {
     })
     return result
   })
-  const columns = Array.from(monthsColumns)
+  const columns = Array.from(monthsColumns).sort()
 
   return (
     <Table dataSource={dataSource} pagination={false} scroll={{ x: true }}>
