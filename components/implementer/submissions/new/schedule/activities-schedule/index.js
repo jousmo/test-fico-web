@@ -13,7 +13,7 @@ export function ActivitiesSchedule() {
   } = useContext(ImplementerSubmissionContext)
 
   return (
-    <Section>
+    <Section fullWidth>
       <ActivitiesTable
         isLoading={loading}
         error={error}
