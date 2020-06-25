@@ -4,6 +4,7 @@ import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
 import PDFHeading from "../heading"
+import { columnDecorator } from "./helpers/columns-decorator"
 import "../style.sass"
 
 export function SchedulePDF(){
@@ -11,6 +12,16 @@ export function SchedulePDF(){
     submissionResult
   } = useContext(AdminSubmissionContext)
   const submission = submissionResult?.data?.Submission
+
+  const activities = submission?.specificObjectives?.reduce(
+    (prev, { activities }) => activities ? prev.concat(activities) : null, []
+  ) || []
+
+  const {
+    dataSource,
+    monthsColumns,
+    yearColumns
+  } = columnDecorator(activities)
 
   return (
     <div className="fico pdf schedule">
