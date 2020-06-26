@@ -1,4 +1,4 @@
-ººdescribe("Implementer profile page", () => {
+describe("Implementer profile page", () => {
   /*
   * Visits the page before each test
   */
