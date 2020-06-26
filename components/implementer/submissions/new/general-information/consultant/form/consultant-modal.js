@@ -30,6 +30,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
 
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
+        edit.supports = null
         values = merge(edit, values)
       }
 
@@ -238,48 +239,49 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                   {({ items, updateItem, removeItem }) =>
                     <div>
                       { items.map((item, index) =>
-                        <>
-                          <Row gutter={[10, 8]} justify="start">
-                            <Col span={8}>
-                              <Form.Item
-                                style={{display: "inline"}}
-                                label="Nombre del proyecto">
-                                <Input
-                                  id="name"
-                                  name="name"
-                                  defaultValue={item.name}
-                                  onChange={updateItem(index)}
-                                  type="text" />
-                              </Form.Item>
-                            </Col>
-                            <Col span={8}>
-                              <Form.Item
-                                style={{display: "inline"}}
-                                label="Fecha">
-                                <DateField
-                                  id="date"
-                                  name="date"
-                                  defaultValue={item.date}
-                                  onChange={updateItem(index)}
-                                  fullWidth />
-                              </Form.Item>
-                            </Col>
-                            <Col span={8}>
-                              <Form.Item
-                                style={{display: "inline"}}
-                                label="Monto recibido">
-                                <Input
-                                  style={{width: "auto"}}
-                                  addonBefore="$"
-                                  id="amount"
-                                  name="amount"
-                                  onChange={updateItem(index)}
-                                  defaultValue={item.amount} />
-                                <DeleteButton onClick={removeItem(index)} />
-                              </Form.Item>
-                            </Col>
-                          </Row>
-                        </>
+                        <Row
+                          gutter={[10, 8]}
+                          justify="start"
+                          key={`support_${item.uuid}`}>
+                          <Col span={8}>
+                            <Form.Item
+                              style={{display: "inline"}}
+                              label="Nombre del proyecto">
+                              <Input
+                                id="name"
+                                name="name"
+                                defaultValue={item.name}
+                                onBlur={updateItem(index)}
+                                type="text" />
+                            </Form.Item>
+                          </Col>
+                          <Col span={8}>
+                            <Form.Item
+                              style={{display: "inline"}}
+                              label="Fecha">
+                              <DateField
+                                id="date"
+                                name="date"
+                                defaultValue={item.date}
+                                onChange={updateItem(index)}
+                                fullWidth />
+                            </Form.Item>
+                          </Col>
+                          <Col span={8}>
+                            <Form.Item
+                              style={{display: "inline"}}
+                              label="Monto recibido">
+                              <Input
+                                style={{width: "auto"}}
+                                addonBefore="$"
+                                id="amount"
+                                name="amount"
+                                onBlur={updateItem(index)}
+                                defaultValue={item.amount} />
+                              <DeleteButton onClick={removeItem(index)} />
+                            </Form.Item>
+                          </Col>
+                        </Row>
                       ) }
                       { !items.length ?
                         <Empty
