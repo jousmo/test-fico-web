@@ -1,6 +1,7 @@
 import { Layout } from "../../../../components/shared"
 import { useRouter } from "next/router"
 import {
+  ProjectClosure,
   ProjectMonitoring,
   ProjectSummary,
   SignedAgreement
@@ -39,6 +40,7 @@ function Project({ client }) {
         <GeneralInformation />
         <SignedAgreement />
         <ProjectMonitoring />
+        <ProjectClosure />
       </Layout>
     </AdminSubmissionContext.Provider>
   )
