@@ -6,6 +6,7 @@ import { extendMoment } from "moment-range"
 const moment = extendMoment(Moment)
 import ActivityTooltip from "./activityTooltip"
 import ActivityBox from "./activityBox"
+import { capitalize } from "lodash"
 
 function ActivitiesTable({ data }) {
   const activities = data?.Submission?.specificObjectives?.reduce(
@@ -28,17 +29,23 @@ function ActivitiesTable({ data }) {
       key: index,
       activity: `Actividad ${index + 1}`
     }
-    const range = moment.range(activity.months[0], activity.months[1])
-    const months = Array.from(range.by('month')).map(
-      m => m.format('YYYYMM')
-    )
-    months.forEach(month => {
-      monthsColumns.add(month)
-      result[month] = <ActivityBox />
+
+    const ranges = []
+    activity.months.forEach((range, i) => {
+      ranges[i] = moment.range(range.months[0], range.months[1])
+    })
+
+    ranges.forEach(range => {
+      Array.from(range.by('month')).map(
+        m => m.format('YYYYMM')
+      ).forEach(month => {
+        monthsColumns.add(month)
+        result[month] = <ActivityBox />
+      })
     })
     return result
   })
-  const columns = Array.from(monthsColumns)
+  const columns = Array.from(monthsColumns).sort()
 
   return (
     <Table dataSource={dataSource} pagination={false} scroll={{ x: true }}>
@@ -48,7 +55,8 @@ function ActivitiesTable({ data }) {
         title="Actividad" />
 
       {columns.map((month, index) => {
-        const column = moment(month, "YYYYMM").format("MMM YYYY")
+        const column =
+          capitalize(moment(month, "YYYYMM").format("MMM YYYY"))
         return (
           <Table.Column
             key={index}
