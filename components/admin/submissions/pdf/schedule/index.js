@@ -19,7 +19,16 @@ export function SchedulePDF(){
 
   const activities = submission?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []
-  ) || []
+  )
+
+  if (!activities){
+    return (
+      <div className="fico pdf schedule">
+        <PDFHeading title="Cronograma" />
+        <Table />
+      </div>
+    )
+  }
 
   const {
     dataSource,
