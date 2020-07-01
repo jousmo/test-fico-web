@@ -1,14 +1,17 @@
 import { withForm } from "../../../../../../../helpers/withForm"
 import { Alert, Col, Form, Input, Row } from "antd"
 import { UserOutlined } from "@ant-design/icons"
-import { CompositeField, SelectField } from "../../../../../../shared"
+import {
+  CompositeField,
+  SelectField,
+  UploadTooltip
+} from "../../../../../../shared"
 import { CommentButton } from "../../../../../../admin/submissions/review";
 import {
   benefits,
   contractTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { HumanResourcesColumns } from "./form-columns"
-import { ConfirmUpload } from "./confirm-upload"
 
 function HumanResourcesTable({ data, onChange }) {
   const concepts = data?.Submission?.concepts || []
@@ -151,7 +154,11 @@ function HumanResourcesTable({ data, onChange }) {
                           type="text" />
                       </Col>
                       <Col flex="80px">
-                        <ConfirmUpload />
+                        <UploadTooltip
+                          body="Adjunta el CV y el documento que certifica los
+                          estudios de esta persona"
+                          title="Experiencia y profesión"
+                          small />
                       </Col>
                     </Row>
                   )}
