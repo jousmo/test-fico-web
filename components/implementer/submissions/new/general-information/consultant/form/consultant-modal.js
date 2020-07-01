@@ -7,7 +7,7 @@ import {
   DeleteButton,
   FieldLabel,
   RadioField,
-  UploadButton,
+  UploadTooltip,
   Visibility
 } from "../../../../../../shared"
 import { getSelectValue, selectOptions } from "../../../../../../../helpers"
@@ -207,9 +207,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label="Documentos"
               help="Adjunta acta constitutiva, cotización firmada y CV.">
-              <UploadButton style={{marginBottom: "12px"}}>
-                Adjuntar
-              </UploadButton>
+              <UploadTooltip body={getTooltipBody()}/>
             </Form.Item>
           </Col>
           <Col span={24}>
