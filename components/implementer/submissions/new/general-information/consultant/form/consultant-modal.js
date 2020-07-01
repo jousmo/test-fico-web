@@ -15,12 +15,18 @@ import { merge } from "lodash"
 
 export function ConsultantModal({edit, onCancel, onSave, ...props}) {
   const [form] = useForm()
-  const [state, setState] = useState({ hasSupport: false })
+  const [state, setState] = useState({
+    hasSupport: false,
+    personType: "NATURAL_PERSON"
+  })
 
   useEffect(() => {
     if(edit) {
       form.setFieldsValue(edit)
-      setState({ hasSupport: edit.hadReceivedSupports })
+      setState({
+        hasSupport: edit.hadReceivedSupports,
+        personType: edit.fiscalPersonType
+      })
     }
   }, [edit])
 
