@@ -23,21 +23,4 @@ describe("Implementer profile page", () => {
     cy.get(".page-content")
       .children().should("contain", 5)
   })
-
-  it("Three sections when type is government", () => {
-    cy.get("#general-information")
-      .find(".ant-select")
-      .find(".ant-select-selection-item")
-      .should("have.text", "Organizacion civil")
-
-    cy.get("#general-information")
-      .find(".ant-select")
-      .first()
-      .click()
-      .type("{downarrow}")
-      .type("{enter}")
-
-    cy.get(".page-content")
-      .children().should("contain", 3)
-  })
 })
