@@ -61,6 +61,24 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
     })
   }
 
+  const onTypeChange = (selectValue) => {
+    const value = getSelectValue(selectValue)
+    setState({ ...state, personType: value })
+    return value
+  }
+
+  const getTooltipBody = () => {
+    let document
+    if (state.personType === "NATURAL_PERSON"){
+      document = "Identificación, "
+    } else {
+      document = "Acta constitutiva, "
+    }
+    document += `constancia de situación fiscal, cotización firmada y CV
+    empresarial y de los consultores`
+    return document
+  }
+
   return (
     <Modal
       title={`${edit ? "Editar" : "Agregar"} consultor`}
@@ -199,7 +217,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               name="fiscalPersonType"
               style={{display: "inline"}}
               label="Tipo de persona"
-              getValueFromEvent={getSelectValue}>
+              getValueFromEvent={onTypeChange}>
               <RadioField
                 id="fiscalPersonType"
                 name="fiscalPersonType"
@@ -226,7 +244,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                 id="hadReceivedSupports"
                 name="hadReceivedSupports"
                 onChange={(v) =>
-                  setState({ hasSupport: getSelectValue(v) })
+                  setState({ ...state, hasSupport: getSelectValue(v) })
                 }
                 options={selectOptions.shared.yesNo} />
             </Form.Item>
