@@ -229,8 +229,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
             <Form.Item
               name="documents"
               style={{display: "inline"}}
-              label="Documentos"
-              help="Adjunta acta constitutiva, cotización firmada y CV.">
+              label="Documentos">
               <UploadTooltip body={getTooltipBody()}/>
             </Form.Item>
           </Col>
