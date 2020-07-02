@@ -4,6 +4,7 @@ import { CompositeField, DeleteButton, FieldLabel } from "../../../../../../shar
 import { v4 as uuid } from "uuid"
 import { GeneralObjectiveText } from "./general-objective-text"
 import { DevelopmentObjectiveText } from "./development-objective-text"
+import { SpecificObjectiveText } from "./specific-objective-text"
 
 function DevelopmentObjectivesForm({data, onChange}) {
   const onSpecificObjectivesChange = (newObjectives) => {
@@ -65,7 +66,11 @@ function DevelopmentObjectivesForm({data, onChange}) {
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Objetivos específicos (máximo 5)">
+            label={
+              <FieldLabel helpText={<SpecificObjectiveText />}>
+                Objetivos específicos (máximo 5)
+              </FieldLabel>
+            }>
             <CompositeField
               maxItems={5}
               onChange={onSpecificObjectivesChange}
