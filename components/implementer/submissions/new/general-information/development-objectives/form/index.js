@@ -2,6 +2,7 @@ import { withForm } from "../../../../../../../helpers/withForm"
 import { Form, Row, Col, Input } from "antd"
 import { CompositeField, DeleteButton, FieldLabel } from "../../../../../../shared"
 import { v4 as uuid } from "uuid"
+import { GeneralObjectiveText } from "./general-objective-text"
 
 function DevelopmentObjectivesForm({data, onChange}) {
   const onSpecificObjectivesChange = (newObjectives) => {
@@ -40,9 +41,12 @@ function DevelopmentObjectivesForm({data, onChange}) {
           <Form.Item
             style={{display: "inline"}}
             label={
-              <FieldLabel comentable={{
-                name: "generalObjective",
-                section: "submission"}}>
+              <FieldLabel
+                helpText={<GeneralObjectiveText />}
+                comentable={{
+                  name: "generalObjective",
+                  section: "submission"
+                }}>
                 Objetivo general
               </FieldLabel>
             }>
