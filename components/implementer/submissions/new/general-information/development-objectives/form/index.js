@@ -3,6 +3,7 @@ import { Form, Row, Col, Input } from "antd"
 import { CompositeField, DeleteButton, FieldLabel } from "../../../../../../shared"
 import { v4 as uuid } from "uuid"
 import { GeneralObjectiveText } from "./general-objective-text"
+import { DevelopmentObjectiveText } from "./development-objective-text"
 
 function DevelopmentObjectivesForm({data, onChange}) {
   const onSpecificObjectivesChange = (newObjectives) => {
@@ -23,9 +24,12 @@ function DevelopmentObjectivesForm({data, onChange}) {
           <Form.Item
             style={{display: "inline"}}
             label={
-              <FieldLabel comentable={{
-                name: "developmentObjective",
-                section: "submission"}}>
+              <FieldLabel
+                helpText={<DevelopmentObjectiveText />}
+                comentable={{
+                  name: "developmentObjective",
+                  section: "submission"
+                }}>
                 Objetivo de desarrollo
               </FieldLabel>
             }>
