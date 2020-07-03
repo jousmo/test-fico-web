@@ -44,6 +44,10 @@ export function ConceptModal({
       .map(r => r.format("MMMM YYYY"))
 
   const onOk = async () => {
+    if (investmentState){
+      return
+    }
+
     try {
       let values = await form.getFieldsValue()
 
