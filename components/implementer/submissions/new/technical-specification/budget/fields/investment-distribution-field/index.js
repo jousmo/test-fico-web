@@ -12,7 +12,8 @@ export function InvestmentDistributionField({
   ],
   unitCost = 0.0,
   totalUnits = 0.0,
-  onChange
+  state,
+  setState
 }) {
   const displayTotal = (percentage = 0) => {
     percentage = Number(percentage)
@@ -28,6 +29,13 @@ export function InvestmentDistributionField({
 
   if (allies[1] ===  undefined){
     defaultValue.pop()
+  }
+
+  const onChange = newItems => {
+    const percentage = newItems.reduce((acc, item) => (
+      acc += Number(item.percentage)
+    ), 0)
+    setState(percentage > 100)
   }
 
   return (
