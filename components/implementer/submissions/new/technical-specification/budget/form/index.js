@@ -54,7 +54,8 @@ function BudgetForm({data, onChange}) {
                 dataSource={items}
                 pagination={false}
                 locale={{emptyText: <Empty description="Agrega todos los conceptos
-                que serán utilizados durante el proyecto" />}}>
+                que serán utilizados durante el proyecto" />}}
+                rowKey={(r, i) => i}>
                 <Table.Column
                   key="comments"
                   render={(text, row, index) => (
