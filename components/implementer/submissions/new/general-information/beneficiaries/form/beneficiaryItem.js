@@ -55,7 +55,7 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index }) {
       <Typography.Text strong>Edad: </Typography.Text>
       <Typography.Text>{ages}</Typography.Text>
       &nbsp;
-      <Typography.Text strong>Nivel de prevención: </Typography.Text>
+      <Typography.Text strong>Nivel de intervención: </Typography.Text>
       <Typography.Text>{preventionLevel}</Typography.Text>
       <DeleteButton onClick={onDelete} style={{marginLeft: "8px"}} />
       <EditButton onClick={onEdit} />
