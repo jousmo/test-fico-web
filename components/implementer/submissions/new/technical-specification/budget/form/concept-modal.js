@@ -24,6 +24,7 @@ export function ConceptModal({
 }) {
   const [form] = useForm()
   const [state, setState] = useState({})
+  const [investmentState, setInvestmentState] = useState(100)
 
   useEffect(() => {
     if(edit) {
@@ -217,7 +218,9 @@ export function ConceptModal({
                 allies={submission?.allies}
                 defaultValue={edit?.investmentDistribution}
                 unitCost={state.unitCost}
-                totalUnits={state.totalUnits} />
+                totalUnits={state.totalUnits}
+                state={investmentState}
+                setState={setInvestmentState}/>
             </Form.Item>
           </Col>
         </Row>
