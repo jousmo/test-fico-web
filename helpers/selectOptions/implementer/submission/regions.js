@@ -85,7 +85,8 @@ export const townships = [
   {
     region: "Otro",
     townships: [
-      "Otro"
+      "Estatal",
+      "Zona centro sur"
     ]
   }
 ]
