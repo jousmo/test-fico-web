@@ -74,7 +74,12 @@ export function ConceptModal({
   }
 
   const onFormChange = () => {
-    setState(form.getFieldsValue())
+    const values = form.getFieldsValue()
+
+    if (values.totalUnits !== unitsState.total){
+      setUnitsState({ overLimit: false, total: values.totalUnits })
+    }
+    setState(values)
   }
 
   const onTypeChange = (value) => {
