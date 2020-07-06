@@ -42,4 +42,10 @@ describe("Implementer submission page", () => {
       .children()
       .should("have.length", 2)
   })
+
+  it("Should have agreement documents section", () => {
+    cy.get(".ant-layout-content")
+      .get(".ant-row.section")
+      .should("have.length", 1)
+  })
 })
