@@ -139,6 +139,7 @@ function HumanResourcesTable({ data, onChange }) {
                         <Input
                           addonBefore="$"
                           id="taxes"
+                          disabled={item.contract_type === "EMPLOYEE"}
                           name="taxes"
                           onChange={updateItem(index)}
                           defaultValue={item.taxes}
