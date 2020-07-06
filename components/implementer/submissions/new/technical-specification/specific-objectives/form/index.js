@@ -6,6 +6,10 @@ import { ActivitiesField } from "../../../../activities-field"
 import {
   CommentButton
 } from "../../../../../../admin/submissions/review/comment-button"
+import { FieldLabel } from "../../../../../../shared"
+import {
+  SpecificObjectiveText
+} from "../../../general-information/development-objectives/form/specific-objective-text"
 
 export default function SpecificObjectiveForm({
   data,
@@ -46,7 +50,10 @@ export default function SpecificObjectiveForm({
         <Section
           title={
             <>
-              {`Objetivo específico ${index + 1}`}
+              <FieldLabel
+                helpText={<SpecificObjectiveText />}>
+                {`Objetivo específico ${index + 1}`}
+              </FieldLabel>
               <CommentButton
                 name={`specificObjective_${index}`}
                 index={index}

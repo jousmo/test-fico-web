@@ -1,9 +1,13 @@
 import { useContext } from "react"
 import {
   ImplementerSubmissionContext
-} from "../../../../../../contexts/implementer/submissions/new/context"
+} from "../../../../../../contexts/implementer/submissions/new"
 import DevelopmentObjectiveForm from "./form"
 import { Section } from "../../../../../shared"
+import { FieldLabel } from "../../../../../shared"
+import {
+  DevelopmentObjectiveText
+} from "../../general-information/development-objectives/form/development-objective-text"
 
 export function DevelopmentObjective() {
   const {
@@ -21,7 +25,13 @@ export function DevelopmentObjective() {
   }
 
   return (
-    <Section title="Objetivo de desarrollo">
+    <Section
+      title={
+        <FieldLabel
+          helpText={<DevelopmentObjectiveText />}>
+          Objetivo de desarrollo
+        </FieldLabel>
+      }>
       <DevelopmentObjectiveForm
         isLoading={loading}
         error={error}

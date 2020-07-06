@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import {
   ImplementerSubmissionContext
-} from "../../../../../../contexts/implementer/submissions/new/context"
+} from "../../../../../../contexts/implementer/submissions/new"
 import SpecificObjectiveForm from "./form"
 
 export function SpecificObjectives() {

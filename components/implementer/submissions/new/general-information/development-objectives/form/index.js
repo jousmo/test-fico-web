@@ -2,6 +2,9 @@ import { withForm } from "../../../../../../../helpers/withForm"
 import { Form, Row, Col, Input } from "antd"
 import { CompositeField, DeleteButton, FieldLabel } from "../../../../../../shared"
 import { v4 as uuid } from "uuid"
+import { GeneralObjectiveText } from "./general-objective-text"
+import { DevelopmentObjectiveText } from "./development-objective-text"
+import { SpecificObjectiveText } from "./specific-objective-text"
 
 function DevelopmentObjectivesForm({data, onChange}) {
   const onSpecificObjectivesChange = (newObjectives) => {
@@ -22,9 +25,12 @@ function DevelopmentObjectivesForm({data, onChange}) {
           <Form.Item
             style={{display: "inline"}}
             label={
-              <FieldLabel comentable={{
-                name: "developmentObjective",
-                section: "submission"}}>
+              <FieldLabel
+                helpText={<DevelopmentObjectiveText />}
+                comentable={{
+                  name: "developmentObjective",
+                  section: "submission"
+                }}>
                 Objetivo de desarrollo
               </FieldLabel>
             }>
@@ -40,9 +46,12 @@ function DevelopmentObjectivesForm({data, onChange}) {
           <Form.Item
             style={{display: "inline"}}
             label={
-              <FieldLabel comentable={{
-                name: "generalObjective",
-                section: "submission"}}>
+              <FieldLabel
+                helpText={<GeneralObjectiveText />}
+                comentable={{
+                  name: "generalObjective",
+                  section: "submission"
+                }}>
                 Objetivo general
               </FieldLabel>
             }>
@@ -57,7 +66,11 @@ function DevelopmentObjectivesForm({data, onChange}) {
         <Col span={24}>
           <Form.Item
             style={{display: "inline"}}
-            label="Objetivos específicos (máximo 5)">
+            label={
+              <FieldLabel helpText={<SpecificObjectiveText />}>
+                Objetivos específicos (máximo 5)
+              </FieldLabel>
+            }>
             <CompositeField
               maxItems={5}
               onChange={onSpecificObjectivesChange}
