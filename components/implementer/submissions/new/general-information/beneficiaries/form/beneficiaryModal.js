@@ -114,7 +114,7 @@ export function BeneficiaryModal({edit, onCancel, onSave, ...props}) {
             <Form.Item
               name="preventionLevel"
               style={{display: "inline"}}
-              label="Nivel de prevención"
+              label="Nivel de intervención"
               getValueFromEvent={getSelectValue}>
               <SelectField
                 id="preventionLevel"
