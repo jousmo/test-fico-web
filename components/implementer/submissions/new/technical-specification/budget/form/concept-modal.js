@@ -211,7 +211,9 @@ export function ConceptModal({
               <MonthlyDistributionField
                 defaultValue={edit?.monthlyDistribution}
                 unitCost={state.unitCost}
-                months={projectMonths} />
+                months={projectMonths}
+                state={unitsState}
+                setState={setUnitsState}/>
             </Form.Item>
           </Col>
           <Col span={24}>
