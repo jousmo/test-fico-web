@@ -49,7 +49,7 @@ export function ConceptModal({
       .map(r => r.format("MMMM YYYY"))
 
   const onOk = async () => {
-    if (investmentState){
+    if (investmentState || unitsState.overLimit){
       return
     }
 
