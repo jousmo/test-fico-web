@@ -7,7 +7,7 @@ import {
   DeleteButton,
   FieldLabel,
   RadioField,
-  UploadButton,
+  UploadTooltip,
   Visibility
 } from "../../../../../../shared"
 import { getSelectValue, selectOptions } from "../../../../../../../helpers"
@@ -15,12 +15,18 @@ import { merge } from "lodash"
 
 export function ConsultantModal({edit, onCancel, onSave, ...props}) {
   const [form] = useForm()
-  const [state, setState] = useState({ hasSupport: false })
+  const [state, setState] = useState({
+    hasSupport: false,
+    personType: "NATURAL_PERSON"
+  })
 
   useEffect(() => {
     if(edit) {
       form.setFieldsValue(edit)
-      setState({ hasSupport: edit.hadReceivedSupports })
+      setState({
+        hasSupport: edit.hadReceivedSupports,
+        personType: edit.fiscalPersonType
+      })
     }
   }, [edit])
 
@@ -53,6 +59,24 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
       date: undefined,
       amount: undefined
     })
+  }
+
+  const onTypeChange = (selectValue) => {
+    const value = getSelectValue(selectValue)
+    setState({ ...state, personType: value })
+    return value
+  }
+
+  const getTooltipBody = () => {
+    let document
+    if (state.personType === "NATURAL_PERSON"){
+      document = "Identificación, "
+    } else {
+      document = "Acta constitutiva, "
+    }
+    document += `constancia de situación fiscal, cotización firmada y CV
+    empresarial y de los consultores`
+    return document
   }
 
   return (
@@ -193,7 +217,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               name="fiscalPersonType"
               style={{display: "inline"}}
               label="Tipo de persona"
-              getValueFromEvent={getSelectValue}>
+              getValueFromEvent={onTypeChange}>
               <RadioField
                 id="fiscalPersonType"
                 name="fiscalPersonType"
@@ -205,11 +229,8 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
             <Form.Item
               name="documents"
               style={{display: "inline"}}
-              label="Documentos"
-              help="Adjunta acta constitutiva, cotización firmada y CV.">
-              <UploadButton style={{marginBottom: "12px"}}>
-                Adjuntar
-              </UploadButton>
+              label="Documentos">
+              <UploadTooltip body={getTooltipBody()}/>
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -222,7 +243,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                 id="hadReceivedSupports"
                 name="hadReceivedSupports"
                 onChange={(v) =>
-                  setState({ hasSupport: getSelectValue(v) })
+                  setState({ ...state, hasSupport: getSelectValue(v) })
                 }
                 options={selectOptions.shared.yesNo} />
             </Form.Item>
