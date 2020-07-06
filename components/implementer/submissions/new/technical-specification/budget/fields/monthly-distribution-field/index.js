@@ -7,7 +7,8 @@ export function MonthlyDistributionField({
   defaultValue = [],
   months = [],
   unitCost = 0.0,
-  onChange
+  setState,
+  state
 }) {
   const rows = months.map((label, index) => {
     const data = {}
@@ -18,8 +19,18 @@ export function MonthlyDistributionField({
     return data
   })
 
-  const displayMonthTotal = (value) =>
+  const displayMonthTotal = value =>
     numeral(unitCost * Number(value || 0)).format("$0,0.00")
+
+  const onChange = newItems => {
+    const { total } = state
+
+    const units = newItems.reduce((acc, item) => (
+      acc += Number(item.value)
+    ), 0)
+
+    setState({ total, overLimit: units > total })
+  }
 
   if(!rows.length) {
     return (
