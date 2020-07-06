@@ -24,4 +24,22 @@ describe("Implementer submission page", () => {
       .get("#notifications")
       .should("have.length", 1)
   })
+
+  it("Should have submission summary", () => {
+    cy.get(".ant-layout-header")
+      .get(".ant-page-header-content")
+      .get(".ant-breadcrumb")
+      .should("have.length", 1)
+
+    cy.get(".ant-layout-header")
+      .get(".ant-page-header-content")
+      .get(".ant-descriptions")
+      .should("have.length", 1)
+
+    cy.get(".ant-layout-header")
+      .get(".ant-page-header-content")
+      .get(".btn-container")
+      .children()
+      .should("have.length", 2)
+  })
 })
