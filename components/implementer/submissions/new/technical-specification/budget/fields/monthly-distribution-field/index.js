@@ -56,7 +56,7 @@ export function MonthlyDistributionField({
             <Row
               gutter={[10, 8]}
               key={`monthly-distribution-${item.uuid}`}>
-              <Col span={12}>{ item.label }</Col>
+              <Col span={12}>{ _.capitalize(item.label) }</Col>
               <Col span={6}>
                 <Input
                   type="number"
