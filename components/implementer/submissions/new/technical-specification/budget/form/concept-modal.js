@@ -33,6 +33,7 @@ export function ConceptModal({
   useEffect(() => {
     if(edit) {
       form.setFieldsValue(edit)
+      setUnitsState({ overLimit: false, total: edit.totalUnits })
       setState(edit)
     }
   }, [edit])
