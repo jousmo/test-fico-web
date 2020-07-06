@@ -41,7 +41,9 @@ export function MonthlyDistributionField({
       isAddDisabled
       onChange={onChange}>
       {({ items, updateItem }) => {
-        const total = items.reduce((t, r) => t + unitCost * Number(r.value || 0), 0)
+        const total = items.reduce((t, r) =>
+          t + unitCost * Number(r.value || 0), 0
+        )
 
         return <>
           <Row gutter={[10, 8]}>
