@@ -1,6 +1,6 @@
 import * as _ from "lodash"
 import { Input, Row, Col, Alert } from "antd"
-import { CompositeField } from "../../../../../../../shared"
+import { CompositeField, Visibility } from "../../../../../../../shared"
 import numeral from "numeral"
 
 export function MonthlyDistributionField({
@@ -77,6 +77,18 @@ export function MonthlyDistributionField({
             <Col span={6}></Col>
             <Col span={6}>{ numeral(total).format("$0,0.00") }</Col>
           </Row>
+
+          <Visibility visible={state.overLimit}>
+            <Row>
+              <Col span={24}>
+                <Alert
+                  message="Atención: La suma de las unidades por mes no debe
+                  superar el total de unidades del concepto."
+                  showIcon
+                  type="error" />
+              </Col>
+            </Row>
+          </Visibility>
         </>
       }
       }
