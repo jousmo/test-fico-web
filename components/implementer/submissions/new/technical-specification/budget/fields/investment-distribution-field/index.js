@@ -33,7 +33,7 @@ export function InvestmentDistributionField({
 
   const onChange = newItems => {
     const percentage = newItems.reduce((acc, item) => (
-      acc += Number(item.percentage)
+      acc += Number(item.percentage || 0)
     ), 0)
     setState(percentage > 100)
   }
