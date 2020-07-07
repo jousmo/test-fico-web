@@ -16,7 +16,8 @@ function AdminSubmissions({ client }) {
   })
 
   const { loading, error, data } = useQuery(submission.queries.getAll, {
-    client: client
+    client: client,
+    variables: { state: "SUBMISSION" }
   })
 
   const injectActions = useMemo(() => ({
