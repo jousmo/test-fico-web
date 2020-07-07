@@ -1,5 +1,8 @@
 import { Layout } from "../../../components/shared"
 import {
+  SubmissionsListing
+} from "../../../components/admin/submissions/list"
+import {
   AdminSubmissionContext
 } from "../../../contexts/admin/submissions/show"
 import { submission } from "../../../graphql/submission"
@@ -25,7 +28,7 @@ function AdminSubmissions({ client }) {
   return (
     <AdminSubmissionContext.Provider value={injectActions}>
       <Layout subheader={false}>
-
+        <SubmissionsListing />
       </Layout>
     </AdminSubmissionContext.Provider>
   )
