@@ -26,7 +26,7 @@ export function MonthlyDistributionField({
     const { total } = state
 
     const units = newItems.reduce((acc, item) => (
-      acc += Number(item.value)
+      acc += Number(item.value || 0)
     ), 0)
 
     setState({ total, overLimit: units > total })
