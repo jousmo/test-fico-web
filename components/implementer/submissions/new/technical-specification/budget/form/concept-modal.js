@@ -24,10 +24,16 @@ export function ConceptModal({
 }) {
   const [form] = useForm()
   const [state, setState] = useState({})
+  const [investmentState, setInvestmentState] = useState(false)
+  const [unitsState, setUnitsState] = useState({
+    overLimit: false,
+    total: 0
+  })
 
   useEffect(() => {
     if(edit) {
       form.setFieldsValue(edit)
+      setUnitsState({ overLimit: false, total: edit.totalUnits })
       setState(edit)
     }
   }, [edit])
@@ -43,6 +49,10 @@ export function ConceptModal({
       .map(r => r.format("MMMM YYYY"))
 
   const onOk = async () => {
+    if (investmentState || unitsState.overLimit){
+      return
+    }
+
     try {
       let values = await form.getFieldsValue()
 
@@ -64,7 +74,12 @@ export function ConceptModal({
   }
 
   const onFormChange = () => {
-    setState(form.getFieldsValue())
+    const values = form.getFieldsValue()
+
+    if (values.totalUnits !== unitsState.total){
+      setUnitsState({ overLimit: false, total: values.totalUnits })
+    }
+    setState(values)
   }
 
   const onTypeChange = (value) => {
@@ -76,8 +91,6 @@ export function ConceptModal({
       setState({ isHumanResource: false })
     }
   }
-
-  const hasRegion = (submission?.township !== "Otro")
 
   return (
     <Modal
@@ -104,21 +117,20 @@ export function ConceptModal({
                 type="text" />
             </Form.Item>
           </Col>
-          { hasRegion && (
-            <Col span={12}>
-              <Form.Item
+          <Col span={12}>
+            <Form.Item
+              name="region"
+              style={{display: "inline"}}
+              label="Región"
+              getValueFromEvent={getSelectValue}>
+              <SelectField
+                id="region"
                 name="region"
-                style={{display: "inline"}}
-                label="Región"
-                getValueFromEvent={getSelectValue}>
-                <SelectField
-                  id="region"
-                  name="region"
-                  defaultValue={edit?.region}
-                  options={implementer.submission.regions} />
-              </Form.Item>
-            </Col>
-          )}
+                disabled={submission?.township !== "Zona centro sur"}
+                defaultValue={edit?.region}
+                options={implementer.submission.regions} />
+            </Form.Item>
+          </Col>
           <Col span={12}>
             <Form.Item
               name="type"
@@ -199,7 +211,9 @@ export function ConceptModal({
               <MonthlyDistributionField
                 defaultValue={edit?.monthlyDistribution}
                 unitCost={state.unitCost}
-                months={projectMonths} />
+                months={projectMonths}
+                state={unitsState}
+                setState={setUnitsState}/>
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -217,7 +231,9 @@ export function ConceptModal({
                 allies={submission?.allies}
                 defaultValue={edit?.investmentDistribution}
                 unitCost={state.unitCost}
-                totalUnits={state.totalUnits} />
+                totalUnits={state.totalUnits}
+                state={investmentState}
+                setState={setInvestmentState}/>
             </Form.Item>
           </Col>
         </Row>

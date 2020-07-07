@@ -1,6 +1,5 @@
-import { Row, Col, Input } from "antd"
-import { createRef } from "react"
-import { CompositeField } from "../../../../../../../shared"
+import { Row, Col, Input, Alert } from "antd"
+import { CompositeField, Visibility } from "../../../../../../../shared"
 import numeral from "numeral"
 
 export function InvestmentDistributionField({
@@ -13,7 +12,8 @@ export function InvestmentDistributionField({
   ],
   unitCost = 0.0,
   totalUnits = 0.0,
-  onChange
+  state,
+  setState
 }) {
   const displayTotal = (percentage = 0) => {
     percentage = Number(percentage)
@@ -29,6 +29,13 @@ export function InvestmentDistributionField({
 
   if (allies[1] ===  undefined){
     defaultValue.pop()
+  }
+
+  const onChange = newItems => {
+    const percentage = newItems.reduce((acc, item) => (
+      acc += Number(item.percentage || 0)
+    ), 0)
+    setState(percentage > 100)
   }
 
   return (
@@ -64,6 +71,18 @@ export function InvestmentDistributionField({
               </Col>
             </Row>
           )}
+
+          <Visibility visible={state}>
+            <Row>
+              <Col span={24}>
+                <Alert
+                  message="Atención: La suma de los porcentajes no debe superar
+                  100%."
+                  showIcon
+                  type="error" />
+              </Col>
+            </Row>
+          </Visibility>
         </>
       }
     </CompositeField>
