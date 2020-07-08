@@ -1,14 +1,15 @@
 import "./style.sass"
-import { Menu } from "antd";
-import { InboxOutlined } from "@ant-design/icons"
+import { useContext } from "react"
+import { PageContext } from "../../../contexts/page"
+import AdminMenu from "./admin-menu"
 
 export function MainMenu() {
-  return (
-    <Menu theme="dark" className="fico main-menu">
-      <Menu.Item>
-        <InboxOutlined />
-        <span>Perfil de implementadora</span>
-      </Menu.Item>
-    </Menu>
-  )
+  const { type, step, submenu } = useContext(PageContext)
+
+  if (type === "implementer"){
+    //Todo: Return Implementer menu
+    return
+  }
+
+  return <AdminMenu step={step} submenu={submenu} />
 }
