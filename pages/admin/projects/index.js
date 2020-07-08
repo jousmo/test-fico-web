@@ -5,6 +5,7 @@ import {
 import {
   AdminSubmissionContext
 } from "../../../contexts/admin/submissions/show"
+import { PageContext } from "../../../contexts/page"
 import { submission } from "../../../graphql/submission"
 import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
@@ -27,11 +28,14 @@ function ProjectsList({ client }) {
   }), [state, loading])
 
   return (
-    <AdminSubmissionContext.Provider value={injectActions}>
-      <Layout subheader={false}>
-        <ProjectListing />
-      </Layout>
-    </AdminSubmissionContext.Provider>
+    <PageContext.Provider
+      value={{ type: "admin", step: "active", submenu: "projects" }}>
+      <AdminSubmissionContext.Provider value={injectActions}>
+        <Layout subheader={false}>
+          <ProjectListing />
+        </Layout>
+      </AdminSubmissionContext.Provider>
+    </PageContext.Provider>
   )
 }
 
