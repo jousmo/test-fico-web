@@ -5,6 +5,7 @@ import {
 import {
   AdminSubmissionContext
 } from "../../../contexts/admin/submissions/show"
+import { PageContext } from "../../../contexts/page"
 import { submission } from "../../../graphql/submission"
 import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
