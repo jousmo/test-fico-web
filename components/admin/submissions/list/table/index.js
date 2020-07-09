@@ -10,7 +10,7 @@ import {
   shared
 } from "../../../../../helpers/selectOptions"
 import { getTotalApproved } from "../../../projects/list/table/helpers"
-import { AxisTooltip } from "../../../projects/list/table/axis-tooltip"
+import { Tooltip } from "../../../../shared/tooltip"
 
 function SubmissionsListingTable({ data }) {
   const { submissionStatusOptions } = shared
@@ -73,7 +73,7 @@ function SubmissionsListingTable({ data }) {
         filters={axisFilterOptions}
         onFilter={(value, record) => record.strategicAxis.indexOf(value) === 0}
         render={text =>
-          <AxisTooltip options={strategicAxisTypes} text={text} />
+          <Tooltip value={getReadableValue(strategicAxisTypes, text)} />
         }
         title="Eje" />
       <Table.Column
