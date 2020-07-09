@@ -3,11 +3,12 @@ import Link from "next/link"
 import { Table } from "antd"
 import { MinusSquareTwoTone } from "@ant-design/icons"
 import {
+  getReadableValue,
   implementer,
   shared
 } from "../../../../../helpers/selectOptions"
+import { Tooltip } from "../../../../shared"
 import { getTotalApproved } from "./helpers"
-import { AxisTooltip } from "./axis-tooltip"
 import { StatusTag } from "./status-tag"
 
 function ProjectListingTable({ data }) {
@@ -71,7 +72,7 @@ function ProjectListingTable({ data }) {
         filters={axisFilterOptions}
         onFilter={(value, record) => record.strategicAxis.indexOf(value) === 0}
         render={text =>
-          <AxisTooltip options={strategicAxisTypes} text={text} />
+          <Tooltip value={getReadableValue(strategicAxisTypes, text)} />
         }
         title="Eje" />
       <Table.Column
