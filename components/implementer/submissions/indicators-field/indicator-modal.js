@@ -100,7 +100,7 @@ export function IndicatorModal({
                   name: "narrativeSummary",
                   section: indicatorType,
                   index: commentIndex}}>
-                  Resumen narrativo
+                  Descripción
                 </FieldLabel>
               }>
               <Input
@@ -122,16 +122,6 @@ export function IndicatorModal({
               }>
               <Input
                 id="methodology"
-                type="text" />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              name="responsible"
-              style={{display: "inline"}}
-              label="Responsable">
-              <Input
-                id="responsible"
                 type="text" />
             </Form.Item>
           </Col>
@@ -234,25 +224,6 @@ export function IndicatorModal({
               <SelectField
                 id="measurementPeriodicity"
                 options={measurementPeriodicityTypes} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="place"
-              style={{display: "inline"}}
-              label="Lugar de intervención">
-              <Input
-                id="place"
-                type="text" />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              name="inputs"
-              style={{display: "inline"}}
-              label="Insumos">
-              <MultipleTextField
-                addLabel="Agregar insumo" />
             </Form.Item>
           </Col>
           <Col span={24}>
