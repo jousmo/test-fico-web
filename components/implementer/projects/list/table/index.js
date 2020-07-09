@@ -37,7 +37,7 @@ function ProjectListingTable({ data }) {
         render={(text, record) =>
           <Link href={`/admin/projects/${record.id}`}><a>{text}</a></Link>
         }
-        title="Nº de Acuerdo" />
+        title="Aprobación" />
       <Table.Column
         dataIndex="name"
         title="Nombre de proyecto" />
