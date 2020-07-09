@@ -4,7 +4,7 @@ import {
   CompositeField,
   DateField,
   DeleteButton,
-  FieldLabel
+  FieldLabel, MultipleTextField
 } from "../../../shared"
 import { merge } from "lodash"
 import { useEffect } from "react"
@@ -70,6 +70,23 @@ export function ActivityModal({
         <Row gutter={[10, 8]} justify="start">
           <Col span={24}>
             <Form.Item
+              name="title"
+              style={{display: "inline"}}
+              label={
+                <FieldLabel comentable={{
+                  name: "title",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Título de la actividad
+                </FieldLabel>
+              }>
+              <Input
+                id="title"
+                type="text" />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
               name="description"
               style={{display: "inline"}}
               label={
@@ -99,6 +116,40 @@ export function ActivityModal({
               }>
               <Input
                 id="responsible"
+                type="text" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="methodology"
+              style={{display: "inline"}}
+              label={
+                <FieldLabel comentable={{
+                  name: "methodology",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Metodología
+                </FieldLabel>
+              }>
+              <Input
+                id="methodology"
+                type="text" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="formula"
+              style={{display: "inline"}}
+              label={
+                <FieldLabel comentable={{
+                  name: "formula",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Fórmula
+                </FieldLabel>
+              }>
+              <Input
+                id="formula"
                 type="text" />
             </Form.Item>
           </Col>
@@ -208,6 +259,24 @@ export function ActivityModal({
                   </div>
                 }
               </CompositeField>
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              name="inputs"
+              style={{display: "inline"}}
+              label="Insumos">
+              <MultipleTextField
+                addLabel="Agregar insumo" />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              name="products"
+              style={{display: "inline"}}
+              label="Productos">
+              <MultipleTextField
+                addLabel="Agregar producto" />
             </Form.Item>
           </Col>
         </Row>
