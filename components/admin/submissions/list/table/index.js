@@ -13,7 +13,7 @@ import { getTotalApproved } from "../../../projects/list/table/helpers"
 import { Tooltip } from "../../../../shared/tooltip"
 
 function SubmissionsListingTable({ data }) {
-  const { submissionStatusOptions } = shared
+  const { submissionStatusOptions, getFilterOptions } = shared
   const {
     submission: {
       strategicAxisTypes,
@@ -21,17 +21,9 @@ function SubmissionsListingTable({ data }) {
     },
   } = implementer
 
-  const statusFilterOptions = submissionStatusOptions.map(option => (
-    {text: option.label, value: option.value}
-  ))
-
-  const axisFilterOptions = strategicAxisTypes.map(option => (
-    {text: option.label, value: option.value}
-  ))
-
-  const regionFilterOptions = regions.map(option => (
-    {text: option.label, value: option.value}
-  ))
+  const statusFilterOptions = getFilterOptions(submissionStatusOptions)
+  const axisFilterOptions = getFilterOptions(strategicAxisTypes)
+  const regionFilterOptions = getFilterOptions(regions)
 
   return (
     <Table
