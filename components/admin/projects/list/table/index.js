@@ -12,7 +12,7 @@ import { getTotalApproved } from "./helpers"
 import { StatusTag } from "./status-tag"
 
 function ProjectListingTable({ data }) {
-  const { projectStatusOptions } = shared
+  const { projectStatusOptions, getFilterOptions } = shared
   const {
     submission: {
       strategicAxisTypes,
@@ -20,17 +20,9 @@ function ProjectListingTable({ data }) {
     }
   } = implementer
 
-  const statusFilterOptions = projectStatusOptions.map(option => (
-    {text: option.label, value: option.value}
-  ))
-
-  const axisFilterOptions = strategicAxisTypes.map(option => (
-    {text: option.label, value: option.value}
-  ))
-
-  const regionFilterOptions = regions.map(option => (
-    {text: option.label, value: option.value}
-  ))
+  const statusFilterOptions = getFilterOptions(projectStatusOptions)
+  const axisFilterOptions = getFilterOptions(strategicAxisTypes)
+  const regionFilterOptions = getFilterOptions(regions)
 
   return (
     <Table
