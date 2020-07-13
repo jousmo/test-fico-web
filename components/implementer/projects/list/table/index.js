@@ -1,44 +1,46 @@
 import { withForm } from "../../../../../helpers/withForm"
+import Link from "next/link"
 import { Table } from "antd"
-import Moment from "moment"
-Moment.locale("es")
-import { capitalize } from "lodash"
 import { MinusSquareTwoTone } from "@ant-design/icons"
 import {
   getReadableValue,
   implementer,
   shared
 } from "../../../../../helpers/selectOptions"
-import { getTotalApproved } from "../../../projects/list/table/helpers"
-import { Tooltip } from "../../../../shared/tooltip"
+import { Tooltip } from "../../../../shared"
+import { getTotalApproved } from "../../../../admin/projects/list/table/helpers"
+import { StatusTag } from "../../../../admin/projects/list/table/status-tag"
 
-function SubmissionsListingTable({ data }) {
-  const { submissionStatusOptions, getFilterOptions } = shared
+function ProjectListingTable({ data }) {
+  const { projectStatusOptions, getFilterOptions } = shared
   const {
     submission: {
       strategicAxisTypes,
       regions
-    },
+    }
   } = implementer
 
-  const statusFilterOptions = getFilterOptions(submissionStatusOptions)
+  const statusFilterOptions = getFilterOptions(projectStatusOptions)
   const axisFilterOptions = getFilterOptions(strategicAxisTypes)
   const regionFilterOptions = getFilterOptions(regions)
 
+  // Will not need to filter data in client once server is fully working
+  const dataSource = data?.filter(e => e.implementer.id === 1)
+
   return (
     <Table
-      dataSource={data}
+      dataSource={dataSource}
       rowKey={(row, index) => index}
       size="small">
       <Table.Column
         width={1}
         title={<MinusSquareTwoTone />} />
       <Table.Column
-        dataIndex="createdAt"
-        render={text => (
-          capitalize(Moment(text).format("MMMM D, YYYY h:mm a"))
-        )}
-        title="Fecha de solicitud" />
+        dataIndex="agreementNumber"
+        render={(text, record) =>
+          <Link href={`/admin/projects/${record.id}`}><a>{text}</a></Link>
+        }
+        title="Aprobación" />
       <Table.Column
         dataIndex="name"
         title="Nombre de proyecto" />
@@ -47,14 +49,9 @@ function SubmissionsListingTable({ data }) {
         filters={statusFilterOptions}
         onFilter={(value, record) => record.status.indexOf(value) === 0}
         render={text =>
-          getReadableValue(submissionStatusOptions, text)
+          <StatusTag options={projectStatusOptions} value={text} />
         }
         title="Estatus" />
-      <Table.Column
-        render={(text, record) => (
-          record.implementer?.name || "N/A"
-        )}
-        title="Implementadora" />
       <Table.Column
         dataIndex="region"
         filters={regionFilterOptions}
@@ -75,4 +72,4 @@ function SubmissionsListingTable({ data }) {
   )
 }
 
-export default withForm(SubmissionsListingTable)
+export default withForm(ProjectListingTable)
