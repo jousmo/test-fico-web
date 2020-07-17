@@ -1,4 +1,5 @@
 import { Layout } from "../../../components/shared"
+import { Button } from "antd"
 import {
   SubmissionsListing
 } from "../../../components/implementer/submissions/list"
@@ -27,15 +28,23 @@ function ImplementerSubmissions({ client }) {
     data
   }), [state, loading])
 
+  const newSubmissionButton = (
+    <Button type="primary">
+      Nueva solicitud
+    </Button>
+  )
+
   return (
     <PageContext.Provider
       value={{
         type: "implementer",
         step: "submissions",
-        submenu: "submissions"
+        submenu: "submissions",
+        title: "Solicitudes",
+        actions: newSubmissionButton
       }}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
-        <Layout subheader={false}>
+        <Layout>
           <SubmissionsListing />
         </Layout>
       </ImplementerSubmissionContext.Provider>
