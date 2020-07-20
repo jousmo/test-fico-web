@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import { Layout } from "../../../components/shared"
 import { Button } from "antd"
 import {
@@ -9,10 +10,11 @@ import {
 import { PageContext } from "../../../contexts/page"
 import { submission } from "../../../graphql/submission"
 import { useMemo, useState } from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../helpers/withApollo"
 
 function ImplementerSubmissions({ client }) {
+  const router = useRouter()
   const [ state ] = useState({
     submissionsList: {}
   })
@@ -28,8 +30,20 @@ function ImplementerSubmissions({ client }) {
     data
   }), [state, loading])
 
+  const [createSubmission] = useMutation(
+    submission.mutations.createNew, { client: client }
+  )
+
+  const handleNewSubmission = async () => {
+    const { data } = await createSubmission({
+      variables: { data: {} }
+    })
+    const { createSubmission: { id } } = data || {}
+    router.push(`/implementer/submissions/${id}/edit/general-information`)
+  }
+
   const newSubmissionButton = (
-    <Button type="primary">
+    <Button onClick={handleNewSubmission} type="primary">
       Nueva solicitud
     </Button>
   )
