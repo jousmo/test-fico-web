@@ -1,9 +1,7 @@
 import { Layout } from "../../../../../../components/implementer/submissions"
 import { useRouter } from "next/router"
 import {
-  data as pageData
-} from "../../../../../../contexts/admin/submissions/review"
-import {
+  data as pageData,
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
@@ -53,7 +51,8 @@ function HumanResources({ client }) {
     save,
     loading,
     error,
-    data
+    data,
+    router
   }), [state, loading])
 
   return (

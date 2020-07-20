@@ -7,9 +7,7 @@ import {
   Consultant
 } from "../../../../../../components/implementer/submissions/new/general-information"
 import {
-  editData as pageData
-} from "../../../../../../contexts/implementer/submissions/new"
-import {
+  editData as pageData,
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
@@ -63,7 +61,8 @@ function GeneralInformation({ client }) {
     isCall,
     loading,
     error,
-    data
+    data,
+    router
   }), [state, loading])
 
   return (
