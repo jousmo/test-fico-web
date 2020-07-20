@@ -1,8 +1,21 @@
 import { Steps as ASteps } from "antd"
+import { useContext } from "react"
+import {
+  ImplementerSubmissionContext
+} from "../../../../contexts/implementer/submissions/new/context"
+import { getRoute } from "./helpers"
 
 export function Steps({current = 0}) {
+  const {
+    router
+  } = useContext(ImplementerSubmissionContext)
+
+  const handleChange = c => {
+    router.push(getRoute(router, c))
+  }
+
   return (
-    <ASteps current={current}>
+    <ASteps current={current} onChange={handleChange}>
       <ASteps.Step
         key="general-information"
         title="Inf. General"
