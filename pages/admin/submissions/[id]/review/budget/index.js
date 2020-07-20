@@ -52,7 +52,8 @@ function Budget({ client }) {
     save,
     loading,
     error,
-    data
+    data,
+    router
   }), [state, loading])
 
   return (
