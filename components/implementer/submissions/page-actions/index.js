@@ -1,11 +1,10 @@
 import { Button, Row, Col } from "antd"
-import { SaveOutlined } from "@ant-design/icons"
 import { useContext } from "react"
 import {
   ImplementerSubmissionContext
 } from "../../../../contexts/implementer/submissions/new/context"
 
-export function PageActions({save}) {
+export function PageActions() {
   const {
     router
   } = useContext(ImplementerSubmissionContext)
@@ -24,14 +23,6 @@ export function PageActions({save}) {
   return (
     <Row justify="end" gutter={10}>
       <Col><Button ghost onClick={handleClose}>Cerrar</Button></Col>
-      <Col>
-        <Button
-          icon={<SaveOutlined />}
-          onClick={() => { save() }}
-          type="primary">
-          Guardar
-        </Button>
-      </Col>
     </Row>
   )
 }
