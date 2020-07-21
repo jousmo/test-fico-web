@@ -7,7 +7,7 @@ function EvaluationTable({ data }) {
   return (
     <List bordered>
       {data?.map(({ id, name }) => (
-        <List.Item>
+        <List.Item key={id}>
           <Link href={`/admin/submissions/${id}`}>
             <a>{name}</a>
           </Link>
