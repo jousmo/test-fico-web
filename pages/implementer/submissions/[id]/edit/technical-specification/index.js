@@ -40,7 +40,7 @@ function TechnicalSpecification({ client }) {
     setState(state => (
       { ...state, submissionId }
     ))
-  }, [submissionId]);
+  }, [submissionId])
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
