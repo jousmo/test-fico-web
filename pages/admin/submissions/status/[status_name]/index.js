@@ -36,7 +36,6 @@ function SubmissionsByStatus({ client }) {
       await updateSubmissionStatus({
         variables: { data: { status }, id: id }
       })
-      return "SUCCESS"
     }
     catch(e){
       console.error(e)

@@ -15,7 +15,7 @@ import {
   handleView
 } from "./helpers"
 
-export function EvaluationActionButtons({ id }){
+export function EvaluationActionButtons({ id, onChange }){
   const {
     save,
     router
@@ -33,12 +33,12 @@ export function EvaluationActionButtons({ id }){
       <ConfirmButton
         icon={<CloseOutlined />}
         confirmText="Rechazar solicitud"
-        onClick={() => handleReject(id, save)} />
+        onClick={() => handleReject(id, save, onChange)} />
       &nbsp;
       <ConfirmButton
         icon={<CheckOutlined />}
         confirmText="Aprobar solicitud"
-        onClick={() => handleApprove(id, router, save)}
+        onClick={() => handleApprove(id, router, save, onChange)}
         style={{ backgroundColor: "green", color: "white" }} />
     </div>
   )
