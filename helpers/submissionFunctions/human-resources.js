@@ -15,7 +15,7 @@ export const setUpdateHumanResources = (humanResource, state, setState) => {
 export const setSave = async (state, updateSubmission, id) => {
   try {
     const updatedSubmission = await updateSubmission({
-      variables: { ...state.humanResources, id: id }
+      variables: { data: { ...state.humanResources }, id: id }
     })
 
     /* TODO: Show feedback to the user */

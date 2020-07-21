@@ -11,7 +11,7 @@ export const setUpdateGeneralInformation = (generalInformation, state, setState)
 export const setSave = async (state, updateSubmission, id) => {
   try {
     const updatedSubmission = await updateSubmission({
-      variables: { ...state.generalInformation, id: id }
+      variables: { data: { ...state.generalInformation }, id: id }
     })
 
     /* TODO: Show feedback to the user */
