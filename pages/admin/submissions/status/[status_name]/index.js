@@ -21,7 +21,7 @@ function SubmissionsByStatus({ client }) {
     submissionsList: {}
   })
 
-  const { loading, error, data } = useQuery(submission.queries.getByStatus, {
+  const { loading, error, data } = useQuery(submission.queries.getAll, {
     client: client,
     variables: { status: status }
   })
