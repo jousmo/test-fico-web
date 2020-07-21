@@ -1,37 +1,44 @@
 import { useContext } from "react"
-import { Button } from "antd"
-import {
-  AdminSubmissionContext
-} from "../../../../../../contexts/admin/submissions/show"
+import { Button, Tooltip } from "antd"
 import {
   CheckOutlined,
   CloseOutlined,
   EyeOutlined
 } from "@ant-design/icons"
+import { ConfirmButton } from "../../../../../shared"
+import {
+  AdminSubmissionContext
+} from "../../../../../../contexts/admin/submissions/show"
+import {
+  handleApprove,
+  handleReject,
+  handleView
+} from "./helpers"
 
 export function EvaluationActionButtons({ id }){
   const {
+    save,
     router
   } = useContext(AdminSubmissionContext)
 
-  const handleView = () => {
-    router.push(`/admin/submissions/${id}/review/general-information`)
-  }
-
   return (
     <div>
-      <Button
-        icon={<EyeOutlined />}
-        onClick={handleView}
-        shape="circle" />
+      <Tooltip title="Ver solicitud">
+        <Button
+          icon={<EyeOutlined />}
+          onClick={() => handleView(id, router)}
+          shape="circle" />
+      </Tooltip>
       &nbsp;
-      <Button
+      <ConfirmButton
         icon={<CloseOutlined />}
-        shape="circle" />
+        confirmText="Rechazar solicitud"
+        onClick={() => handleReject(id, save)} />
       &nbsp;
-      <Button
+      <ConfirmButton
         icon={<CheckOutlined />}
-        shape="circle"
+        confirmText="Aprobar solicitud"
+        onClick={() => handleApprove(id, router, save)}
         style={{ backgroundColor: "green", color: "white" }} />
     </div>
   )
