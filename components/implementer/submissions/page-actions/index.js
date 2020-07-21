@@ -11,11 +11,9 @@ export function PageActions() {
 
   const handleClose = () => {
     const { route } = router
-    let role = undefined
+    let role = "admin"
     if (route.includes("implementer")) {
       role = "implementer"
-    } else {
-      role = "admin"
     }
     router.push(`/${role}/submissions`)
   }
