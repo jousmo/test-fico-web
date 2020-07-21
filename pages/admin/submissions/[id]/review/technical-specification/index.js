@@ -1,4 +1,7 @@
-import { Layout } from "../../../../../../components/implementer/submissions"
+import {
+  Layout,
+  SaveHeader
+} from "../../../../../../components/implementer/submissions"
 import { useRouter } from "next/router"
 import {
   data as pageData
@@ -8,7 +11,7 @@ import {
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
-import { useState, useCallback, useMemo } from "react"
+import { useState, useCallback, useMemo, useEffect } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
 import {
@@ -27,10 +30,19 @@ import {
 
 function TechnicalSpecification({ client }) {
   const router = useRouter()
+  const submissionId = router.query.id
+
   const [state, setState] = useState({
     technicalSpecification: {},
-    dirty: false
+    dirty: false,
+    submissionId: undefined
   })
+
+  useEffect(() => {
+    setState(state => (
+      { ...state, submissionId }
+    ))
+  }, [submissionId])
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
@@ -46,12 +58,11 @@ function TechnicalSpecification({ client }) {
   }, [state])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, router.query.id)
+    await setSave(state, updateSubmission, state.submissionId)
   }, [state])
 
   const injectActions = useMemo(() => ({
     updateTechnicalSpecification,
-    save,
     loading,
     error,
     data,
@@ -65,6 +76,7 @@ function TechnicalSpecification({ client }) {
         update={updateTechnicalSpecification}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
+            <SaveHeader save={save} />
             <DevelopmentObjective />
             <GeneralObjective />
             <SpecificObjectives />
