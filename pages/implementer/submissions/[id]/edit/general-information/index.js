@@ -28,9 +28,7 @@ import {
 function GeneralInformation({ client }) {
   const router = useRouter()
   const [state, setState] = useState({
-    generalInformation: {
-      consultant: {}
-    },
+    generalInformation: {},
     dirty: false
   })
 
