@@ -16,7 +16,8 @@ import {
 } from "../../../../../helpers"
 
 function SubmissionsByStatus({ client }) {
-  const status = useRouter().query.status_name?.toUpperCase()
+  const router = useRouter()
+  const status = router.query.status_name?.toUpperCase()
   const [ state ] = useState({
     submissionsList: {}
   })
@@ -29,7 +30,8 @@ function SubmissionsByStatus({ client }) {
   const injectActions = useMemo(() => ({
     loading,
     error,
-    data
+    data,
+    router
   }), [state, loading])
 
   const pageTitle = selectOptions
@@ -39,7 +41,7 @@ function SubmissionsByStatus({ client }) {
     <AdminSubmissionContext.Provider value={injectActions}>
       <PageContext.Provider value={{ title: pageTitle }}>
         <Layout>
-          <ListByStatus />
+          <ListByStatus status={status} />
         </Layout>
       </PageContext.Provider>
     </AdminSubmissionContext.Provider>
