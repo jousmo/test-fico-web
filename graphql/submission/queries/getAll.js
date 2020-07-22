@@ -1,10 +1,18 @@
 import { gql } from "apollo-boost"
 
 export const getAll = gql`
-  query SubmissionByStatus($state: String) {
-    allSubmissions(filter: {state: $state}) {
+  query getSubmissions(
+    $state: String,
+    $status: String
+  ) {
+    submissions(
+      state: $state,
+      status: $status
+    ) {
       id
-      implementer
+      implementer {
+        name
+      }
       name
       type
       applyingCall
@@ -23,17 +31,106 @@ export const getAll = gql`
       justification
       developmentObjective
       generalObjective
-      specificObjectives
-      beneficiaries
-      consultants
-      developmentObjectiveIndicators
-      generalObjectiveIndicators
-      concepts
+      specificObjectives {
+        description
+        indicators {
+          type
+          title
+          description
+          methodology
+          formula
+          meansOfVerification
+          baseline
+          goal
+          startDate
+          endDate
+          measurementPeriodicity
+          products
+          generalObjectiveSubmission {
+            id
+          }
+          developmentObjectiveSubmission {
+            id
+          }
+        }
+        activities {
+          title
+          description
+          responsible
+          methodology
+          formula
+          meansOfVerification
+          baseline
+          goal
+          place
+          months
+          inputs
+          products
+          specificObjective {
+            id
+          }
+        }
+      }
+      beneficiaries {
+        description
+        number
+        gender
+        educationLevel
+        age
+        preventionLevel
+      }
+      consultants {
+        description
+        commercialName
+        commercialAddress
+        contactName
+        phone
+        rfc
+        fiscalAddress
+        fiscalPersonType
+        hadReceivedSupports
+        supports {
+          name
+          date
+          amount
+        }
+      }
+      developmentObjectiveIndicators {
+        id
+      }
+      generalObjectiveIndicators {
+        id
+      }
+      concepts {
+        name
+        region
+        type
+        measurementUnit
+        unitCost
+        totalUnits
+        monthlyDistribution
+        investmentDistributions {
+          name
+          type
+          percentage
+        }
+        humanResource {
+          position
+          name
+          tasks
+          overseer
+          hours
+          contractType
+          salary
+          benefits
+          taxes
+          total
+        }
+      }
       status
       statusChangedAt
       deadline
       signedContractAt
-      comments
       agreementNumber
     }
   }
