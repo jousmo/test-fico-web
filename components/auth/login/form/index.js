@@ -9,12 +9,14 @@ export function LoginForm({ onSubmit }){
       onFinish={onSubmit}>
       <Form.Item
         name="email"
-        rules={[{ required: true, message: "Porfavor ingresa to correo" }]}>
+        rules={[{ required: true, message: "Por favor ingresa to correo" }]}>
         <Input />
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[{ required: true, message: "Porfavor ingresa to contraseña" }]}>
+        rules={
+          [{ required: true, message: "Por favor ingresa to contraseña" }]
+        }>
         <Input.Password />
       </Form.Item>
       <Form.Item>
