@@ -55,7 +55,13 @@ function SubmissionsByStatus({ client }) {
 
   return (
     <AdminSubmissionContext.Provider value={injectActions}>
-      <PageContext.Provider value={{ title: pageTitle }}>
+      <PageContext.Provider
+        value={{
+          step: status,
+          submenu: "submissions",
+          title: pageTitle,
+          type: "submissions"
+        }}>
         <Layout>
           <ListByStatus status={status} />
         </Layout>
