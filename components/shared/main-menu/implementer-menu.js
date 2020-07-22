@@ -23,13 +23,13 @@ export default function ImplementerMenu({ step, submenu }) {
             <a>Todas las solicitudes</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key="directive_council">
-          <Link href="/implementer/submissions/status/">
+        <Menu.Item key="on_council">
+          <Link href="/implementer/submissions/status/on_council">
             <a>Consejo directivo</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key="technical_committee">
-          <Link href="/implementer/submissions/status/">
+        <Menu.Item key="on_committee">
+          <Link href="/implementer/submissions/status/on_committee">
             <a>Comité técnico</a>
           </Link>
         </Menu.Item>
