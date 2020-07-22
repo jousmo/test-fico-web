@@ -1,4 +1,5 @@
 import { Button, Form, Input } from "antd"
+import Link from "next/link"
 
 export function LoginForm({ onSubmit }){
   return (
@@ -21,6 +22,13 @@ export function LoginForm({ onSubmit }){
           Iniciar sesión
         </Button>
       </Form.Item>
+      <small>
+        ¿Olvidaste tu contraseña?
+        &nbsp;
+        <Link href="/password-recovery">
+          <a>Click aqui</a>
+        </Link>
+      </small>
     </Form>
   )
 }
