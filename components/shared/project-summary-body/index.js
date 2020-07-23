@@ -47,7 +47,7 @@ function SummaryBody({ data, extra }) {
       </Descriptions.Item>
       <Descriptions.Item label="Nivel de prevención">
         {
-          preventionLevel.map(level => (
+          preventionLevel?.map(level => (
             getReadableValue(preventionLevelTypes, level)
           )).join(", ")
         }
