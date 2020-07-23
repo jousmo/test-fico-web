@@ -1,9 +1,11 @@
 import { PageActions } from "../../../components/implementer/profile";
 
 
-export const data = ({save}) => {
+export const data = ({ save }) => {
   return {
     title: "Perfil de la implementadora",
-    actions: <PageActions save={save} />
+    actions: <PageActions save={save} />,
+    step: "profile",
+    type: "implementer"
   }
 }
