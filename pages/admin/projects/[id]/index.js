@@ -40,7 +40,7 @@ function Project({ client }) {
     <PageContext.Provider
       value={{ type: "admin", submenu: "projects" }}>
       <AdminSubmissionContext.Provider value={injectActions}>
-        <Layout subheader={<ProjectSummary />}>
+        <Layout subheader={<ProjectSummary type="admin" />}>
           <Government />
           <GeneralInformation />
           <SignedAgreement />
