@@ -44,7 +44,7 @@ function SubmissionsByStatus({ client }) {
           step: status,
           submenu: "submissions",
           title: pageTitle,
-          type: "submissions"
+          type: "implementer"
         }}>
         <Layout>
           <ListByStatus />
