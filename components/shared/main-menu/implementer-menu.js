@@ -59,11 +59,12 @@ export default function ImplementerMenu({ step, submenu }) {
           </Link>
         </Menu.Item>
       </Menu.SubMenu>
-      <Menu.SubMenu
-        key="profile"
-        icon={<UserOutlined />}
-        title="Perfil de implementadora">
-      </Menu.SubMenu>
+      <Menu.Item key="profile">
+        <UserOutlined />
+        <Link href="/implementer/profile">
+          <a>Perfil de implementadora</a>
+        </Link>
+      </Menu.Item>
     </Menu>
   )
 }
