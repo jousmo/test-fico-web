@@ -11,9 +11,12 @@ import "./style.sass"
 export function SubmissionSummary() {
   const {
     loading,
+    router,
     error,
     data
   } = useContext(ImplementerSubmissionContext)
+
+  const editRoute = `/implementer/submissions/${data?.Submission?.id}/edit/general-information`
 
   return (
     <div className="fico submission summary implementer">
@@ -32,6 +35,7 @@ export function SubmissionSummary() {
       <div className="btn-container">
         <Button
           icon={<RightCircleOutlined />}
+          onClick={() => router.push(editRoute)}
           className="implementer continue-submission">
           Continuar solicitud
         </Button>
