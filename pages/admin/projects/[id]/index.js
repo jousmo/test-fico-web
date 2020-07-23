@@ -4,7 +4,8 @@ import {
   ProjectClosure,
   ProjectMonitoring,
   ProjectSummary,
-  SignedAgreement
+  SignedAgreement,
+  Government
 } from "../../../../components/admin/projects/show"
 import {
   GeneralInformation
@@ -40,6 +41,7 @@ function Project({ client }) {
       value={{ type: "admin", submenu: "projects" }}>
       <AdminSubmissionContext.Provider value={injectActions}>
         <Layout subheader={<ProjectSummary />}>
+          <Government />
           <GeneralInformation />
           <SignedAgreement />
           <ProjectMonitoring />
