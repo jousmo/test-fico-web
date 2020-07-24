@@ -9,6 +9,7 @@ import { CommentButton } from "../../../../../../admin/submissions/review"
 
 function BudgetForm({data, onChange}) {
   const [state, setState] = useState({ isModalOpen: false, edit: false })
+  const { Submission } = data || {}
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
@@ -40,12 +41,12 @@ function BudgetForm({data, onChange}) {
         onClickAdd={onClickAdd}
         onChange={onChange}
         addLabel="Agregar concepto"
-        defaultValue={data?.Submission?.concepts}>
+        defaultValue={Submission?.concepts}>
         {({ items, addNew, removeItem, replaceItemAtIndex }) =>
           <>
             <ConceptModal
               visible={state.isModalOpen}
-              submission={data?.Submission}
+              submission={Submission}
               onCancel={onCancel}
               onSave={onSave(addNew, replaceItemAtIndex)}
               edit={state.edit} />
@@ -104,17 +105,19 @@ function BudgetForm({data, onChange}) {
                   key="ficosec"
                   dataIndex="name"
                   render={renderInvestment("FICOSEC")} />
-                <Table.Column
-                  title={data?.Submission?.allies[0]}
-                  key="firstAlly"
-                  dataIndex="name"
-                  render={renderInvestment(data?.Submission?.allies[0])} />
-                {data?.Submission?.allies[1] && (
+                {Submission?.allies && (
                   <Table.Column
-                    title={data?.Submission?.allies[1]}
+                    title={Submission?.allies[0]}
+                    key="firstAlly"
+                    dataIndex="name"
+                    render={renderInvestment(Submission?.allies[0])} />
+                )}
+                {(Submission?.allies && Submission?.allies[1]) && (
+                  <Table.Column
+                    title={Submission?.allies[1]}
                     key="secondAlly"
                     dataIndex="name"
-                    render={renderInvestment(data?.Submission?.allies[1])} />
+                    render={renderInvestment(Submission?.allies[1])} />
                 )}
                 <Table.Column
                   title="Unidades"
