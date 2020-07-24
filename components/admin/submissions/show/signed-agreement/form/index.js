@@ -3,7 +3,7 @@ import { Button, Form } from "antd"
 import { DateField, UploadButton, Visibility } from "../../../../../shared"
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 
-function SubmissionAgreementForm({ data, onChange, onSave }) {
+function SubmissionAgreementForm({ data, onChange, onSave, hasContract }) {
   const onDateChange = dateObject => {
     const newSignDate = getSelectValue(dateObject)
     onChange(newSignDate)
@@ -32,7 +32,7 @@ function SubmissionAgreementForm({ data, onChange, onSave }) {
       </Visibility>
       <Form.Item style={{marginBottom: "5px"}}>
         <UploadButton
-          disabled={!data?.signedContractAt}>
+          disabled={!hasContract}>
           Subir convenio firmado
         </UploadButton>
       </Form.Item>
