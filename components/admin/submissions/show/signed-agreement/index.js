@@ -1,5 +1,5 @@
 import { Section } from "../../../../shared"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
@@ -15,12 +15,20 @@ export function SignedAgreement() {
   } = useContext(AdminSubmissionContext)
 
   const [state, setState] = useState({
-    hasSignedContract: data?.Submission?.signedContractAt
+    hasSignedContract: undefined
   })
+
+  useEffect(() => {
+    setState({ hasSignedContract: data?.Submission?.signedContractAt })
+  }, [data])
 
   const onChange = newSignedContractAt => {
     updateSubmissionDetail({ signedContractAt: newSignedContractAt })
-    setState({ hasSignedContract: newSignedContractAt })
+  }
+
+  const handleSave = async () => {
+    await save()
+    setState({ hasSignedContract: true })
   }
 
   return (
@@ -31,7 +39,7 @@ export function SignedAgreement() {
         isLoading={loading}
         hasContract={state.hasSignedContract}
         onChange={onChange}
-        onSave={save} />
+        onSave={handleSave} />
     </Section>
   )
 }
