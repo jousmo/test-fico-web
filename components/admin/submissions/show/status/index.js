@@ -15,11 +15,7 @@ export function Status() {
   } = useContext(AdminSubmissionContext)
 
   const onChange = newDeadline => {
-    const newSubmission = {
-      ...data?.Submission,
-      deadline: newDeadline
-    }
-    updateSubmissionDetail(newSubmission)
+    updateSubmissionDetail({ deadline: newDeadline })
   }
 
   return (
