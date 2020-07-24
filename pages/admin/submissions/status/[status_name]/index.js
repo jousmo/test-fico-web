@@ -28,7 +28,7 @@ function SubmissionsByStatus({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getAll, {
     client: client,
-    variables: { status: status }
+    variables: { state: "SUBMISSION", status: status }
   })
 
   const save = useCallback(async (id, status) => {
