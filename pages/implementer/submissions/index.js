@@ -36,7 +36,7 @@ function ImplementerSubmissions({ client }) {
 
   const handleNewSubmission = async () => {
     const { data } = await createSubmission({
-      variables: { data: {} }
+      variables: { data: { state: "SUBMISSION", status: "CREATED" } }
     })
     const { createSubmission: { id } } = data || {}
     router.push(`/implementer/submissions/${id}/edit/general-information`)
