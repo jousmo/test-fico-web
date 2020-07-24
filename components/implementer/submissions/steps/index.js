@@ -11,6 +11,9 @@ export function Steps({current = 0}) {
   } = useContext(ImplementerSubmissionContext)
 
   const handleChange = c => {
+    if (!router?.query?.id){
+      return
+    }
     router.push(getRoute(router, c))
   }
 
