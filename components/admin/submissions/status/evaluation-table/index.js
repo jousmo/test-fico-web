@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { withForm } from "../../../../../helpers/withForm"
-import Link from "next/link"
 import { Divider, Typography, Row, Col } from "antd"
 import { EvaluationActionButtons } from "./action-buttons"
 
@@ -21,9 +20,7 @@ function EvaluationTable({ data }) {
       {state.submissions.map(({ id, name, technicalOpinion }) => (
         <>
           <Col span={20}>
-            <Link href={`/admin/submissions/${id}`}>
-              <a>{name}</a>
-            </Link>
+            <Typography.Text>{name}</Typography.Text>
             <br />
             <Typography.Text>{technicalOpinion}</Typography.Text>
           </Col>
