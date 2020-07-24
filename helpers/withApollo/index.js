@@ -5,7 +5,7 @@ import fetch from "node-fetch"
 import { setContext } from "apollo-link-context"
 
 const link = createHttpLink({
-  uri: "https://ficosec-centro-sur-server-danielcc.jaxitank.vercel.app/graphql",
+  uri: "https://ficosec-centro-sur-server.jaxitank.vercel.app",
   fetch: fetch
 })
 

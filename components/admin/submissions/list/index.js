@@ -16,7 +16,7 @@ export function SubmissionsListing() {
     <Section style={{padding: 0}}>
       <SearchField />
       <SubmissionsListingTable
-        data={data?.allSubmissions}
+        data={data?.submissions}
         error={error}
         isLoading={loading} />
     </Section>

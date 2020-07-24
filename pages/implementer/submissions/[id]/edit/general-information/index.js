@@ -7,9 +7,7 @@ import {
   Consultant
 } from "../../../../../../components/implementer/submissions/new/general-information"
 import {
-  editData as pageData
-} from "../../../../../../contexts/implementer/submissions/new"
-import {
+  editData as pageData,
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
@@ -30,9 +28,7 @@ import {
 function GeneralInformation({ client }) {
   const router = useRouter()
   const [state, setState] = useState({
-    generalInformation: {
-      consultant: {}
-    },
+    generalInformation: {},
     dirty: false
   })
 
@@ -63,7 +59,8 @@ function GeneralInformation({ client }) {
     isCall,
     loading,
     error,
-    data
+    data,
+    router
   }), [state, loading])
 
   return (

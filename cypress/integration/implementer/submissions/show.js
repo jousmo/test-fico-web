@@ -1,13 +1,14 @@
+/*
 describe("Implementer submission page", () => {
-  /*
+  /!*
   * Visits the page before each test
-  */
+  *!/
   beforeEach(() => {
     cy.log("Visiting http://localhost:3000/implementer/submissions/1")
     cy.visit("/implementer/submissions/1")
   })
 
-  /** Header section **/
+  /!** Header section **!/
   it("Should have user header", () => {
     cy.get(".ant-layout-header")
       .get(".ant-page-header-heading")
@@ -49,3 +50,4 @@ describe("Implementer submission page", () => {
       .should("have.length", 1)
   })
 })
+*/

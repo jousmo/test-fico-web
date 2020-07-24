@@ -15,7 +15,7 @@ export const setUpdateTechnicalSpecification = (technicalSpecification, state, s
 export const setSave = async (state, updateSubmission, id) => {
   try {
     const updatedSubmission = await updateSubmission({
-      variables: { ...state.technicalSpecification, id: id }
+      variables: { data: { ...state.technicalSpecification }, id: id }
     })
 
     /* TODO: Show feedback to the user */

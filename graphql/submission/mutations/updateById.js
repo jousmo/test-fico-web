@@ -2,69 +2,13 @@ import { gql } from "apollo-boost"
 
 export const updateById = gql`
   mutation UpdateSubmissionById(
-    $id: ID!,
-    $name: String,
-    $type: String,
-    $applyingCall: String,
-    $township: String,
-    $region: String,
-    $allies: [String],
-    $implementationPlace: String,
-    $responsible: String,
-    $startDate: String,
-    $endDate: String,
-    $strategicAxis: String,
-    $preventionLevel: [String],
-    $scope: [String],
-    $issueDescription: String,
-    $description: String,
-    $justification: String,
-    $developmentObjective: String,
-    $beneficiaries: JSON,
-    $generalObjective: String,
-    $specificObjectives: JSON,
-    $consultants: JSON,
-    $developmentObjectiveIndicators: JSON,
-    $generalObjectiveIndicators: JSON,
-    $concepts: JSON,
-    $status: String,
-    $statusChangedAt: String,
-    $deadline: String,
-    $signedContractAt: String,
-    $comments: JSON){
+    $data: CreateSubmissionInput!,
+    $id: ID!){
       updateSubmission(
         id: $id,
-        name: $name,
-        type: $type,
-        applyingCall: $applyingCall,
-        township: $township,
-        region: $region,
-        allies: $allies,
-        implementationPlace: $implementationPlace,
-        responsible: $responsible,
-        startDate: $startDate,
-        endDate: $endDate,
-        strategicAxis: $strategicAxis,
-        preventionLevel: $preventionLevel,
-        scope: $scope,
-        issueDescription: $issueDescription,
-        description: $description,
-        justification: $justification,
-        developmentObjective: $developmentObjective,
-        generalObjective: $generalObjective,
-        specificObjectives: $specificObjectives,
-        beneficiaries: $beneficiaries,
-        consultants: $consultants,
-        developmentObjectiveIndicators: $developmentObjectiveIndicators,
-        generalObjectiveIndicators: $generalObjectiveIndicators,
-        concepts: $concepts,
-        status: $status,
-        statusChangedAt: $statusChangedAt,
-        deadline: $deadline,
-        signedContractAt: $signedContractAt,
-        comments: $comments
+        data: $data
       ) {
         id
       }
-  }
+    }
 `

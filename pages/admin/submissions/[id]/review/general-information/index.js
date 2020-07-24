@@ -63,7 +63,8 @@ function GeneralInformation({ client }) {
     isCall,
     loading,
     error,
-    data
+    data,
+    router
   }), [state, loading])
 
   return (

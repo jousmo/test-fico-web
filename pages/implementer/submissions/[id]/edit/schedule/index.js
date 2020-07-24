@@ -1,19 +1,21 @@
-import { Layout } from "../../../../../components/implementer/submissions"
+import { Layout } from "../../../../../../components/implementer/submissions"
+import { useRouter } from "next/router"
 import {
   data as pageData,
   ImplementerSubmissionContext
-} from "../../../../../contexts/implementer/submissions/new"
-import { PageContext } from "../../../../../contexts/page"
-import { submission } from "../../../../../graphql/submission"
+} from "../../../../../../contexts/implementer/submissions/new"
+import { PageContext } from "../../../../../../contexts/page"
+import { submission } from "../../../../../../graphql/submission"
 import { useState, useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../helpers/withApollo"
+import { withApollo } from "../../../../../../helpers/withApollo"
 import {
   Heading,
   ActivitiesSchedule
-} from "../../../../../components/implementer/submissions/new/schedule"
+} from "../../../../../../components/implementer/submissions/new/schedule"
 
 function Schedule({ client }) {
+  const router = useRouter()
   const [state] = useState({
     schedule: {},
     dirty: false
@@ -21,13 +23,14 @@ function Schedule({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: "1" }
+    variables: { id: router.query.id }
   })
 
   const injectActions = useMemo(() => ({
     loading,
     error,
-    data
+    data,
+    router
   }), [state, loading])
 
   return (

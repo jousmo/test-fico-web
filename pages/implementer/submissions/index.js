@@ -1,4 +1,6 @@
+import { useRouter } from "next/router"
 import { Layout } from "../../../components/shared"
+import { Button } from "antd"
 import {
   SubmissionsListing
 } from "../../../components/implementer/submissions/list"
@@ -8,10 +10,11 @@ import {
 import { PageContext } from "../../../contexts/page"
 import { submission } from "../../../graphql/submission"
 import { useMemo, useState } from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../helpers/withApollo"
 
 function ImplementerSubmissions({ client }) {
+  const router = useRouter()
   const [ state ] = useState({
     submissionsList: {}
   })
@@ -27,15 +30,35 @@ function ImplementerSubmissions({ client }) {
     data
   }), [state, loading])
 
+  const [createSubmission] = useMutation(
+    submission.mutations.createNew, { client: client }
+  )
+
+  const handleNewSubmission = async () => {
+    const { data } = await createSubmission({
+      variables: { data: { state: "SUBMISSION", status: "CREATED" } }
+    })
+    const { createSubmission: { id } } = data || {}
+    router.push(`/implementer/submissions/${id}/edit/general-information`)
+  }
+
+  const newSubmissionButton = (
+    <Button onClick={handleNewSubmission} type="primary">
+      Nueva solicitud
+    </Button>
+  )
+
   return (
     <PageContext.Provider
       value={{
         type: "implementer",
         step: "submissions",
-        submenu: "submissions"
+        submenu: "submissions",
+        title: "Solicitudes",
+        actions: newSubmissionButton
       }}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
-        <Layout subheader={false}>
+        <Layout>
           <SubmissionsListing />
         </Layout>
       </ImplementerSubmissionContext.Provider>
