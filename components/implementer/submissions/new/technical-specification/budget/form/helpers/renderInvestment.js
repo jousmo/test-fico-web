@@ -3,8 +3,8 @@ import numeral from "numeral"
 
 export const renderInvestment = (type) => (text, record, index) => {
   const percentage = record.investmentDistribution
-    .find(i => i.name === type)?.percentage || 0
-  
+    ?.find(i => i.name === type)?.percentage || 0
+
   const total = Number(record.unitCost) * Number(record.totalUnits)
 
   const totalFormatted = numeral(total / 100 * percentage).format("$0,0.00")
