@@ -14,6 +14,7 @@ export function ActivityItem({data, onDelete, onEdit}) {
     meansOfVerification="N/A",
     place="N/A",
     months="N/A",
+    title="N/A",
     key
   } = data
 
@@ -33,7 +34,9 @@ export function ActivityItem({data, onDelete, onEdit}) {
 
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
-      <Typography.Title level={4}>{description}</Typography.Title>
+      <Typography.Title level={4}>{title}</Typography.Title>
+      <Typography.Text>{description}</Typography.Text>
+      <br />
       <Typography.Text type="secondary">
         {responsible}
       </Typography.Text>
