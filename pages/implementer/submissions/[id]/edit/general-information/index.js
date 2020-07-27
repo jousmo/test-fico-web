@@ -1,4 +1,7 @@
-import { Layout } from "../../../../../../components/implementer/submissions"
+import {
+  Layout,
+  SaveHeader
+} from "../../../../../../components/implementer/submissions"
 import { useRouter } from "next/router"
 import {
   ProjectDetails,
@@ -12,7 +15,7 @@ import {
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
-import { useState, useMemo, useCallback } from "react"
+import { useState, useMemo, useCallback, useEffect } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
 import {
@@ -27,10 +30,19 @@ import {
 
 function GeneralInformation({ client }) {
   const router = useRouter()
+  const submissionId = router.query.id
+
   const [state, setState] = useState({
     generalInformation: {},
-    dirty: false
+    dirty: false,
+    submissionId: undefined
   })
+
+  useEffect(() => {
+    setState(state => (
+      { ...state, submissionId }
+    ))
+  }, [submissionId])
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
@@ -46,7 +58,7 @@ function GeneralInformation({ client }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, router.query.id)
+    await setSave(state, updateSubmission, state.submissionId)
   }, [state])
 
   const isCall = useCallback(() => {
@@ -55,7 +67,6 @@ function GeneralInformation({ client }) {
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
-    save,
     isCall,
     loading,
     error,
@@ -70,6 +81,7 @@ function GeneralInformation({ client }) {
         submission={data?.Submission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
+            <SaveHeader save={save} />
             <ProjectDetails />
             <Consultant />
             <DevelopmentObjectives />

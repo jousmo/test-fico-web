@@ -1,18 +1,26 @@
 import { Button, Row, Col } from "antd"
-import { SaveOutlined } from "@ant-design/icons"
+import { useContext } from "react"
+import {
+  ImplementerSubmissionContext
+} from "../../../../contexts/implementer/submissions/new/context"
 
-export function PageActions({save}) {
+export function PageActions() {
+  const {
+    router
+  } = useContext(ImplementerSubmissionContext)
+
+  const handleClose = () => {
+    const { route } = router
+    let role = "admin"
+    if (route.includes("implementer")) {
+      role = "implementer"
+    }
+    router.push(`/${role}/submissions`)
+  }
+
   return (
     <Row justify="end" gutter={10}>
-      <Col><Button ghost>Cerrar</Button></Col>
-      <Col>
-        <Button
-          icon={<SaveOutlined />}
-          onClick={() => { save() }}
-          type="primary">
-          Guardar
-        </Button>
-      </Col>
+      <Col><Button ghost onClick={handleClose}>Cerrar</Button></Col>
     </Row>
   )
 }
