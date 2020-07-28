@@ -4,7 +4,7 @@ import { EditButton, DeleteButton } from "../../../shared"
 export function IndicatorItem({data, onDelete, onEdit}) {
   const {
     title="Indicador sin título",
-    narrativeSummary="N/A",
+    description="N/A",
     methodology="N/A",
     baseline="N/A",
     goal="N/A",
@@ -15,27 +15,29 @@ export function IndicatorItem({data, onDelete, onEdit}) {
 
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
-      <Typography.Title level={4}>{title}</Typography.Title>
+      <Typography.Title level={4}>
+        {title || "Indicador sin título"}
+      </Typography.Title>
       <Typography.Text type="secondary">
-        {narrativeSummary}
+        {description || "N/A"}
       </Typography.Text>
       <br />
       <Typography.Text strong>Metodología: </Typography.Text>
       <Typography.Text>
-        {methodology}
+        {methodology || "N/A"}
       </Typography.Text>
       <br />
       <Typography.Text strong>Línea base: </Typography.Text>
-      <Typography.Text>{baseline}</Typography.Text>
+      <Typography.Text>{baseline || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Meta: </Typography.Text>
-      <Typography.Text>{goal}</Typography.Text>
+      <Typography.Text>{goal || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Formula: </Typography.Text>
-      <Typography.Text>{formula}</Typography.Text>
+      <Typography.Text>{formula || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
-      <Typography.Text>{meansOfVerification}</Typography.Text>
+      <Typography.Text>{meansOfVerification || "N/A"}</Typography.Text>
       <DeleteButton
         onClick={onDelete}
         style={{marginLeft: "8px"}} />
