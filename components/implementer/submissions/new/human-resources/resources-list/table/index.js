@@ -20,7 +20,8 @@ function HumanResourcesTable({ data, onChange }) {
     {
       key: index,
       position: concept.name,
-      ...concept.humanResource}
+      ...concept.humanResource[0]
+    }
   ).filter(e => e !== false) || []
 
   const hasDuplicates = humanResources
@@ -30,7 +31,7 @@ function HumanResourcesTable({ data, onChange }) {
   const onConceptsChange = (newHumanResources) => {
     const newConcepts = [...concepts]
     newHumanResources?.forEach(humanResource => (
-      newConcepts[humanResource.key].humanResource = humanResource
+      newConcepts[humanResource.key].humanResource[0] = humanResource
     ))
 
     onChange && onChange(newConcepts)

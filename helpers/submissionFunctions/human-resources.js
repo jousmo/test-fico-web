@@ -15,7 +15,7 @@ export const setUpdateHumanResources = (humanResource, state, setState) => {
 export const setSave = async (state, updateSubmission, id) => {
   try {
     const humanResources = { ...state.humanResources }
-    humanResources.concepts?.forEach(concept => delete concept.humanResource.key)
+    humanResources.concepts?.forEach(concept => delete concept.humanResource[0].key)
     const updatedSubmission = await updateSubmission({
       variables: { data: { ...humanResources }, id: id }
     })
