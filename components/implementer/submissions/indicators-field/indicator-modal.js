@@ -92,18 +92,18 @@ export function IndicatorModal({
           </Col>
           <Col span={24}>
             <Form.Item
-              name="narrativeSummary"
+              name="description"
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
-                  name: "narrativeSummary",
+                  name: "description",
                   section: indicatorType,
                   index: commentIndex}}>
                   Descripción
                 </FieldLabel>
               }>
               <Input
-                id="narrativeSummary"
+                id="description"
                 type="text" />
             </Form.Item>
           </Col>
