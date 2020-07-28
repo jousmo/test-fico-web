@@ -19,7 +19,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
   let newComments = []
 
   switch (section){
-    case "submission": {
+    case "SUBMISSION": {
       newComments = deleteSubmissionComments(submission, comment)
       newSubmission = {
         ...submission,
@@ -28,7 +28,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       update({ comments: newComments })
       break
     }
-    case "consultant": {
+    case "CONSULTANT": {
       const consultants = deleteConsultantComments(submission, comment, index)
       newComments = consultants[index].comments
       newSubmission = {
@@ -38,7 +38,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       update({ consultants: consultants })
       break
     }
-    case "beneficiary": {
+    case "BENEFICIARY": {
       const beneficiaries =
         deleteBeneficiaryComments(submission, comment, index)
       newComments = beneficiaries[index].comments
@@ -49,7 +49,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       update({ beneficiaries: beneficiaries })
       break
     }
-    case "generalIndicator": {
+    case "GENERAL_INDICATOR": {
       const indicators = deleteGeneralIComments(submission, comment, index)
       newComments = indicators[index]?.comments
       newSubmission = {
@@ -59,7 +59,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       update({ generalObjectiveIndicators: indicators })
       break
     }
-    case "developmentIndicator": {
+    case "DEVELOPMENT_INDICATOR": {
       const indicators = deleteDevelopmentIComments(submission, comment, index)
       newComments = indicators[index]?.comments
       newSubmission = {
@@ -69,7 +69,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       update({ developmentObjectiveIndicators: indicators })
       break
     }
-    case "budget": {
+    case "BUDGET": {
       const concepts = deleteBudgetComments(submission, comment, index)
       newComments = concepts[index]?.comments
       newSubmission = {
@@ -79,7 +79,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       update({ concepts: concepts })
       break
     }
-    case "humanResource": {
+    case "HUMAN_RESOURCE": {
       const concepts = deleteHRComments(submission, comment, index)
       newComments = concepts[index]?.humanResource?.comments
       newSubmission = {
@@ -89,7 +89,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       update({ concepts: concepts })
       break
     }
-    case "specificObjective": {
+    case "SPECIFIC_OBJECTIVE": {
       const objectives = deleteSpecificOComments(submission, comment, index)
       newComments = objectives[index]?.comments
       newSubmission = {
@@ -99,7 +99,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       update({ specificObjectives: objectives })
       break
     }
-    case "specificIndicator": {
+    case "SPECIFIC_INDICATOR": {
       const objectives = deleteSpecificIComments(submission, comment, index)
       newComments = objectives.newComments
       if (objectives === false) {
@@ -114,7 +114,7 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       update({ specificObjectives: objectives.objectives })
       break
     }
-    case "specificActivity": {
+    case "SPECIFIC_ACTIVITY": {
       const objectives = deleteSpecificAComments(submission, comment, index)
       newComments = objectives?.newComments
       if (objectives === false) {
