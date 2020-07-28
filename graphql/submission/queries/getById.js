@@ -40,12 +40,6 @@ export const getById = gql`
           endDate
           measurementPeriodicity
           products
-          generalObjectiveSubmission {
-            id
-          }
-          developmentObjectiveSubmission {
-            id
-          }
         }
         activities {
           title
@@ -91,9 +85,33 @@ export const getById = gql`
       }
       developmentObjectiveIndicators {
         id
+        type
+        title
+        description
+        methodology
+        formula
+        meansOfVerification
+        baseline
+        goal
+        startDate
+        endDate
+        measurementPeriodicity
+        products
       }
       generalObjectiveIndicators {
         id
+        type
+        title
+        description
+        methodology
+        formula
+        meansOfVerification
+        baseline
+        goal
+        startDate
+        endDate
+        measurementPeriodicity
+        products
       }
       concepts {
         name
