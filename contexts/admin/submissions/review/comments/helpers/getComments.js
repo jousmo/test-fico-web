@@ -1,32 +1,32 @@
 export const getCommentsHelper = (index, name, section, submission) => {
   let comments = []
   switch (section){
-    case "submission":
+    case "SUBMISSION":
       comments = submission?.comments
       break
-    case "consultant":
+    case "CONSULTANT":
       comments = submission?.consultants[index]?.comments
       break
-    case "beneficiary":
+    case "BENEFICIARY":
       comments = submission?.beneficiaries[index]?.comments
       break
-    case "generalIndicator":
+    case "GENERAL_INDICATOR":
       comments = submission?.generalObjectiveIndicators[index]?.comments
       break
-    case "developmentIndicator":
+    case "DEVELOPMENT_INDICATOR":
       comments =
         submission?.developmentObjectiveIndicators[index]?.comments
       break
-    case "budget":
+    case "BUDGET":
       comments = submission?.concepts[index]?.comments
       break
-    case "humanResource":
+    case "HUMAN_RESOURCE":
       comments = submission?.concepts[index]?.humanResource?.comments
       break
-    case "specificObjective":
+    case "SPECIFIC_OBJECTIVE":
       comments = submission?.specificObjectives[index]?.comments
       break
-    case "specificIndicator":
+    case "SPECIFIC_INDICATOR":
       let indices = index.split("-")
       if (indices[1] === `undefined`){
         break
@@ -34,14 +34,15 @@ export const getCommentsHelper = (index, name, section, submission) => {
       comments =
         submission?.specificObjectives[indices[0]]?.indicators[indices[1]]?.comments
       break
-    case "specificActivity":
-      indices = index.split("-")
+    case "SPECIFIC_ACTIVITY": {
+      let indices = index.split("-")
       if (indices[1] === `undefined`){
         break
       }
       comments =
         submission?.specificObjectives[indices[0]]?.activities[indices[1]]?.comments
       break
+    }
   }
   return comments?.filter(comment => (
     comment.fieldName === name
