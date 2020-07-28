@@ -35,7 +35,6 @@ export function IndicatorModal({
 
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
-        edit.inputs = null
         edit.products = null
         values = merge(edit, values)
       }
