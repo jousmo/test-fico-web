@@ -14,5 +14,5 @@ export const handleReject = (id, save, onChange) => {
 }
 
 export const handleView = (id, router) => {
-  router.push(`/admin/submissions/${id}/review/general-information`)
+  router.push(`/admin/submissions/${id}`)
 }
