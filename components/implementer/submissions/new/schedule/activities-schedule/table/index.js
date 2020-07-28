@@ -31,7 +31,7 @@ function ActivitiesTable({ data }) {
     }
 
     const ranges = []
-    activity.months.forEach((range, i) => {
+    activity.months?.forEach((range, i) => {
       ranges[i] = moment.range(range.months[0], range.months[1])
     })
 
