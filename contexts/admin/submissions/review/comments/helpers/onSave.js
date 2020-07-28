@@ -24,7 +24,7 @@ export const onSaveHelper = (
   let newSubmission = {}
 
   switch (section){
-    case "submission": {
+    case "SUBMISSION": {
       const newComments = addSubmissionComment(submission, comment)
       newSubmission = {
         ...submission,
@@ -33,7 +33,7 @@ export const onSaveHelper = (
       update({ comments: newComments })
       break
     }
-    case "consultant": {
+    case "CONSULTANT": {
       const consultants = addConsultantComment(submission, comment, index)
       newSubmission = {
         ...submission,
@@ -42,7 +42,7 @@ export const onSaveHelper = (
       update({ consultants: consultants })
       break
     }
-    case "beneficiary": {
+    case "BENEFICIARY": {
       const beneficiaries = addBeneficiaryComment(submission, comment, index)
       newSubmission = {
         ...submission,
@@ -51,7 +51,7 @@ export const onSaveHelper = (
       update({ beneficiaries: beneficiaries })
       break
     }
-    case "generalIndicator": {
+    case "GENERAL_INDICATOR": {
       const indicators = addGeneralIComment(submission, comment, index)
       newSubmission = {
         ...submission,
@@ -60,7 +60,7 @@ export const onSaveHelper = (
       update({ generalObjectiveIndicators: indicators })
       break
     }
-    case "developmentIndicator": {
+    case "DEVELOPMENT_INDICATOR": {
       const indicators = addDevelopmentIComment(submission, comment, index)
       newSubmission = {
         ...submission,
@@ -69,7 +69,7 @@ export const onSaveHelper = (
       update({ developmentObjectiveIndicators: indicators })
       break
     }
-    case "budget": {
+    case "BUDGET": {
       const concepts = addBudgetComment(submission, comment, index)
       newSubmission = {
         ...submission,
@@ -78,7 +78,7 @@ export const onSaveHelper = (
       update({ concepts: concepts })
       break
     }
-    case "humanResource": {
+    case "HUMAN_RESOURCES": {
       const concepts = addHRComment(submission, comment, index)
       newSubmission = {
         ...submission,
@@ -87,7 +87,7 @@ export const onSaveHelper = (
       update({ concepts: concepts })
       break
     }
-    case "specificObjective": {
+    case "SPECIFIC_OBJECTIVE": {
       const objectives = addSpecificOComment(submission, comment, index)
       newSubmission = {
         ...submission,
@@ -96,7 +96,7 @@ export const onSaveHelper = (
       update({ specificObjectives: objectives })
       break
     }
-    case "specificIndicator": {
+    case "SPECIFIC_INDICATOR": {
       const objectives = addSpecificIComment(submission, comment, index)
       if (objectives === false) {
         newSubmission = { ...submission }
@@ -110,7 +110,7 @@ export const onSaveHelper = (
       update({ specificObjectives: objectives })
       break
     }
-    case "specificActivity": {
+    case "SPECIFIC_ACTIVITY": {
       const objectives = addSpecificAComment(submission, comment, index)
       if (objectives === false) {
         newSubmission = { ...submission }
