@@ -29,6 +29,7 @@ export function BeneficiaryModal({edit, onCancel, onSave, ...props}) {
         edit.age = null
         values = merge(edit, values)
       }
+      values.number = Number(values.number)
 
       onSave(values)
       form.resetFields()
