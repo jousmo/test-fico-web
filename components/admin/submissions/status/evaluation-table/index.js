@@ -20,7 +20,7 @@ function EvaluationTable({ data }) {
       {state.submissions.map(({ id, name, technicalOpinion }) => (
         <>
           <Col span={20}>
-            <Typography.Text>{name}</Typography.Text>
+            <Typography.Text strong>{name}</Typography.Text>
             <br />
             <Typography.Text>{technicalOpinion}</Typography.Text>
           </Col>
