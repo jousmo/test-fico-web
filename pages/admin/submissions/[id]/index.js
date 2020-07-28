@@ -1,4 +1,5 @@
 import { Layout } from "../../../../components/shared"
+import { success, warning } from "../../../../helpers"
 import { useRouter } from "next/router"
 import {
   AgreementDocuments,
@@ -47,14 +48,14 @@ function Submission({ client }) {
 
   const save = useCallback(async () => {
     try {
-      const updatedSubmission = await updateSubmission({
-        variables: { ...state.submissionDetail, id: router.query.id }
+      await updateSubmission({
+        variables: { data: { ...state.submissionDetail }, id: router.query.id }
       })
-
-      /* TODO: Show feedback to the user */
+      success()
     }
     catch(e) {
       console.error(e)
+      warning()
     }
   })
 
