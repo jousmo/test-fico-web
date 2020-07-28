@@ -34,27 +34,29 @@ export function ActivityItem({data, onDelete, onEdit}) {
 
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
-      <Typography.Title level={4}>{title}</Typography.Title>
-      <Typography.Text>{description}</Typography.Text>
+      <Typography.Title level={4}>
+        {title || "Actividad sin titulo"}
+      </Typography.Title>
+      <Typography.Text>{description || "N/A"}</Typography.Text>
       <br />
       <Typography.Text type="secondary">
-        {responsible}
+        {responsible || "N/A"}
       </Typography.Text>
       <br />
       <Typography.Text strong>Línea base: </Typography.Text>
-      <Typography.Text>{baseline}</Typography.Text>
+      <Typography.Text>{baseline || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Meta: </Typography.Text>
-      <Typography.Text>{goal}</Typography.Text>
+      <Typography.Text>{goal || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
-      <Typography.Text>{meansOfVerification}</Typography.Text>
+      <Typography.Text>{meansOfVerification || "N/A"}</Typography.Text>
       <br />
       <Typography.Text strong>Lugar de intervención: </Typography.Text>
-      <Typography.Text>{place}</Typography.Text>
+      <Typography.Text>{place || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Mes de implementación: </Typography.Text>
-      <Typography.Text>{formattedMonths}</Typography.Text>
+      <Typography.Text>{formattedMonths || "N/A"}</Typography.Text>
       <DeleteButton
         onClick={onDelete}
         style={{marginLeft: "8px"}} />
