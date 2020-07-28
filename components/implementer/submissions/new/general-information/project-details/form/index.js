@@ -132,7 +132,7 @@ function ProjectDetailsForm({
             <SelectField
               id="allies"
               name="allies"
-              defaultValue={data?.Submission?.allies}
+              defaultValue={data?.Submission?.allies || []}
               maxTagCount={2}
               mode="tags"
               onChange={onAddAlly} />
@@ -233,7 +233,7 @@ function ProjectDetailsForm({
               name="preventionLevel"
               onChange={onChange}
               mode="tags"
-              defaultValue={data?.Submission?.preventionLevel}
+              defaultValue={data?.Submission?.preventionLevel || []}
               options={implementer.submission.preventionLevelTypes} />
           </Form.Item>
         </Col>
@@ -249,7 +249,7 @@ function ProjectDetailsForm({
               name="scope"
               mode="tags"
               onChange={onChange}
-              defaultValue={data?.Submission?.scope}
+              defaultValue={data?.Submission?.scope || []}
               options={implementer.submission.scopeTypes} />
           </Form.Item>
         </Col>
