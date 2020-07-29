@@ -64,7 +64,7 @@ function HumanResourcesTable({ data, onChange }) {
                           index={item.key}
                           name={item.name}
                           small
-                          section="humanResource" />
+                          section="HUMAN_RESOURCE" />
                       </Col>
                       <Col flex="30px">
                         <span key={`userIcon-${index}`}>
