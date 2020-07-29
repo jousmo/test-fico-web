@@ -1,8 +1,11 @@
 import { Layout } from "../../../../../components/shared"
 import { useRouter } from "next/router"
 import {
-  ListByStatus
+  ListByStatus,
 } from "../../../../../components/admin/submissions/status"
+import {
+  ApproveByStatus
+} from "../../../../../components/admin/submissions/status/approve-by-status"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
@@ -53,6 +56,11 @@ function SubmissionsByStatus({ client }) {
   const pageTitle = selectOptions
     .getReadableValue(selectOptions.shared.submissionStatusOptions, status)
 
+  let list = <ListByStatus />
+  if (status === "ON_COUNCIL" || status === "ON_COMMITTEE"){
+    list = <ApproveByStatus />
+  }
+
   return (
     <AdminSubmissionContext.Provider value={injectActions}>
       <PageContext.Provider
@@ -63,7 +71,7 @@ function SubmissionsByStatus({ client }) {
           type: "submissions"
         }}>
         <Layout>
-          <ListByStatus status={status} />
+          {list}
         </Layout>
       </PageContext.Provider>
     </AdminSubmissionContext.Provider>
