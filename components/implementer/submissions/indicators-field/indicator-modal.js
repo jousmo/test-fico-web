@@ -53,7 +53,7 @@ export function IndicatorModal({
   }
 
   let commentIndex
-  if (indicatorType === "specificIndicator"){
+  if (indicatorType === "SPECIFIC_INDICATOR"){
     commentIndex = `${objectiveIndex}-${edit?.index}`
   } else {
     commentIndex = edit?.index
