@@ -16,7 +16,7 @@ export function ApproveByStatus() {
     <Section>
       <SearchField />
       <EvaluationTable
-        data={data?.submissions}
+        data={data?.Submissions}
         error={error}
         isLoading={loading} />
     </Section>
