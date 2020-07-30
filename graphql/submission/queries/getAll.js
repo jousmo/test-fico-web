@@ -5,7 +5,7 @@ export const getAll = gql`
     $state: String,
     $status: String
   ) {
-    submissions(
+    Submissions(
       state: $state,
       status: $status
     ) {

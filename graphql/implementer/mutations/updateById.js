@@ -23,7 +23,7 @@ export const updateById = gql`
     $incomesAndExpenses: String,
     $councilMembers: JSON,
     $projects: JSON){
-      updateImplementer(
+      UpdateImplementer(
         id: $id,
         type: $type,
         name: $name,
