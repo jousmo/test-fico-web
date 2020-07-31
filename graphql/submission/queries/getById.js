@@ -144,6 +144,7 @@ export const getById = gql`
       deadline
       signedContractAt
       agreementNumber
+      technicalOpinion
       comments {
         fieldName
         revision

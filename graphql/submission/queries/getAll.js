@@ -132,6 +132,7 @@ export const getAll = gql`
       deadline
       signedContractAt
       agreementNumber
+      technicalOpinion
     }
   }
 `
