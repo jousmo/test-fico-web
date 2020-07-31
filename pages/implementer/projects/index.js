@@ -29,7 +29,7 @@ function ProjectsList({ client }) {
 
   return (
     <PageContext.Provider
-      value={{ type: "submissions", step: "active", submenu: "projects" }}>
+      value={{ type: "implementer", step: "active", submenu: "projects" }}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout subheader={false}>
           <ProjectListing />

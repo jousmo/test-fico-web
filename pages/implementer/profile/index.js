@@ -12,16 +12,20 @@ import {
   ImplementerProfileContext
 } from "../../../contexts/implementer/profile"
 import { useState, useCallback, useMemo } from "react"
-import { withApollo, client } from "../../../helpers/withApollo"
+import { withApollo } from "../../../helpers/withApollo"
 import { implementer } from "../../../graphql"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 
-function Profile({client}) {
+function Profile({ client }) {
   const [state, setState] = useState({ generalInformation: {} })
-  const [updateProfile] = useMutation(implementer.mutations.updateById, { client: client })
+  const [updateProfile] = useMutation(implementer.mutations.updateById, {
+    client: client
+  })
+
+  /* TODO: Update to use implementer id from application session */
   const { loading, error, data } = useQuery(implementer.queries.getById, {
     client: client,
-    variables: { id: "1" }
+    variables: { id: "f3f13a59-337e-4989-b010-d7713a53c3c2" }
   })
 
   const updateGeneralInformation = useCallback(generalInformation => {
@@ -33,7 +37,10 @@ function Profile({client}) {
   const save = useCallback(async () => {
     try {
       const updatedProfile = await updateProfile({
-        variables: { ...state.generalInformation, id: "1" }
+        variables: {
+          data: {...state.generalInformation},
+          id: "f3f13a59-337e-4989-b010-d7713a53c3c2"
+        }
       })
 
       /* TODO: Show feedback to the user */

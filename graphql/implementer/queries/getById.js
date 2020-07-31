@@ -22,8 +22,11 @@ export const getById = gql`
       previousSupports
       alliances
       incomesAndExpenses
-      councilMembers
-      projects
+      councilMembers {
+        name
+        charge
+        remuneration
+      }
     }
   }
 `

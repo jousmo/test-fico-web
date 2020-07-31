@@ -12,7 +12,9 @@ function ListByStatusTable({ data }) {
       <Table.Column
         dataIndex="name"
         render={(text, record) =>
-          <Link href={`/admin/submissions/${record.id}`}><a>{text}</a></Link>
+          <Link href={`/implementer/submissions/${record.id}`}>
+            <a>{text}</a>
+          </Link>
         }
         title="Solicitud" />
     </Table>

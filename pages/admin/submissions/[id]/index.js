@@ -17,6 +17,7 @@ import { submission } from "../../../../graphql/submission"
 import { useCallback, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers/withApollo"
+import { PageContext } from "../../../../contexts/page"
 
 function Submission({ client }) {
   const router = useRouter()
@@ -68,16 +69,22 @@ function Submission({ client }) {
   }), [state, loading])
 
   return (
-    <AdminSubmissionContext.Provider value={injectActions}>
-      <Layout subheader={<SubmissionSummary />}>
-        <GeneralInformation />
-        <Beneficiaries />
-        <Status />
-        <AgreementDocuments />
-        <Attachments />
-        <SignedAgreement />
-      </Layout>
-    </AdminSubmissionContext.Provider>
+    <PageContext.Provider
+      value={{
+        type: "admin",
+        submenu: "submissions"
+      }}>
+      <AdminSubmissionContext.Provider value={injectActions}>
+        <Layout subheader={<SubmissionSummary />}>
+          <GeneralInformation />
+          <Beneficiaries />
+          <Status />
+          <AgreementDocuments />
+          <Attachments />
+          <SignedAgreement />
+        </Layout>
+      </AdminSubmissionContext.Provider>
+    </PageContext.Provider>
   )
 }
 
