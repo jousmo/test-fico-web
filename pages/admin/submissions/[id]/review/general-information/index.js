@@ -35,9 +35,7 @@ function GeneralInformation({ client }) {
   const submissionId = router.query.id
 
   const [state, setState] = useState({
-    generalInformation: {
-      consultant: {}
-    },
+    generalInformation: {},
     dirty: false,
     submissionId: undefined
   })

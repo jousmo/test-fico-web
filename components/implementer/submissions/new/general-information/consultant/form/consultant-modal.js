@@ -112,7 +112,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                 <FieldLabel comentable={{
                   index: edit?.index,
                   name: "commercialName",
-                  section: "consultant"}}>
+                  section: "CONSULTANT"}}>
                   Nombre comercial
                 </FieldLabel>
               }>
@@ -130,7 +130,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                 <FieldLabel comentable={{
                   index: edit?.index,
                   name: "commercialAddress",
-                  section: "consultant"}}>
+                  section: "CONSULTANT"}}>
                   Dirección comercial
                 </FieldLabel>
               }>
@@ -148,7 +148,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                 <FieldLabel comentable={{
                   index: edit?.index,
                   name: "contactName",
-                  section: "consultant"}}>
+                  section: "CONSULTANT"}}>
                   Contacto responsable
                 </FieldLabel>
               }>
@@ -166,7 +166,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                 <FieldLabel comentable={{
                   index: edit?.index,
                   name: "phone",
-                  section: "consultant"}}>
+                  section: "CONSULTANT"}}>
                   Número de teléfono
                 </FieldLabel>
               }>
@@ -184,7 +184,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                 <FieldLabel comentable={{
                   index: edit?.index,
                   name: "rfc",
-                  section: "consultant"}}>
+                  section: "CONSULTANT"}}>
                   RFC
                 </FieldLabel>
               }>
@@ -202,7 +202,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                 <FieldLabel comentable={{
                   index: edit?.index,
                   name: "fiscalAddress",
-                  section: "consultant"}}>
+                  section: "CONSULTANT"}}>
                   Dirección fiscal
                 </FieldLabel>
               }>

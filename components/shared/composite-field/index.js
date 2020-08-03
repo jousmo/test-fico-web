@@ -47,18 +47,14 @@ export function CompositeField({
       return false
     }
 
-    if(count >= maxItems) {
-      return true
-    }
-
-    return false
+    return count >= maxItems;
   }
-  
+
   const addNew = value => {
     const newItems = [...state.items, value]
-    
+
     setState({ items: newItems, maxReached: isMaxReached(newItems.length) })
-    onChange && onChange(newItems)
+    handleChange(newItems)
   }
 
   const updateItem = index => {
@@ -69,7 +65,7 @@ export function CompositeField({
       newItems[index][name] = value
 
       setState({ ...state, items: newItems })
-      onChange && onChange(newItems)
+      handleChange(newItems)
     }
   }
 
@@ -77,15 +73,20 @@ export function CompositeField({
     const newItems = Array.from(state.items)
     newItems[index] = data
     setState({ ...state, items: newItems })
-    onChange && onChange(newItems)
+    handleChange(newItems)
   }
 
   const removeItem = index => {
     return event => {
       const newItems = Array.from(state.items).filter((it, i) => i !== index)
       setState({ items: newItems, maxReached: isMaxReached(newItems.length) })
-      onChange && onChange(newItems)
+      handleChange(newItems)
     }
+  }
+
+  const handleChange = items => {
+    const newItems = items.map(({uuid, ...item}) => item)
+    onChange && onChange(newItems)
   }
 
   return (
@@ -99,7 +100,7 @@ export function CompositeField({
           replaceItemAtIndex
         })
       }
-      { !isAddDisabled ? 
+      { !isAddDisabled ?
         <Button
           type="dashed"
           icon={<PlusOutlined />}

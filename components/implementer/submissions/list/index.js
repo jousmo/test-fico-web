@@ -8,6 +8,7 @@ import SubmissionsListingTable from "./table"
 export function SubmissionsListing() {
   const {
     loading,
+    router,
     error,
     data
   } = useContext(ImplementerSubmissionContext)
@@ -16,8 +17,9 @@ export function SubmissionsListing() {
     <Section style={{padding: 0}}>
       <SearchField />
       <SubmissionsListingTable
-        data={data?.submissions}
+        data={data?.Submissions}
         error={error}
+        router={router}
         isLoading={loading} />
     </Section>
   )

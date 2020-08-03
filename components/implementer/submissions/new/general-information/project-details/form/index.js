@@ -34,7 +34,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "type",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Tipo de solicitud
               </FieldLabel>
             }>
@@ -52,7 +52,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "applyingCall",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Convocatoria a la que aplica
               </FieldLabel>
             }>
@@ -71,7 +71,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "name",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Nombre del proyecto
               </FieldLabel>
             }>
@@ -89,7 +89,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "township",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Municipio
               </FieldLabel>
             }>
@@ -106,7 +106,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "region",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Región
               </FieldLabel>
             }>
@@ -125,14 +125,14 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "allies",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Aliados del proyecto
               </FieldLabel>
             }>
             <SelectField
               id="allies"
               name="allies"
-              defaultValue={data?.Submission?.allies}
+              defaultValue={data?.Submission?.allies || []}
               maxTagCount={2}
               mode="tags"
               onChange={onAddAlly} />
@@ -168,7 +168,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "startDate",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Fecha de inicio
               </FieldLabel>
             }>
@@ -186,7 +186,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "endDate",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Fecha de conclusión
               </FieldLabel>
             }>
@@ -204,7 +204,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "strategicAxis",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Eje estratégico
               </FieldLabel>
             }>
@@ -224,7 +224,7 @@ function ProjectDetailsForm({
                 helpText={<PreventionLevelsText />}
                 comentable={{
                   name: "preventionLevel",
-                  section: "submission"}}>
+                  section: "SUBMISSION"}}>
                 Nivel de prevención
               </FieldLabel>
             }>
@@ -233,7 +233,7 @@ function ProjectDetailsForm({
               name="preventionLevel"
               onChange={onChange}
               mode="tags"
-              defaultValue={data?.Submission?.preventionLevel}
+              defaultValue={data?.Submission?.preventionLevel || []}
               options={implementer.submission.preventionLevelTypes} />
           </Form.Item>
         </Col>
@@ -249,7 +249,7 @@ function ProjectDetailsForm({
               name="scope"
               mode="tags"
               onChange={onChange}
-              defaultValue={data?.Submission?.scope}
+              defaultValue={data?.Submission?.scope || []}
               options={implementer.submission.scopeTypes} />
           </Form.Item>
         </Col>
@@ -259,7 +259,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "issueDescription",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Problemática a tratar
               </FieldLabel>
             }>
@@ -277,7 +277,7 @@ function ProjectDetailsForm({
             label={
               <FieldLabel comentable={{
                 name: "description",
-                section: "submission"}}>
+                section: "SUBMISSION"}}>
                 Descripción del proyecto
               </FieldLabel>
             }>

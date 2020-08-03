@@ -35,7 +35,6 @@ export function IndicatorModal({
 
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
-        edit.inputs = null
         edit.products = null
         values = merge(edit, values)
       }
@@ -54,7 +53,7 @@ export function IndicatorModal({
   }
 
   let commentIndex
-  if (indicatorType === "specificIndicator"){
+  if (indicatorType === "SPECIFIC_INDICATOR"){
     commentIndex = `${objectiveIndex}-${edit?.index}`
   } else {
     commentIndex = edit?.index
@@ -93,18 +92,18 @@ export function IndicatorModal({
           </Col>
           <Col span={24}>
             <Form.Item
-              name="narrativeSummary"
+              name="description"
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
-                  name: "narrativeSummary",
+                  name: "description",
                   section: indicatorType,
                   index: commentIndex}}>
                   Descripción
                 </FieldLabel>
               }>
               <Input
-                id="narrativeSummary"
+                id="description"
                 type="text" />
             </Form.Item>
           </Col>

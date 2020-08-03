@@ -29,7 +29,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
                 helpText={<DevelopmentObjectiveText />}
                 comentable={{
                   name: "developmentObjective",
-                  section: "submission"
+                  section: "SUBMISSION"
                 }}>
                 Objetivo de desarrollo
               </FieldLabel>
@@ -50,7 +50,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
                 helpText={<GeneralObjectiveText />}
                 comentable={{
                   name: "generalObjective",
-                  section: "submission"
+                  section: "SUBMISSION"
                 }}>
                 Objetivo general
               </FieldLabel>

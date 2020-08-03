@@ -12,7 +12,7 @@ import {
 import { getTotalApproved } from "../../../../admin/projects/list/table/helpers"
 import { Tooltip } from "../../../../shared/"
 
-function SubmissionsListingTable({ data }) {
+function SubmissionsListingTable({ data, router }) {
   const { submissionStatusOptions } = shared
   const {
     submission: {
@@ -33,10 +33,19 @@ function SubmissionsListingTable({ data }) {
     {text: option.label, value: option.value}
   ))
 
+  const handleClick = record => {
+    return {
+      onClick: () => {
+        router.push(`/implementer/submissions/${record.id}`)
+      }
+    }
+  }
+
   return (
     <Table
       dataSource={data}
       rowKey={(row, index) => index}
+      onRow={record => handleClick(record)}
       size="small">
       <Table.Column
         width={1}

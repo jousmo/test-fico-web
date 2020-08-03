@@ -11,6 +11,7 @@ import { submission } from "../../../../graphql/submission"
 import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers/withApollo"
+import { PageContext } from "../../../../contexts/page"
 
 function Submission({ client }) {
   const router = useRouter()
@@ -24,16 +25,20 @@ function Submission({ client }) {
 
   const injectActions = useMemo(() => ({
     loading,
+    router,
     error,
     data
   }), [state, loading])
 
   return (
-    <ImplementerSubmissionContext.Provider value={injectActions}>
-      <Layout subheader={<SubmissionSummary />}>
-        <AgreementDocuments />
-      </Layout>
-    </ImplementerSubmissionContext.Provider>
+    <PageContext.Provider
+      value={{ type: "implementer", submenu: "submissions" }}>
+      <ImplementerSubmissionContext.Provider value={injectActions}>
+        <Layout subheader={<SubmissionSummary />}>
+          <AgreementDocuments />
+        </Layout>
+      </ImplementerSubmissionContext.Provider>
+    </PageContext.Provider>
   )
 }
 

@@ -57,7 +57,7 @@ export default function SpecificObjectiveForm({
               <CommentButton
                 name={`specificObjective_${index}`}
                 index={index}
-                section="specificObjective" />
+                section="SPECIFIC_OBJECTIVE" />
             </>
           }
           key={uuid()}>
@@ -70,13 +70,13 @@ export default function SpecificObjectiveForm({
             <Form.Item label="Indicadores">
               <IndicatorsField
                 onChange={onSpecificObjectiveItemsChange(index, "indicators")}
-                indicatorType="specificIndicator"
+                indicatorType="SPECIFIC_INDICATOR"
                 objectiveIndex={index}
                 defaultValue={objective.indicators} />
             </Form.Item>
             <Form.Item label="Actividades">
               <ActivitiesField
-                activityType="specificActivity"
+                activityType="SPECIFIC_ACTIVITY"
                 objectiveIndex={index}
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}
                 defaultValue={objective.activities} />

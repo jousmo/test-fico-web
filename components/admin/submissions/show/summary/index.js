@@ -63,7 +63,7 @@ export function SubmissionSummary() {
 
   const goToSubmission = (
     <Descriptions.Item>
-      <Link href={`/admin/submissions/${data?.Submission.id}/`}>
+      <Link href={`/admin/submissions/${data?.Submission.id}/review/general-information`}>
         <a><EyeOutlined /> Ver la solicitud</a>
       </Link>
     </Descriptions.Item>

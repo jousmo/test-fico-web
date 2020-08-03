@@ -63,7 +63,7 @@ function BudgetForm({data, onChange}) {
                     <CommentButton
                       index={index}
                       name={`concept_${index}`}
-                      section="budget"
+                      section="BUDGET"
                       small />
                   )
                   }/>

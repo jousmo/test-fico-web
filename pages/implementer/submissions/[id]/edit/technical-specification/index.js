@@ -70,8 +70,8 @@ function TechnicalSpecification({ client }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 1 })}>
       <CommentsProvider
-        submission={data?.Submission}
-        update={updateTechnicalSpecification}>
+        readOnly
+        submission={data?.Submission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <SaveHeader save={save} />

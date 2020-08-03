@@ -2,10 +2,10 @@ import { gql } from "apollo-boost"
 
 export const getAll = gql`
   query getSubmissions(
-    $state: String,
+    $state: String!,
     $status: String
   ) {
-    submissions(
+    Submissions(
       state: $state,
       status: $status
     ) {
@@ -132,6 +132,7 @@ export const getAll = gql`
       deadline
       signedContractAt
       agreementNumber
+      technicalOpinion
     }
   }
 `

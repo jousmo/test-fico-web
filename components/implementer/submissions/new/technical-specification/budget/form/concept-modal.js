@@ -60,6 +60,8 @@ export function ConceptModal({
         values.index = edit.index
         values = merge(edit, values)
       }
+      values.unitCost = Number(values.unitCost)
+      values.totalUnits = Number(values.totalUnits)
 
       onSave(values)
     }

@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash"
 
 export const setUpdateTechnicalSpecification = (technicalSpecification, state, setState) => {
   const newTechnicalSpecification = {
@@ -14,8 +15,20 @@ export const setUpdateTechnicalSpecification = (technicalSpecification, state, s
 
 export const setSave = async (state, updateSubmission, id) => {
   try {
+    const data = cloneDeep(state.technicalSpecification)
+    data.specificObjectives = data.specificObjectives?.map(objective => {
+      objective.activities = objective.activities.map(({uuid, ...activity}) =>
+        activity
+      )
+
+      objective.indicators = objective.indicators.map(({uuid, ...indicator}) =>
+        indicator
+      )
+
+      return objective
+    })
     const updatedSubmission = await updateSubmission({
-      variables: { data: { ...state.technicalSpecification }, id: id }
+      variables: { data: data, id: id }
     })
 
     /* TODO: Show feedback to the user */

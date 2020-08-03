@@ -6,7 +6,7 @@ import {
   SelectField,
   UploadTooltip
 } from "../../../../../../shared"
-import { CommentButton } from "../../../../../../admin/submissions/review";
+import { CommentButton } from "../../../../../../admin/submissions/review"
 import {
   benefits,
   contractTypes
@@ -20,7 +20,8 @@ function HumanResourcesTable({ data, onChange }) {
     {
       key: index,
       position: concept.name,
-      ...concept.humanResource}
+      ...concept.humanResource[0]
+    }
   ).filter(e => e !== false) || []
 
   const hasDuplicates = humanResources
@@ -29,11 +30,22 @@ function HumanResourcesTable({ data, onChange }) {
 
   const onConceptsChange = (newHumanResources) => {
     const newConcepts = [...concepts]
-    newHumanResources?.forEach(humanResource => (
-      newConcepts[humanResource.key].humanResource = humanResource
-    ))
+    newHumanResources?.forEach(humanResource => {
+      newConcepts[humanResource.key].humanResource[0] = formatValues(humanResource)
+    })
 
     onChange && onChange(newConcepts)
+  }
+
+  const formatValues = (hr) => {
+    const humanResource = { ...hr }
+
+    humanResource.hours = Number(humanResource.hours)
+    humanResource.salary = Number(humanResource.salary)
+    humanResource.taxes = Number(humanResource.taxes)
+    humanResource.total = Number(humanResource.total)
+
+    return humanResource
   }
 
   return (
@@ -63,7 +75,7 @@ function HumanResourcesTable({ data, onChange }) {
                           index={item.key}
                           name={item.name}
                           small
-                          section="humanResource" />
+                          section="HUMAN_RESOURCE" />
                       </Col>
                       <Col flex="30px">
                         <span key={`userIcon-${index}`}>
@@ -96,36 +108,38 @@ function HumanResourcesTable({ data, onChange }) {
                       </Col>
                       <Col flex="150px">
                         <Input
-                          id="oversees"
-                          name="oversees"
+                          id="overseer"
+                          name="overseer"
                           onChange={updateItem(index)}
-                          defaultValue={item.oversees}
+                          defaultValue={item.overseer}
                           type="text" />
                       </Col>
                       <Col flex="80px">
                         <Input
                           id="hours"
                           name="hours"
+                          min={1}
                           onChange={updateItem(index)}
                           defaultValue={item.hours}
-                          type="text" />
+                          type="number" />
                       </Col>
                       <Col flex="150px">
                         <SelectField
-                          id="contract_type"
-                          name="contract_type"
+                          id="contractType"
+                          name="contractType"
                           options={contractTypes}
                           onChange={updateItem(index)}
-                          defaultValue={item.contract_type} />
+                          defaultValue={item.contractType} />
                       </Col>
                       <Col flex="150px">
                         <Input
                           addonBefore="$"
                           id="salary"
                           name="salary"
+                          min={0}
                           onChange={updateItem(index)}
                           defaultValue={item.salary}
-                          type="text" />
+                          type="number" />
                       </Col>
                       <Col flex="150px">
                         <SelectField
@@ -137,22 +151,26 @@ function HumanResourcesTable({ data, onChange }) {
                       </Col>
                       <Col flex="150px">
                         <Input
-                          addonBefore="$"
+                          addonBefore="%"
                           id="taxes"
-                          disabled={item.contract_type === "EMPLOYEE"}
+                          disabled={item.contractType === "EMPLOYEE"}
                           name="taxes"
                           onChange={updateItem(index)}
                           defaultValue={item.taxes}
-                          type="text" />
+                          type="number" />
                       </Col>
                       <Col flex="150px">
                         <Input
                           addonBefore="$"
                           id="total"
                           name="total"
+                          disabled
                           onChange={updateItem(index)}
                           defaultValue={item.total}
-                          type="text" />
+                          value={
+                            Number(item.salary) + ((Number(item.taxes) * Number(item.salary)) / 100)
+                          }
+                          type="number" />
                       </Col>
                       <Col flex="80px">
                         <UploadTooltip

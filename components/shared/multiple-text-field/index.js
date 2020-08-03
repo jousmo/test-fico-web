@@ -22,12 +22,12 @@ export function MultipleTextField({
     <CompositeField
       onChange={onCompositeFieldChange}
       addLabel={addLabel}
-      defaultValue={defaultValue.map(transformDefaultValue).map(itemGenUuid)}
-      value={value.map(transformDefaultValue).map(itemGenUuid)}
+      defaultValue={defaultValue?.map(transformDefaultValue)?.map(itemGenUuid)}
+      value={value?.map(transformDefaultValue)?.map(itemGenUuid)}
       onClickAdd={addNew => addNew({ value: "", uuid: uuid() })}>
       {({items, removeItem, updateItem}) =>
         <div>
-          {items.map((item, index) =>
+          {items?.map((item, index) =>
             <Form.Item key={item.uuid}>
               <Row>
                 <Col flex="auto">

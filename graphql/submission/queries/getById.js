@@ -40,12 +40,6 @@ export const getById = gql`
           endDate
           measurementPeriodicity
           products
-          generalObjectiveSubmission {
-            id
-          }
-          developmentObjectiveSubmission {
-            id
-          }
         }
         activities {
           title
@@ -60,9 +54,6 @@ export const getById = gql`
           months
           inputs
           products
-          specificObjective {
-            id
-          }
         }
       }
       beneficiaries {
@@ -90,10 +81,32 @@ export const getById = gql`
         }
       }
       developmentObjectiveIndicators {
-        id
+        type
+        title
+        description
+        methodology
+        formula
+        meansOfVerification
+        baseline
+        goal
+        startDate
+        endDate
+        measurementPeriodicity
+        products
       }
       generalObjectiveIndicators {
-        id
+        type
+        title
+        description
+        methodology
+        formula
+        meansOfVerification
+        baseline
+        goal
+        startDate
+        endDate
+        measurementPeriodicity
+        products
       }
       concepts {
         name
@@ -126,6 +139,13 @@ export const getById = gql`
       deadline
       signedContractAt
       agreementNumber
+      technicalOpinion
+      comments {
+        fieldName
+        revision
+        comment
+        type
+      }
     }
   }
 `
