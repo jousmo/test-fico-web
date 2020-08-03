@@ -1,3 +1,5 @@
+import { cloneDeep } from "lodash"
+
 export const setUpdateTechnicalSpecification = (technicalSpecification, state, setState) => {
   const newTechnicalSpecification = {
     ...state.technicalSpecification,
@@ -13,7 +15,7 @@ export const setUpdateTechnicalSpecification = (technicalSpecification, state, s
 
 export const setSave = async (state, updateSubmission, id) => {
   try {
-    let data = { ...state.technicalSpecification }
+    const data = cloneDeep(state.technicalSpecification)
     data.specificObjectives = data.specificObjectives?.map(objective => {
       objective.activities = objective.activities.map(({uuid, ...activity}) =>
         activity
