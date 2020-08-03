@@ -85,8 +85,8 @@ export function CompositeField({
   }
 
   const handleChange = items => {
-    items.forEach(i => i.uuid && delete i.uuid)
-    onChange && onChange(items)
+    const newItems = items.map(({uuid, ...item}) => item)
+    onChange && onChange(newItems)
   }
 
   return (
