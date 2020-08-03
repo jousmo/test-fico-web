@@ -25,7 +25,7 @@ function ProjectListingTable({ data }) {
   const regionFilterOptions = getFilterOptions(regions)
 
   // Will not need to filter data in client once server is fully working
-  const dataSource = data?.filter(e => e.implementer.id === 1)
+  const dataSource = data?.filter(e => e.implementer?.id === 1)
 
   return (
     <Table
@@ -38,7 +38,7 @@ function ProjectListingTable({ data }) {
       <Table.Column
         dataIndex="agreementNumber"
         render={(text, record) =>
-          <Link href={`/admin/projects/${record.id}`}><a>{text}</a></Link>
+          <Link href={`/implementer/projects/${record.id}`}><a>{text}</a></Link>
         }
         title="Aprobación" />
       <Table.Column

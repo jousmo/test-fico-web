@@ -14,16 +14,12 @@ import {
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
 import { submission } from "../../../../graphql/submission"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers/withApollo"
-import { PageContext } from "../../../../contexts/page"
 
 function Project({ client }) {
   const router = useRouter()
-  const [ state ] = useState({
-    submissionDetail: {}
-  })
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
@@ -34,21 +30,18 @@ function Project({ client }) {
     loading,
     error,
     data
-  }), [state, loading])
+  }), [loading])
 
   return (
-    <PageContext.Provider
-      value={{ type: "admin", submenu: "projects" }}>
-      <AdminSubmissionContext.Provider value={injectActions}>
-        <Layout subheader={<ProjectSummary type="admin" />}>
-          <Government />
-          <GeneralInformation />
-          <SignedAgreement />
-          <ProjectMonitoring />
-          <ProjectClosure />
-        </Layout>
-      </AdminSubmissionContext.Provider>
-    </PageContext.Provider>
+    <AdminSubmissionContext.Provider value={injectActions}>
+      <Layout subheader={<ProjectSummary type="implementer" />}>
+        <Government />
+        <GeneralInformation />
+        <SignedAgreement />
+        <ProjectMonitoring />
+        <ProjectClosure />
+      </Layout>
+    </AdminSubmissionContext.Provider>
   )
 }
 

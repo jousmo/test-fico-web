@@ -6,6 +6,10 @@ export const getById = gql`
       id
       implementer {
         name
+        councilMembers {
+          name
+          charge
+        }
       }
       name
       type

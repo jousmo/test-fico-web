@@ -12,7 +12,7 @@ import { BreadcrumbHeading } from "../../../../shared/breadcrum-heading"
 import SummaryBody from "../../../../shared/project-summary-body"
 import "./style.sass"
 
-export function ProjectSummary() {
+export function ProjectSummary({ type }) {
   const {
     loading,
     error,
@@ -28,7 +28,7 @@ export function ProjectSummary() {
 
   const goToProject = (
     <Descriptions.Item>
-      <Link href={`/admin/projects/${data?.Submission.id}/`}>
+      <Link href={`/${type}/projects/${data?.Submission.id}/review`}>
         <a><EyeOutlined /> Ver la solicitud</a>
       </Link>
     </Descriptions.Item>
@@ -37,11 +37,11 @@ export function ProjectSummary() {
   return (
     <div className="fico project summary">
       <BreadcrumbHeading
-        home={{ label: "Monitoreo", url: "/admin/projects" }}
+        home={{ label: "Monitoreo", url: "/${type}/projects" }}
         itemsList={[
           {
             label: data?.Submission?.name,
-            url: `/admin/projects/${data?.Submission?.id}`
+            url: `/${type}/projects/${data?.Submission?.id}`
           }
         ]}
         extra={headingButtons} />
