@@ -54,9 +54,6 @@ export const getById = gql`
           months
           inputs
           products
-          specificObjective {
-            id
-          }
         }
       }
       beneficiaries {
@@ -84,7 +81,6 @@ export const getById = gql`
         }
       }
       developmentObjectiveIndicators {
-        id
         type
         title
         description
@@ -99,7 +95,6 @@ export const getById = gql`
         products
       }
       generalObjectiveIndicators {
-        id
         type
         title
         description
