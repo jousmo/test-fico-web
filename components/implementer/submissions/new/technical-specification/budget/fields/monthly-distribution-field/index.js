@@ -14,7 +14,7 @@ export function MonthlyDistributionField({
     const data = {}
 
     data.label = label
-    data.value = defaultValue[index]
+    data.value = defaultValue?.[index]
 
     return data
   })
