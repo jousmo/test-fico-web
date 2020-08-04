@@ -23,7 +23,7 @@ function AgreementDocumentsForm({ data }) {
           <Form.Item
             style={{display: "inline"}}
             label="Documentos de la implementadora para firma de convenio">
-            <List bordered>
+            <List>
               <FileInput label="Acta constitutiva" />
               <FileInput label="Poder representante legal" />
               <FileInput
