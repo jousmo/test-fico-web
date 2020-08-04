@@ -22,8 +22,8 @@ export function SignedAgreement() {
     setState({ hasSignedContract: data?.Submission?.signedContractAt })
   }, [data])
 
-  const onChange = newSignedContractAt => {
-    updateSubmissionDetail({ signedContractAt: newSignedContractAt })
+  const onChange = ({ target: { name, value } }) => {
+    updateSubmissionDetail({ [name]: value })
   }
 
   const handleSave = async () => {

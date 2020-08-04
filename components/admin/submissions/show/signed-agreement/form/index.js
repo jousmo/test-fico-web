@@ -1,12 +1,12 @@
 import { withForm } from "../../../../../../helpers/withForm"
 import { Button, Form, Input } from "antd"
 import { DateField, UploadButton, Visibility } from "../../../../../shared"
-import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 
 function SubmissionAgreementForm({ data, onChange, onSave, hasContract }) {
-  const onDateChange = dateObject => {
-    const newSignDate = getSelectValue(dateObject)
-    onChange(newSignDate)
+  const onDateChange = ({ currentTarget }) => {
+    const { id: name, value } = currentTarget
+    const target = { name, value }
+    onChange({ target })
   }
 
   const onAgreement = data?.status === "ON_AGREEMENT"
@@ -27,7 +27,6 @@ function SubmissionAgreementForm({ data, onChange, onSave, hasContract }) {
             onChange={onChange} />
           <DateField
             id="signedContractAt"
-            name="signedContractAt"
             defaultValue={data?.signedContractAt}
             onChange={onDateChange} />
           &nbsp;
