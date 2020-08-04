@@ -3,7 +3,7 @@ import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
 import { Button, Col, Descriptions } from "antd"
-import { EyeOutlined } from "@ant-design/icons"
+import { EyeOutlined, BarChartOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import {
   CloseOutlined,
@@ -22,6 +22,8 @@ export function SubmissionSummary() {
     error,
     data
   } = useContext(AdminSubmissionContext)
+
+  const onAgreement = data?.Submission?.status === "ON_AGREEMENT"
 
   const [state, setState] = useState({
     isModalOpen: false
@@ -45,20 +47,26 @@ export function SubmissionSummary() {
   }
 
   const headingButtons = (
-    <Col>
-      <Button
-        ghost
-        shape="circle"
-        icon={<RetweetOutlined />}
-        onClick={onRequestReview} />
-      <Button ghost shape="circle" icon={<CloseOutlined />} />
-      <Button ghost shape="circle" icon={<SelectOutlined />} />
-      <Button
-        ghost
-        shape="circle"
-        icon={<UploadOutlined rotate={90}/>}
-        onClick={onClickApprove} />
-    </Col>
+    !onAgreement ? (
+      <Col>
+        <Button
+          ghost
+          shape="circle"
+          icon={<RetweetOutlined />}
+          onClick={onRequestReview} />
+        <Button ghost shape="circle" icon={<CloseOutlined />} />
+        <Button ghost shape="circle" icon={<SelectOutlined />} />
+        <Button
+          ghost
+          shape="circle"
+          icon={<UploadOutlined rotate={90}/>}
+          onClick={onClickApprove} />
+      </Col>
+    ) : (
+      <Col>
+        <Button type="success" size="large" icon={<BarChartOutlined />}>Aprobar para monitoreo</Button>
+      </Col>
+    )
   )
 
   const goToSubmission = (
