@@ -64,7 +64,7 @@ export function SubmissionSummary() {
       </Col>
     ) : (
       <Col>
-        <Button type="success" size="large" icon={<BarChartOutlined />}>Aprobar para monitoreo</Button>
+        <Button type="ficosuccess" size="large" icon={<BarChartOutlined />}>Aprobar para monitoreo</Button>
       </Col>
     )
   )
