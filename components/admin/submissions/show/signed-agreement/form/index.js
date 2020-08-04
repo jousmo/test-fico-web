@@ -1,5 +1,5 @@
 import { withForm } from "../../../../../../helpers/withForm"
-import { Button, Form } from "antd"
+import { Button, Form, Input } from "antd"
 import { DateField, UploadButton, Visibility } from "../../../../../shared"
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 
@@ -18,9 +18,16 @@ function SubmissionAgreementForm({ data, onChange, onSave, hasContract }) {
         Anexa el convenio firmado
       </Form.Item>
       <Visibility visible={onAgreement}>
-        <Form.Item label="Fecha de firma de convenio">
+        <Form.Item label="Numero y fecha de firma de convenio">
+          <Input
+            name="agreementNumber"
+            style={{width: "140px", marginRight: "5px"}}
+            placeholder="Numero de acuerdo"
+            defaultValue={data?.agreementNumber}
+            onChange={onChange} />
           <DateField
             id="signedContractAt"
+            name="signedContractAt"
             defaultValue={data?.signedContractAt}
             onChange={onDateChange} />
           &nbsp;
