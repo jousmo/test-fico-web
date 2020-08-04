@@ -1,9 +1,13 @@
 import { withForm } from "../../../../../helpers/withForm"
+import { useContext } from "react"
 import Link from "next/link"
 import { Table } from "antd"
 import { MinusSquareTwoTone } from "@ant-design/icons"
+import { PageContext } from "../../../../../contexts/page"
 
 function ListByStatusTable({ data }) {
+  const { type } = useContext(PageContext)
+
   return (
     <Table dataSource={data}>
       <Table.Column
@@ -12,7 +16,7 @@ function ListByStatusTable({ data }) {
       <Table.Column
         dataIndex="name"
         render={(text, record) =>
-          <Link href={`/implementer/submissions/${record.id}`}>
+          <Link href={`/${type}/submissions/${record.id}`}>
             <a>{text}</a>
           </Link>
         }
