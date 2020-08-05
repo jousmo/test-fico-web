@@ -9,7 +9,7 @@ function ProjectsList({ client }) {
       value={{ type: "admin", step: "active", submenu: "projects" }}>
       {/*Todo: What context will you use ?*/}
       <Layout subheader={false}>
-        <MonitoringFinancial />
+        <MonitoringFinancial/>
       </Layout>
     </PageContext.Provider>
   )
