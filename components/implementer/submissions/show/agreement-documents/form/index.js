@@ -65,7 +65,7 @@ function AgreementDocumentsForm({ data }) {
               />
               <FileInput
                 typeFile="IDENTIFICATION"
-                label="Copia de la identificación oficial de representante legan"
+                label="Copia de la identificación oficial de representante legal"
                 onChange={handleUploadChange}
                 onRemove={handleUploadOnRemove}
                 className="documentsAgreement"
