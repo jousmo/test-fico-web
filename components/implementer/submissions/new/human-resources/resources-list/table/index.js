@@ -1,5 +1,5 @@
 import { withForm } from "../../../../../../../helpers/withForm"
-import { Alert, Col, Form, Input, Row } from "antd"
+import { Alert, Col, Form, Input, Row, Radio } from "antd"
 import { UserOutlined } from "@ant-design/icons"
 import {
   CompositeField,
@@ -69,7 +69,11 @@ function HumanResourcesTable({ data, onChange }) {
                 <div style={{width: "1650px"}}>
                   <HumanResourcesColumns />
                   {items.map((item, index) =>
-                    <Row gutter={[10, 8]} justify="start" key={index}>
+                    <Row
+                      align="middle"
+                      gutter={[10, 8]}
+                      justify="start"
+                      key={index}>
                       <Col flex="50px">
                         <CommentButton
                           index={item.key}
@@ -141,13 +145,15 @@ function HumanResourcesTable({ data, onChange }) {
                           defaultValue={item.salary}
                           type="number" />
                       </Col>
-                      <Col flex="150px">
-                        <SelectField
+                      <Col flex="130px">
+                        <Radio.Group
                           id="benefits"
                           name="benefits"
-                          options={benefits}
                           onChange={updateItem(index)}
-                          defaultValue={item.benefits} />
+                          defaultValue={item.benefits}>
+                          <Radio value={true}>Si</Radio>
+                          <Radio value={false}>No</Radio>
+                        </Radio.Group>
                       </Col>
                       <Col flex="150px">
                         <Input

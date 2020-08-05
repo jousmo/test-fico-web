@@ -59,7 +59,7 @@ export function CompositeField({
 
   const updateItem = index => {
     return event => {
-      const value = event.currentTarget?.value || event.target?.checked
+      const value = event.currentTarget?.value || event.target?.value
       const name = event.currentTarget?.id || event.target?.name
       const newItems = Array.from(state.items)
       newItems[index][name] = value

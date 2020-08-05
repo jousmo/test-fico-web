@@ -26,7 +26,7 @@ export function HumanResourcesColumns() {
       <Col flex="150px">
         <Typography.Text>Salario</Typography.Text>
       </Col>
-      <Col flex="150px">
+      <Col flex="130px">
         <Typography.Text>Prestaciones</Typography.Text>
       </Col>
       <Col flex="150px">
