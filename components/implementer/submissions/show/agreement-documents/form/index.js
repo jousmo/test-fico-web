@@ -16,13 +16,9 @@ function AgreementDocumentsForm({ data }) {
   const [state, setState] = useState(INIT_STATE)
 
   const handleUploadChange = ({ typeFile, file: { status }}) => {
-    if (status === "done") {
+    if (status !== "removed") {
       setState({ ...state, [typeFile]: true })
-    }
-  }
-
-  const handleUploadOnRemove = ({ typeFile, status }) => {
-    if (status === "done") {
+    } else {
       setState({ ...state, [typeFile]: false })
     }
   }
@@ -51,7 +47,6 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="CONSTITUTIVE"
                 label="Acta constitutiva"
                 onChange={handleUploadChange}
-                onRemove={handleUploadOnRemove}
                 className="documentsAgreement"
                 disabled={state.CONSTITUTIVE}
               />
@@ -59,7 +54,6 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="LEGAL_POWER"
                 label="Poder representante legal"
                 onChange={handleUploadChange}
-                onRemove={handleUploadOnRemove}
                 className="documentsAgreement"
                 disabled={state.LEGAL_POWER}
               />
@@ -67,7 +61,6 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="IDENTIFICATION"
                 label="Copia de la identificación oficial de representante legal"
                 onChange={handleUploadChange}
-                onRemove={handleUploadOnRemove}
                 className="documentsAgreement"
                 disabled={state.IDENTIFICATION}
               />
@@ -75,7 +68,6 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="CONSTANCY"
                 label="Copia de constancia de situación"
                 onChange={handleUploadChange}
-                onRemove={handleUploadOnRemove}
                 className="documentsAgreement"
                 disabled={state.CONSTANCY}
               />
@@ -83,7 +75,6 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="PROOF_RESIDENCY"
                 label="Comprobante de domicilio"
                 onChange={handleUploadChange}
-                onRemove={handleUploadOnRemove}
                 className="documentsAgreement"
                 disabled={state.PROOF_RESIDENCY}
               />
@@ -91,7 +82,6 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="ACCOUNT_BALANCE"
                 label="Copia de la caratula del estado de cuenta (Cuenta exclusiva de proyecto)"
                 onChange={handleUploadChange}
-                onRemove={handleUploadOnRemove}
                 className="documentsAgreement"
                 disabled={state.ACCOUNT_BALANCE}
               />
