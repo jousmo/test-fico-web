@@ -1,6 +1,6 @@
 import { PageHeader } from "antd"
 import { MenuUnfoldOutlined } from "@ant-design/icons"
-import { extra } from "./extra"
+import UserHeader from "./user-header"
 import { PageContext } from "../../../contexts/page"
 import { useContext } from "react"
 
@@ -19,7 +19,7 @@ function Toolbar({subheader}) {
     <div>
       <PageHeader
         backIcon={<MenuUnfoldOutlined />}
-        extra={extra}>
+        extra={<UserHeader />}>
         {subheader}
       </PageHeader>
     </div>
