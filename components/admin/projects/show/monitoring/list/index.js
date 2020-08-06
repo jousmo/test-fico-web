@@ -1,30 +1,45 @@
-import { withForm } from "../../../../../../helpers/withForm"
-import Moment from "moment"
-import { extendMoment } from "moment-range"
-const moment = extendMoment(Moment)
-moment.locale("es")
-import { MonitoringRow } from "./row"
+import { List, Typography, Button } from "antd"
 
-function MonitoringList({ data }){
-  const range = moment.range(moment(data.startDate),
-    moment(data.endDate))
-  const months = Array.from(range.by("month"))
+function MonitoringList({ router }){
+  const getButton = type => {
+    const { query: { id } } = router
+    const url = `/admin/projects/${id}/monitoring/${type}`
+
+    return (
+      <Button
+        onClick={() => router.push(url)}
+        style={{ backgroundColor: "#2593fc", color: "white" }}>
+        Actualizar
+      </Button>
+    )
+  }
 
   return (
-    <>
-      { months.map((month, index) => (
-        <MonitoringRow
-          date={month}
-          key={index}
-          title={month} />
-      ))}
-      <MonitoringRow
-        title="Monitoreo trimestral" />
-      <MonitoringRow
-        buttonText="Calificar"
-        title="Reporte final del proyecto" />
-    </>
+    <List>
+      <Typography.Text>
+        Actualiza mensualmente los resultados de tus actividades y movimientos
+        financieros para el análisis del progreso del proyecto.
+      </Typography.Text>
+      <List.Item actions={[getButton("financial")]}>
+        <div>
+          <Typography.Text strong>Monitoreo financiero</Typography.Text>
+          <br />
+          <Typography.Text>
+            Facturación de conceptos y desgloce de gastos
+          </Typography.Text>
+        </div>
+      </List.Item>
+      <List.Item actions={[getButton("technical")]}>
+        <div>
+          <Typography.Text strong>Monitoreo técnico</Typography.Text>
+          <br />
+          <Typography.Text>
+            Verificación de actividades y sus beneficiarios
+          </Typography.Text>
+        </div>
+      </List.Item>
+    </List>
   )
 }
 
-export default withForm(MonitoringList)
+export default MonitoringList
