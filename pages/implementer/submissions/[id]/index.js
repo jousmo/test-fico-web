@@ -8,22 +8,46 @@ import {
   ImplementerSubmissionContext
 } from "../../../../contexts/implementer/submissions/show"
 import { submission } from "../../../../graphql/submission"
-import { useMemo, useState } from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useMutation, useQuery } from '@apollo/react-hooks'
 import { withApollo } from "../../../../helpers/withApollo"
 import { PageContext } from "../../../../contexts/page"
 
 function Submission({ client }) {
   const router = useRouter()
-  const [ state ] = useState({
-    submissionDetail: {}
-  })
-  const { loading, error, data } = useQuery(submission.queries.getById, {
-    client: client,
-    variables: { id: router.query.id }
+  const submissionId = router.query.id
+
+  const [state, setState] = useState({
+    documentsAgreement: []
   })
 
+  const { loading, error, data } = useQuery(submission.queries.getById, {
+    client: client,
+    variables: { id: submissionId }
+  })
+
+  const [updateSubmission] = useMutation(
+    submission.mutations.updateById, { client: client }
+  )
+
+  const save = useCallback(async (newDocumentsAgreement) => {
+   /* try {
+      await updateSubmission({
+        variables: { data: { documentsAgreement: newDocumentsAgreement  }, id: submissionId }
+      })
+    } catch(e) {
+      console.error(e)
+    }*/
+  }, [])
+
+  const updateDocumentAgreement = useCallback(documentsAgreement => {
+    const newDocumentsAgreement = [ ...state.documentsAgreement, documentsAgreement ]
+    setState({ ...state, documentsAgreement: newDocumentsAgreement })
+    save(newDocumentsAgreement)
+  }, [state, setState])
+
   const injectActions = useMemo(() => ({
+    updateDocumentAgreement,
     loading,
     router,
     error,

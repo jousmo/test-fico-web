@@ -3,23 +3,32 @@ import { Alert, Col, Form, List, Row } from "antd"
 import { FileInput } from "../../../../profile/legal-documents/form/fileInput"
 import { useState } from 'react'
 
-const INIT_STATE = {
-  CONSTITUTIVE: false,
-  LEGAL_POWER: false,
-  IDENTIFICATION: false,
-  CONSTANCY: false,
-  PROOF_RESIDENCY: false,
-  ACCOUNT_BALANCE: false
-}
-
 function AgreementDocumentsForm({ data }) {
-  const [state, setState] = useState(INIT_STATE)
+  const [state, setState] = useState({})
 
-  const handleUploadChange = ({ typeFile, file: { status }}) => {
-    if (status !== "removed") {
-      setState({ ...state, [typeFile]: true })
+  const onChange = (info) => {
+    const { typeFile, file: { uid, name, status, response } } = info || {}
+    if (status === "removed") {
+      setState({
+        ...state,
+        [typeFile]: {
+          disabled: false,
+          fileList: []
+        }
+      })
     } else {
-      setState({ ...state, [typeFile]: false })
+      setState({
+        ...state,
+        [typeFile]: {
+          disabled: true,
+          fileList: [{
+            uid,
+            name,
+            status,
+            url: response?.imageUrl
+          }]
+        }
+      })
     }
   }
 
@@ -46,44 +55,50 @@ function AgreementDocumentsForm({ data }) {
               <FileInput
                 typeFile="CONSTITUTIVE"
                 label="Acta constitutiva"
-                onChange={handleUploadChange}
                 className="documentsAgreement"
-                disabled={state.CONSTITUTIVE}
+                onChange={onChange}
+                disabled={state["CONSTITUTIVE"]?.disabled}
+                fileList={state["CONSTITUTIVE"]?.fileList}
               />
               <FileInput
                 typeFile="LEGAL_POWER"
                 label="Poder representante legal"
-                onChange={handleUploadChange}
                 className="documentsAgreement"
-                disabled={state.LEGAL_POWER}
+                onChange={onChange}
+                disabled={state["LEGAL_POWER"]?.disabled}
+                fileList={state["LEGAL_POWER"]?.fileList}
               />
               <FileInput
                 typeFile="IDENTIFICATION"
                 label="Copia de la identificación oficial de representante legal"
-                onChange={handleUploadChange}
                 className="documentsAgreement"
-                disabled={state.IDENTIFICATION}
+                onChange={onChange}
+                disabled={state["IDENTIFICATION"]?.disabled}
+                fileList={state["IDENTIFICATION"]?.fileList}
               />
               <FileInput
                 typeFile="CONSTANCY"
                 label="Copia de constancia de situación"
-                onChange={handleUploadChange}
                 className="documentsAgreement"
-                disabled={state.CONSTANCY}
+                onChange={onChange}
+                disabled={state["CONSTANCY"]?.disabled}
+                fileList={state["CONSTANCY"]?.fileList}
               />
               <FileInput
                 typeFile="PROOF_RESIDENCY"
                 label="Comprobante de domicilio"
-                onChange={handleUploadChange}
                 className="documentsAgreement"
-                disabled={state.PROOF_RESIDENCY}
+                onChange={onChange}
+                disabled={state["PROOF_RESIDENCY"]?.disabled}
+                fileList={state["PROOF_RESIDENCY"]?.fileList}
               />
               <FileInput
                 typeFile="ACCOUNT_BALANCE"
                 label="Copia de la caratula del estado de cuenta (Cuenta exclusiva de proyecto)"
-                onChange={handleUploadChange}
                 className="documentsAgreement"
-                disabled={state.ACCOUNT_BALANCE}
+                onChange={onChange}
+                disabled={state["ACCOUNT_BALANCE"]?.disabled}
+                fileList={state["ACCOUNT_BALANCE"]?.fileList}
               />
             </List>
           </Form.Item>
