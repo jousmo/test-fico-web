@@ -5,7 +5,7 @@ import fetch from "node-fetch"
 import { setContext } from "apollo-link-context"
 
 const link = createHttpLink({
-  uri: process.env.SERVER_URI,
+  uri: process.env.NEXT_PUBLIC_SERVER_URI,
   fetch: fetch
 })
 
