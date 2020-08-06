@@ -1,4 +1,3 @@
-import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input, Typography } from "antd"
 import { merge } from "lodash"
 import { useEffect, useState } from "react"
@@ -22,7 +21,7 @@ export function ConceptModal({
   submission,
   ...props
 }) {
-  const [form] = useForm()
+  const [form] = Form.useForm()
   const [state, setState] = useState({})
   const [investmentState, setInvestmentState] = useState(false)
   const [unitsState, setUnitsState] = useState({

@@ -1,6 +1,5 @@
 import { Modal, Form, Row, Col, Input, Empty } from "antd"
 import { useEffect, useState } from "react"
-import { useForm } from "antd/lib/form/util"
 import {
   CompositeField,
   DateField,
@@ -14,7 +13,7 @@ import { getSelectValue, selectOptions } from "../../../../../../../helpers"
 import { merge } from "lodash"
 
 export function ConsultantModal({edit, onCancel, onSave, ...props}) {
-  const [form] = useForm()
+  const [form] = Form.useForm()
   const [state, setState] = useState({
     hasSupport: false,
     personType: "NATURAL_PERSON"

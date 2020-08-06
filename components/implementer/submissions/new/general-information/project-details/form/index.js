@@ -1,4 +1,3 @@
-import { useForm } from "antd/lib/form/util"
 import { Row, Form, Col, Input, Select } from "antd"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
@@ -13,7 +12,7 @@ function ProjectDetailsForm({
   onChange,
   isCall
 }) {
-  const [form] = useForm()
+  const [form] = Form.useForm()
 
   const onAddAlly = (value) => {
     if (value.currentTarget.value.length > 2){

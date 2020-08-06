@@ -1,8 +1,7 @@
-import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Input, Typography } from "antd"
 
 export function ApprovalModal({ onSave, onCancel, ...props }) {
-  const [form] = useForm()
+  const [form] = Form.useForm()
 
   const onOk = async () => {
     try {
