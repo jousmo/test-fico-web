@@ -15,7 +15,6 @@ export function DateField({
   const onDateChange = value => {
     if(value?.length > 0) {
       value = value.map(v => v.format("YYYYMM[01]"))
-      console.log(value)
     }
     else {
       value = value?.format()

@@ -31,13 +31,13 @@ function Submission({ client }) {
   )
 
   const save = useCallback(async (newDocumentsAgreement) => {
-   /* try {
-      await updateSubmission({
-        variables: { data: { documentsAgreement: newDocumentsAgreement  }, id: submissionId }
+    try {
+     await updateSubmission({
+       variables: { data: { documentsAgreement: newDocumentsAgreement }, id: submissionId }
       })
     } catch(e) {
       console.error(e)
-    }*/
+    }
   }, [])
 
   const updateDocumentAgreement = useCallback(documentsAgreement => {

@@ -3,15 +3,17 @@ import { Alert, Col, Form, List, Row } from "antd"
 import { FileInput } from "../../../../profile/legal-documents/form/fileInput"
 import { useState } from 'react'
 
-function AgreementDocumentsForm({ data }) {
+function AgreementDocumentsForm({ data, onChange }) {
   const [state, setState] = useState({})
 
-  const onChange = (info) => {
-    const { typeFile, file: { uid, name, status, response } } = info || {}
+  const handleChangeUpload = (info) => {
+    const { typeFile: type, file: { uid, name, status, response } } = info || {}
+    const url = response?.imageUrl
+
     if (status === "removed") {
       setState({
         ...state,
-        [typeFile]: {
+        [type]: {
           disabled: false,
           fileList: []
         }
@@ -19,16 +21,15 @@ function AgreementDocumentsForm({ data }) {
     } else {
       setState({
         ...state,
-        [typeFile]: {
+        [type]: {
           disabled: true,
-          fileList: [{
-            uid,
-            name,
-            status,
-            url: response?.imageUrl
-          }]
+          fileList: [{ uid, name, status, url }]
         }
       })
+    }
+
+    if (status === "done") {
+      onChange({ type, name, url })
     }
   }
 
@@ -56,7 +57,7 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="CONSTITUTIVE"
                 label="Acta constitutiva"
                 className="documentsAgreement"
-                onChange={onChange}
+                onChange={handleChangeUpload}
                 disabled={state["CONSTITUTIVE"]?.disabled}
                 fileList={state["CONSTITUTIVE"]?.fileList}
               />
@@ -64,7 +65,7 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="LEGAL_POWER"
                 label="Poder representante legal"
                 className="documentsAgreement"
-                onChange={onChange}
+                onChange={handleChangeUpload}
                 disabled={state["LEGAL_POWER"]?.disabled}
                 fileList={state["LEGAL_POWER"]?.fileList}
               />
@@ -72,7 +73,7 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="IDENTIFICATION"
                 label="Copia de la identificación oficial de representante legal"
                 className="documentsAgreement"
-                onChange={onChange}
+                onChange={handleChangeUpload}
                 disabled={state["IDENTIFICATION"]?.disabled}
                 fileList={state["IDENTIFICATION"]?.fileList}
               />
@@ -80,7 +81,7 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="CONSTANCY"
                 label="Copia de constancia de situación"
                 className="documentsAgreement"
-                onChange={onChange}
+                onChange={handleChangeUpload}
                 disabled={state["CONSTANCY"]?.disabled}
                 fileList={state["CONSTANCY"]?.fileList}
               />
@@ -88,7 +89,7 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="PROOF_RESIDENCY"
                 label="Comprobante de domicilio"
                 className="documentsAgreement"
-                onChange={onChange}
+                onChange={handleChangeUpload}
                 disabled={state["PROOF_RESIDENCY"]?.disabled}
                 fileList={state["PROOF_RESIDENCY"]?.fileList}
               />
@@ -96,7 +97,7 @@ function AgreementDocumentsForm({ data }) {
                 typeFile="ACCOUNT_BALANCE"
                 label="Copia de la caratula del estado de cuenta (Cuenta exclusiva de proyecto)"
                 className="documentsAgreement"
-                onChange={onChange}
+                onChange={handleChangeUpload}
                 disabled={state["ACCOUNT_BALANCE"]?.disabled}
                 fileList={state["ACCOUNT_BALANCE"]?.fileList}
               />
