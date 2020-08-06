@@ -8,7 +8,8 @@ export function Authenticate(email, password, router) {
       auth.currentUser.getIdTokenResult().then(res => {
         loggingIn()
         message.success("Iniciado exitosamente")
-        const { claims } = res
+        const { claims, token } = res
+        localStorage.setItem("token", JSON.stringify(token))
         localStorage.setItem("user", JSON.stringify(res))
 
         if (claims.role === "ADMIN"){
