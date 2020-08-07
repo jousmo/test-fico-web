@@ -48,7 +48,6 @@
   },
   "devDependencies": {
     "cypress": "^4.12.1",
-    "dotenv": "^8.2.0",
     "eslint-plugin-react": "^7.20.5"
   }
 }
