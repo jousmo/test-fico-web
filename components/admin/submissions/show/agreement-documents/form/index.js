@@ -31,7 +31,6 @@ function AgreementDocumentsForm({ data, client }) {
     try {
       await deleteDocumentSubmission({ variables: { id }})
       const documents = state.filter(document => document.id !== id)
-      debugger
       success("Documento eliminado correctamente")
       setState(documents)
     } catch (e) {

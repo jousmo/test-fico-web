@@ -30,7 +30,7 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract }
   const onDone = useCallback(async ({ typeFile: type, file: { name, response } }) => {
     const url = response?.imageUrl
     const newDocument = { type, name, url }
-    debugger
+
     try {
       const { data: { CreateDocumentSubmission: { id }}} = await createDocumentSubmission({
         variables: { data: newDocument, id: submissionId}
