@@ -12,7 +12,8 @@ export function SignedAgreement() {
     loading,
     error,
     data,
-    client
+    client,
+    refetch
   } = useContext(AdminSubmissionContext)
 
   const [state, setState] = useState({
@@ -41,7 +42,9 @@ export function SignedAgreement() {
         hasContract={state.hasSignedContract}
         onChange={onChange}
         onSave={handleSave}
-        client={client}/>
+        client={client}
+        refetch={refetch}
+      />
     </Section>
   )
 }

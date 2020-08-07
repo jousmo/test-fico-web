@@ -29,7 +29,7 @@ function Submission({ client }) {
     submission.mutations.updateById, { client: client }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: router.query.id }
   })
@@ -66,8 +66,9 @@ function Submission({ client }) {
     loading,
     error,
     data,
-    client
-  }), [state, loading])
+    client,
+    refetch
+  }), [state, loading, data])
 
   return (
     <PageContext.Provider

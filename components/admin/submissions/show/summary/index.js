@@ -23,7 +23,10 @@ export function SubmissionSummary() {
     data
   } = useContext(AdminSubmissionContext)
 
+  console.log("Sumarry")
+  console.log(data)
   const onAgreement = data?.Submission?.status === "ON_AGREEMENT"
+  const findDocument = data?.Submission?.documents.filter(document => document.type === "AGREEMENT")
 
   const [state, setState] = useState({
     isModalOpen: false
@@ -64,7 +67,12 @@ export function SubmissionSummary() {
       </Col>
     ) : (
       <Col>
-        <Button type="ficosuccess" size="large" icon={<BarChartOutlined />}>Aprobar para monitoreo</Button>
+        <Button
+          type="ficosuccess"
+          size="large"
+          icon={<BarChartOutlined />} disabled={!findDocument.length}>
+          Aprobar para monitoreo
+        </Button>
       </Col>
     )
   )

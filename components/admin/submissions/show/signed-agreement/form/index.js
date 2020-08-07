@@ -6,7 +6,7 @@ import { success, warning } from '../../../../../../helpers/alert'
 import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
 
-function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract }) {
+function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, refetch }) {
   const submissionId = data?.id
   const document = data?.documents.filter(document => document.type === "AGREEMENT").map(document => ({...document, uid: document.id}))
   const onAgreement = data?.status === "ON_AGREEMENT"
@@ -33,11 +33,12 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract }
 
     try {
       const { data: { CreateDocumentSubmission: { id }}} = await createDocumentSubmission({
-        variables: { data: newDocument, id: submissionId}
+        variables: { data: newDocument, id: submissionId }
       })
       const document = [{ ...newDocument, uid: id, id }]
       success("Documento agregado correctamente")
       setState(document)
+      refetch()
     } catch (e) {
       warning("Hubo un error al subir el documento")
       console.error(e)
@@ -49,6 +50,7 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract }
       await deleteDocumentSubmission({ variables: { id }})
       success("Documento eliminado correctamente")
       setState([])
+      refetch()
     } catch (e) {
       warning("Hubo un error al eliminar el documento")
       console.error(e)
