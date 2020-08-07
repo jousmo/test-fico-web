@@ -28,8 +28,6 @@ function AgreementDocumentsForm({ data, client }) {
   }
 
   const onClick = useCallback(async id => {
-    console.log(id)
-    debugger
     try {
       await deleteDocumentSubmission({ variables: { id }})
       const documents = state.filter(document => document.id !== id)

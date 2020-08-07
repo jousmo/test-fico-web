@@ -38,8 +38,6 @@ function AgreementDocumentsForm({ data, client }) {
   }, [state, submissionId])
 
   const onRemove = useCallback(async ({ id }) => {
-    if (!id) return null
-
     try {
       await deleteDocumentSubmission({ variables: { id }})
       success("Documento eliminado correctamente")

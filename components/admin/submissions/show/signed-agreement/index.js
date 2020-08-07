@@ -11,7 +11,8 @@ export function SignedAgreement() {
     save,
     loading,
     error,
-    data
+    data,
+    client
   } = useContext(AdminSubmissionContext)
 
   const [state, setState] = useState({
@@ -39,7 +40,8 @@ export function SignedAgreement() {
         isLoading={loading}
         hasContract={state.hasSignedContract}
         onChange={onChange}
-        onSave={handleSave} />
+        onSave={handleSave}
+        client={client}/>
     </Section>
   )
 }

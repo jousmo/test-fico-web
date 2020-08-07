@@ -9,8 +9,9 @@ export function UploadButton({
   className = "",
   typeFile,
   files,
-  onDone,
-  onRemove,
+  disabled,
+  onDone = () => null,
+  onRemove = () => null,
   ...props
 }) {
 
@@ -44,7 +45,7 @@ export function UploadButton({
       className={className}
       {...uploadProps}
     >
-      <Button style={style} disabled={!!fileList?.length}>
+      <Button style={style} disabled={!!fileList?.length || disabled}>
         <UploadOutlined /> {children}
       </Button>
     </Upload>
