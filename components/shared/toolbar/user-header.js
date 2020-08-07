@@ -1,8 +1,11 @@
 import { Button, Dropdown, Menu, Space } from "antd"
 import { useState, useEffect } from "react"
 import { BellOutlined, UserOutlined } from "@ant-design/icons"
+import { Logout } from "../../../helpers/auth/logout"
+import { useRouter } from "next/router"
 
 function UserHeader(){
+  const router = useRouter()
   const [userState, setUserState] = useState(undefined)
 
   useEffect(() => {
@@ -11,7 +14,7 @@ function UserHeader(){
   }, [])
 
   const menu = (
-    <Menu>
+    <Menu onClick={() => Logout(router)}>
       <Menu.Item key="0">
         Cerrar sesión
       </Menu.Item>
