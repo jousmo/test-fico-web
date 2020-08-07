@@ -12,12 +12,19 @@ export function LoginContainer() {
     login
   } = useContext(AuthSubmissionContext)
 
+  const sizeProps = {
+    xs: 16,
+    sm: 16,
+    md: 8,
+    lg: 5
+  }
+
   return (
     <Row
       align="middle"
       className="fico login container"
       justify="center">
-      <Col span={5}>
+      <Col {...sizeProps}>
         <LoginHeading />
         <LoginForm onSubmit={login} />
       </Col>
