@@ -65,7 +65,8 @@ function Submission({ client }) {
     save,
     loading,
     error,
-    data
+    data,
+    client
   }), [state, loading])
 
   return (
