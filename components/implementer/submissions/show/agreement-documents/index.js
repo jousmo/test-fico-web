@@ -7,15 +7,11 @@ import AgreementDocumentsForm from "./form"
 
 export function AgreementDocuments() {
   const {
-    updateDocumentAgreement,
     loading,
     error,
-    data
+    data,
+    client
   } = useContext(ImplementerSubmissionContext)
-
-  const onChange = (documentsAgreement) => {
-    updateDocumentAgreement(documentsAgreement)
-  }
 
   return (
     <Section title="Documentos de convenio">
@@ -23,7 +19,7 @@ export function AgreementDocuments() {
         data={data?.Submission}
         error={error}
         isLoading={loading}
-        onChange={onChange}
+        client={client}
       />
     </Section>
   )
