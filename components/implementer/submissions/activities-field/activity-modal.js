@@ -1,4 +1,3 @@
-import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input } from "antd"
 import {
   CompositeField,
@@ -17,7 +16,7 @@ export function ActivityModal({
   edit,
   ...props
 }) {
-  const [form] = useForm()
+  const [form] = Form.useForm()
 
   useEffect(() => {
     if(edit) {

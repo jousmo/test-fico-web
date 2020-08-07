@@ -1,12 +1,11 @@
-import { Modal, Form, Row, Col, Input } from "antd";
-import { YearSelect, SelectField } from "../../../../shared";
-import { implementer } from "../../../../../helpers/selectOptions";
-import { useForm } from "antd/lib/form/util";
-import { getSelectValue } from "../../../../../helpers/getSelectValue";
+import { Modal, Form, Row, Col, Input } from "antd"
+import { YearSelect, SelectField } from "../../../../shared"
+import { implementer } from "../../../../../helpers/selectOptions"
+import { getSelectValue } from "../../../../../helpers/getSelectValue"
 
 export function ProjectModal({onCancel, onSave, ...props}) {
-  const [form] = useForm()
-  
+  const [form] = Form.useForm()
+
   const onOk = async () => {
     try {
       const values = await form.getFieldsValue()

@@ -13,10 +13,17 @@ function Login() {
   }
 
   useEffect(() => {
+    const user = localStorage.getItem("user")
+
+    if (!user){
+      return
+    }
+
     const {
       expirationTime,
       claims: { role }
-    } = JSON.parse(localStorage.getItem("user"))
+    } = JSON.parse(user)
+
     if (new Date(expirationTime) > new Date()){
       router.push(`/${role.toLowerCase()}/submissions`)
     }
