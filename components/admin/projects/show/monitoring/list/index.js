@@ -2,8 +2,8 @@ import { List, Typography, Button } from "antd"
 
 function MonitoringList({ router }){
   const getButton = type => {
-    const { query: { id } } = router
-    const url = `/admin/projects/${id}/monitoring/${type}`
+    const { query } = router || {}
+    const url = `/admin/projects/${query?.id}/monitoring/${type}`
 
     return (
       <Button
