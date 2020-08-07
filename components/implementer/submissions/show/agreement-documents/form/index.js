@@ -28,7 +28,7 @@ function AgreementDocumentsForm({ data, onChange }) {
       })
     }
 
-    if (status === "done") {
+    if (status === "done" || status === "error") {
       onChange({ type, name, url })
     }
   }

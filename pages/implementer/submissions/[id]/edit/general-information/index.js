@@ -27,7 +27,6 @@ import {
   setUpdateGeneralInformation
 } from "../../../../../../helpers/submissionFunctions/general-information"
 
-
 function GeneralInformation({ client }) {
   const router = useRouter()
   const submissionId = router.query.id
