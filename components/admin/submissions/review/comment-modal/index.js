@@ -1,5 +1,4 @@
 import { Modal, Form, Input } from "antd"
-import { useForm } from "antd/lib/form/util"
 import { CommentListing } from "./list"
 import { useEffect, useState } from "react"
 
@@ -15,7 +14,7 @@ export function CommentModal({
   ...props
 }) {
   const [state, setState] = useState({ comments: [] })
-  const [form] = useForm()
+  const [form] = Form.useForm()
 
   const onOk = async () => {
     try {

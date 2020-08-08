@@ -5,12 +5,12 @@ import fetch from "node-fetch"
 import { setContext } from "apollo-link-context"
 
 const link = createHttpLink({
-  uri: "https://ficosec-centro-sur-server.jaxitank.vercel.app",
+  uri: process.env.NEXT_PUBLIC_SERVER_URI,
   fetch: fetch
 })
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('token')
 
   if(!token)
     return {}
@@ -18,7 +18,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : ""
     }
   }
 })

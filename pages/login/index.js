@@ -1,19 +1,33 @@
-import {
-  LoginContainer
-} from "../../components/auth/login"
-import {
-  AuthSubmissionContext
-} from "../../contexts/auth"
-import { useMemo } from "react"
-import { useQuery } from "@apollo/react-hooks"
-import { submission } from "../../graphql/submission"
+import { useRouter } from "next/router"
+import { LoginContainer } from "../../components/auth/login"
+import { AuthSubmissionContext } from "../../contexts/auth"
+import { useMemo, useEffect } from "react"
 import { withApollo } from "../../helpers/withApollo"
+import { Authenticate } from "../../helpers/auth/login"
 
-function Login({ client }) {
+function Login() {
+  const router = useRouter()
 
-  const login = async (values) => {
-    // Todo: Update login logic once server authentication is running
+  const login = async ({ email, password }) => {
+    Authenticate(email, password, router)
   }
+
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+
+    if (!user){
+      return
+    }
+
+    const {
+      expirationTime,
+      claims: { role }
+    } = JSON.parse(user)
+
+    if (new Date(expirationTime) > new Date()){
+      router.push(`/${role.toLowerCase()}/submissions`)
+    }
+  }, [])
 
   const injectActions = useMemo(() => ({
     login

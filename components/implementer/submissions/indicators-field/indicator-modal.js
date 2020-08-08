@@ -1,4 +1,3 @@
-import { useForm } from "antd/lib/form/util"
 import { Modal, Form, Row, Col, Input } from "antd"
 import {
   DateField,
@@ -21,7 +20,7 @@ export function IndicatorModal({
   edit,
   ...props
 }) {
-  const [form] = useForm()
+  const [form] = Form.useForm()
 
   useEffect(() => {
     if(edit) {

@@ -1,6 +1,5 @@
 import { Modal, Form, Row, Col, Input } from "antd"
 import { useEffect } from "react"
-import { useForm } from "antd/lib/form/util"
 import { SelectField } from "../../../../../../shared"
 import {
   preventionLevelTypes,
@@ -12,7 +11,7 @@ import { getSelectValue } from "../../../../../../../helpers/getSelectValue"
 import { merge } from "lodash"
 
 export function BeneficiaryModal({edit, onCancel, onSave, ...props}) {
-  const [form] = useForm()
+  const [form] = Form.useForm()
 
   useEffect(() => {
     if(edit) {
