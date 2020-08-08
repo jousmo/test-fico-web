@@ -1,17 +1,16 @@
 import { withForm } from "../../../../../../helpers/withForm"
 import { Button, Form, Input } from "antd"
 import { DateField, UploadButton, Visibility } from "../../../../../shared"
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { success, warning } from '../../../../../../helpers/alert'
 import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
 
 function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, refetch }) {
   const submissionId = data?.id
-  const document = data?.documents.filter(document => document.type === "AGREEMENT").map(document => ({...document, uid: document.id}))
   const onAgreement = data?.status === "ON_AGREEMENT"
-
-  const [state, setState] = useState(document)
+  const filter = data?.documents.filter(document => document.type === "AGREEMENT")
+  const document = filter?.map(document => ({...document, uid: document.id}))
 
   const [createDocumentSubmission] = useMutation(
     submission.mutations.createDocumentSubmission, { client: client }
@@ -32,30 +31,25 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, 
     const newDocument = { type, name, url }
 
     try {
-      const { data: { CreateDocumentSubmission: { id }}} = await createDocumentSubmission({
-        variables: { data: newDocument, id: submissionId }
-      })
-      const document = [{ ...newDocument, uid: id, id }]
+      await createDocumentSubmission({ variables: { data: newDocument, id: submissionId } })
       success("Documento agregado correctamente")
-      setState(document)
       refetch()
     } catch (e) {
       warning("Hubo un error al subir el documento")
       console.error(e)
     }
-  }, [state, submissionId])
+  }, [submissionId])
 
   const onRemove = useCallback(async ({ id }) => {
     try {
       await deleteDocumentSubmission({ variables: { id }})
       success("Documento eliminado correctamente")
-      setState([])
       refetch()
     } catch (e) {
       warning("Hubo un error al eliminar el documento")
       console.error(e)
     }
-  }, [state])
+  }, [])
 
   return (
     <Form
@@ -88,7 +82,7 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, 
           disabled={!hasContract}
           onDone={onDone}
           onRemove={onRemove}
-          files={state}
+          files={document}
         >
           Subir convenio firmado
         </UploadButton>

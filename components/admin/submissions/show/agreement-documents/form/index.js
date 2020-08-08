@@ -2,27 +2,27 @@ import { withForm } from "../../../../../../helpers/withForm"
 import { Alert, Col, Form, List, Row } from "antd"
 import { PaperClipOutlined } from "@ant-design/icons"
 import { DeleteButton } from "../../../../../shared"
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { success, warning } from '../../../../../../helpers/alert'
 import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
 
-function AgreementDocumentsForm({ data, client }) {
-  const documents =  data?.documents
-
-  const [state, setState] = useState(documents)
+function AgreementDocumentsForm({ data, client, refetch }) {
+  const documents = data?.documents
 
   const [deleteDocumentSubmission] = useMutation(
     submission.mutations.deleteDocumentSubmission, { client: client }
   )
 
   const getAction = (type) => {
-    const [document] = state.filter(document => document.type === type)
+    const [document] = documents.filter(document => document.type === type)
 
     if (!document?.id) return null
 
     return [
-      <a href={document.url} target="_blank"><PaperClipOutlined />&nbsp;{document.name}</a>,
+      <a href={document.url} target="_blank">
+        <PaperClipOutlined />&nbsp;{document.name}
+      </a>,
       <DeleteButton style={{float: "none"}} onClick={() => onClick(document.id)}/>
     ]
   }
@@ -30,14 +30,13 @@ function AgreementDocumentsForm({ data, client }) {
   const onClick = useCallback(async id => {
     try {
       await deleteDocumentSubmission({ variables: { id }})
-      const documents = state.filter(document => document.id !== id)
       success("Documento eliminado correctamente")
-      setState(documents)
+      refetch()
     } catch (e) {
       warning("Hubo un error al eliminar el documento")
       console.error(e)
     }
-  }, [state, setState])
+  }, [documents])
 
   if (data?.status !== "ON_AGREEMENT"){
     return (

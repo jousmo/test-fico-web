@@ -1,20 +1,10 @@
 import { Section } from "../../../../shared"
 import { useContext, useState, useEffect } from "react"
-import {
-  AdminSubmissionContext
-} from "../../../../../contexts/admin/submissions/show"
+import { AdminSubmissionContext } from "../../../../../contexts/admin/submissions/show"
 import SubmissionAgreementForm from "./form"
 
 export function SignedAgreement() {
-  const {
-    updateSubmissionDetail,
-    save,
-    loading,
-    error,
-    data,
-    client,
-    refetch
-  } = useContext(AdminSubmissionContext)
+  const { data, save, updateSubmissionDetail, ...props } = useContext(AdminSubmissionContext)
 
   const [state, setState] = useState({
     hasSignedContract: undefined
@@ -30,20 +20,17 @@ export function SignedAgreement() {
 
   const handleSave = async () => {
     await save()
-    setState({ hasSignedContract: true })
+    setState({ hasSignedContract: true });
   }
 
   return (
     <Section title="Convenio firmado">
       <SubmissionAgreementForm
         data={data?.Submission}
-        error={error}
-        isLoading={loading}
         hasContract={state.hasSignedContract}
         onChange={onChange}
         onSave={handleSave}
-        client={client}
-        refetch={refetch}
+        {...props}
       />
     </Section>
   )

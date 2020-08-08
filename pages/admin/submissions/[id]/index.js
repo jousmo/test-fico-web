@@ -10,16 +10,15 @@ import {
   SubmissionSummary,
   Status
 } from "../../../../components/admin/submissions/show"
-import {
-  AdminSubmissionContext
-} from "../../../../contexts/admin/submissions/show"
+import { AdminSubmissionContext } from "../../../../contexts/admin/submissions/show"
 import { submission } from "../../../../graphql/submission"
 import { useCallback, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers/withApollo"
 import { PageContext } from "../../../../contexts/page"
 
-function Submission({ client }) {
+function Submission({ query, client }) {
+  console.log(query)
   const router = useRouter()
   const [ state, setState ] = useState({
     submissionDetail: {}
@@ -45,7 +44,7 @@ function Submission({ client }) {
       dirty: true,
       submissionDetail: newSubmission
     })
-  })
+  }, [])
 
   const save = useCallback(async () => {
     try {
@@ -58,7 +57,7 @@ function Submission({ client }) {
       console.error(e)
       warning()
     }
-  })
+  }, [])
 
   const injectActions = useMemo(() => ({
     updateSubmissionDetail,
@@ -88,6 +87,12 @@ function Submission({ client }) {
       </AdminSubmissionContext.Provider>
     </PageContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(Submission)

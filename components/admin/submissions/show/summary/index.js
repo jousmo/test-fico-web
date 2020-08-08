@@ -23,8 +23,6 @@ export function SubmissionSummary() {
     data
   } = useContext(AdminSubmissionContext)
 
-  console.log("Sumarry")
-  console.log(data)
   const onAgreement = data?.Submission?.status === "ON_AGREEMENT"
   const findDocument = data?.Submission?.documents.filter(document => document.type === "AGREEMENT")
 
