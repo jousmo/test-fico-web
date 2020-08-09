@@ -1,16 +1,13 @@
 import { withForm } from "../../../../../../helpers/withForm"
 import { Alert, Col, Form, List, Row } from "antd"
 import { FileInput } from "../../../../profile/legal-documents/form/fileInput"
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
-import { success, warning } from '../../../../../../helpers/alert'
 
-function AgreementDocumentsForm({ data, client }) {
+function AgreementDocumentsForm({ data, client, refetch }) {
   const submissionId = data?.id
   const documents = data?.documents.map(document => ({...document, uid: document.id}))
-
-  const [state, setState] = useState(documents)
 
   const [createDocumentSubmission] = useMutation(
     submission.mutations.createDocumentSubmission, { client: client }
@@ -20,35 +17,30 @@ function AgreementDocumentsForm({ data, client }) {
     submission.mutations.deleteDocumentSubmission, { client: client }
   )
 
-  const onDone = useCallback(async ({ typeFile: type, file: { name, response } }) => {
+  const onDoneFile = useCallback(async (info, cb) => {
+    const { typeFile: type, file: { name, response } } = info
     const url = response?.imageUrl
     const newDocument = { type, name, url }
 
     try {
-      const { data: { CreateDocumentSubmission: { id }}} = await createDocumentSubmission({
-        variables: { data: newDocument, id: submissionId}
-      })
-      const documents = [...state, { ...newDocument, uid: id, id }]
-      success("Documento agregado correctamente")
-      setState(documents)
+      await createDocumentSubmission({ variables: { data: newDocument, id: submissionId } })
+      cb(null, refetch)
     } catch (e) {
-      warning("Hubo un error al subir el documento")
+      cb(e)
       console.error(e)
     }
-  }, [state, submissionId])
+  }, [submissionId, refetch])
 
-  const onRemove = useCallback(async ({ id }) => {
+  const onRemoveFile = useCallback(async (file, cb) => {
+    const { id } = file
     try {
       await deleteDocumentSubmission({ variables: { id }})
-      success("Documento eliminado correctamente")
-      const documents = state.filter(document => document.id !== id)
-      setState(documents)
+      cb(null, refetch)
     } catch (e) {
-      warning("Hubo un error al eliminar el documento")
+      cb(e)
       console.error(e)
     }
-  }, [state])
-
+  }, [refetch])
 
   if (data?.status !== "ON_AGREEMENT"){
     return (
@@ -74,49 +66,49 @@ function AgreementDocumentsForm({ data, client }) {
                 typeFile="CONSTITUTIVE"
                 label="Acta constitutiva"
                 className="documentsAgreement"
-                files={state.filter(document => document.type === "CONSTITUTIVE")}
-                onDone={onDone}
-                onRemove={onRemove}
+                files={documents.filter(document => document.type === "CONSTITUTIVE")}
+                onDoneFile={onDoneFile}
+                onRemoveFile={onRemoveFile}
               />
               <FileInput
                 typeFile="LEGAL_POWER"
                 label="Poder representante legal"
                 className="documentsAgreement"
-                files={state.filter(document => document.type === "LEGAL_POWER")}
-                onDone={onDone}
-                onRemove={onRemove}
+                files={documents.filter(document => document.type === "LEGAL_POWER")}
+                onDoneFile={onDoneFile}
+                onRemoveFile={onRemoveFile}
               />
               <FileInput
                 typeFile="IDENTIFICATION"
                 label="Copia de la identificación oficial de representante legal"
                 className="documentsAgreement"
-                files={state.filter(document => document.type === "IDENTIFICATION")}
-                onDone={onDone}
-                onRemove={onRemove}
+                files={documents.filter(document => document.type === "IDENTIFICATION")}
+                onDoneFile={onDoneFile}
+                onRemoveFile={onRemoveFile}
               />
               <FileInput
                 typeFile="CONSTANCY"
                 label="Copia de constancia de situación"
                 className="documentsAgreement"
-                files={state.filter(document => document.type === "CONSTANCY")}
-                onDone={onDone}
-                onRemove={onRemove}
+                files={documents.filter(document => document.type === "CONSTANCY")}
+                onDoneFile={onDoneFile}
+                onRemoveFile={onRemoveFile}
               />
               <FileInput
                 typeFile="PROOF_RESIDENCY"
                 label="Comprobante de domicilio"
                 className="documentsAgreement"
-                files={state.filter(document => document.type === "PROOF_RESIDENCY")}
-                onDone={onDone}
-                onRemove={onRemove}
+                files={documents.filter(document => document.type === "PROOF_RESIDENCY")}
+                onDoneFile={onDoneFile}
+                onRemoveFile={onRemoveFile}
               />
               <FileInput
                 typeFile="ACCOUNT_BALANCE"
                 label="Copia de la caratula del estado de cuenta (Cuenta exclusiva de proyecto)"
                 className="documentsAgreement"
-                files={state.filter(document => document.type === "ACCOUNT_BALANCE")}
-                onDone={onDone}
-                onRemove={onRemove}
+                files={documents.filter(document => document.type === "ACCOUNT_BALANCE")}
+                onDoneFile={onDoneFile}
+                onRemoveFile={onRemoveFile}
               />
             </List>
           </Form.Item>

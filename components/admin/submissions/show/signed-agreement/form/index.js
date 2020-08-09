@@ -36,7 +36,7 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, 
       cb(e)
       console.error(e)
     }
-  }, [submissionId])
+  }, [submissionId, refetch])
 
   const onRemoveFile = useCallback(async (file, cb) => {
     const { id } = file
@@ -47,7 +47,7 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, 
       cb(e)
       console.error(e)
     }
-  }, [])
+  }, [refetch])
 
   return (
     <Form
