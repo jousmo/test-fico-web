@@ -28,7 +28,7 @@ export function UploadButton({
   }
 
   const uploadProps = {
-    action: "https://assets.dev.jaxitank.com/asset-upload",
+    action:`${process.env.NEXT_PUBLIC_S3_URI}/asset-upload`,
     fileList,
     onChange(info) {
       setFileList(info.fileList.slice())
