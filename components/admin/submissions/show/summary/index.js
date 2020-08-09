@@ -2,8 +2,8 @@ import { useContext, useState } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import { Button, Col, Descriptions } from "antd"
-import { EyeOutlined, BarChartOutlined } from "@ant-design/icons"
+import { Button, Col, Descriptions, Modal } from "antd"
+import { EyeOutlined, BarChartOutlined, ExclamationCircleOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import {
   CloseOutlined,
@@ -18,6 +18,7 @@ import "./style.sass"
 
 export function SubmissionSummary() {
   const {
+    saveApproveMonitoring,
     loading,
     error,
     data
@@ -36,6 +37,16 @@ export function SubmissionSummary() {
 
   const onCancel = () => {
     setState({ isModalOpen: false })
+  }
+
+  const showMonitoringConfirm = () => {
+    Modal.confirm({
+      title: `¿Quieres aprobar la solicitud para monitoreo?`,
+      icon: <ExclamationCircleOutlined />,
+      onOk() {
+        saveApproveMonitoring()
+      }
+    });
   }
 
   const onSave = (values) => {
@@ -68,7 +79,8 @@ export function SubmissionSummary() {
         <Button
           type="ficosuccess"
           size="large"
-          icon={<BarChartOutlined />} disabled={!findDocument.length}>
+          icon={<BarChartOutlined />} disabled={!findDocument.length}
+          onClick={showMonitoringConfirm}>
           Aprobar para monitoreo
         </Button>
       </Col>

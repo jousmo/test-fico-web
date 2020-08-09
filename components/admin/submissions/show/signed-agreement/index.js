@@ -1,35 +1,24 @@
 import { Section } from "../../../../shared"
-import { useContext, useState, useEffect } from "react"
+import { useContext } from "react"
 import { AdminSubmissionContext } from "../../../../../contexts/admin/submissions/show"
 import SubmissionAgreementForm from "./form"
 
 export function SignedAgreement() {
   const { data, save, updateSubmissionDetail, ...props } = useContext(AdminSubmissionContext)
-
-  const [state, setState] = useState({
-    hasSignedContract: undefined
-  })
-
-  useEffect(() => {
-    setState({ hasSignedContract: data?.Submission?.signedContractAt })
-  }, [data])
+  const { signedContractAt, agreementNumber } = data?.Submission || {}
+  const hasSignedContract = !!(signedContractAt && agreementNumber)
 
   const onChange = ({ target: { name, value } }) => {
     updateSubmissionDetail({ [name]: value })
-  }
-
-  const handleSave = async () => {
-    await save()
-    setState({ hasSignedContract: true });
   }
 
   return (
     <Section title="Convenio firmado">
       <SubmissionAgreementForm
         data={data?.Submission}
-        hasContract={state.hasSignedContract}
+        hasContract={!hasSignedContract}
         onChange={onChange}
-        onSave={handleSave}
+        onSave={save}
         {...props}
       />
     </Section>

@@ -2,15 +2,13 @@ import { withForm } from "../../../../../../helpers/withForm"
 import { Button, Form, Input } from "antd"
 import { DateField, UploadButton, Visibility } from "../../../../../shared"
 import { useCallback } from 'react'
-import { success, warning } from '../../../../../../helpers/alert'
 import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
 
 function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, refetch }) {
-  const submissionId = data?.id
-  const onAgreement = data?.status === "ON_AGREEMENT"
-  const filter = data?.documents.filter(document => document.type === "AGREEMENT")
-  const document = filter?.map(document => ({...document, uid: document.id}))
+  const { id: submissionId, status, documents } = data || {}
+  const onAgreement = status === "ON_AGREEMENT"
+  const files = documents?.filter(document => document.type === "AGREEMENT").map(item => ({...item, uid: item.id}))
 
   const [createDocumentSubmission] = useMutation(
     submission.mutations.createDocumentSubmission, { client: client }
@@ -26,27 +24,27 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, 
     onChange({ target })
   }
 
-  const onDone = useCallback(async ({ typeFile: type, file: { name, response } }) => {
+  const onDoneFile = useCallback(async (info, cb) => {
+    const { typeFile: type, file: { name, response } } = info
     const url = response?.imageUrl
     const newDocument = { type, name, url }
 
     try {
       await createDocumentSubmission({ variables: { data: newDocument, id: submissionId } })
-      success("Documento agregado correctamente")
-      refetch()
+      cb(null, refetch)
     } catch (e) {
-      warning("Hubo un error al subir el documento")
+      cb(e)
       console.error(e)
     }
   }, [submissionId])
 
-  const onRemove = useCallback(async ({ id }) => {
+  const onRemoveFile = useCallback(async (file, cb) => {
+    const { id } = file
     try {
       await deleteDocumentSubmission({ variables: { id }})
-      success("Documento eliminado correctamente")
-      refetch()
+      cb(null, refetch)
     } catch (e) {
-      warning("Hubo un error al eliminar el documento")
+      cb(e)
       console.error(e)
     }
   }, [])
@@ -79,11 +77,10 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, 
       <Form.Item style={{marginBottom: "5px"}}>
         <UploadButton
           typeFile="AGREEMENT"
-          disabled={!hasContract}
-          onDone={onDone}
-          onRemove={onRemove}
-          files={document}
-        >
+          disabled={hasContract}
+          onDoneFile={onDoneFile}
+          onRemoveFile={onRemoveFile}
+          files={files}>
           Subir convenio firmado
         </UploadButton>
       </Form.Item>
