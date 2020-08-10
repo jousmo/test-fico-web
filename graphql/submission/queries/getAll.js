@@ -22,6 +22,7 @@ export const getAll = gql`
       status
       statusChangedAt
       deadline
+      agreementNumber
       concepts {
         name
         region
