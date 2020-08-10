@@ -31,23 +31,23 @@ function AgreementDocumentsForm({ data }) {
           <Form.Item
             style={{display: "inline"}}
             label="Documentos de la implementadora para firma de convenio">
-            <List bordered>
-              <List.Item actions={getAction()}>
+            <List>
+              <List.Item actions={getAction()} style={{borderBottom: 0}}>
                 Acta constitutiva
               </List.Item>
-              <List.Item actions={getAction()}>
+              <List.Item actions={getAction()} style={{borderBottom: 0}}>
                 Poder representante legal
               </List.Item>
-              <List.Item actions={getAction()}>
+              <List.Item actions={getAction()} style={{borderBottom: 0}}>
                 Copia de la identificación oficial de representante legan
               </List.Item>
-              <List.Item actions={getAction()}>
+              <List.Item actions={getAction()} style={{borderBottom: 0}}>
                 Copia de constancia de situación
               </List.Item>
-              <List.Item actions={getAction()}>
+              <List.Item actions={getAction()} style={{borderBottom: 0}}>
                 Comprobante de domicilio
               </List.Item>
-              <List.Item actions={getAction()}>
+              <List.Item actions={getAction()} style={{borderBottom: 0}}>
                 Copia de la caratula del estado de cuenta (Cuenta exclusiva
                 de proyecto)
               </List.Item>

@@ -9,7 +9,8 @@ export function AgreementDocuments() {
   const {
     loading,
     error,
-    data
+    data,
+    client
   } = useContext(ImplementerSubmissionContext)
 
   return (
@@ -17,7 +18,9 @@ export function AgreementDocuments() {
       <AgreementDocumentsForm
         data={data?.Submission}
         error={error}
-        isLoading={loading} />
+        isLoading={loading}
+        client={client}
+      />
     </Section>
   )
 }

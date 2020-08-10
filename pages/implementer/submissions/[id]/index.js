@@ -8,16 +8,13 @@ import {
   ImplementerSubmissionContext
 } from "../../../../contexts/implementer/submissions/show"
 import { submission } from "../../../../graphql/submission"
-import { useMemo, useState } from "react"
-import { useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../helpers/withApollo"
+import { useMemo } from 'react'
+import { useQuery } from '@apollo/react-hooks'
+import { withApollo } from "../../../../helpers"
 import { PageContext } from "../../../../contexts/page"
 
 function Submission({ client }) {
   const router = useRouter()
-  const [ state ] = useState({
-    submissionDetail: {}
-  })
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: router.query.id }
@@ -27,8 +24,9 @@ function Submission({ client }) {
     loading,
     router,
     error,
-    data
-  }), [state, loading])
+    data,
+    client
+  }), [loading])
 
   return (
     <PageContext.Provider

@@ -150,6 +150,12 @@ export const getById = gql`
         comment
         type
       }
+      documents {
+        id
+        name
+        type
+        url
+      }
     }
   }
 `
