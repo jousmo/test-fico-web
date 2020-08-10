@@ -2,8 +2,8 @@ import { useContext, useState } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import { Button, Col, Descriptions } from "antd"
-import { EyeOutlined } from "@ant-design/icons"
+import { Button, Col, Descriptions, Modal } from "antd"
+import { EyeOutlined, BarChartOutlined, ExclamationCircleOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import {
   CloseOutlined,
@@ -18,10 +18,14 @@ import "./style.sass"
 
 export function SubmissionSummary() {
   const {
+    saveApproveMonitoring,
     loading,
     error,
     data
   } = useContext(AdminSubmissionContext)
+
+  const onAgreement = data?.Submission?.status === "ON_AGREEMENT"
+  const findDocument = data?.Submission?.documents.filter(document => document.type === "AGREEMENT")
 
   const [state, setState] = useState({
     isModalOpen: false
@@ -35,6 +39,16 @@ export function SubmissionSummary() {
     setState({ isModalOpen: false })
   }
 
+  const showMonitoringConfirm = () => {
+    Modal.confirm({
+      title: `¿Quieres aprobar la solicitud para monitoreo?`,
+      icon: <ExclamationCircleOutlined />,
+      onOk() {
+        saveApproveMonitoring()
+      }
+    });
+  }
+
   const onSave = (values) => {
     /* TODO: Change status of submission */
     onCancel()
@@ -45,20 +59,32 @@ export function SubmissionSummary() {
   }
 
   const headingButtons = (
-    <Col>
-      <Button
-        ghost
-        shape="circle"
-        icon={<RetweetOutlined />}
-        onClick={onRequestReview} />
-      <Button ghost shape="circle" icon={<CloseOutlined />} />
-      <Button ghost shape="circle" icon={<SelectOutlined />} />
-      <Button
-        ghost
-        shape="circle"
-        icon={<UploadOutlined rotate={90}/>}
-        onClick={onClickApprove} />
-    </Col>
+    !onAgreement ? (
+      <Col>
+        <Button
+          ghost
+          shape="circle"
+          icon={<RetweetOutlined />}
+          onClick={onRequestReview} />
+        <Button ghost shape="circle" icon={<CloseOutlined />} />
+        <Button ghost shape="circle" icon={<SelectOutlined />} />
+        <Button
+          ghost
+          shape="circle"
+          icon={<UploadOutlined rotate={90}/>}
+          onClick={onClickApprove} />
+      </Col>
+    ) : (
+      <Col>
+        <Button
+          type="ficosuccess"
+          size="large"
+          icon={<BarChartOutlined />} disabled={!findDocument.length}
+          onClick={showMonitoringConfirm}>
+          Aprobar para monitoreo
+        </Button>
+      </Col>
+    )
   )
 
   const goToSubmission = (

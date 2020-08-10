@@ -1,45 +1,26 @@
 import { Section } from "../../../../shared"
-import { useContext, useState, useEffect } from "react"
-import {
-  AdminSubmissionContext
-} from "../../../../../contexts/admin/submissions/show"
+import { useContext } from "react"
+import { AdminSubmissionContext } from "../../../../../contexts/admin/submissions/show"
 import SubmissionAgreementForm from "./form"
 
 export function SignedAgreement() {
-  const {
-    updateSubmissionDetail,
-    save,
-    loading,
-    error,
-    data
-  } = useContext(AdminSubmissionContext)
+  const { data, save, updateSubmissionDetail, ...props } = useContext(AdminSubmissionContext)
+  const { signedContractAt, agreementNumber } = data?.Submission || {}
+  const hasSignedContract = !!(signedContractAt && agreementNumber)
 
-  const [state, setState] = useState({
-    hasSignedContract: undefined
-  })
-
-  useEffect(() => {
-    setState({ hasSignedContract: data?.Submission?.signedContractAt })
-  }, [data])
-
-  const onChange = newSignedContractAt => {
-    updateSubmissionDetail({ signedContractAt: newSignedContractAt })
-  }
-
-  const handleSave = async () => {
-    await save()
-    setState({ hasSignedContract: true })
+  const onChange = ({ target: { name, value } }) => {
+    updateSubmissionDetail({ [name]: value })
   }
 
   return (
     <Section title="Convenio firmado">
       <SubmissionAgreementForm
         data={data?.Submission}
-        error={error}
-        isLoading={loading}
-        hasContract={state.hasSignedContract}
+        hasContract={!hasSignedContract}
         onChange={onChange}
-        onSave={handleSave} />
+        onSave={save}
+        {...props}
+      />
     </Section>
   )
 }

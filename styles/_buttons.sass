@@ -2,10 +2,20 @@
   &-primary
     background-color: $accent-color
     border-color: $accent-color
-  
+
   &-link
     color: $toolbar-text-color
 
   &:focus, &:hover
     color: $toolbar-text-color
     border-color: $toolbar-text-color
+
+.ant-btn
+  &-ficosuccess
+    background-color: $success-color
+    border-color: $content-background-color !important
+    color: $content-background-color !important
+  &-ficosuccess:focus, &-ficosuccess:hover
+    background-color: $success-color-hover
+  &-ficosuccess:disabled, &-ficosuccess:disabled:hover
+    background-color: $success-color-disabled
