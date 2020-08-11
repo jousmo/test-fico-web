@@ -1,11 +1,24 @@
-import { PageHeader } from "../../../../shared/page-header"
-import { TechnicalMonitoringTabs } from "./tabs"
+import { useContext } from "react"
+import {
+  AdminSubmissionContext
+} from "../../../../../contexts/admin/submissions/show"
+import { PageHeader } from "../../../../shared"
+import TechnicalMonitoringTabs from "./tabs"
 
 export function TechnicalMonitoring() {
+  const {
+    loading,
+    error,
+    data
+  } = useContext(AdminSubmissionContext)
+
   return (
     <section>
       <PageHeader title="Monitoreo técnico" />
-      <TechnicalMonitoringTabs />
+      <TechnicalMonitoringTabs
+        data={data}
+        error={error}
+        isLoading={loading} />
     </section>
   )
 }
