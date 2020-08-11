@@ -5,11 +5,10 @@ import {
   MonitoringFinancial
 } from "../../../../../../components/admin/projects/monitoring"
 
-function ProjectsList({ client }) {
+function FinancialMonitoringPage({ client }) {
   return (
     <PageContext.Provider
       value={{ type: "admin", step: "active", submenu: "projects" }}>
-      {/*Todo: What context will you use ?*/}
       <Layout subheader={false}>
         <MonitoringFinancial />
       </Layout>
@@ -17,4 +16,4 @@ function ProjectsList({ client }) {
   )
 }
 
-export default withApollo(ProjectsList)
+export default withApollo(FinancialMonitoringPage)
