@@ -3,7 +3,7 @@ import { Section } from "../../../../../../shared/section"
 
 export function ObjectivesSummary() {
   return (
-    <Section style={{ padding: 0, margin: "1rem 0" }}>
+    <Section style={{ margin: "1rem 0" }}>
       <Row>
         <Col flex="auto">
           <Statistic title="Meta" value="90" />
