@@ -1,12 +1,13 @@
 import { Tabs } from "antd"
+import { withForm } from "../../../../../../helpers"
 import { MonitoringObjectives } from "./objectives"
 import "./style.sass"
 
-export function TechnicalMonitoringTabs() {
+function TechnicalMonitoringTabs({ data }) {
   return (
     <Tabs defaultActiveKey="1" className="fico technical-monitoring">
       <Tabs.TabPane tab="Objetivos y actividades" key="1">
-        <MonitoringObjectives />
+        <MonitoringObjectives data={data} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Retos y obstáculos" key="2">
 
@@ -17,3 +18,5 @@ export function TechnicalMonitoringTabs() {
     </Tabs>
   )
 }
+
+export default withForm(TechnicalMonitoringTabs)
