@@ -7,17 +7,12 @@ import MonitoringList from "./list"
 
 export function ProjectMonitoring() {
   const {
-    loading,
-    error,
-    data
+    router
   } = useContext(AdminSubmissionContext)
 
   return (
     <Section title="Monitoreo de proyecto">
-      <MonitoringList
-        data={data?.Submission}
-        error={error}
-        isLoading={loading} />
+      <MonitoringList router={router} />
     </Section>
   )
 }
