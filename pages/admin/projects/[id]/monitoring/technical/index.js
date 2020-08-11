@@ -3,7 +3,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { withApollo } from "../../../../../../helpers/withApollo"
 import {
   TechnicalMonitoring
-} from "../../../../../../components/admin/projects/monitoring/technical"
+} from "../../../../../../components/admin/projects/monitoring"
 
 function TechnicalMonitoringPage({ client }) {
   return (
