@@ -1,8 +1,24 @@
-import { Alert, Col, Divider, Row, Statistic } from "antd"
+import { Alert, Col, Divider, Form, Row, Statistic } from "antd"
 import { SearchFieldPrimary } from "../../../../../shared/search-field-primary"
 import { Section } from "../../../../../shared/section"
+import { ExpenseTable } from "./expenseTable"
+import { CompositeField } from "../../../../../shared/composite-field"
+import { ExpenseModal } from "./form/expenseModal"
+import { useState } from "react"
 
 export function Expense () {
+  const [state, setState] = useState({
+    isModalOpen: false
+  })
+
+  const onClickAdd = () => {
+    setState({ isModalOpen: true })
+  }
+
+  const onCancel = () => {
+    setState({ isModalOpen: false })
+  }
+
   return (
     <div className="financial">
       <Alert
@@ -31,6 +47,21 @@ export function Expense () {
               valueStyle={{ color: "#cf1322" }} />
           </Col>
         </Row>
+      </Section>
+      <Section style={{padding: 0, margin: "1rem 0"}} title="Gastos">
+        <CompositeField
+          onClickAdd={onClickAdd}
+          addLabel="Subir factura">
+          {({ items, addNew, removeItem, replaceItemAtIndex }) =>
+            <div>
+              <ExpenseModal
+                className="fico expense-modal-form"
+                visible={state.isModalOpen}
+                onCancel={onCancel} />
+            </div>
+          }
+        </CompositeField>
+        <ExpenseTable />
       </Section>
     </div>
   )

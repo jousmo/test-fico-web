@@ -17,3 +17,33 @@ $white-color: #FFF
 
       .ant-divider
         height: 100%
+
+.fico.expense-modal-form
+  .ant-divider
+    &::before
+      content: none
+    .ant-divider-inner-text
+      padding-left: 0
+      font-size: 0.9rem
+  .ant-form
+    .ant-row
+      margin-bottom: 1rem
+      .ant-col
+        text-align: left
+        font-size: 0.5rem
+        > label
+          font-size: 0.75rem
+        .ant-picker
+          width: 100%
+    .ant-space
+      margin-bottom: 1rem
+  .ant-alert-info
+    background-color: $white-color
+    border: none
+    font-size: 0.75rem
+    padding-left: 1.25rem
+    .ant-alert-icon
+      left: 0
+  .ant-modal-footer
+    display: flex
+    justify-content: space-between
