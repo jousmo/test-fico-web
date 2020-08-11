@@ -1,4 +1,6 @@
-import { Table } from "antd"
+import { Table, Select, DatePicker, Button, Space } from "antd"
+import { EditOutlined, EyeOutlined } from "@ant-design/icons"
+import moment from "moment"
 
 export function ExpenseTable () {
   const dataSource = [
@@ -10,11 +12,13 @@ export function ExpenseTable () {
       emisor: "JOSE USCANGA",
       rfc: "UAMJ83120CY8",
       importe: 1234,
-      fechaPago: "21/Ene/2020",
+      fechaPago: "21/01/2020",
       conceptoId: "Telefono/Internet",
       presupuestoUso: "16%"
     }
   ]
+
+  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"]
 
   return (
     <Table
@@ -23,8 +27,13 @@ export function ExpenseTable () {
       size="small">
       <Table.Column
         width={1}
+        dataIndex="key"
+        title="" />
+      <Table.Column
+        width={1}
         dataIndex="mes"
-        title="Mes" />
+        title="Mes"
+        render={text => <Select value={text} />} />
       <Table.Column
         width={1}
         dataIndex="emision"
@@ -48,15 +57,29 @@ export function ExpenseTable () {
       <Table.Column
         width={1}
         dataIndex="fechaPago"
-        title="Fecha de pago" />
+        title="Fecha de pago"
+        render={text => <DatePicker defaultValue={moment(text, dateFormatList[0])} format={dateFormatList} />} />
       <Table.Column
         width={1}
         dataIndex="conceptoId"
-        title="ID Concepto" />
+        title="ID Concepto"
+        render={text => <Select value={text} />} />
       <Table.Column
         width={1}
         dataIndex="presupuestoUso"
         title="Uso presupuestal" />
+      <Table.Column
+        width={1}
+        dataIndex="actions"
+        title=""
+        render={text => <Space>
+          <Button
+            type="primary" shape="circle"
+            icon={<EditOutlined />} />
+          <Button
+            type="primary" shape="circle"
+            icon={<EyeOutlined />} />
+        </Space>} />
     </Table>
   )
 }
