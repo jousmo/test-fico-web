@@ -33,9 +33,9 @@ export function ModalExpense({ onSave, onCancel, ...props }) {
     })
   }
 
-  const onOk = () => {
+  const onOk = async () => {
     const values = { ...state, ...stateDates }
-    form.resetFields()
+    await form.resetFields()
     onSave(values)
   }
 
