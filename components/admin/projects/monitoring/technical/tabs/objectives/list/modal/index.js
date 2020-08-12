@@ -3,7 +3,7 @@ import {
   Modal, Row, Tag, Typography
 } from "antd"
 import { useEffect } from "react"
-import { DateField } from "../../../../../../../../shared"
+import { DateField, UploadButton } from "../../../../../../../../shared"
 import { getSelectValue } from "../../../../../../../../../helpers"
 import { ParticipantsField } from "./participants-field"
 
@@ -42,6 +42,7 @@ export function ObjectivesModal({ edit, onCancel, ...props }) {
       {...props}>
       <Form
         form={form}
+        className="fico technical-monitoring objectives-form"
         name="indicator-form">
         <Row gutter={[10, 8]} justify="start">
           <Col span={24}>
@@ -107,6 +108,32 @@ export function ObjectivesModal({ edit, onCancel, ...props }) {
             style={{ margin: "10px 0" }}>
             Indicador
           </Divider>
+          <Col span={24}>
+            <Form.Item
+              label="Indicador"
+              style={{ marginBottom: "0" }}>
+              <Typography.Text strong>
+                {edit?.indicador}
+              </Typography.Text>
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              label="Medio de verificación"
+              style={{ marginBottom: "0" }}>
+              <Typography.Text strong>
+                {edit?.meansOfVerification}
+              </Typography.Text>
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              id="verificationDocument"
+              name="verificationDocument"
+              style={{ marginBottom: "0" }}>
+              <UploadButton>Subir medio de verificación</UploadButton>
+            </Form.Item>
+          </Col>
         </Row>
       </Form>
     </Modal>
