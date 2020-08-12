@@ -11,19 +11,16 @@ export function Expense () {
   })
 
   const onClickAdd = () => {
-    setState({ isModalOpen: true })
+    setState({ ...state, isModalOpen: true })
   }
 
   const onCancel = () => {
-    setState({ isModalOpen: false })
+    setState({ ...state, isModalOpen: false })
   }
 
   const onChange = expense => {
     const newExpense = Array.from(expense)
-    setState({
-      ...state,
-      dataSource: newExpense
-    })
+    setState({ ...state, dataSource: newExpense })
   }
 
   const onSave = (addNew, replaceItemAtIndex) => expense => {
@@ -41,8 +38,8 @@ export function Expense () {
       <Alert
         type="info"
         showIcon
-        message="Adjunta tu conjunto de facturas y selecciona el concepto al que pertenecen,
-                     solo se admiten facturas emitidas a tu organización" />
+        message="Adjunta tu conjunto de facturas y selecciona el concepto al que pertenecen, solo se admiten
+        facturas emitidas a tu organización" />
       <SearchFieldPrimary style={{marginTop: "1rem"}} />
       <Section style={{padding: 0, margin: "1rem 0"}}>
         <Row>

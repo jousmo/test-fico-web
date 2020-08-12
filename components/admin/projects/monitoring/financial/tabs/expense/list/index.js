@@ -23,8 +23,7 @@ export function ListExpense ({ dataSource }) {
       <Table.Column
         width={1}
         dataIndex="createAt"
-        title="Emisión"
-        sorter={(a, b) => a.createAt - b.createAt} />
+        title="Emisión" />
       <Table.Column
         width={1}
         dataIndex="uuid"
