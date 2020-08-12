@@ -5,6 +5,7 @@ import {
 import { useEffect } from "react"
 import { DateField } from "../../../../../../../../shared"
 import { getSelectValue } from "../../../../../../../../../helpers"
+import { ParticipantsField } from "./participants-field"
 
 export function ObjectivesModal({ edit, onCancel, ...props }) {
   const [form] = Form.useForm()
@@ -29,11 +30,13 @@ export function ObjectivesModal({ edit, onCancel, ...props }) {
     onCancel()
   }
 
+  const type = edit?.key?.includes("A") ? "ACTIVITY" : "INDICATOR"
+
   return (
     <Modal
       cancelText="Cancelar"
       onOk={onOk}
-      width={550}
+      width={600}
       onCancel={onClose}
       okText="Guardar"
       {...props}>
@@ -51,6 +54,7 @@ export function ObjectivesModal({ edit, onCancel, ...props }) {
             <Form.Item
               getValueFromEvent={getSelectValue}
               style={{ marginBottom: "0" }}
+              id="dateApplied"
               name="dateApplied">
               <DateField
                 bordered={false}
@@ -71,7 +75,11 @@ export function ObjectivesModal({ edit, onCancel, ...props }) {
             </Form.Item>
           </Col>
           <Col span={9}>
-            <Form.Item label="Reales" style={{ marginBottom: "0" }}>
+            <Form.Item
+              label="Reales"
+              id="attendance"
+              name="attendance"
+              style={{ marginBottom: "0" }}>
               <InputNumber />
             </Form.Item>
           </Col>
@@ -86,6 +94,13 @@ export function ObjectivesModal({ edit, onCancel, ...props }) {
             style={{ margin: "10px 0" }}>
             Participantes
           </Divider>
+          <Col span={24}>
+            <Form.Item
+              id="participants"
+              name="participants">
+              <ParticipantsField type={type} />
+            </Form.Item>
+          </Col>
           <Divider
             plain
             orientation="left"
