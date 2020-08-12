@@ -11,7 +11,8 @@ export function CompositeField({
   defaultValue=[],
   value,
   maxItems,
-  isAddDisabled=false
+  isAddDisabled=false,
+  orientation="BOTTOM"
 }) {
   const genUuid = i => {
     i.uuid = uuid()
@@ -89,8 +90,21 @@ export function CompositeField({
     onChange && onChange(newItems)
   }
 
+  const renderButtonDashed = () => (
+    <Button
+      type="dashed"
+      icon={<PlusOutlined />}
+      onClick={() => onClickAdd && onClickAdd(addNew)}
+      disabled={state.maxReached}
+      block>
+      {addLabel}
+    </Button>
+  )
+
   return (
     <div>
+      { orientation === "TOP" && ( !isAddDisabled && renderButtonDashed() ) }
+
       {
         children({
           items: state.items,
@@ -100,16 +114,8 @@ export function CompositeField({
           replaceItemAtIndex
         })
       }
-      { !isAddDisabled ?
-        <Button
-          type="dashed"
-          icon={<PlusOutlined />}
-          onClick={() => onClickAdd && onClickAdd(addNew)}
-          disabled={state.maxReached}
-          block>
-          {addLabel}
-        </Button>
-      : null }
+
+      { orientation === "BOTTOM" && ( !isAddDisabled && renderButtonDashed() ) }
     </div>
   )
 }

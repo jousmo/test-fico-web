@@ -70,7 +70,8 @@ export function Expense () {
           onClickAdd={onClickAdd}
           onChange={onChange}
           defaultValue={state.dataSource}
-          addLabel="Subir factura">
+          addLabel="Subir factura"
+          orientation="TOP">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <>
               <ModalExpense
