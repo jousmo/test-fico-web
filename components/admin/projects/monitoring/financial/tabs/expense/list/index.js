@@ -22,7 +22,7 @@ export function ListExpense ({ dataSource }) {
         render={text => <Select value={text} />} />
       <Table.Column
         width={1}
-        dataIndex="createAt"
+        dataIndex="issuedAt"
         title="Emisión" />
       <Table.Column
         width={1}
@@ -31,7 +31,7 @@ export function ListExpense ({ dataSource }) {
         sorter />
       <Table.Column
         width={1}
-        dataIndex="issuing"
+        dataIndex="issuer"
         title="Emisor" />
       <Table.Column
         width={1}

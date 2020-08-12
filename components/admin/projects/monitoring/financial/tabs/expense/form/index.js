@@ -76,8 +76,8 @@ export function ModalExpense({ onSave, onCancel, ...props }) {
         <Divider orientation="left">Emisor</Divider>
         <Form.Item
           label="Razon social:"
-          name="issuing">
-          <Input name="issuing" />
+          name="issuer">
+          <Input name="issuer" />
         </Form.Item>
         <Form.Item
           label="RFC:"
@@ -86,16 +86,16 @@ export function ModalExpense({ onSave, onCancel, ...props }) {
         </Form.Item>
         <Form.Item
           label="Emisión:"
-          name="createAt">
+          name="issuedAt">
           <DateField
-            id="createAt"
+            id="issuedAt"
             onChange={onChangeDate}
             format="DD/MM/YYYY" />
         </Form.Item>
         <Divider orientation="left">Receptor</Divider>
         <Form.Item
           label="Razon social:"
-          name="receiver">
+          name="receptor">
           <Select name="receiver" options={[{ label: "José Uscanga", value:"José Uscanga"}]} />
         </Form.Item>
         <Divider orientation="left">Asignación</Divider>
@@ -111,7 +111,7 @@ export function ModalExpense({ onSave, onCancel, ...props }) {
         </Form.Item>
         <Form.Item
           label="ID Rubro:"
-          name="entry">
+          name="category">
           <Input name="entry" />
         </Form.Item>
         <Form.Item
