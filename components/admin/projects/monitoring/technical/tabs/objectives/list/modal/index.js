@@ -1,12 +1,9 @@
 import {
   Col, Divider, Form, InputNumber,
-  Modal,  Popover, Row, Tag,
-  Typography
+  Modal, Row, Tag, Typography
 } from "antd"
-import { ExclamationCircleOutlined } from "@ant-design/icons"
 import { useEffect } from "react"
 import { DateField } from "../../../../../../../../shared"
-import { ParticipantsText } from "./participants-text"
 import { getSelectValue } from "../../../../../../../../../helpers"
 
 export function ObjectivesModal({ edit, onCancel, ...props }) {
@@ -88,10 +85,6 @@ export function ObjectivesModal({ edit, onCancel, ...props }) {
             orientation="left"
             style={{ margin: "10px 0" }}>
             Participantes
-            &nbsp;
-            <Popover content={<ParticipantsText />}>
-              <ExclamationCircleOutlined />
-            </Popover>
           </Divider>
           <Divider
             plain
