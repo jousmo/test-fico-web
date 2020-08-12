@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu, Space } from "antd"
+import { Button, Dropdown, Menu, message, Space } from "antd"
 import { useState, useEffect } from "react"
 import { BellOutlined, UserOutlined } from "@ant-design/icons"
 import { Logout } from "../../../helpers/auth/logout"
@@ -9,8 +9,14 @@ function UserHeader(){
   const [userState, setUserState] = useState(undefined)
 
   useEffect(() => {
-    const { claims } = JSON.parse(localStorage.getItem("user"))
-    setUserState(claims.name)
+    try {
+      const { claims } = JSON.parse(localStorage.getItem("user"))
+      setUserState(claims.name)
+    }
+    catch(e){
+      router.push("/login")
+      message.warn("Favor de iniciar sesión")
+    }
   }, [])
 
   const menu = (
