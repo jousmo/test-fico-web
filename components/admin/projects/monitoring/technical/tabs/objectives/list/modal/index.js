@@ -1,6 +1,7 @@
 import {
-  Col, Divider, Form, Modal,
-  Popover, Row, Tag, Typography
+  Col, Divider, Form, InputNumber,
+  Modal,  Popover, Row, Tag,
+  Typography
 } from "antd"
 import { ExclamationCircleOutlined } from "@ant-design/icons"
 import { useEffect } from "react"
@@ -67,6 +68,21 @@ export function ObjectivesModal({ edit, onCancel, ...props }) {
             style={{ margin: "10px 0" }}>
             Resultados
           </Divider>
+          <Col span={7}>
+            <Form.Item label="Meta" style={{ marginBottom: "0" }}>
+              {edit?.goal}
+            </Form.Item>
+          </Col>
+          <Col span={9}>
+            <Form.Item label="Reales" style={{ marginBottom: "0" }}>
+              <InputNumber />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Cumplimiento" style={{ marginBottom: "0" }}>
+              50%
+            </Form.Item>
+          </Col>
           <Divider
             plain
             orientation="left"
