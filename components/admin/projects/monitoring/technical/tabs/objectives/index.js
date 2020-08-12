@@ -9,7 +9,9 @@ export function MonitoringObjectives({ data }) {
 
   const [state, setState] = useState({
     selectedRows: [],
-    fulfilled: {}
+    fulfilled: {},
+    isModalOpen: false,
+    edit: undefined
   })
 
   return (
