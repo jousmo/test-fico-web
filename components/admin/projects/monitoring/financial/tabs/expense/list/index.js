@@ -1,50 +1,38 @@
-import { Table, Select, DatePicker, Button, Space } from "antd"
+import { Table, Select, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined } from "@ant-design/icons"
-import moment from "moment"
+import { DateField } from "../../../../../../../shared"
 
-export function ExpenseTable () {
-  const dataSource = [
-    {
-      key: "1",
-      mes: "ENERO",
-      emision: "21/Ene/2020",
-      folio: "OESS-DFSDF-SDFSF",
-      emisor: "JOSE USCANGA",
-      rfc: "UAMJ83120CY8",
-      importe: 1234,
-      fechaPago: "21/01/2020",
-      conceptoId: "Telefono/Internet",
-      presupuestoUso: "16%"
-    }
-  ]
-
-  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"]
-
+export function ListExpense ({ dataSource }) {
   return (
     <Table
+      rowKey={r => r}
       style={{marginTop: "1.5rem"}}
       dataSource={dataSource}
-      size="small">
+      size="small"
+      locale={{emptyText: <Empty description="Agrega todas las facturas" />}}
+      pagination={false}>
       <Table.Column
         width={1}
-        dataIndex="key"
-        title="" />
+        title=""
+        render={(text, record, index) => ++index} />
       <Table.Column
         width={1}
-        dataIndex="mes"
+        dataIndex="monthAt"
         title="Mes"
         render={text => <Select value={text} />} />
       <Table.Column
         width={1}
-        dataIndex="emision"
-        title="Emisión" />
+        dataIndex="createAt"
+        title="Emisión"
+        sorter={(a, b) => a.createAt - b.createAt} />
       <Table.Column
         width={1}
-        dataIndex="folio"
-        title="Folio SAT" />
+        dataIndex="uuid"
+        title="Folio SAT"
+        sorter />
       <Table.Column
         width={1}
-        dataIndex="emisor"
+        dataIndex="issuing"
         title="Emisor" />
       <Table.Column
         width={1}
@@ -52,27 +40,26 @@ export function ExpenseTable () {
         title="RFC" />
       <Table.Column
         width={1}
-        dataIndex="importe"
+        dataIndex="ficosecPayment"
         title="Importe" />
       <Table.Column
         width={1}
-        dataIndex="fechaPago"
+        dataIndex="paymentAt"
         title="Fecha de pago"
-        render={text => <DatePicker defaultValue={moment(text, dateFormatList[0])} format={dateFormatList} />} />
+        render={text => <DateField value={text} format="DD/MM/YYYY" />} />
       <Table.Column
         width={1}
-        dataIndex="conceptoId"
+        dataIndex="concept"
         title="ID Concepto"
         render={text => <Select value={text} />} />
       <Table.Column
         width={1}
-        dataIndex="presupuestoUso"
+        dataIndex="investmentOnePayment"
         title="Uso presupuestal" />
       <Table.Column
         width={1}
-        dataIndex="actions"
         title=""
-        render={text => <Space>
+        render={() => <Space>
           <Button
             type="primary" shape="circle"
             icon={<EditOutlined />} />

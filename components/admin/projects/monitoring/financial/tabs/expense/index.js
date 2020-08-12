@@ -1,14 +1,13 @@
-import { Alert, Col, Divider, Form, Row, Statistic } from "antd"
-import { SearchFieldPrimary } from "../../../../../shared/search-field-primary"
-import { Section } from "../../../../../shared/section"
-import { ExpenseTable } from "./expenseTable"
-import { CompositeField } from "../../../../../shared/composite-field"
-import { ExpenseModal } from "./form/expenseModal"
 import { useState } from "react"
+import { Alert, Col, Divider, Row, Statistic, DatePicker, Space } from "antd"
+import { Section, SearchFieldPrimary, CompositeField } from "../../../../../../shared"
+import { ListExpense } from "./list"
+import { ModalExpense } from "./form"
 
 export function Expense () {
   const [state, setState] = useState({
-    isModalOpen: false
+    isModalOpen: false,
+    dataSource: []
   })
 
   const onClickAdd = () => {
@@ -17,6 +16,24 @@ export function Expense () {
 
   const onCancel = () => {
     setState({ isModalOpen: false })
+  }
+
+  const onChange = expense => {
+    const newExpense = Array.from(expense)
+    setState({
+      ...state,
+      dataSource: newExpense
+    })
+  }
+
+  const onSave = (addNew, replaceItemAtIndex) => expense => {
+    if(expense.index !== undefined) {
+      replaceItemAtIndex(expense.index, expense)
+    } else {
+      addNew(expense)
+    }
+
+    onCancel()
   }
 
   return (
@@ -49,19 +66,25 @@ export function Expense () {
         </Row>
       </Section>
       <Section style={{padding: 0, margin: "1rem 0"}} title="Gastos">
+        <Space>
+          <DatePicker.RangePicker />
+        </Space>
         <CompositeField
           onClickAdd={onClickAdd}
+          onChange={onChange}
+          defaultValue={state.dataSource}
           addLabel="Subir factura">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
-            <div>
-              <ExpenseModal
+            <>
+              <ModalExpense
                 className="fico expense-modal-form"
                 visible={state.isModalOpen}
+                onSave={onSave(addNew, replaceItemAtIndex)}
                 onCancel={onCancel} />
-            </div>
+              <ListExpense dataSource={items} />
+            </>
           }
         </CompositeField>
-        <ExpenseTable />
       </Section>
     </div>
   )

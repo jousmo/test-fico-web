@@ -96,7 +96,8 @@ export function ConceptModal({
   return (
     <Modal
       title={`${edit ? "Editar" : "Agregar"} concepto`}
-      onOk={onOk}
+      onOk={form.resetFields()
+        onCancel && onCancel()}
       onCancel={onCancelModal}
       width={800}
       okText={`${edit ? "Guardar" : "Agregar"}`}

@@ -1,7 +1,7 @@
+import { Tabs } from "antd"
 import { Expense } from "./expense"
 import { SearchFieldPrimary } from "../../../../../shared"
 import "./style.sass"
-import { Tabs } from "antd"
 
 export function MonitoringFinancialTabs() {
   return (
