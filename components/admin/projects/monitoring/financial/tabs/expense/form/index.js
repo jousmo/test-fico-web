@@ -114,11 +114,6 @@ export function ModalExpense({ onSave, onCancel, ...props }) {
           name="entry">
           <Input name="entry" />
         </Form.Item>
-        <Divider orientation="left">Importe</Divider>
-        <Space>
-          <Statistic title="Importe de factura" value="$456.00" />
-          <Statistic title="Uso del presupuesto" value="16%" />
-        </Space>
         <Form.Item
           label="Fecha de pago:"
           name="paymentAt">
@@ -148,6 +143,11 @@ export function ModalExpense({ onSave, onCancel, ...props }) {
           name="implementerPayment">
           <Input name="implementerPayment" />
         </Form.Item>
+        <Divider orientation="left">Importe</Divider>
+        <Space>
+          <Statistic title="Importe de factura" value="$456.00" />
+          <Statistic title="Uso del presupuesto" value="16%" />
+        </Space>
       </Form>
     </Modal>
   )
