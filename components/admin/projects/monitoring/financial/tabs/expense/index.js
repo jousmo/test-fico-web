@@ -45,20 +45,20 @@ function Expense ({ data }) {
       <Section style={{padding: 0, margin: "1rem 0"}}>
         <Row>
           <Col flex="auto">
-            <Statistic title="Presupuesto a FICOSEC" value={`$${state.data?.budgeted}`} />
+            <Statistic title="Presupuesto a FICOSEC" value={`$${state.data?.budgeted?.toFixed(2)}`} />
           </Col>
           <Col span={1}>
             <Divider type="vertical" />
           </Col>
           <Col flex="auto">
-            <Statistic title="Comprobado a FICOSEC" value={`$${state.data?.evidenced}`} />
+            <Statistic title="Comprobado a FICOSEC" value={`$${state.data?.evidenced?.toFixed(2)}`} />
           </Col>
           <Col span={1}>
             <Divider type="vertical" />
           </Col>
           <Col flex="auto">
             <Statistic
-              title="Diferencia" value={`$${state.data?.difference}`}
+              title="Diferencia" value={`$${state.data?.difference?.toFixed(2)}`}
               valueStyle={{ color: "#cf1322" }} />
           </Col>
         </Row>
