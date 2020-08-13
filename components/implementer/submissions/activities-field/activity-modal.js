@@ -29,7 +29,6 @@ export function ActivityModal({
       let values = await form.getFieldsValue()
 
       if(typeof edit?.index !== "undefined") {
-        values.index = edit.index
         edit.months = null
         values = merge(edit, values)
       }
