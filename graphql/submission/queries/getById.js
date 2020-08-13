@@ -159,6 +159,22 @@ export const getById = gql`
       budgeted
       evidenced
       difference
+      invoices {
+        uuid
+        issuer
+        rfc
+        issuedAt
+        receptor
+        monthAt
+        concept
+        category
+        paymentAt
+        ficosecPayment
+        investmentOnePayment
+        investmentTwoPayment
+        implementerPayment
+        amount
+      }
       technicalMonitoringReports{
         id
         key

@@ -1,8 +1,9 @@
 import { Table, Select, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined } from "@ant-design/icons"
 import { DateField } from "../../../../../../../shared"
+import moment from "moment"
 
-export function ListExpense ({ dataSource }) {
+export function ListExpense ({ dataSource, budgeted }) {
   return (
     <Table
       rowKey={r => r}
@@ -23,7 +24,8 @@ export function ListExpense ({ dataSource }) {
       <Table.Column
         width={1}
         dataIndex="issuedAt"
-        title="Emisión" />
+        title="Emisión"
+        render={text => moment(text).format("DD/MMMM/YYYY").toUpperCase()} />
       <Table.Column
         width={1}
         dataIndex="uuid"
@@ -39,10 +41,11 @@ export function ListExpense ({ dataSource }) {
         title="RFC" />
       <Table.Column
         width={1}
-        dataIndex="ficosecPayment"
-        title="Importe" />
+        dataIndex="amount"
+        title="Importe"
+        render={text => `$${text}`} />
       <Table.Column
-        width={1}
+        width={2}
         dataIndex="paymentAt"
         title="Fecha de pago"
         render={text => <DateField value={text} format="DD/MM/YYYY" />} />
@@ -53,8 +56,9 @@ export function ListExpense ({ dataSource }) {
         render={text => <Select value={text} />} />
       <Table.Column
         width={1}
-        dataIndex="investmentOnePayment"
-        title="Uso presupuestal" />
+        dataIndex="percentage"
+        title="Uso presupuestal"
+        render={(text, row) => `${parseFloat((row.amount * 100) / budgeted).toFixed(2)}%` } />
       <Table.Column
         width={1}
         title=""

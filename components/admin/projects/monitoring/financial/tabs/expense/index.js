@@ -8,8 +8,7 @@ import { ModalExpense } from "./form"
 function Expense ({ data }) {
   const [state, setState] = useState({
     isModalOpen: false,
-    data,
-    dataSource: []
+    data
   })
 
   const onClickAdd = () => {
@@ -71,7 +70,7 @@ function Expense ({ data }) {
         <CompositeField
           onClickAdd={onClickAdd}
           onChange={onChange}
-          defaultValue={state.dataSource}
+          defaultValue={state.data.invoices}
           addLabel="Subir factura"
           orientation="TOP">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
@@ -81,7 +80,7 @@ function Expense ({ data }) {
                 visible={state.isModalOpen}
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 onCancel={onCancel} />
-              <ListExpense dataSource={items} />
+              <ListExpense dataSource={items} budgeted={state.data?.budgeted}/>
             </>
           }
         </CompositeField>
