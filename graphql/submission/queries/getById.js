@@ -156,6 +156,15 @@ export const getById = gql`
         type
         url
       }
+      technicalMonitoringReports{
+        goal
+        completed
+        compliance
+        verificationDocument{
+          name
+          url
+        }
+      }
     }
   }
 `
