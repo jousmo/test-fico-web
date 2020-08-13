@@ -156,6 +156,9 @@ export const getById = gql`
         type
         url
       }
+      budgeted
+      evidenced
+      difference
       technicalMonitoringReports{
         id
         key

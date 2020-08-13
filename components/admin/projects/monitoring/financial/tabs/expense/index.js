@@ -1,12 +1,14 @@
 import { useState } from "react"
 import { Alert, Col, Divider, Row, Statistic, DatePicker, Space } from "antd"
 import { Section, SearchFieldPrimary, CompositeField } from "../../../../../../shared"
+import { withForm } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 
-export function Expense () {
+function Expense ({ data }) {
   const [state, setState] = useState({
     isModalOpen: false,
+    data,
     dataSource: []
   })
 
@@ -44,20 +46,20 @@ export function Expense () {
       <Section style={{padding: 0, margin: "1rem 0"}}>
         <Row>
           <Col flex="auto">
-            <Statistic title="Presupuesto a FICOSEC" value="$189,436.00" />
+            <Statistic title="Presupuesto a FICOSEC" value={`$${state.data?.budgeted}`} />
           </Col>
           <Col span={1}>
             <Divider type="vertical" />
           </Col>
           <Col flex="auto">
-            <Statistic title="Comprobado a FICOSEC" value="$456.00" />
+            <Statistic title="Comprobado a FICOSEC" value={`$${state.data?.evidenced}`} />
           </Col>
           <Col span={1}>
             <Divider type="vertical" />
           </Col>
           <Col flex="auto">
             <Statistic
-              title="Diferencia" value="$188,980.00"
+              title="Diferencia" value={`$${state.data?.difference}`}
               valueStyle={{ color: "#cf1322" }} />
           </Col>
         </Row>
@@ -87,3 +89,5 @@ export function Expense () {
     </div>
   )
 }
+
+export default withForm(Expense)
