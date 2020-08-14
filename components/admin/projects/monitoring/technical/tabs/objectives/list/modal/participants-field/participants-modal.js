@@ -12,6 +12,7 @@ export function ParticipantsModal({ onSave, onCancel, type, ...props }) {
 
   const onOk = async () => {
     try {
+      await form.validateFields()
       const values = await form.getFieldsValue()
 
       onSave(values)
@@ -51,7 +52,8 @@ export function ParticipantsModal({ onSave, onCancel, type, ...props }) {
             <Form.Item
               name="amount"
               id="amount"
-              style={{display: "inline"}}>
+              style={{display: "inline"}}
+              rules={[{ required: true, message: "Campo requerido" }]}>
               <InputNumber
                 style={{ width: "100%" }}
                 min={1}
@@ -63,7 +65,8 @@ export function ParticipantsModal({ onSave, onCancel, type, ...props }) {
               name="type"
               id="type"
               getValueFromEvent={getSelectValue}
-              style={{display: "inline"}}>
+              style={{display: "inline"}}
+              rules={[{ required: true, message: "Campo requerido" }]}>
               <SelectField
                 options={atendeeType}
                 placeholder="Tipo" />
@@ -74,7 +77,8 @@ export function ParticipantsModal({ onSave, onCancel, type, ...props }) {
               name="preventionLevel"
               id="preventionLevel"
               getValueFromEvent={getSelectValue}
-              style={{display: "inline"}}>
+              style={{display: "inline"}}
+              rules={[{ required: true, message: "Campo requerido" }]}>
               <SelectField
                 options={preventionLevelTypes}
                 placeholder="Nivel de prevención / intervención" />
@@ -85,7 +89,8 @@ export function ParticipantsModal({ onSave, onCancel, type, ...props }) {
               name="gender"
               id="gender"
               getValueFromEvent={getSelectValue}
-              style={{display: "inline"}}>
+              style={{display: "inline"}}
+              rules={[{ required: true, message: "Campo requerido" }]}>
               <SelectField
                 options={genderTypes}
                 placeholder="Sexo" />
@@ -96,7 +101,8 @@ export function ParticipantsModal({ onSave, onCancel, type, ...props }) {
               name="age"
               id="age"
               getValueFromEvent={getSelectValue}
-              style={{display: "inline"}}>
+              style={{display: "inline"}}
+              rules={[{ required: true, message: "Campo requerido" }]}>
               <SelectField
                 options={ageRanges}
                 placeholder="Rango de edad" />
