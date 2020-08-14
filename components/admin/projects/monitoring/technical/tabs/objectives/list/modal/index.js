@@ -20,6 +20,8 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
     try {
       await form.validateFields()
       const values = await form.getFieldsValue()
+
+      values.key = edit.key
       values.goal = Number(values.goal)
 
       onSave(values)
@@ -105,7 +107,6 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
             <Form.Item
               label="Meta"
               id="goal"
-              name="goal"
               style={{ marginBottom: "0" }}>
               {edit?.goal}
             </Form.Item>
