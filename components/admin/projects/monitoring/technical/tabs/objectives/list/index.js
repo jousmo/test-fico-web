@@ -1,53 +1,43 @@
 import { Button, Table } from "antd"
+import { CheckSquareTwoTone } from "@ant-design/icons/lib"
 import { EditOutlined } from "@ant-design/icons"
 import { decoratedData } from "./data-decorator"
 import { ObjectivesModal } from "./modal"
-import { useContext, useState, useEffect } from "react"
+import { useContext, useState } from "react"
+import moment from "moment"
+moment.locale("es")
 import {
   AdminSubmissionContext
 } from "../../../../../../../../contexts/admin/submissions/show"
 
-export function ObjectivesList({ data, completed, setCompleted }) {
+export function ObjectivesList({ data }) {
   const [state, setState] = useState({
-    selectedRows: [],
     isModalOpen: false,
     edit: undefined,
-    reports: []
+    test: 0
   })
 
-  useEffect(() => {
-    setState({ ...state, reports: data.technicalMonitoringReports })
-  }, [data])
-
   const dataSource = decoratedData(data)
-  const { save, update, refetch } = useContext(AdminSubmissionContext)
-
-  const onSelectChange = selectedRowKeys => {
-    setState(prevState => (
-      { ...prevState,  selectedRows: selectedRowKeys }
-    ))
-  }
+  const { save, update } = useContext(AdminSubmissionContext)
 
   const getReport = row => {
-    const report = state.reports.find(r => r.key === row.key)
-    return report
-  }
-
-  const getReal = (row) => {
-    const report = state.reports.find(r => r.key === row.key)
-    return report?.completed || 0
+    return data.technicalMonitoringReports?.find(r => r.key === row.key)
   }
 
   const getParticipants = row => {
     const report = getReport(row)
-    const total = report?.participants?.reduce((acc, item) => (
+    return report?.participants?.reduce((acc, item) => (
       acc += Number(item.amount || 0)
     ), 0) || 0
-    return total
+  }
+
+  const getAppliedAt = row => {
+    const report = getReport(row)
+    return moment(report?.appliedAt).format("DD/MM/YYYY")
   }
 
   const onSave = monitoring => {
-    const newReports = [ ...state.reports ]
+    const newReports = [ ...data.technicalMonitoringReports ]
 
     const index = newReports.findIndex(r => r.key === monitoring.key)
     if (index >= 0){
@@ -57,14 +47,12 @@ export function ObjectivesList({ data, completed, setCompleted }) {
       newReports.push(monitoring)
       save(monitoring)
     }
-    setState({ ...state, reports: newReports })
-    refetch()
 
     onCancel()
   }
 
   const onEdit = row => {
-    const report = state?.reports?.find(report =>
+    const report = data.technicalMonitoringReports?.find(report =>
       report.key === row.key
     ) || {}
     setState({ ...state, isModalOpen: true, edit: { ...row, ...report } })
@@ -84,13 +72,17 @@ export function ObjectivesList({ data, completed, setCompleted }) {
       <Table
         className="table-list"
         dataSource={dataSource}
-        rowSelection={{ state, onChange: onSelectChange }}
         size="middle">
+        <Table.Column
+          render={(t, row) => getReport(row) && <CheckSquareTwoTone />}
+          title={<CheckSquareTwoTone />}/>
         <Table.Column
           dataIndex="level"
           title="Nivel" />
         <Table.Column title="Resumen narrativo" dataIndex="description" />
-        <Table.Column title="Realizado" />
+        <Table.Column
+          render={(t, row) => getAppliedAt(row)}
+          title="Realizado" />
         <Table.Column
           dataIndex="title"
           title="Indicador" />
@@ -103,7 +95,7 @@ export function ObjectivesList({ data, completed, setCompleted }) {
           title="Meta" />
         <Table.Column
           align="center"
-          render={(t, row) => getReal(row)}
+          render={(t, row) => getReport(row)?.completed || 0}
           title="Real"
           width={90} />
         <Table.Column
