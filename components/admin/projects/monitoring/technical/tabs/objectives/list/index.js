@@ -2,9 +2,14 @@ import { Button, InputNumber, Table } from "antd"
 import { EditOutlined } from "@ant-design/icons"
 import { decoratedData } from "./data-decorator"
 import { ObjectivesModal } from "./modal"
+import { useContext } from "react"
+import {
+  AdminSubmissionContext
+} from "../../../../../../../../contexts/admin/submissions/show"
 
 export function ObjectivesList({ data, state, setState }) {
   const dataSource = decoratedData(data)
+  const { save } = useContext(AdminSubmissionContext)
 
   const onSelectChange = selectedRowKeys => {
     setState(prevState => (
@@ -29,6 +34,11 @@ export function ObjectivesList({ data, state, setState }) {
     ))
   }
 
+  const onSave = monitoring => {
+    save(monitoring)
+    onCancel()
+  }
+
   const onEdit = row => {
     setState({ ...state, isModalOpen: true, edit: row })
   }
@@ -42,6 +52,7 @@ export function ObjectivesList({ data, state, setState }) {
       <ObjectivesModal
         edit={state.edit}
         onCancel={onCancel}
+        onSave={onSave}
         visible={state.isModalOpen} />
       <Table
         className="table-list"
