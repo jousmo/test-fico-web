@@ -29,11 +29,6 @@ function Expense ({ data, save }) {
       addNew(expense)
     }
 
-    expense.ficosecPayment = +expense.ficosecPayment
-    expense.investmentOnePayment = +expense.investmentOnePayment
-    expense.investmentTwoPayment = +expense.investmentTwoPayment
-    expense.implementerPayment = +expense.implementerPayment
-
     save(expense)
     onCancel()
   }

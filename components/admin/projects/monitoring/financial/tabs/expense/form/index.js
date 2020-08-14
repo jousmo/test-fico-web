@@ -4,8 +4,10 @@ import { DateField, SelectField } from "../../../../../../../shared"
 import { UploadOutlined } from "@ant-design/icons"
 import { getSelectValue } from "../../../../../../../../helpers/getSelectValue"
 import { warning } from "../../../../../../../../helpers/alert"
+import { merge } from "lodash"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
+  const budgeted = submission?.budgeted
   const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
 
   const [state, setState] = useState({})
@@ -43,14 +45,20 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     const implementerPayment = +state?.implementerPayment || 0
 
     const amount = ficosecPayment + investmentOnePayment + investmentTwoPayment + implementerPayment
-    const percentage = (amount * 100) / submission?.budgeted
+    const percentage = (amount * 100) / budgeted
 
     return { amount, percentage }
   }
 
   const onSubmit = async () => {
     try {
-      const values = await form.validateFields()
+      let values = await form.validateFields()
+
+      if(typeof edit?.index !== "undefined") {
+        values.index = edit.index
+        values = merge(edit, values)
+      }
+
       onSave(values)
     } catch (e) {
       warning("Llena los campos requeridos")
