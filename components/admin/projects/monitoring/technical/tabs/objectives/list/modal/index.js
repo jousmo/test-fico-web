@@ -22,7 +22,8 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
       const values = await form.getFieldsValue()
 
       values.key = edit.key
-      values.goal = Number(values.goal)
+      values.id = edit.id
+      values.goal = Number(edit.goal)
 
       onSave(values)
     }
@@ -61,11 +62,13 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
 
   const files = []
   if (edit?.verificationDocument){
-    files.push(edit.verificationDocument)
+    const { id: uid, ...document } = edit?.verificationDocument
+    files.push({ uid, ...document })
   }
 
   return (
     <Modal
+      destroyOnClose
       cancelText="Cancelar"
       onOk={onOk}
       width={600}
@@ -86,6 +89,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
           <Col span={24}>
             <Form.Item
               getValueFromEvent={getSelectValue}
+              initialValue={edit?.appliedAt}
               style={{ marginBottom: "0" }}
               rules={[{ required: true, message: "Campo requerido" }]}
               id="appliedAt"
@@ -116,6 +120,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
               label="Reales"
               id="completed"
               name="completed"
+              initialValue={edit?.completed}
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <InputNumber />
@@ -134,10 +139,13 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
           </Divider>
           <Col span={24}>
             <Form.Item
-              rules={[{ required: true, message: "Campo requerido" }]}
               id="participants"
-              name="participants">
-              <ParticipantsField type={type} />
+              name="participants"
+              rules={[{ required: true, message: "Campo requerido" }]}>
+              <ParticipantsField
+                defaultValue={edit?.participants}
+                onChange={(p) => form.setFieldsValue({ participants: p })}
+                type={type} />
             </Form.Item>
           </Col>
           <Divider
@@ -168,6 +176,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
             <Form.Item
               id="verificationDocument"
               name="verificationDocument"
+              initialValue={files}
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <UploadButton
