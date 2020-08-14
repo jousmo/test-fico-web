@@ -11,6 +11,7 @@ import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { success } from "../../../../../../helpers/alert"
+import { cloneDeep } from "lodash"
 
 function TechnicalMonitoringPage({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -20,6 +21,10 @@ function TechnicalMonitoringPage({ client, query }) {
 
   const [createMonitoring] = useMutation(
     submission.mutations.createMonitoring, { client: client }
+  )
+
+  const [updateMonitoring] = useMutation(
+    submission.mutations.updateMonitoring, { client: client }
   )
 
   const save = useCallback(async monitoring => {
@@ -34,8 +39,28 @@ function TechnicalMonitoringPage({ client, query }) {
     }
   }, [createMonitoring])
 
+  const update = useCallback(async monitoring => {
+    const newMonitoring = cloneDeep(monitoring)
+    const { id, ...updatedMonitoring } = newMonitoring
+
+    delete updatedMonitoring.verificationDocument.id
+    updatedMonitoring.participants = [...updatedMonitoring.participants]
+      .map(({uuid, ...p}) => p)
+
+    try {
+      await updateMonitoring({
+        variables: { data: updatedMonitoring, id: id }
+      })
+      success()
+    }
+    catch(e) {
+      console.error(e)
+    }
+  }, [updateMonitoring])
+
   const injectActions = useMemo(() => ({
     loading,
+    update,
     error,
     data,
     save
