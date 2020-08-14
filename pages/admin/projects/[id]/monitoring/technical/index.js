@@ -14,7 +14,7 @@ import { success } from "../../../../../../helpers/alert"
 import { cloneDeep } from "lodash"
 
 function TechnicalMonitoringPage({ client, query }) {
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: query.id }
   })
@@ -33,11 +33,12 @@ function TechnicalMonitoringPage({ client, query }) {
         variables: { data: monitoring, id: query.id }
       })
       success()
+      refetch()
     }
     catch(e) {
       console.error(e)
     }
-  }, [createMonitoring])
+  }, [createMonitoring, refetch])
 
   const update = useCallback(async monitoring => {
     const newMonitoring = cloneDeep(monitoring)
@@ -52,11 +53,12 @@ function TechnicalMonitoringPage({ client, query }) {
         variables: { data: updatedMonitoring, id: id }
       })
       success()
+      refetch()
     }
     catch(e) {
       console.error(e)
     }
-  }, [updateMonitoring])
+  }, [updateMonitoring, refetch])
 
   const injectActions = useMemo(() => ({
     loading,
@@ -64,7 +66,7 @@ function TechnicalMonitoringPage({ client, query }) {
     error,
     data,
     save
-  }), [loading])
+  }), [loading, data])
 
   return (
     <PageContext.Provider
