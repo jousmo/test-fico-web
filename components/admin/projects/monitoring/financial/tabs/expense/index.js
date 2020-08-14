@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { Alert, Col, Divider, Row, Statistic, DatePicker, Space } from "antd"
-import { Section, SearchFieldPrimary, CompositeField } from "../../../../../../shared"
+import { Alert, Col, Divider, Row, Statistic, Space } from "antd"
+import { Section, SearchFieldPrimary, CompositeField, DateField } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
@@ -69,7 +69,7 @@ function Expense ({ data, save, update }) {
       </Section>
       <Section style={{padding: 0, margin: "1rem 0"}} title="Gastos">
         <Space>
-          <DatePicker.RangePicker />
+          <DateField range format="DD/MM/YYYY" />
         </Space>
         <CompositeField
           onClickAdd={onClickAdd}
