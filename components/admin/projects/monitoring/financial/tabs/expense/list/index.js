@@ -4,7 +4,7 @@ import { DateField, SelectField } from "../../../../../../../shared"
 import moment from "moment"
 moment.locale("es")
 
-export function ListExpense ({ dataSource, budgeted, onEdit }) {
+export function ListExpense ({ dataSource, onEdit }) {
   return (
     <Table
       rowKey={a => a.uuid}
@@ -59,7 +59,7 @@ export function ListExpense ({ dataSource, budgeted, onEdit }) {
         width={1}
         dataIndex="percentage"
         title="Uso presupuestal"
-        render={(text, row) => `${parseFloat((row.amount * 100) / budgeted).toFixed(2)}%` } />
+        render={text => `${text.toFixed(2)}%` } />
       <Table.Column
         width={1}
         title=""

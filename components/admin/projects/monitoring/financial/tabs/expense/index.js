@@ -88,7 +88,6 @@ function Expense ({ data, save, update }) {
                 className="fico expense-modal-form"/>
               <ListExpense
                 dataSource={items}
-                budgeted={Submission?.budgeted}
                 onEdit={onEdit}/>
             </>
           }

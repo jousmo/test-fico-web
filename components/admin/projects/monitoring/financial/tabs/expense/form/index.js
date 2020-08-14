@@ -27,7 +27,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
 
   const onCancelModal = () => {
     form.resetFields()
-    setState({})
+    setState({ amount, percentage })
     onCancel && onCancel()
   }
 
