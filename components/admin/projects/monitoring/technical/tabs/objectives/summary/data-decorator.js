@@ -1,4 +1,4 @@
-export const decoratedGoal = (data) => {
+export const decoratedGoal = data => {
   let goal = 0
   data?.generalObjectiveIndicators?.forEach(indicator =>
     goal += parseInt(indicator.goal)
@@ -26,12 +26,11 @@ export const decoratedGoal = (data) => {
   return goal
 }
 
-export const decoratedReal = (fulfilled) => {
-  let real = 0
-  Object.keys(fulfilled).forEach(key =>
-    real += fulfilled[key]
-  )
-  return real
+export const decoratedReal = data => {
+  const { technicalMonitoringReports: reports } = data || {}
+  return reports?.reduce((acc, item) => (
+    acc += Number(item.completed || 0)
+  ), 0) || 0
 }
 
 export const decoratedFulfilled = (real, goal) => {
