@@ -24,10 +24,13 @@ function FinancialMonitoringPage({ client }) {
     submission.mutations.createProjectInvoice, { client: client }
   )
 
+  const [updateProjectInvoice] = useMutation(
+    submission.mutations.updateProjectInvoice, { client: client }
+  )
+
   const save = useCallback(async expense => {
-    debugger
     try {
-      // await createProjectInvoice({ variables: { data: expense, id: router.query.id } })
+      await createProjectInvoice({ variables: { data: expense, id: router.query.id } })
       success()
     } catch (e) {
       warning()
@@ -35,12 +38,24 @@ function FinancialMonitoringPage({ client }) {
     }
   }, [createProjectInvoice])
 
+  const update = useCallback(async expense => {
+    try {
+      const { id, index, ...newExpense } = expense
+      await updateProjectInvoice({ variables: { data: newExpense, id } })
+      success()
+    } catch (e) {
+      warning()
+      console.error(e)
+    }
+  }, [updateProjectInvoice])
+
   const injectActions = useMemo(() => ({
     loading,
     router,
     error,
     data,
-    save
+    save,
+    update
   }), [loading])
 
   return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Modal, Form, Input, Divider, Alert, Button, Upload, Statistic, Space } from "antd"
+import { Modal, Form, Input, InputNumber, Divider, Alert, Button, Upload, Statistic, Space } from "antd"
 import { DateField, SelectField } from "../../../../../../../shared"
 import { UploadOutlined } from "@ant-design/icons"
 import { getSelectValue } from "../../../../../../../../helpers/getSelectValue"
@@ -7,10 +7,10 @@ import { warning } from "../../../../../../../../helpers/alert"
 import { merge } from "lodash"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
-  const budgeted = submission?.budgeted
-  const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
+  const { budgeted, amount = 0, percentage = 0, concepts } = submission || {}
+  const listConcepts = concepts?.map(concept => ({ label: concept.name, value: concept.name }))
 
-  const [state, setState] = useState({})
+  const [state, setState] = useState({ amount, percentage })
   const [form] = Form.useForm()
 
   const layout = {
@@ -31,28 +31,23 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     onCancel && onCancel()
   }
 
-  const onChange = ({ target: { name, value }}) => {
-    setState({
-      ...state,
-      [name]: value
-    })
-  }
-
-  const calculate = () => {
-    const ficosecPayment = +state?.ficosecPayment || 0
-    const investmentOnePayment = +state?.investmentOnePayment || 0
-    const investmentTwoPayment = +state?.investmentTwoPayment || 0
-    const implementerPayment = +state?.implementerPayment || 0
+  const onChange = () => {
+    const ficosecPayment = form.getFieldValue("ficosecPayment") || 0
+    const investmentOnePayment = form.getFieldValue("investmentOnePayment") || 0
+    const investmentTwoPayment = form.getFieldValue("investmentTwoPayment") || 0
+    const implementerPayment = form.getFieldValue("implementerPayment") || 0
 
     const amount = ficosecPayment + investmentOnePayment + investmentTwoPayment + implementerPayment
     const percentage = (amount * 100) / budgeted
 
-    return { amount, percentage }
+    form.setFieldsValue({ amount, percentage })
+    setState({ ...state, amount, percentage })
   }
 
   const onSubmit = async () => {
     try {
-      let values = await form.validateFields()
+      await form.validateFields()
+      let values = await form.getFieldsValue()
 
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
@@ -133,21 +128,19 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         <Form.Item
           label="Mes de asignación:"
           name="monthAt"
-          defaultValue={edit?.monthAt}
+          getValueFromEvent={getSelectValue}
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <SelectField
             id="monthAt"
-            name="monthAt"
             options={[{ label: "Enero 2020", value:"Enero 2020"}, { label: "Agosto 2020", value:"Agosto 2020"}]}/>
         </Form.Item>
         <Form.Item
           label="ID Concepto:"
           name="concept"
-          defaultValue={edit?.concept}
+          getValueFromEvent={getSelectValue}
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <SelectField
             id="concept"
-            name="concept"
             options={listConcepts}/>
         </Form.Item>
         <Form.Item
@@ -170,7 +163,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           label="FICOSEC:"
           name="ficosecPayment"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input
+          <InputNumber
             name="ficosecPayment"
             type="number"
             onChange={onChange}/>
@@ -179,7 +172,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           label="Coinversión 1:"
           name="investmentOnePayment"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input
+          <InputNumber
             name="investmentOnePayment"
             type="number"
             onChange={onChange}/>
@@ -188,7 +181,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           label="Coinversión 2:"
           name="investmentTwoPayment"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input
+          <InputNumber
             name="investmentTwoPayment"
             type="number"
             onChange={onChange}/>
@@ -197,15 +190,17 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           label="Implementadora:"
           name="implementerPayment"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input
+          <InputNumber
             name="implementerPayment"
             type="number"
             onChange={onChange}/>
         </Form.Item>
+        <Form.Item hidden name="amount"/>
+        <Form.Item hidden name="percentage"/>
         <Divider orientation="left">Importe</Divider>
         <Space>
-          <Statistic title="Importe de factura" value={`$${calculate().amount.toFixed(2)}`} />
-          <Statistic title="Uso del presupuesto" value={`${calculate().percentage.toFixed(2)}%`} />
+          <Statistic title="Importe de factura" value={`$${state?.amount?.toFixed(2)}`} />
+          <Statistic title="Uso del presupuesto" value={`${state?.percentage?.toFixed(2)}%`} />
         </Space>
       </Form>
     </Modal>

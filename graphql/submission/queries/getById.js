@@ -160,6 +160,7 @@ export const getById = gql`
       evidenced
       difference
       invoices {
+        id
         uuid
         issuer
         rfc
@@ -174,6 +175,7 @@ export const getById = gql`
         investmentTwoPayment
         implementerPayment
         amount
+        percentage
       }
       technicalMonitoringReports{
         id

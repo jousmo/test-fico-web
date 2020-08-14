@@ -5,7 +5,7 @@ import { withForm } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 
-function Expense ({ data, save }) {
+function Expense ({ data, save, update }) {
   const Submission = data || {}
   const [state, setState] = useState({ isModalOpen: false, edit: false })
 
@@ -25,11 +25,11 @@ function Expense ({ data, save }) {
   const onSave = (addNew, replaceItemAtIndex) => expense => {
     if(expense.index !== undefined) {
       replaceItemAtIndex(expense.index, expense)
+      update(expense)
     } else {
       addNew(expense)
+      save(expense)
     }
-
-    save(expense)
     onCancel()
   }
 
