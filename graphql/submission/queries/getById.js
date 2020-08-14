@@ -157,11 +157,14 @@ export const getById = gql`
         url
       }
       technicalMonitoringReports{
+        id
         key
         goal
+        appliedAt
         completed
         compliance
         verificationDocument{
+          id
           name
           url
         }
