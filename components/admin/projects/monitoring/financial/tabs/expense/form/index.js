@@ -1,11 +1,13 @@
-import { useState } from "react"
-import { Modal, Form, Input, Divider, Select, Alert, Button, Upload, Statistic, Space } from "antd"
-import { DateField } from "../../../../../../../shared"
+import { useEffect, useState } from "react"
+import { Modal, Form, Input, Divider, Alert, Button, Upload, Statistic, Space } from "antd"
+import { DateField, SelectField } from "../../../../../../../shared"
 import { UploadOutlined } from "@ant-design/icons"
 import { getSelectValue } from "../../../../../../../../helpers/getSelectValue"
 import { warning } from "../../../../../../../../helpers/alert"
 
-export function ModalExpense({ onSave, onCancel, concepts, budgeted, ...props }) {
+export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
+  const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
+
   const [state, setState] = useState({})
   const [form] = Form.useForm()
 
@@ -14,9 +16,12 @@ export function ModalExpense({ onSave, onCancel, concepts, budgeted, ...props })
     wrapperCol: { span: 24 }
   }
 
-  const listConcepts = concepts.map(concept => ({ label: concept.name, value: concept.name }))
-
-  debugger
+  useEffect(() => {
+    if(edit) {
+      form.setFieldsValue(edit)
+      setState(edit)
+    }
+  }, [edit])
 
   const onCancelModal = () => {
     form.resetFields()
@@ -38,7 +43,7 @@ export function ModalExpense({ onSave, onCancel, concepts, budgeted, ...props })
     const implementerPayment = +state?.implementerPayment || 0
 
     const amount = ficosecPayment + investmentOnePayment + investmentTwoPayment + implementerPayment
-    const percentage = (amount * 100) / budgeted
+    const percentage = (amount * 100) / submission?.budgeted
 
     return { amount, percentage }
   }
@@ -120,14 +125,22 @@ export function ModalExpense({ onSave, onCancel, concepts, budgeted, ...props })
         <Form.Item
           label="Mes de asignación:"
           name="monthAt"
+          defaultValue={edit?.monthAt}
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Select name="monthAt" options={[{ label: "Enero 2020", value:"Enero 2020"}]} />
+          <SelectField
+            id="monthAt"
+            name="monthAt"
+            options={[{ label: "Enero 2020", value:"Enero 2020"}, { label: "Agosto 2020", value:"Agosto 2020"}]}/>
         </Form.Item>
         <Form.Item
           label="ID Concepto:"
           name="concept"
+          defaultValue={edit?.concept}
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Select name="concept" options={listConcepts} />
+          <SelectField
+            id="concept"
+            name="concept"
+            options={listConcepts}/>
         </Form.Item>
         <Form.Item
           label="ID Rubro:"

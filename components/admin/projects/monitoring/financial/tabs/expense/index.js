@@ -6,17 +6,15 @@ import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 
 function Expense ({ data, save }) {
-  const [state, setState] = useState({
-    isModalOpen: false,
-    data
-  })
+  const Submission = data || {}
+  const [state, setState] = useState({ isModalOpen: false, edit: false })
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
   }
 
   const onCancel = () => {
-    setState({ ...state, isModalOpen: false })
+    setState({ ...state, isModalOpen: false, edit: false })
   }
 
   const onChange = expense => {
@@ -40,6 +38,11 @@ function Expense ({ data, save }) {
     onCancel()
   }
 
+  const onEdit = (item, index) => {
+    item.index = index
+    setState({ ...state, isModalOpen: true, edit: item })
+  }
+
   return (
     <div className="financial">
       <Alert
@@ -51,20 +54,20 @@ function Expense ({ data, save }) {
       <Section style={{padding: 0, margin: "1rem 0"}}>
         <Row>
           <Col flex="auto">
-            <Statistic title="Presupuesto a FICOSEC" value={`$${state.data?.budgeted?.toFixed(2)}`} />
+            <Statistic title="Presupuesto a FICOSEC" value={`$${Submission?.budgeted?.toFixed(2)}`} />
           </Col>
           <Col span={1}>
             <Divider type="vertical" />
           </Col>
           <Col flex="auto">
-            <Statistic title="Comprobado a FICOSEC" value={`$${state.data?.evidenced?.toFixed(2)}`} />
+            <Statistic title="Comprobado a FICOSEC" value={`$${Submission?.evidenced?.toFixed(2)}`} />
           </Col>
           <Col span={1}>
             <Divider type="vertical" />
           </Col>
           <Col flex="auto">
             <Statistic
-              title="Diferencia" value={`$${state.data?.difference?.toFixed(2)}`}
+              title="Diferencia" value={`$${Submission?.difference?.toFixed(2)}`}
               valueStyle={{ color: "#cf1322" }} />
           </Col>
         </Row>
@@ -76,19 +79,22 @@ function Expense ({ data, save }) {
         <CompositeField
           onClickAdd={onClickAdd}
           onChange={onChange}
-          defaultValue={state.data.invoices}
           addLabel="Subir factura"
+          defaultValue={Submission?.invoices}
           orientation="TOP">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <>
               <ModalExpense
-                className="fico expense-modal-form"
                 visible={state.isModalOpen}
+                submission={Submission}
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 onCancel={onCancel}
-                concepts={state.data?.concepts}
-                budgeted={state.data?.budgeted} />
-              <ListExpense dataSource={items} budgeted={state.data?.budgeted}/>
+                edit={state.edit}
+                className="fico expense-modal-form"/>
+              <ListExpense
+                dataSource={items}
+                budgeted={Submission?.budgeted}
+                onEdit={onEdit}/>
             </>
           }
         </CompositeField>

@@ -1,10 +1,10 @@
-import { Table, Select, Button, Space, Empty } from "antd"
+import { Table, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined } from "@ant-design/icons"
-import { DateField } from "../../../../../../../shared"
+import { DateField, SelectField } from "../../../../../../../shared"
 import moment from "moment"
 moment.locale("es")
 
-export function ListExpense ({ dataSource, budgeted }) {
+export function ListExpense ({ dataSource, budgeted, onEdit }) {
   return (
     <Table
       rowKey={a => a.uuid}
@@ -21,7 +21,7 @@ export function ListExpense ({ dataSource, budgeted }) {
         width={1}
         dataIndex="monthAt"
         title="Mes"
-        render={text => <Select value={text} />} />
+        render={text => <SelectField value={text} disabled />} />
       <Table.Column
         width={1}
         dataIndex="issuedAt"
@@ -47,12 +47,14 @@ export function ListExpense ({ dataSource, budgeted }) {
         width={2}
         dataIndex="paymentAt"
         title="Fecha de pago"
-        render={text => <DateField value={text} format="DD/MM/YYYY" />} />
+        render={text => <DateField
+          value={text} format="DD/MM/YYYY"
+          disabled />} />
       <Table.Column
         width={1}
         dataIndex="concept"
         title="ID Concepto"
-        render={text => <Select value={text} />} />
+        render={text => <SelectField value={text} disabled />} />
       <Table.Column
         width={1}
         dataIndex="percentage"
@@ -61,10 +63,11 @@ export function ListExpense ({ dataSource, budgeted }) {
       <Table.Column
         width={1}
         title=""
-        render={() => <Space>
+        render={(text, record, index) => <Space>
           <Button
             type="primary" shape="circle"
-            icon={<EditOutlined />} />
+            icon={<EditOutlined />}
+            onClick={() => onEdit(record, index)} />
           <Button
             type="primary" shape="circle"
             icon={<EyeOutlined />} />
