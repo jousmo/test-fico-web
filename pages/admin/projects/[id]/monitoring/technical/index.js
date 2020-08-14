@@ -8,24 +8,38 @@ import {
   TechnicalMonitoring
 } from "../../../../../../components/admin/projects/monitoring"
 import { submission } from "../../../../../../graphql/submission"
-import { useMemo, useState } from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useCallback, useMemo } from "react"
+import { useMutation, useQuery } from "@apollo/react-hooks"
+import { success } from "../../../../../../helpers/alert"
 
 function TechnicalMonitoringPage({ client, query }) {
-  const [ state ] = useState({
-    project: {}
-  })
-
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: query.id }
   })
 
+  const [createMonitoring] = useMutation(
+    submission.mutations.createMonitoring, { client: client }
+  )
+
+  const save = useCallback(async monitoring => {
+    try {
+      await createMonitoring({
+        variables: { data: monitoring, id: query.id }
+      })
+      success()
+    }
+    catch(e) {
+      console.error(e)
+    }
+  }, [createMonitoring])
+
   const injectActions = useMemo(() => ({
     loading,
     error,
-    data
-  }), [state, loading])
+    data,
+    save
+  }), [loading])
 
   return (
     <PageContext.Provider
