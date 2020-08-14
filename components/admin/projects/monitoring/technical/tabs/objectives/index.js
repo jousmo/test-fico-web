@@ -1,6 +1,6 @@
 import { SearchFieldPrimary } from "../../../../../../shared"
 import { Alert } from "antd"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ObjectivesSummary } from "./summary"
 import { ObjectivesList } from "./list"
 
@@ -11,8 +11,13 @@ export function MonitoringObjectives({ data }) {
     selectedRows: [],
     fulfilled: {},
     isModalOpen: false,
-    edit: undefined
+    edit: undefined,
+    reports: []
   })
+
+  useEffect(() => {
+    setState({ ...state, reports: Submission.technicalMonitoringReports })
+  }, [Submission])
 
   return (
     <div className="objectives" style={{ marginTop: "-2.5rem"}}>
