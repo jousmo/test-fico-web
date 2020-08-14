@@ -5,7 +5,7 @@ import { UploadOutlined } from "@ant-design/icons"
 import { getSelectValue } from "../../../../../../../../helpers/getSelectValue"
 import { warning } from "../../../../../../../../helpers/alert"
 
-export function ModalExpense({ onSave, onCancel, budgeted, ...props }) {
+export function ModalExpense({ onSave, onCancel, concepts, budgeted, ...props }) {
   const [state, setState] = useState({})
   const [form] = Form.useForm()
 
@@ -13,6 +13,10 @@ export function ModalExpense({ onSave, onCancel, budgeted, ...props }) {
     labelCol: { span: 6 },
     wrapperCol: { span: 24 }
   }
+
+  const listConcepts = concepts.map(concept => ({ label: concept.name, value: concept.name }))
+
+  debugger
 
   const onCancelModal = () => {
     form.resetFields()
@@ -94,7 +98,7 @@ export function ModalExpense({ onSave, onCancel, budgeted, ...props }) {
           label="RFC:"
           name="rfc"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input  name="rfc" />
+          <Input name="rfc" />
         </Form.Item>
         <Form.Item
           label="Emisión:"
@@ -110,7 +114,7 @@ export function ModalExpense({ onSave, onCancel, budgeted, ...props }) {
           label="Razon social:"
           name="receptor"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Select name="receiver" options={[{ label: "José Uscanga", value:"José Uscanga"}]} />
+          <Input name="receiver" />
         </Form.Item>
         <Divider orientation="left">Asignación</Divider>
         <Form.Item
@@ -123,7 +127,7 @@ export function ModalExpense({ onSave, onCancel, budgeted, ...props }) {
           label="ID Concepto:"
           name="concept"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Select name="concept" options={[{ label: "Concepto 1", value:"Concepto 1"}]} />
+          <Select name="concept" options={listConcepts} />
         </Form.Item>
         <Form.Item
           label="ID Rubro:"

@@ -86,6 +86,7 @@ function Expense ({ data, save }) {
                 visible={state.isModalOpen}
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 onCancel={onCancel}
+                concepts={state.data?.concepts}
                 budgeted={state.data?.budgeted} />
               <ListExpense dataSource={items} budgeted={state.data?.budgeted}/>
             </>
