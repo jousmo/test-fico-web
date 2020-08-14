@@ -2,6 +2,7 @@ import { Table, Select, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined } from "@ant-design/icons"
 import { DateField } from "../../../../../../../shared"
 import moment from "moment"
+moment.locale("es")
 
 export function ListExpense ({ dataSource, budgeted }) {
   return (
@@ -29,8 +30,7 @@ export function ListExpense ({ dataSource, budgeted }) {
       <Table.Column
         width={1}
         dataIndex="uuid"
-        title="Folio SAT"
-        sorter />
+        title="Folio SAT" />
       <Table.Column
         width={1}
         dataIndex="issuer"
@@ -42,8 +42,7 @@ export function ListExpense ({ dataSource, budgeted }) {
       <Table.Column
         width={1}
         dataIndex="amount"
-        title="Importe"
-        render={text => `$${text}`} />
+        title="Importe" />
       <Table.Column
         width={2}
         dataIndex="paymentAt"

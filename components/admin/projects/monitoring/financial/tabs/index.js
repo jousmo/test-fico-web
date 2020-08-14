@@ -9,7 +9,8 @@ export function MonitoringFinancialTabs() {
   const {
     loading,
     error,
-    data
+    data,
+    save
   } = useContext(AdminSubmissionContext)
 
   return (
@@ -18,7 +19,8 @@ export function MonitoringFinancialTabs() {
         <Expense
           data={data?.Submission}
           error={error}
-          isLoading={loading} />
+          isLoading={loading}
+          save={save} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Resumen conceptos" key="2">
         <SearchFieldPrimary style={{margin: "0 1rem"}} />

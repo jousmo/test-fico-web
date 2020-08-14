@@ -5,7 +5,7 @@ import { withForm } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 
-function Expense ({ data }) {
+function Expense ({ data, save }) {
   const [state, setState] = useState({
     isModalOpen: false,
     data
@@ -31,6 +31,12 @@ function Expense ({ data }) {
       addNew(expense)
     }
 
+    expense.ficosecPayment = +expense.ficosecPayment
+    expense.investmentOnePayment = +expense.investmentOnePayment
+    expense.investmentTwoPayment = +expense.investmentTwoPayment
+    expense.implementerPayment = +expense.implementerPayment
+
+    save(expense)
     onCancel()
   }
 
@@ -79,7 +85,8 @@ function Expense ({ data }) {
                 className="fico expense-modal-form"
                 visible={state.isModalOpen}
                 onSave={onSave(addNew, replaceItemAtIndex)}
-                onCancel={onCancel} />
+                onCancel={onCancel}
+                budgeted={state.data?.budgeted} />
               <ListExpense dataSource={items} budgeted={state.data?.budgeted}/>
             </>
           }

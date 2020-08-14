@@ -5,10 +5,12 @@ import {
   MonitoringFinancial
 } from "../../../../../../components/admin/projects/monitoring"
 import { useQuery } from "@apollo/react-hooks"
+import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../../../../graphql/submission"
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
 import { useRouter } from "next/router"
+import { success, warning } from "../../../../../../helpers/alert"
 
 function FinancialMonitoringPage({ client }) {
   const router = useRouter()
@@ -18,11 +20,26 @@ function FinancialMonitoringPage({ client }) {
     variables: { id: router.query.id }
   })
 
+  const [createProjectInvoice] = useMutation(
+    submission.mutations.createProjectInvoice, { client: client }
+  )
+
+  const save = useCallback(async expense => {
+    try {
+      await createProjectInvoice({ variables: { data: expense, id: router.query.id } })
+      success()
+    } catch (e) {
+      warning()
+      console.error(e)
+    }
+  }, [createProjectInvoice])
+
   const injectActions = useMemo(() => ({
     loading,
     router,
     error,
-    data
+    data,
+    save
   }), [loading])
 
   return (
