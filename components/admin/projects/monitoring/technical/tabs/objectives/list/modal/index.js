@@ -2,13 +2,14 @@ import {
   Col, Divider, Form, InputNumber,
   Modal, Row, Tag, Typography
 } from "antd"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { DateField, UploadButton } from "../../../../../../../../shared"
 import { getSelectValue } from "../../../../../../../../../helpers"
 import { ParticipantsField } from "./participants-field"
 
 export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
   const [form] = Form.useForm()
+  const [completed, setCompleted] = useState("0")
 
   useEffect(() => {
     if(edit) {
@@ -47,6 +48,12 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
 
   const onRemoveFile = () => {
     form.setFieldsValue({ verificationDocument: undefined })
+  }
+
+  const getPercentage = () => {
+    const compliance = edit?.compliance
+    return compliance ||
+      (Number(completed * 100) / (edit?.goal || 1)).toFixed(2)
   }
 
   const type = edit?.key?.includes("A") ? "ACTIVITY" : "INDICATOR"
@@ -123,12 +130,15 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
               initialValue={edit?.completed}
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
-              <InputNumber />
+              <InputNumber
+                max={edit?.goal}
+                min={0}
+                onChange={v => setCompleted(v)} />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="Cumplimiento" style={{ marginBottom: "0" }}>
-              {(form.getFieldValue("completed")) / edit?.goal }%
+              {getPercentage()}%
             </Form.Item>
           </Col>
           <Divider
