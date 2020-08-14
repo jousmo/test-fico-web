@@ -157,12 +157,20 @@ export const getById = gql`
         url
       }
       technicalMonitoringReports{
+        key
         goal
         completed
         compliance
         verificationDocument{
           name
           url
+        }
+        participants{
+          amount
+          type
+          age
+          gender
+          preventionLevel
         }
       }
     }
