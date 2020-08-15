@@ -32,8 +32,12 @@ export function ObjectivesList({ data }) {
   }
 
   const getAppliedAt = row => {
-    const report = getReport(row)
-    return moment(report?.appliedAt).format("DD/MM/YYYY")
+    const { appliedAt } = getReport(row) || {}
+    if (!appliedAt){
+      return null
+    }
+
+    return moment(appliedAt).format("DD/MM/YYYY")
   }
 
   const onSave = monitoring => {
