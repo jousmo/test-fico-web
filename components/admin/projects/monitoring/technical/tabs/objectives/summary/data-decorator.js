@@ -34,6 +34,7 @@ export const decoratedReal = data => {
 }
 
 export const decoratedFulfilled = (real, goal) => {
-  const result = ((real * 100) / goal).toString()
+  const currentGoal = goal === 0 ? 1 : goal
+  const result = ((real * 100) / currentGoal).toString()
   return `${result.substring(0,4)}%`
 }
