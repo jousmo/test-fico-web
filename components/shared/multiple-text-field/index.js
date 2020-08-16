@@ -28,7 +28,7 @@ export function MultipleTextField({
       {({items, removeItem, updateItem}) =>
         <div>
           {items?.map((item, index) =>
-            <Form.Item key={item.uuid}>
+            <Form.Item key={index}>
               <Row>
                 <Col flex="auto">
                   <Input

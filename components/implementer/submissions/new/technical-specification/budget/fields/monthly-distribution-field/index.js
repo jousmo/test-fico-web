@@ -66,7 +66,7 @@ export function MonthlyDistributionField({
           { items.map((item, index) =>
             <Row
               gutter={[10, 8]}
-              key={`monthly-distribution-${item.uuid}`}>
+              key={`monthly-distribution-${index}`}>
               <Col span={12}>{ _.capitalize(item.label) }</Col>
               <Col span={6}>
                 <Input

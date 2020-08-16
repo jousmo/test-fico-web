@@ -240,7 +240,7 @@ export function ActivityModal({
                       <Row
                         gutter={[10, 8]}
                         justify="start"
-                        key={`date_${item.uuid}`}>
+                        key={`date_${index}`}>
                         <Col span={24}>
                           <DateField
                             defaultValue={item.months}

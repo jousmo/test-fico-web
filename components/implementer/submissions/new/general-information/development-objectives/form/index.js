@@ -80,7 +80,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
               {({ items, updateItem, removeItem }) =>
                 <div>
                   { items.map((item, index) =>
-                    <Form.Item key={`specific_objective_${item.uuid}`}>
+                    <Form.Item key={`specific_objective_${index}`}>
                       <Row>
                         <Col flex="auto">
                           <Input.TextArea

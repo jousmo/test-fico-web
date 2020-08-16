@@ -262,7 +262,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                         <Row
                           gutter={[10, 8]}
                           justify="start"
-                          key={`support_${item.uuid}`}>
+                          key={`support_${index}`}>
                           <Col span={8}>
                             <Form.Item
                               style={{display: "inline"}}
