@@ -17,10 +17,6 @@ export function UploadButton({
   const isDisabled = files?.length >= maxFile
   const [fileList, setFileList] = useState(files)
 
-  useEffect(() => {
-    setFileList(files)
-  }, [files])
-
   const findAndDelete = file => {
     const index = fileList.indexOf(file)
     const newFileList = fileList.slice()

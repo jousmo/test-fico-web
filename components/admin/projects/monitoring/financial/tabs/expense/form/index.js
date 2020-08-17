@@ -7,10 +7,10 @@ import { merge } from "lodash"
 import convert from "xml-js"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
-  const { budgeted, amount = 0, percentage = 0, concepts } = submission || {}
+  const { budgeted, concepts } = submission || {}
   const listConcepts = concepts?.map(concept => ({ label: concept.name, value: concept.name }))
 
-  const [state, setState] = useState({ amount, percentage })
+  const [state, setState] = useState()
   const [form] = Form.useForm()
 
   const layout = {
@@ -27,7 +27,6 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
 
   const onCancelModal = () => {
     form.resetFields()
-    setState({ amount, percentage })
     onCancel && onCancel()
   }
 
@@ -36,7 +35,6 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       await form.validateFields()
       let values = await form.getFieldsValue()
 
-      debugger
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
         values = merge(edit, values)
@@ -87,6 +85,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         <UploadButtonTwo
           key={1}
           onDone={onDone}
+          files={state?.documents}
           accept={"application/pdf,application/xml"}
         >
           Subir factura
@@ -235,8 +234,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         </Form.Item>
         <Divider orientation="left">Importe</Divider>
         <Space>
-          <Statistic title="Importe de factura" value={`$${state?.amount}`} />
-          <Statistic title="Uso del presupuesto" value={`${state?.percentage}%`} />
+          <Statistic title="Importe de factura" value={`$${state?.amount || 0}`} />
+          <Statistic title="Uso del presupuesto" value={`${state?.percentage || 0}%`} />
         </Space>
       </Form>
     </Modal>

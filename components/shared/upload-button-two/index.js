@@ -1,6 +1,6 @@
 import { Upload, Button } from "antd"
 import { UploadOutlined } from "@ant-design/icons"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export function UploadButtonTwo({
   children,
@@ -8,7 +8,8 @@ export function UploadButtonTwo({
   files = [],
   accept
 }) {
-  const [state, setState] = useState(files)
+  const newFiles = files?.map(file => ({ uid: file.id, ...file }))
+  const [state, setState] = useState(newFiles)
 
   const uploadProps = {
     action:`${process.env.NEXT_PUBLIC_S3_URI}/asset-upload`,

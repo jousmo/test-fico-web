@@ -176,6 +176,12 @@ export const getById = gql`
         implementerPayment
         amount
         percentage
+        documents {
+          id
+          type
+          name
+          url
+        }
       }
       technicalMonitoringReports{
         id
