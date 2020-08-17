@@ -3,7 +3,7 @@ import { Alert } from "antd"
 import { ObjectivesSummary } from "./summary"
 import { ObjectivesList } from "./list"
 
-export function MonitoringObjectives({ data }) {
+export function MonitoringObjectives({ data, dateFilter }) {
   const { Submission } = data || {}
 
   return (
@@ -16,6 +16,7 @@ export function MonitoringObjectives({ data }) {
         message="Especifica cuántos participantes fueron atendidos y adjunta la
         evidencia necesaria en cada objetivo y actividad" />
       <ObjectivesList
+        dateFilter={dateFilter}
         data={Submission} />
     </div>
   )
