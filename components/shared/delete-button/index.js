@@ -1,20 +1,23 @@
-import { Popconfirm, Button } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { Popconfirm, Button } from "antd"
+import { DeleteOutlined } from "@ant-design/icons"
 
 export function DeleteButton({
   onClick,
-  confirmText="Confirma que deseas eliminar este elemento",
-  style
+  confirmText = "Confirma que deseas eliminar este elemento",
+  style,
+  ...props
 }) {
   return (
-    <Popconfirm title={confirmText}
+    <Popconfirm
+      title={confirmText}
       onConfirm={onClick}
       okText="Eliminar"
       cancelText="Cancelar">
       <Button
         style={{float: "right", ...style}}
         shape="circle"
-        icon={<DeleteOutlined />} />
+        icon={<DeleteOutlined />}
+        {...props} />
     </Popconfirm>
   )
 }

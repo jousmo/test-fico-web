@@ -156,6 +156,26 @@ export const getById = gql`
         type
         url
       }
+      technicalMonitoringReports{
+        id
+        key
+        goal
+        appliedAt
+        completed
+        compliance
+        verificationDocument{
+          id
+          name
+          url
+        }
+        participants{
+          amount
+          type
+          age
+          gender
+          preventionLevel
+        }
+      }
     }
   }
 `

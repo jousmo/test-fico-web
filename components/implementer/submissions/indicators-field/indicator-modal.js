@@ -33,7 +33,6 @@ export function IndicatorModal({
       let values = await form.getFieldsValue()
 
       if(typeof edit?.index !== "undefined") {
-        values.index = edit.index
         edit.products = null
         values = merge(edit, values)
       }

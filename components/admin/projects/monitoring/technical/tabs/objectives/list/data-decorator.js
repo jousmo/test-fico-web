@@ -5,7 +5,7 @@ export const decoratedData = (data) => {
 
   data?.generalObjectiveIndicators?.forEach((indicator, i) =>
     result.push({
-      key: `OG_${i}`,
+      key: `OG_${i + 1}`,
       level: <Tag color="error">OG</Tag>,
       ...indicator
     })
@@ -13,7 +13,7 @@ export const decoratedData = (data) => {
 
   data?.developmentObjectiveIndicators?.forEach((indicator, i) =>
     result.push({
-      key: `OD_${i}`,
+      key: `OD_${i + 1}`,
       level: <Tag color="warning">OD</Tag>,
       ...indicator
     })
@@ -24,7 +24,7 @@ export const decoratedData = (data) => {
     const { activities, indicators, ...objective } = obj
 
     result.push({
-      key: `OE_${index}`,
+      key: `OE_${objNumber}`,
       level: <Tag color="processing">{`OE${objNumber}`}</Tag>,
       ...objective
     })

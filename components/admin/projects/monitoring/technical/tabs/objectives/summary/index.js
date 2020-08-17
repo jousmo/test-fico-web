@@ -6,8 +6,8 @@ import {
   decoratedFulfilled
 } from "./data-decorator"
 
-export function ObjectivesSummary({ data, fulfilled }) {
-  const real = decoratedReal(fulfilled)
+export function ObjectivesSummary({ data }) {
+  const real = decoratedReal(data)
   const goal = decoratedGoal(data)
   const totalFulfilled = decoratedFulfilled(real, goal)
   const color = parseInt(totalFulfilled) >= 80 ? "#008000" : "#cf1322"

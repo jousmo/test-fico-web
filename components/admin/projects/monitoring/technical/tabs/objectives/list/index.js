@@ -1,75 +1,123 @@
-import { Button, InputNumber, Table } from "antd"
+import { Button, Table } from "antd"
+import { CheckSquareTwoTone } from "@ant-design/icons/lib"
 import { EditOutlined } from "@ant-design/icons"
 import { decoratedData } from "./data-decorator"
+import { ObjectivesModal } from "./modal"
+import { useContext, useState } from "react"
+import moment from "moment"
+moment.locale("es")
+import {
+  AdminSubmissionContext
+} from "../../../../../../../../contexts/admin/submissions/show"
 
-export function ObjectivesList({ data, state, setState }) {
+export function ObjectivesList({ data }) {
+  const [state, setState] = useState({
+    isModalOpen: false,
+    edit: undefined,
+    test: 0
+  })
+
   const dataSource = decoratedData(data)
+  const { save, update } = useContext(AdminSubmissionContext)
 
-  const onSelectChange = selectedRowKeys => {
-    setState(prevState => (
-      { ...prevState,  selectedRows: selectedRowKeys }
-    ))
+  const getReport = row => {
+    return data.technicalMonitoringReports?.find(r => r.key === row.key)
   }
 
-  const getFulfilled = row => {
-    const real = state.fulfilled[row.key] || 0
-    const goal = isNaN(parseInt(row.goal)) ? 1 : row.goal
-
-    const result = (real * 100) / goal
-    return `${result.toString().substring(0, 4)}%`
+  const getParticipants = row => {
+    const report = getReport(row)
+    return report?.participants?.reduce((acc, item) => (
+      acc += Number(item.amount || 0)
+    ), 0) || 0
   }
 
-  const handleChangeReal = (value, row) => {
-    const newFulfilled = { ...state.fulfilled }
-    newFulfilled[row.key] = value
+  const getAppliedAt = row => {
+    const { appliedAt } = getReport(row) || {}
+    if (!appliedAt){
+      return null
+    }
 
-    setState(prevState => (
-      { ...prevState, fulfilled: newFulfilled }
-    ))
+    return moment(appliedAt).format("DD/MM/YYYY")
+  }
+
+  const onSave = monitoring => {
+    const newReports = [ ...data.technicalMonitoringReports ]
+
+    const index = newReports.findIndex(r => r.key === monitoring.key)
+    if (index >= 0){
+      newReports[index] = monitoring
+      update(monitoring)
+    } else {
+      newReports.push(monitoring)
+      save(monitoring)
+    }
+
+    onCancel()
+  }
+
+  const onEdit = row => {
+    const report = data.technicalMonitoringReports?.find(report =>
+      report.key === row.key
+    ) || {}
+    setState({ ...state, isModalOpen: true, edit: { ...row, ...report } })
+  }
+
+  const onCancel = () => {
+    setState({ ...state, isModalOpen: false, edit: undefined })
   }
 
   return (
-    <Table
-      className="table-list"
-      dataSource={dataSource}
-      rowSelection={{ state, onChange: onSelectChange }}
-      size="middle">
-      <Table.Column
-        dataIndex="level"
-        title="Nivel" />
-      <Table.Column title="Resumen narrativo" dataIndex="description" />
-      <Table.Column title="Realizado" />
-      <Table.Column
-        dataIndex="title"
-        title="Indicador" />
-      <Table.Column
-        dataIndex="meansOfVerification"
-        title="Medio de verificación" />
-      <Table.Column
-        align="center"
-        dataIndex="goal"
-        title="Meta" />
-      <Table.Column
-        render={(t, row) =>
-          <InputNumber
-            defaultValue={0}
-            max={row.goal}
-            min={0}
-            onChange={value => handleChangeReal(value, row)} />
-        }
-        title="Real"
-        width={90} />
-      <Table.Column
-        align="center"
-        render={(t, row) => getFulfilled(row)}
-        title="Cumplimiento" />
-      <Table.Column title="Participantes" />
-      <Table.Column
-        render={(t, row) =>
-          <Button
-            icon={<EditOutlined />}
-            shape="circle" />
-        } />
-    </Table>
+    <>
+      <ObjectivesModal
+        edit={state.edit}
+        onCancel={onCancel}
+        onSave={onSave}
+        visible={state.isModalOpen} />
+      <Table
+        className="table-list"
+        dataSource={dataSource}
+        size="middle">
+        <Table.Column
+          render={(t, row) => getReport(row) && <CheckSquareTwoTone />}
+          title={<CheckSquareTwoTone />}/>
+        <Table.Column
+          dataIndex="level"
+          title="Nivel" />
+        <Table.Column title="Resumen narrativo" dataIndex="description" />
+        <Table.Column
+          render={(t, row) => getAppliedAt(row)}
+          title="Realizado" />
+        <Table.Column
+          dataIndex="title"
+          title="Indicador" />
+        <Table.Column
+          dataIndex="meansOfVerification"
+          title="Medio de verificación" />
+        <Table.Column
+          align="center"
+          dataIndex="goal"
+          title="Meta" />
+        <Table.Column
+          align="center"
+          render={(t, row) => getReport(row)?.completed || 0}
+          title="Real"
+          width={90} />
+        <Table.Column
+          align="center"
+          render={(t, row) => `${getReport(row)?.compliance || 0}%`}
+          title="Cumplimiento" />
+        <Table.Column
+          align="center"
+          render={(t, row) => getParticipants(row)}
+          title="Participantes" />
+        <Table.Column
+          render={(t, row) =>
+            <Button
+              icon={<EditOutlined />}
+              onClick={() => onEdit(row)}
+              shape="circle" />
+          } />
+      </Table>
+    </>
   )
 }
