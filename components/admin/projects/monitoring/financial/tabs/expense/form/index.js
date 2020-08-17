@@ -9,7 +9,6 @@ import convert from "xml-js"
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const { budgeted, concepts } = submission || {}
   const listConcepts = concepts?.map(concept => ({ label: concept.name, value: concept.name }))
-
   const [state, setState] = useState({})
   const [form] = Form.useForm()
 
@@ -22,13 +21,12 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     if(edit) {
       form.setFieldsValue(edit)
       setState(edit)
-    } else {
-      setState({})
     }
   }, [edit])
 
   const onCancelModal = () => {
     form.resetFields()
+    setState({})
     onCancel && onCancel()
   }
 
@@ -98,6 +96,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
 
   return (
     <Modal
+      destroyOnClose
       title="&nbsp;"
       width={600}
       onCancel={onCancelModal}

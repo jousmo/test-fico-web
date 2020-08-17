@@ -10,8 +10,8 @@ export function UploadButtonTwo({
   accept,
   maxFile = 1
 }) {
-  const isDisabled = files?.length >= maxFile
   const newFiles = files?.map(file => ({ uid: file.url, ...file }))
+  const isDisabled = files?.length >= maxFile
   const [state, setState] = useState(newFiles)
 
   const uploadProps = {
