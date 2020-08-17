@@ -11,7 +11,8 @@ export function UploadButton({
   files = [],
   onDoneFile,
   onRemoveFile,
-  maxFile = 1
+  maxFile = 1,
+  multiple = false
 }) {
   const isDisabled = files?.length >= maxFile
   const [fileList, setFileList] = useState(files)
@@ -30,6 +31,7 @@ export function UploadButton({
   const uploadProps = {
     action:`${process.env.NEXT_PUBLIC_S3_URI}/asset-upload`,
     fileList,
+    multiple,
     onChange(info) {
       setFileList(info.fileList.slice())
 

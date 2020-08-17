@@ -45,7 +45,8 @@
     "react-dom": "^16.13.1",
     "sass": "^1.26.10",
     "uuid": "^7.0.3",
-    "webpack": "^4.44.1"
+    "webpack": "^4.44.1",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "cypress": "^4.12.1",

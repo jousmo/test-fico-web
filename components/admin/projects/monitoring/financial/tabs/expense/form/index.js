@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { Modal, Form, Input, InputNumber, Divider, Alert, Button, Upload, Statistic, Space } from "antd"
-import { DateField, SelectField } from "../../../../../../../shared"
-import { UploadOutlined } from "@ant-design/icons"
+import { Modal, Form, Input, InputNumber, Divider, Alert, Button, Statistic, Space } from "antd"
+import { DateField, SelectField, UploadButtonTwo } from "../../../../../../../shared"
 import { getSelectValue } from "../../../../../../../../helpers/getSelectValue"
 import { warning } from "../../../../../../../../helpers/alert"
 import { merge } from "lodash"
+import convert from "xml-js"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const { budgeted, amount = 0, percentage = 0, concepts } = submission || {}
@@ -31,24 +31,12 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     onCancel && onCancel()
   }
 
-  const onChange = () => {
-    const ficosecPayment = form.getFieldValue("ficosecPayment") || 0
-    const investmentOnePayment = form.getFieldValue("investmentOnePayment") || 0
-    const investmentTwoPayment = form.getFieldValue("investmentTwoPayment") || 0
-    const implementerPayment = form.getFieldValue("implementerPayment") || 0
-
-    const amount = ficosecPayment + investmentOnePayment + investmentTwoPayment + implementerPayment
-    const percentage = (amount * 100) / budgeted
-
-    form.setFieldsValue({ amount, percentage })
-    setState({ ...state, amount, percentage })
-  }
-
   const onSubmit = async () => {
     try {
       await form.validateFields()
       let values = await form.getFieldsValue()
 
+      debugger
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
         values = merge(edit, values)
@@ -61,17 +49,48 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     }
   }
 
+  const onDone = async (info) => {
+    const documents = info?.map(el => {
+      const type = el.type === "text/xml" ? "XML" : "PDF"
+      return { type, name: el.name, url: el.url }
+    })
+
+    const { url } = documents?.find(el => el.type === "XML")
+    await readXml(url)
+    form.setFieldsValue({ documents })
+  }
+
+  const readXml = async url => {
+    try {
+      const response = await fetch(url)
+      const xml = await response.text()
+      const xmlJson = convert.xml2js(xml, { compact: true, ignoreComment: true, alwaysChildren: true })
+      const { UUID: uuid, FechaTimbrado: issuedAt } = xmlJson["cfdi:Comprobante"]["cfdi:Complemento"]["tfd:TimbreFiscalDigital"]["_attributes"]
+      const { Nombre: issuer, Rfc: rfc } = xmlJson["cfdi:Comprobante"]["cfdi:Emisor"]["_attributes"]
+      const { Nombre: receptor } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
+      const { Total: amount } = xmlJson["cfdi:Comprobante"]["_attributes"]
+      const percentage = (amount * 100) / budgeted
+
+      form.setFieldsValue({ uuid, issuedAt, issuer, rfc, receptor, amount: +amount, percentage: +percentage })
+      setState({ amount, percentage })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   return (
     <Modal
       title="&nbsp;"
       width={600}
       onCancel={onCancelModal}
       footer={[
-        <Upload key={1}>
-          <Button>
-            <UploadOutlined /> Adjuntar PDF
-          </Button>
-        </Upload>,
+        <UploadButtonTwo
+          key={1}
+          onDone={onDone}
+          accept={"application/pdf,application/xml"}
+        >
+          Subir factura
+        </UploadButtonTwo>,
         <Button
           key="submit"
           type="primary"
@@ -93,36 +112,36 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           label="Folio SAT:"
           name="uuid"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input name="uuid" />
+          <Input name="uuid" readOnly/>
         </Form.Item>
         <Divider orientation="left">Emisor</Divider>
         <Form.Item
           label="Razon social:"
           name="issuer"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input name="issuer" />
+          <Input name="issuer" readOnly/>
         </Form.Item>
         <Form.Item
           label="RFC:"
           name="rfc"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input name="rfc" />
+          <Input name="rfc" readOnly/>
         </Form.Item>
         <Form.Item
           label="Emisión:"
           name="issuedAt"
-          getValueFromEvent={getSelectValue}
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <DateField
             id="issuedAt"
-            format="DD/MM/YYYY" />
+            format="DD/MM/YYYY"
+            disabled />
         </Form.Item>
         <Divider orientation="left">Receptor</Divider>
         <Form.Item
           label="Razon social:"
           name="receptor"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input name="receiver" />
+          <Input name="receiver" readOnly/>
         </Form.Item>
         <Divider orientation="left">Asignación</Divider>
         <Form.Item
@@ -165,8 +184,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="ficosecPayment"
-            type="number"
-            onChange={onChange}/>
+            type="number"/>
         </Form.Item>
         <Form.Item
           label="Coinversión 1:"
@@ -174,8 +192,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="investmentOnePayment"
-            type="number"
-            onChange={onChange}/>
+            type="number"/>
         </Form.Item>
         <Form.Item
           label="Coinversión 2:"
@@ -183,8 +200,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="investmentTwoPayment"
-            type="number"
-            onChange={onChange}/>
+            type="number"/>
         </Form.Item>
         <Form.Item
           label="Implementadora:"
@@ -192,15 +208,35 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="implementerPayment"
-            type="number"
-            onChange={onChange}/>
+            type="number"/>
         </Form.Item>
-        <Form.Item hidden name="amount"/>
-        <Form.Item hidden name="percentage"/>
+        <Form.Item
+          hidden
+          label="Total:"
+          name="amount">
+          <InputNumber
+            name="amount"
+            type="number"/>
+        </Form.Item>
+        <Form.Item
+          hidden
+          label="Uso del presupuesto:"
+          name="percentage">
+          <InputNumber
+            name="percentage"
+            type="number"/>
+        </Form.Item>
+        <Form.Item
+          hidden
+          label="Documentos"
+          id="documents"
+          name="documents">
+          <Input name="documents" />
+        </Form.Item>
         <Divider orientation="left">Importe</Divider>
         <Space>
-          <Statistic title="Importe de factura" value={`$${state?.amount?.toFixed(2)}`} />
-          <Statistic title="Uso del presupuesto" value={`${state?.percentage?.toFixed(2)}%`} />
+          <Statistic title="Importe de factura" value={`$${state?.amount}`} />
+          <Statistic title="Uso del presupuesto" value={`${state?.percentage}%`} />
         </Space>
       </Form>
     </Modal>
