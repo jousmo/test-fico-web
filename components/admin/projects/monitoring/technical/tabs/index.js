@@ -2,6 +2,7 @@ import { DatePicker, Tabs } from "antd"
 import { useState } from "react"
 import { withForm } from "../../../../../../helpers"
 import { MonitoringObjectives } from "./objectives"
+import { MonitoringParticipants } from "./participants"
 import "./style.sass"
 
 function TechnicalMonitoringTabs({ data }) {
@@ -27,7 +28,7 @@ function TechnicalMonitoringTabs({ data }) {
 
       </Tabs.TabPane>
       <Tabs.TabPane tab="Participantes" key="3">
-
+        <MonitoringParticipants />
       </Tabs.TabPane>
     </Tabs>
   )
