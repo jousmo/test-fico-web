@@ -51,7 +51,6 @@ function FinancialMonitoringPage({ client }) {
 
   const injectActions = useMemo(() => ({
     loading,
-    router,
     error,
     data,
     save,

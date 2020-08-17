@@ -10,7 +10,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const { budgeted, concepts } = submission || {}
   const listConcepts = concepts?.map(concept => ({ label: concept.name, value: concept.name }))
 
-  const [state, setState] = useState()
+  const [state, setState] = useState({})
   const [form] = Form.useForm()
 
   const layout = {
@@ -22,6 +22,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     if(edit) {
       form.setFieldsValue(edit)
       setState(edit)
+    } else {
+      setState({})
     }
   }, [edit])
 
@@ -36,11 +38,13 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       let values = await form.getFieldsValue()
 
       if(typeof edit?.index !== "undefined") {
+        delete edit.documents
         values.index = edit.index
         values = merge(edit, values)
       }
 
       onSave(values)
+      form.resetFields()
     } catch (e) {
       warning("Llena los campos requeridos")
       console.error(e)
@@ -53,27 +57,43 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       return { type, name: el.name, url: el.url }
     })
 
-    const { url } = documents?.find(el => el.type === "XML")
-    await readXml(url)
+    const filter = documents?.find(el => el.type === "XML")
+
+    if (filter) {
+      try {
+        const response = await fetch(filter.url)
+        const xml = await response.text()
+        const xmlJson = convert.xml2js(xml, { compact: true, ignoreComment: true, alwaysChildren: true })
+        const { UUID: uuid, FechaTimbrado: issuedAt } = xmlJson["cfdi:Comprobante"]["cfdi:Complemento"]["tfd:TimbreFiscalDigital"]["_attributes"]
+        const { Nombre: issuer, Rfc: rfc } = xmlJson["cfdi:Comprobante"]["cfdi:Emisor"]["_attributes"]
+        const { Nombre: receptor } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
+        const { Total: amount } = xmlJson["cfdi:Comprobante"]["_attributes"]
+        const percentage = (amount * 100) / budgeted
+
+        form.setFieldsValue({ uuid, issuedAt, issuer, rfc, receptor, amount: +amount, percentage: +percentage })
+        setState({ ...state, amount: +amount, percentage: +percentage, documents })
+      } catch (e) {
+        console.error(e)
+      }
+    } else {
+      setState({ ...state, documents })
+    }
+
     form.setFieldsValue({ documents })
   }
 
-  const readXml = async url => {
-    try {
-      const response = await fetch(url)
-      const xml = await response.text()
-      const xmlJson = convert.xml2js(xml, { compact: true, ignoreComment: true, alwaysChildren: true })
-      const { UUID: uuid, FechaTimbrado: issuedAt } = xmlJson["cfdi:Comprobante"]["cfdi:Complemento"]["tfd:TimbreFiscalDigital"]["_attributes"]
-      const { Nombre: issuer, Rfc: rfc } = xmlJson["cfdi:Comprobante"]["cfdi:Emisor"]["_attributes"]
-      const { Nombre: receptor } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
-      const { Total: amount } = xmlJson["cfdi:Comprobante"]["_attributes"]
-      const percentage = (amount * 100) / budgeted
 
-      form.setFieldsValue({ uuid, issuedAt, issuer, rfc, receptor, amount: +amount, percentage: +percentage })
-      setState({ amount, percentage })
-    } catch (e) {
-      console.error(e)
+  const onRemove = ({ type, url }) => {
+    const oldDocuments = form.getFieldValue("documents")
+    const documents = oldDocuments?.filter(document => document.url !== url)
+
+    if (type === "XML") {
+      form.setFieldsValue({ uuid: "", issuedAt: "", issuer: "", rfc: "", receptor: "", amount: 0, percentage: 0 })
+      setState({ ...state, amount: 0, percentage: 0 })
     }
+
+    setState({ ...state, documents })
+    form.setFieldsValue({ documents })
   }
 
   return (
@@ -85,7 +105,9 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         <UploadButtonTwo
           key={1}
           onDone={onDone}
+          onRemove={onRemove}
           files={state?.documents}
+          maxFile={2}
           accept={"application/pdf,application/xml"}
         >
           Subir factura

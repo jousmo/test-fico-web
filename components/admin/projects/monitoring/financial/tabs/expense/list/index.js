@@ -7,7 +7,7 @@ moment.locale("es")
 export function ListExpense ({ dataSource, onEdit }) {
   return (
     <Table
-      rowKey={a => a.uuid}
+      rowKey={a => a.id}
       style={{marginTop: "1.5rem"}}
       dataSource={dataSource}
       size="small"

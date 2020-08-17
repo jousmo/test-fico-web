@@ -8,6 +8,8 @@ export const updateProjectInvoice = gql`
     UpdateProjectInvoice(
       id: $id,
       data: $data
-    )
+    ) {
+      id
+    }
   }
 `

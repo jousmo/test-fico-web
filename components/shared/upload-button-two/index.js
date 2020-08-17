@@ -5,10 +5,13 @@ import { useEffect, useState } from "react"
 export function UploadButtonTwo({
   children,
   onDone,
+  onRemove,
   files = [],
-  accept
+  accept,
+  maxFile = 1
 }) {
-  const newFiles = files?.map(file => ({ uid: file.id, ...file }))
+  const isDisabled = files?.length >= maxFile
+  const newFiles = files?.map(file => ({ uid: file.url, ...file }))
   const [state, setState] = useState(newFiles)
 
   const uploadProps = {
@@ -16,6 +19,7 @@ export function UploadButtonTwo({
     multiple: true,
     fileList: state,
     accept,
+    onRemove,
 
     onChange (info) {
       let fileList = [...info.fileList]
@@ -38,7 +42,7 @@ export function UploadButtonTwo({
   return (
     <Upload
       {...uploadProps}>
-      <Button>
+      <Button disabled={isDisabled}>
         <UploadOutlined /> {children}
       </Button>
     </Upload>

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Alert, Col, Divider, Row, Statistic, Space, DatePicker } from "antd"
-import { Section, SearchFieldPrimary, CompositeField, DateField } from "../../../../../../shared"
+import { Section, SearchFieldPrimary, CompositeField } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
