@@ -1,8 +1,8 @@
-import { Col, Typography } from "antd"
+import { Col, Row, Typography } from "antd"
 
 export function HeaderColumns(){
   return (
-    <>
+    <Row className="header">
       <Col span={8}>
         <Typography.Text strong>Nivel educación / Prevención</Typography.Text>
       </Col>
@@ -19,6 +19,6 @@ export function HeaderColumns(){
         <Typography.Text strong>Rango de edad</Typography.Text>
       </Col>
       <Col span={1} />
-    </>
+    </Row>
   )
 }
