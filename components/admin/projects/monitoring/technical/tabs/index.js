@@ -1,15 +1,14 @@
-import { Tabs } from "antd"
+import { DatePicker, Tabs } from "antd"
 import { useState } from "react"
 import { withForm } from "../../../../../../helpers"
 import { MonitoringObjectives } from "./objectives"
-import { DateField } from "../../../../../shared"
 import "./style.sass"
 
 function TechnicalMonitoringTabs({ data }) {
   const [filterState, setFilterState] = useState([])
 
-  const onFilterChange = ({ currentTarget }) => {
-    const { value } = currentTarget
+  const onFilterChange = value => {
+    value = value && value?.map(v => v.format("YYYYMMDD"))
     setFilterState(value)
   }
 
@@ -18,9 +17,8 @@ function TechnicalMonitoringTabs({ data }) {
       defaultActiveKey="1"
       className="fico technical-monitoring"
       tabBarExtraContent={
-        <DateField
-          onChange={onFilterChange}
-          range />
+        <DatePicker.RangePicker
+          onChange={onFilterChange} />
       }>
       <Tabs.TabPane tab="Objetivos y actividades" key="1">
         <MonitoringObjectives data={data} dateFilter={filterState} />
