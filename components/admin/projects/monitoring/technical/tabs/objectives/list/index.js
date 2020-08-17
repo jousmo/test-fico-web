@@ -10,14 +10,14 @@ import {
   AdminSubmissionContext
 } from "../../../../../../../../contexts/admin/submissions/show"
 
-export function ObjectivesList({ data }) {
+export function ObjectivesList({ data, dateFilter }) {
   const [state, setState] = useState({
     isModalOpen: false,
     edit: undefined,
     test: 0
   })
 
-  const dataSource = decoratedData(data)
+  const dataSource = decoratedData(data, dateFilter)
   const { save, update } = useContext(AdminSubmissionContext)
 
   const getReport = row => {
