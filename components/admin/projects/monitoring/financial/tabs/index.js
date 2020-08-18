@@ -1,32 +1,20 @@
 import { Tabs } from "antd"
-import Expense from "./expense"
-import { SearchFieldPrimary } from "../../../../../shared"
+import { Expense } from "./expense"
+import { SummaryConcept } from "./summary"
+import { withForm } from "../../../../../../helpers"
 import "./style.sass"
-import { useContext } from "react"
-import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
 
-export function MonitoringFinancialTabs() {
-  const {
-    loading,
-    error,
-    data,
-    save,
-    update
-  } = useContext(AdminSubmissionContext)
-
+function MonitoringFinancialTabs() {
   return (
     <Tabs defaultActiveKey="1" className="fico financial-monitoring">
       <Tabs.TabPane tab="Gastos" key="1">
-        <Expense
-          data={data?.Submission}
-          error={error}
-          isLoading={loading}
-          save={save}
-          update={update}/>
+        <Expense />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Resumen conceptos" key="2">
-        <SearchFieldPrimary style={{margin: "0 1rem"}} />
+        <SummaryConcept />
       </Tabs.TabPane>
     </Tabs>
   )
 }
+
+export default withForm(MonitoringFinancialTabs)
