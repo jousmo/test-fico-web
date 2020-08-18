@@ -2,7 +2,6 @@ import {
   Layout,
   SaveHeader
 } from "../../../../../../components/implementer/submissions"
-import { useRouter } from "next/router"
 import {
   ProjectDetails,
   DevelopmentObjectives,
@@ -27,9 +26,8 @@ import {
   setUpdateGeneralInformation
 } from "../../../../../../helpers/submissionFunctions/general-information"
 
-function GeneralInformation({ client }) {
-  const router = useRouter()
-  const submissionId = router.query.id
+function GeneralInformation({ client, query }) {
+  const submissionId = query.id
 
   const [state, setState] = useState({
     generalInformation: {},
@@ -49,7 +47,7 @@ function GeneralInformation({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const updateGeneralInformation = useCallback(generalInformation => {
@@ -70,7 +68,6 @@ function GeneralInformation({ client }) {
     loading,
     error,
     data,
-    router
   }), [state, loading])
 
   return (
@@ -90,6 +87,12 @@ function GeneralInformation({ client }) {
       </CommentsProvider>
     </PageContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(GeneralInformation)

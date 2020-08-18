@@ -1,5 +1,4 @@
 import { Layout } from "../../../../../components/shared"
-import { useRouter } from "next/router"
 import {
   ListByStatus,
 } from "../../../../../components/admin/submissions/status"
@@ -18,9 +17,8 @@ import {
   selectOptions
 } from "../../../../../helpers"
 
-function SubmissionsByStatus({ client }) {
-  const router = useRouter()
-  const status = router.query.status_name?.toUpperCase()
+function SubmissionsByStatus({ client, query }) {
+  const status = query.status_name?.toUpperCase()
   const [ state ] = useState({
     submissionsList: {}
   })
@@ -49,8 +47,7 @@ function SubmissionsByStatus({ client }) {
     loading,
     error,
     data,
-    save,
-    router
+    save
   }), [state, loading])
 
   const pageTitle = selectOptions
@@ -76,6 +73,12 @@ function SubmissionsByStatus({ client }) {
       </PageContext.Provider>
     </AdminSubmissionContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(SubmissionsByStatus)

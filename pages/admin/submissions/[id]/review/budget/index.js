@@ -2,7 +2,6 @@ import {
   Layout,
   SaveHeader
 } from "../../../../../../components/implementer/submissions"
-import { useRouter } from "next/router"
 import {
   data as pageData
 } from "../../../../../../contexts/admin/submissions/review"
@@ -26,9 +25,8 @@ import {
 } from "../../../../../../helpers/submissionFunctions/budget"
 
 
-function Budget({ client }) {
-  const router = useRouter()
-  const submissionId = router.query.id
+function Budget({ client, query }) {
+  const submissionId = query.id
 
   const [state, setState] = useState({
     budget: {},
@@ -48,7 +46,7 @@ function Budget({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const updateBudget = useCallback(budget => {
@@ -63,8 +61,7 @@ function Budget({ client }) {
     updateBudget,
     loading,
     error,
-    data,
-    router
+    data
   }), [state, loading])
 
   return (
@@ -81,6 +78,12 @@ function Budget({ client }) {
       </CommentsProvider>
     </PageContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(Budget)

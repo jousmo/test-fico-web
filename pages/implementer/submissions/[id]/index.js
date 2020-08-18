@@ -1,5 +1,4 @@
 import { Layout } from "../../../../components/shared"
-import { useRouter } from "next/router"
 import {
   SubmissionSummary,
   AgreementDocuments
@@ -13,16 +12,14 @@ import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers"
 import { PageContext } from "../../../../contexts/page"
 
-function Submission({ client }) {
-  const router = useRouter()
+function Submission({ client, query }) {
   const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const injectActions = useMemo(() => ({
     loading,
-    router,
     error,
     data,
     client,

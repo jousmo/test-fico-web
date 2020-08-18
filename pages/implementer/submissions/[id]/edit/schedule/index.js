@@ -1,5 +1,4 @@
 import { Layout } from "../../../../../../components/implementer/submissions"
-import { useRouter } from "next/router"
 import {
   data as pageData,
   ImplementerSubmissionContext
@@ -14,8 +13,7 @@ import {
   ActivitiesSchedule
 } from "../../../../../../components/implementer/submissions/new/schedule"
 
-function Schedule({ client }) {
-  const router = useRouter()
+function Schedule({ client, query }) {
   const [state] = useState({
     schedule: {},
     dirty: false
@@ -23,14 +21,13 @@ function Schedule({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const injectActions = useMemo(() => ({
     loading,
     error,
-    data,
-    router
+    data
   }), [state, loading])
 
   return (
@@ -43,6 +40,12 @@ function Schedule({ client }) {
       </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(Schedule)
