@@ -1,27 +1,30 @@
 export const decoratedGoal = data => {
   let goal = 0
+
+  const getNumber = value => {
+    const number = +value
+    if (isNaN(number)){
+      return 0
+    }
+    return number
+  }
+
   data?.generalObjectiveIndicators?.forEach(indicator =>
-    goal += parseInt(indicator.goal)
+    goal += getNumber(indicator.goal)
   )
 
   data?.developmentObjectiveIndicators?.forEach(indicator =>
-    goal += parseInt(indicator.goal)
+    goal += getNumber(indicator.goal)
   )
 
   data?.specificObjectives?.forEach(objective => {
     const { indicators, activities } = objective
-    indicators?.forEach(indicator => {
-      if (typeof (indicator.goal) !== "number"){
-        return
-      }
-      goal += parseInt(indicator.goal)
-    })
-    activities?.forEach(activity => {
-      if (typeof (activity.goal) !== "number"){
-        return
-      }
-      goal += parseInt(activity.goal)
-    })
+    indicators?.forEach(indicator =>
+      goal += getNumber(indicator.goal)
+    )
+    activities?.forEach(activity =>
+      goal += getNumber(activity.goal)
+    )
   })
   return goal
 }
