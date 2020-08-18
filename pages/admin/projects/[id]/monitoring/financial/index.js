@@ -4,7 +4,6 @@ import { withApollo } from "../../../../../../helpers/withApollo"
 import {
   MonitoringFinancial
 } from "../../../../../../components/admin/projects/monitoring"
-import { useQuery } from "@apollo/react-hooks"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
