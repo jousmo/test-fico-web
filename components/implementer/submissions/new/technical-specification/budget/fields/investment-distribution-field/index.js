@@ -54,7 +54,7 @@ export function InvestmentDistributionField({
           {items.map((item, index) =>
             <Row
               gutter={[10, 8]}
-              key={`investment-${item.uuid}`}>
+              key={`investment-${index}`}>
               <Col span={12}>{ item.name }</Col>
               <Col span={6}>
                 <Input

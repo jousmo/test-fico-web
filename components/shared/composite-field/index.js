@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { Button } from "antd"
 import { PlusOutlined } from "@ant-design/icons"
-import { v4 as uuid } from "uuid"
 
 export function CompositeField({
   children,
@@ -11,21 +10,17 @@ export function CompositeField({
   defaultValue=[],
   value,
   maxItems,
-  isAddDisabled=false
+  isAddDisabled=false,
+  orientation="BOTTOM"
 }) {
-  const genUuid = i => {
-    i.uuid = uuid()
-    return i
-  }
-
   const [state, setState] = useState({
-    items: Array.from(defaultValue).map(genUuid),
+    items: Array.from(defaultValue),
     maxReached: maxItems && (defaultValue.length >= maxItems)
   })
 
   useEffect(() => {
     if(value) {
-      setState({ ...state, items: Array.from(value).map(genUuid) })
+      setState({ ...state, items: Array.from(value) })
     }
   }, [value])
 
@@ -85,12 +80,25 @@ export function CompositeField({
   }
 
   const handleChange = items => {
-    const newItems = items.map(({uuid, ...item}) => item)
+    const newItems = items.map(({...item}) => item)
     onChange && onChange(newItems)
   }
 
+  const renderButtonDashed = () => (
+    <Button
+      type="dashed"
+      icon={<PlusOutlined />}
+      onClick={() => onClickAdd && onClickAdd(addNew)}
+      disabled={state.maxReached}
+      block>
+      {addLabel}
+    </Button>
+  )
+
   return (
     <div>
+      { orientation === "TOP" && ( !isAddDisabled && renderButtonDashed() ) }
+
       {
         children({
           items: state.items,
@@ -100,16 +108,8 @@ export function CompositeField({
           replaceItemAtIndex
         })
       }
-      { !isAddDisabled ?
-        <Button
-          type="dashed"
-          icon={<PlusOutlined />}
-          onClick={() => onClickAdd && onClickAdd(addNew)}
-          disabled={state.maxReached}
-          block>
-          {addLabel}
-        </Button>
-      : null }
+
+      { orientation === "BOTTOM" && ( !isAddDisabled && renderButtonDashed() ) }
     </div>
   )
 }

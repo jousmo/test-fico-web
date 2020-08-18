@@ -1,23 +1,57 @@
 $white-color: #FFF
-$primary-color: #1890ff
-$primary-color-hover: #40a9ff
 
-.fico
-  .monitoring-finacial
-    .ant-tabs-bar
-      margin-top: 3px
-      background-color: $white-color
-      .ant-tabs-tab:first-child
-        margin-left: 1rem
-    .ant-tabs-content
-      .ant-alert
-        background-color: $white-color
-        border: none
-      .ant-btn-primary
-        background-color: $primary-color
-        border-color: $primary-color
-        color: $white-color
-        &:hover
-          background-color: $primary-color-hover
-          border-color: $primary-color-hover
-          color: $white-color
+.fico.financial-monitoring
+  .ant-tabs-nav-wrap
+    margin: 3px 0
+    background-color: $white-color
+
+  .ant-tabs-tab:first-child
+    margin-left: 1rem
+
+  .ant-tabs-content-holder
+    padding: 0 1rem
+
+    .financial
+      .ant-statistic
+        text-align: center
+      .ant-space
+        display: flex
+        justify-content: flex-end
+        margin-bottom: 1rem
+
+      .ant-divider
+        height: 100%
+
+.fico.expense-modal-form
+  .ant-divider
+    &::before
+      content: none
+    .ant-divider-inner-text
+      padding-left: 0
+      font-size: 0.9rem
+  .ant-form
+    .ant-row
+      margin-bottom: 1rem
+      .ant-col
+        text-align: left
+        font-size: 0.5rem
+        > label
+          font-size: 0.75rem
+        .ant-picker
+          width: 100%
+    .ant-space
+      margin-bottom: 1rem
+  .ant-alert-info
+    background-color: $white-color
+    border: none
+    font-size: 0.75rem
+    padding-left: 1.25rem
+    .ant-alert-icon
+      left: 0
+  .ant-modal-footer
+    display: flex
+    justify-content: space-between
+    span
+      text-align: left
+  .ant-input-number
+    width: 100%
