@@ -1,9 +1,11 @@
 import { Alert } from "antd"
 import { StatisticHeader } from "../../../../../../shared"
-import { getStatistics } from "./helpers"
+import { decoratedData, getStatistics } from "./helpers"
+import { ParticipantsList } from "./list"
 
-export function MonitoringParticipants() {
+export function MonitoringParticipants({ data }) {
   const statistics = getStatistics()
+  const { beneficiaries, participants } = decoratedData(data)
 
   return (
     <div className="participants" style={{ marginTop: "-2.5rem"}}>
@@ -13,6 +15,8 @@ export function MonitoringParticipants() {
         showIcon
         message="Acumulado total de participantes del proyecto, desglosado por
         rango de edad y por sexo." />
+      <ParticipantsList title="Beneficiarios" data={beneficiaries} />
+      <ParticipantsList title="Participantes" data={participants} />
     </div>
   )
 }
