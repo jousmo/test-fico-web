@@ -3,7 +3,7 @@ import { Section } from "../../../../../../../shared"
 import { HeaderColumns } from "./header"
 import { ParticipantRow } from "./row"
 
-export function ParticipantsList({ data = {}, title }){
+export function ParticipantsList({ data = {}, openModal, title }){
   const { PRIMARY, SECONDARY, TERTIARY } = data
 
   const sort = object => {
@@ -20,17 +20,32 @@ export function ParticipantsList({ data = {}, title }){
       <Collapse defaultActiveKey={["1"]} bordered={false}>
         <Collapse.Panel key="1" header="Primaria">
           {sortedPrimary.map((ages, index) =>
-            <ParticipantRow items={PRIMARY[ages]} age={ages} key={index} />
+            <ParticipantRow
+              age={ages}
+              items={PRIMARY[ages]}
+              key={index}
+              level="Primaria"
+              onClick={openModal}/>
           )}
         </Collapse.Panel>
         <Collapse.Panel key="2" header="Secundaria">
           {sortedSecondary.map((ages, index) =>
-            <ParticipantRow items={SECONDARY[ages]} age={ages} key={index} />
+            <ParticipantRow
+              age={ages}
+              items={SECONDARY[ages]}
+              key={index}
+              level="Secundaria"
+              onClick={openModal}/>
           )}
         </Collapse.Panel>
         <Collapse.Panel key="3" header="Terciaria">
           {sortedTertiary.map((ages, index) =>
-            <ParticipantRow items={TERTIARY[ages]} age={ages} key={index} />
+            <ParticipantRow
+              age={ages}
+              items={TERTIARY[ages]}
+              key={index}
+              level="Terciaria"
+              onClick={openModal}/>
           )}
         </Collapse.Panel>
       </Collapse>
