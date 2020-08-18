@@ -9,25 +9,33 @@ export const getStatistics = () => {
 export const decoratedData = data => {
   const { Submission: { technicalMonitoringReports: reports } } = data
   const result = {
-    beneficiaries: {},
-    participants: {}
+    beneficiaries: {
+      PRIMARY: {},
+      SECONDARY: {},
+      TERTIARY: {}
+    },
+    participants: {
+      PRIMARY: {},
+      SECONDARY: {},
+      TERTIARY: {}
+    }
   }
 
   reports?.forEach(({ key, participants }) => {
     participants.forEach(p => {
-      const { age } = p
+      const { age, preventionLevel } = p
       if (p.type === "BENEFICIARY"){
-        if(!result.beneficiaries[age]){
-          result.beneficiaries[age] = []
+        if(!result.beneficiaries[preventionLevel][age]){
+          result.beneficiaries[preventionLevel][age] = []
         }
 
-        result.beneficiaries[age].push({key, ...p})
+        result.beneficiaries[preventionLevel][age].push({key, ...p})
       } else {
-        if(!result.participants[age]){
-          result.participants[age] = []
+        if(!result.participants[preventionLevel][age]){
+          result.participants[preventionLevel][age] = []
         }
 
-        result.participants[age].push({key, ...p})
+        result.participants[preventionLevel][age].push({key, ...p})
       }
     })
   })
