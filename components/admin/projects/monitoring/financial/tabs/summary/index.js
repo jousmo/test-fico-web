@@ -15,7 +15,7 @@ export function SummaryConcept () {
 
   const filterHeader = () => (
     <>
-      <SelectField />
+      <SelectField value="Año 1" />
       <Checkbox.Group
         style={{marginLeft: "1rem"}}
         options={["Mensual", "Trimestral"]}

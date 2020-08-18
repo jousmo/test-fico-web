@@ -2,7 +2,7 @@ import { Empty, Table } from "antd"
 import { cellFormat } from "../../../../../../../../helpers"
 import { ArrowsAltOutlined } from "@ant-design/icons"
 
-export function ListSummaryConcept () {
+export function ListSummaryConcept ({ onChange }) {
   const dataSource = [
     {
       key: "1",
@@ -22,8 +22,10 @@ export function ListSummaryConcept () {
       total: 1368
     }
   ]
+
   return (
     <Table
+      onChange={onChange}
       className="summary-concepts"
       size="small"
       dataSource={dataSource}
@@ -37,67 +39,93 @@ export function ListSummaryConcept () {
         width={1}
         dataIndex="ene"
         title={<><ArrowsAltOutlined /> Ene</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="feb"
         title={<><ArrowsAltOutlined /> Feb</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="mar"
         title={<><ArrowsAltOutlined /> Mar</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="abr"
         title={<><ArrowsAltOutlined /> Abr</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="may"
         title={<><ArrowsAltOutlined /> May</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="jun"
         title={<><ArrowsAltOutlined /> Jun</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="jul"
         title={<><ArrowsAltOutlined /> Jul</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="ago"
         title={<><ArrowsAltOutlined /> Ago</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="sep"
         title={<><ArrowsAltOutlined /> Sep</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="oct"
         title={<><ArrowsAltOutlined /> Oct</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="nov"
         title={<><ArrowsAltOutlined /> Nov</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="dic"
         title={<><ArrowsAltOutlined /> Dic</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="total"
         title={<><ArrowsAltOutlined /> Total</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
     </Table>
   )
 }

@@ -2,7 +2,7 @@ import { Empty, Table } from "antd"
 import { cellFormat } from "../../../../../../../../helpers"
 import { ArrowsAltOutlined } from "@ant-design/icons"
 
-export function ListSummaryComparative () {
+export function ListSummaryComparative ({ onChange }) {
   const dataSource = [
     {
       key: "1",
@@ -16,6 +16,7 @@ export function ListSummaryComparative () {
   ]
   return (
     <Table
+      onChange={onChange}
       className="summary-concepts"
       size="small"
       dataSource={dataSource}
@@ -29,27 +30,37 @@ export function ListSummaryComparative () {
         width={1}
         dataIndex="1er"
         title={<><ArrowsAltOutlined /> 1er</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="2er"
         title={<><ArrowsAltOutlined /> 2er</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="3er"
         title={<><ArrowsAltOutlined /> 3er</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="4er"
         title={<><ArrowsAltOutlined /> 4er</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
       <Table.Column
         width={1}
         dataIndex="total"
         title={<><ArrowsAltOutlined /> Total</>}
-        render={text => cellFormat.money(text)} />
+        render={text => cellFormat.money(text)}
+        sorter
+        showSorterTooltip={false} />
     </Table>
   )
 }
