@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { useRouter } from "next/router"
 import {
   ImplementerSubmissionContext
 } from "../../../../../contexts/implementer/submissions/show"
@@ -9,9 +10,9 @@ import SummaryBody from "../../../../shared/submission-summary-body"
 import "./style.sass"
 
 export function SubmissionSummary() {
+  const router = useRouter()
   const {
     loading,
-    router,
     error,
     data
   } = useContext(ImplementerSubmissionContext)
