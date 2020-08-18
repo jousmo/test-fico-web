@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import { Button, Tooltip } from "antd"
+import { useRouter } from "next/router"
 import {
   CheckOutlined,
   CloseOutlined,
@@ -16,10 +17,8 @@ import {
 } from "./helpers"
 
 export function EvaluationActionButtons({ id, onChange }){
-  const {
-    save,
-    router
-  } = useContext(AdminSubmissionContext)
+  const router = useRouter()
+  const { save } = useContext(AdminSubmissionContext)
 
   return (
     <div>

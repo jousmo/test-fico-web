@@ -1,6 +1,8 @@
 import { List, Typography, Button } from "antd"
+import { useRouter } from "next/router"
 
-function MonitoringList({ router }){
+function MonitoringList( ){
+  const router = useRouter()
   const getButton = type => {
     const { query } = router || {}
     const url = `/admin/projects/${query?.id}/monitoring/${type}`
