@@ -3,6 +3,7 @@ import { useState } from "react"
 import { withForm } from "../../../../../../helpers"
 import { MonitoringObjectives } from "./objectives"
 import { MonitoringParticipants } from "./participants"
+import { MonitoringObstacles } from "./obstacles"
 import "./style.sass"
 
 function TechnicalMonitoringTabs({ data }) {
@@ -25,7 +26,7 @@ function TechnicalMonitoringTabs({ data }) {
         <MonitoringObjectives data={data} dateFilter={filterState} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Retos y obstáculos" key="2">
-
+        <MonitoringObstacles/>
       </Tabs.TabPane>
       <Tabs.TabPane tab="Participantes" key="3">
         <MonitoringParticipants data={data}/>
