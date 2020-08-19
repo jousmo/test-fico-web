@@ -28,7 +28,7 @@ function TechnicalMonitoringTabs({ data }) {
 
       </Tabs.TabPane>
       <Tabs.TabPane tab="Participantes" key="3">
-        <MonitoringParticipants />
+        <MonitoringParticipants data={data}/>
       </Tabs.TabPane>
     </Tabs>
   )
