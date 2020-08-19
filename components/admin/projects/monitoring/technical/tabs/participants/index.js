@@ -6,8 +6,8 @@ import { ParticipantsList } from "./list"
 import { ParticipantsModal } from "./modal"
 
 export function MonitoringParticipants({ data }) {
-  const statistics = getStatistics()
-  const { beneficiaries, participants } = decoratedData(data)
+  const { beneficiaries, participants, summary } = decoratedData(data)
+  const statistics = getStatistics(summary)
 
   const [state, setState] = useState({
     isModalOpen: false,
