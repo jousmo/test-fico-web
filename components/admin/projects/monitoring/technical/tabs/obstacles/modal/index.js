@@ -1,7 +1,14 @@
 import { Col, Form, Input, Modal, Row } from "antd"
+import { useEffect } from "react"
 
-export function ObstaclesModal({ onCancel, onSave, ...props }){
+export function ObstaclesModal({ edit, onCancel, onSave, ...props }){
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    if(edit) {
+      form.setFieldsValue(edit)
+    }
+  }, [edit])
 
   const onOk = async () => {
     try {
