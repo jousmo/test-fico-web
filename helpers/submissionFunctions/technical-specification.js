@@ -14,7 +14,7 @@ export const setUpdateTechnicalSpecification = (technicalSpecification, state, s
   })
 }
 
-export const setSave = async (state, setState, updateSubmission, id) => {
+export const setSave = async (state, updateSubmission, id) => {
   try {
     const saving = loadingAlert()
     const data = cloneDeep(state.technicalSpecification)
@@ -32,7 +32,6 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     await updateSubmission({
       variables: { data: data, id: id }
     })
-    setState({ ...state, technicalSpecification: {} })
     saving()
     success()
   }
