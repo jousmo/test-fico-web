@@ -59,7 +59,7 @@ export function ListExpense ({ dataSource, onEdit }) {
         width={1}
         dataIndex="percentage"
         title="Uso presupuestal"
-        render={text => `${text.toFixed(2)}%` } />
+        render={text => `${text?.toFixed(2)}%` } />
       <Table.Column
         width={1}
         title=""

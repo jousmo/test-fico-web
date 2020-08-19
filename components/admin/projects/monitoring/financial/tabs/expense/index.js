@@ -7,10 +7,8 @@ import moment from "moment"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 
 export function Expense () {
-  const { data } = useContext(AdminSubmissionContext)
-  const { Submission } = data || {}
-
-  const [state, setState] = useState({ isModalOpen: false, edit: false, filterInvoice: Submission.invoices })
+  const { data: { Submission }, save, update } = useContext(AdminSubmissionContext)
+  const [state, setState] = useState({ isModalOpen: false, edit: false, filterInvoice: Submission?.invoices })
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
@@ -30,8 +28,8 @@ export function Expense () {
       replaceItemAtIndex(expense.index, expense)
       update(expense)
     } else {
-      addNew(expense)
       save(expense)
+      addNew(expense)
     }
     onCancel()
   }
@@ -90,9 +88,9 @@ export function Expense () {
         <CompositeField
           onClickAdd={onClickAdd}
           onChange={onChange}
-          addLabel="Subir factura"
           defaultValue={Submission?.invoices}
           value={state?.filterInvoice}
+          addLabel="Subir factura"
           orientation="TOP">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <>
