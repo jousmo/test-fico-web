@@ -202,6 +202,11 @@ export const getById = gql`
           preventionLevel
         }
       }
+      technicalUpdates{
+        correctiveActions
+        challenges
+        obstacles
+      }
     }
   }
 `
