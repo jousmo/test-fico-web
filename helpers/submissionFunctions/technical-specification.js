@@ -1,4 +1,5 @@
 import { cloneDeep } from "lodash"
+import { success, loadingAlert } from "../alert"
 
 export const setUpdateTechnicalSpecification = (technicalSpecification, state, setState) => {
   const newTechnicalSpecification = {
@@ -13,8 +14,9 @@ export const setUpdateTechnicalSpecification = (technicalSpecification, state, s
   })
 }
 
-export const setSave = async (state, updateSubmission, id) => {
+export const setSave = async (state, setState, updateSubmission, id) => {
   try {
+    const saving = loadingAlert()
     const data = cloneDeep(state.technicalSpecification)
     data.specificObjectives = data.specificObjectives?.map(objective => {
       objective.activities = objective.activities.map(({uuid, ...activity}) =>
@@ -27,11 +29,12 @@ export const setSave = async (state, updateSubmission, id) => {
 
       return objective
     })
-    const updatedSubmission = await updateSubmission({
+    await updateSubmission({
       variables: { data: data, id: id }
     })
-
-    /* TODO: Show feedback to the user */
+    setState({ ...state, technicalSpecification: {} })
+    saving()
+    success()
   }
   catch(e) {
     console.error(e)

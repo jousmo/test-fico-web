@@ -30,15 +30,8 @@ function TechnicalSpecification({ client, query }) {
 
   const [state, setState] = useState({
     technicalSpecification: {},
-    dirty: false,
-    submissionId: undefined
+    dirty: false
   })
-
-  useEffect(() => {
-    setState(state => (
-      { ...state, submissionId }
-    ))
-  }, [submissionId])
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
@@ -46,7 +39,7 @@ function TechnicalSpecification({ client, query }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: query.id }
+    variables: { id: submissionId }
   })
 
   const updateTechnicalSpecification = useCallback(technicalSpecification => {
@@ -54,7 +47,7 @@ function TechnicalSpecification({ client, query }) {
   }, [state])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, state.submissionId)
+    await setSave(state, setState, updateSubmission, submissionId)
   }, [state])
 
   const injectActions = useMemo(() => ({
