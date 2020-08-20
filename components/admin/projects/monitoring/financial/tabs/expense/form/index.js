@@ -1,22 +1,12 @@
 import { Modal, Form, Input, InputNumber, Divider, Alert, Statistic, Space, Typography } from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
 import { cellFormat, getSelectValue, warning} from "../../../../../../../../helpers"
-import convert from "xml-js"
 import { useEffect, useState } from "react"
 import { merge } from "lodash"
-
-const INIT_STATE = {
-  amount: 0,
-  percentage: 0,
-  ficosecPaymentPercentage: 0,
-  investmentOnePaymentPercentage: 0,
-  investmentTwoPaymentPercentage: 0,
-  implementerPaymentPercentage: 0
-}
+import { INIT_STATE, readXmlFile, toFileList, getPercentagePayment } from "./helpers"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const [state, setState] = useState(INIT_STATE)
-
   const [form] = Form.useForm()
   const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
 
@@ -27,25 +17,10 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     }
   }, [edit])
 
-
   const loadPercentagePayment = async () => {
-    const {
-      amount,
-      percentage,
-      ficosecPayment,
-      implementerPayment,
-      investmentOnePayment,
-      investmentTwoPayment
-    } = await form.getFieldsValue()
-
-    setState({
-      amount,
-      percentage,
-      ficosecPaymentPercentage: ((ficosecPayment * 100) / amount).toFixed(2),
-      implementerPaymentPercentage: ((implementerPayment * 100) / amount).toFixed(2),
-      investmentOnePaymentPercentage: ((investmentOnePayment * 100) / amount).toFixed(2),
-      investmentTwoPaymentPercentage: ((investmentTwoPayment * 100) / amount).toFixed(2)
-    })
+    const formData = await form.getFieldsValue()
+    const setData = getPercentagePayment(formData)
+    setState({ ...setData })
   }
 
   const onCancelModal = () => {
@@ -78,10 +53,14 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       return { id: el.id, type, name: el.name, url: el.url }
     })
 
-    const nodes = await readXmlFile(documents)
+    try {
+      const nodes = await readXmlFile(documents)
+      await form.setFieldsValue({ documents, ...nodes })
+      setState({ ...state, amount: nodes.amount, percentage: nodes.percentage || 0 })
+    } catch (err) {
+      console.log(err)
+    }
 
-    await form.setFieldsValue({ documents, ...nodes })
-    setState({ ...state, amount: nodes.amount, percentage: nodes.percentage || 0 })
   }
 
   const onRemoveFile = async ({ type, url }) => {
@@ -101,30 +80,6 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     } else {
       await form.setFieldsValue({ documents })
     }
-  }
-
-  const readXmlFile = async documents => {
-    const document = documents?.find(el => el.type === "XML")
-
-    if (!document) return {}
-
-    try {
-      const response = await fetch(document.url)
-      const xml = await response.text()
-      const xmlJson = convert.xml2js(xml, { compact: true, ignoreComment: true, alwaysChildren: true })
-      const { UUID: uuid, FechaTimbrado: issuedAt } = xmlJson["cfdi:Comprobante"]["cfdi:Complemento"]["tfd:TimbreFiscalDigital"]["_attributes"]
-      const { Nombre: issuer, Rfc: rfc } = xmlJson["cfdi:Comprobante"]["cfdi:Emisor"]["_attributes"]
-      const { Nombre: receptor } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
-      const amount = +xmlJson["cfdi:Comprobante"]["_attributes"]["Total"]
-      const percentage = +((amount * 100) / submission?.budgeted).toFixed(2)
-      return { uuid, issuedAt, issuer, rfc, receptor, amount, percentage }
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  const toFileList = (files) => {
-    return files?.map((document, index) => ({ uid: index, status: "done", ...document }))
   }
 
   const onChange = (who, value) => {
