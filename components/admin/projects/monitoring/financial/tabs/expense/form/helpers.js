@@ -9,7 +9,7 @@ export const INIT_STATE = {
   implementerPaymentPercentage: 0
 }
 
-export const readXmlFile = async documents => {
+export const readXmlFile = async (documents, budgeted) => {
   const document = documents?.find(el => el.type === "XML")
 
   if (!document) return {}
@@ -22,7 +22,7 @@ export const readXmlFile = async documents => {
     const { Nombre: issuer, Rfc: rfc } = xmlJson["cfdi:Comprobante"]["cfdi:Emisor"]["_attributes"]
     const { Nombre: receptor } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
     const amount = +xmlJson["cfdi:Comprobante"]["_attributes"]["Total"]
-    const percentage = +((amount * 100) / submission?.budgeted).toFixed(2)
+    const percentage = +((amount * 100) / budgeted).toFixed(2)
     return { uuid, issuedAt, issuer, rfc, receptor, amount, percentage }
   } catch (err) {
     throw new Error(err)

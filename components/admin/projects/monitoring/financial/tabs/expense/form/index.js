@@ -13,13 +13,12 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   useEffect(() => {
     if(edit) {
       form.setFieldsValue(edit)
-      loadPercentagePayment()
+      loadPercentagePayment(edit)
     }
   }, [edit])
 
-  const loadPercentagePayment = async () => {
-    const formData = await form.getFieldsValue()
-    const setData = getPercentagePayment(formData)
+  const loadPercentagePayment = async (data) => {
+    const setData = getPercentagePayment(data)
     setState({ ...setData })
   }
 
@@ -54,13 +53,12 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     })
 
     try {
-      const nodes = await readXmlFile(documents)
+      const nodes = await readXmlFile(documents, submission?.budgeted)
       await form.setFieldsValue({ documents, ...nodes })
       setState({ ...state, amount: nodes.amount, percentage: nodes.percentage || 0 })
     } catch (err) {
       console.log(err)
     }
-
   }
 
   const onRemoveFile = async ({ type, url }) => {
@@ -112,8 +110,9 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           name="documents"
           getValueFromEvent={onDoneFile}>
           <UploadButtonForm
-            defaultFileList={toFileList(edit?.documents)}
+            fileList={toFileList(edit?.documents)}
             onRemoveFile={onRemoveFile}
+            maxFile={2}
             accept={"application/pdf,application/xml"}>
             Subir factura
           </UploadButtonForm>
