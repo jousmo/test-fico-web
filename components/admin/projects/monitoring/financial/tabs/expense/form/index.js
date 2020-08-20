@@ -1,4 +1,4 @@
-import { Modal, Form, Input, InputNumber, Divider, Alert, Statistic, Space } from "antd"
+import { Modal, Form, Input, InputNumber, Divider, Alert, Statistic, Space, Typography } from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
 import { cellFormat, getSelectValue, warning} from "../../../../../../../../helpers"
 import convert from "xml-js"
@@ -111,7 +111,6 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       <Form
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
-        name="expense-form"
         form={form}>
         <Form.Item
           name="documents"
@@ -200,53 +199,59 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         </Form.Item>
         <Divider orientation="left">Coinversión</Divider>
         <Form.Item
+          className="wrapper-number"
           label="FICOSEC:"
           name="ficosecPayment"
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="ficosecPayment"
-            type="number" />
+            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+          <Typography.Title level={4}>0%</Typography.Title>
         </Form.Item>
         <Form.Item
+          className="wrapper-number"
           label="Coinversión 1:"
           name="investmentOnePayment"
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="investmentOnePayment"
-            type="number" />
+            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+          <Typography.Title level={4}>10%</Typography.Title>
         </Form.Item>
         <Form.Item
+          className="wrapper-number"
           label="Coinversión 2:"
           name="investmentTwoPayment"
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="investmentTwoPayment"
-            type="number" />
+            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+          <Typography.Title level={4}>0%</Typography.Title>
         </Form.Item>
         <Form.Item
+          className="wrapper-number"
           label="Implementadora:"
           name="implementerPayment"
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="implementerPayment"
-            type="number" />
+            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+          <Typography.Title level={4}>0%</Typography.Title>
         </Form.Item>
         <Divider orientation="left">Importe</Divider>
         <Form.Item
           label="Total:"
           name="amount">
-          <InputNumber
-            name="amount"
-            type="number"
-            readOnly />
+          <InputNumber name="amount" readOnly />
         </Form.Item>
         <Form.Item
           label="Uso del presupuesto:"
           name="percentage">
-          <InputNumber
-            name="percentage"
-            type="number"
-            readOnly />
+          <InputNumber name="percentage" readOnly />
         </Form.Item>
       </Form>
     </Modal>
