@@ -109,7 +109,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       [who]: percentage
     })
   }
-  
+
   return (
     <Modal
       destroyOnClose

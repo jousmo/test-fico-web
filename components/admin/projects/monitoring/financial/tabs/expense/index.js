@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { Alert, Col, Divider, Row, Statistic, Space, DatePicker } from "antd"
-import { Section, SearchFieldPrimary, CompositeField } from "../../../../../../shared"
+import { Section, SearchFieldPrimary, CompositeField, StatisticHeader } from "../../../../../../shared"
+import { cellFormat } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 import moment from "moment"
@@ -8,8 +9,13 @@ import { AdminSubmissionContext } from "../../../../../../../contexts/admin/subm
 
 export function Expense () {
   const { data: { Submission }, save, update } = useContext(AdminSubmissionContext)
-
   const [state, setState] = useState({ isModalOpen: false, edit: false, filterInvoice: false })
+
+  const dataStatistics = [
+    { title: "Presupuesto a FICOSEC", value: cellFormat.money(Submission?.budgeted).children },
+    { title: "Comprobado a FICOSEC", value: cellFormat.money(Submission?.evidenced).children },
+    { title: "Diferencia", value: cellFormat.money(Submission?.difference).children }
+  ]
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
@@ -53,6 +59,8 @@ export function Expense () {
     }
   }
 
+
+
   return (
     <>
       <Alert
@@ -61,27 +69,7 @@ export function Expense () {
         message="Adjunta tu conjunto de facturas y selecciona el concepto al que pertenecen, solo se admiten
         facturas emitidas a tu organización" />
       <SearchFieldPrimary style={{marginTop: "1rem"}} />
-      <Section style={{padding: 0, margin: "1rem 0"}}>
-        <Row>
-          <Col flex="auto">
-            <Statistic title="Presupuesto a FICOSEC" value={`$${Submission?.budgeted?.toFixed(2)}`} />
-          </Col>
-          <Col span={1}>
-            <Divider type="vertical" />
-          </Col>
-          <Col flex="auto">
-            <Statistic title="Comprobado a FICOSEC" value={`$${Submission?.evidenced?.toFixed(2)}`} />
-          </Col>
-          <Col span={1}>
-            <Divider type="vertical" />
-          </Col>
-          <Col flex="auto">
-            <Statistic
-              title="Diferencia" value={`$${Submission?.difference?.toFixed(2)}`}
-              valueStyle={{ color: "#cf1322" }} />
-          </Col>
-        </Row>
-      </Section>
+      <StatisticHeader statistics={dataStatistics} styles={{padding: 0}} valueStyle={{ color: "#cf1322" }}/>
       <Section style={{padding: 0, margin: "1rem 0"}} title="Gastos">
         <Space>
           <DatePicker.RangePicker onChange={onChangeRageDate} />

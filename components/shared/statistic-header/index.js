@@ -1,9 +1,9 @@
 import { Section } from "../section"
 import { Col, Divider, Row, Statistic } from "antd"
 
-export function StatisticHeader({ statistics }){
+export function StatisticHeader({ statistics, styles = {}, valueStyle = {} }){
   return (
-    <Section style={{ margin: "1rem 0" }}>
+    <Section style={{ margin: "1rem 0", ...styles }}>
       <Row>
         <Col flex="auto">
           <Statistic {...statistics[0]} />
@@ -18,7 +18,7 @@ export function StatisticHeader({ statistics }){
           <Divider type="vertical" />
         </Col>
         <Col flex="auto">
-          <Statistic {...statistics[2]} />
+          <Statistic {...statistics[2]} valueStyle={valueStyle} />
         </Col>
       </Row>
     </Section>
