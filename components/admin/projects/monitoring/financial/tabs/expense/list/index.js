@@ -1,6 +1,7 @@
 import { Table, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined } from "@ant-design/icons"
 import { DateField, SelectField } from "../../../../../../../shared"
+import { cellFormat } from "../../../../../../../../helpers"
 import moment from "moment"
 moment.locale("es")
 
@@ -42,7 +43,8 @@ export function ListExpense ({ dataSource, onEdit }) {
       <Table.Column
         width={1}
         dataIndex="amount"
-        title="Importe" />
+        title="Importe"
+        render={text => cellFormat.money(text)} />
       <Table.Column
         width={2}
         dataIndex="paymentAt"
@@ -58,8 +60,8 @@ export function ListExpense ({ dataSource, onEdit }) {
       <Table.Column
         width={1}
         dataIndex="percentage"
-        title="Uso presupuestal"
-        render={text => `${text?.toFixed(2)}%` } />
+        render={text => `${text}%`}
+        title="Uso presupuestal" />
       <Table.Column
         width={1}
         title=""

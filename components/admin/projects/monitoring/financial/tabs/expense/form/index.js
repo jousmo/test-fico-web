@@ -5,15 +5,17 @@ import convert from "xml-js"
 import { useEffect, useState } from "react"
 import { merge } from "lodash"
 
+const INIT_STATE = {
+  amount: 0,
+  percentage: 0,
+  ficosecPaymentPercentage: 0,
+  investmentOnePaymentPercentage: 0,
+  investmentTwoPaymentPercentage: 0,
+  implementerPaymentPercentage: 0
+}
+
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
-  const [state, setState] = useState({
-    amount: 0,
-    percentage: 0,
-    ficosecPaymentPercentage: 0,
-    investmentOnePaymentPercentage: 0,
-    investmentTwoPaymentPercentage: 0,
-    implementerPaymentPercentage: 0
-  })
+  const [state, setState] = useState(INIT_STATE)
 
   const [form] = Form.useForm()
   const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
@@ -21,11 +23,34 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   useEffect(() => {
     if(edit) {
       form.setFieldsValue(edit)
+      loadPercentagePayment()
     }
   }, [edit])
 
+
+  const loadPercentagePayment = async () => {
+    const {
+      amount,
+      percentage,
+      ficosecPayment,
+      implementerPayment,
+      investmentOnePayment,
+      investmentTwoPayment
+    } = await form.getFieldsValue()
+
+    setState({
+      amount,
+      percentage,
+      ficosecPaymentPercentage: ((ficosecPayment * 100) / amount).toFixed(2),
+      implementerPaymentPercentage: ((implementerPayment * 100) / amount).toFixed(2),
+      investmentOnePaymentPercentage: ((investmentOnePayment * 100) / amount).toFixed(2),
+      investmentTwoPaymentPercentage: ((investmentTwoPayment * 100) / amount).toFixed(2)
+    })
+  }
+
   const onCancelModal = () => {
     form.resetFields()
+    setState(INIT_STATE)
     onCancel && onCancel()
   }
 
@@ -91,7 +116,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       const { Nombre: issuer, Rfc: rfc } = xmlJson["cfdi:Comprobante"]["cfdi:Emisor"]["_attributes"]
       const { Nombre: receptor } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
       const amount = +xmlJson["cfdi:Comprobante"]["_attributes"]["Total"]
-      const percentage = (amount * 100) / submission?.budgeted
+      const percentage = +((amount * 100) / submission?.budgeted).toFixed(2)
       return { uuid, issuedAt, issuer, rfc, receptor, amount, percentage }
     } catch (err) {
       console.error(err)
@@ -106,7 +131,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     const percentage = state?.amount ? ((value * 100) / state.amount) : 0
     setState({
       ...state,
-      [who]: percentage
+      [who]: percentage.toFixed(2)
     })
   }
 
@@ -202,7 +227,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         <Divider orientation="left">Importe</Divider>
         <Space>
           <Statistic title="Importe de factura" value={cellFormat.money(state?.amount).children} />
-          <Statistic title="Uso del presupuesto" value={`${state.percentage}%`} />
+          <Statistic title="Uso del presupuesto" value={`${state?.percentage}%`} />
         </Space>
         <Form.Item
           label="Fecha de pago:"
@@ -214,54 +239,58 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
             format="DD/MM/YYYY" />
         </Form.Item>
         <Divider orientation="left">Coinversión</Divider>
-        <Form.Item
-          className="wrapper-number"
-          label="FICOSEC:"
-          name="ficosecPayment"
-          rules={[{ required: true, message: "El campo es requerido" }]}>
-          <InputNumber
+        <Space className="wrapper-number">
+          <Form.Item
+            label="FICOSEC:"
             name="ficosecPayment"
-            onChange={(value) => onChange("ficosecPaymentPercentage", value)}
-            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value.replace(/\$\s?|(,*)/g, '')} />
-          <Typography.Title level={4}>{`${state?.ficosecPaymentPercentage.toFixed(2)}%`}</Typography.Title>
-        </Form.Item>
-        <Form.Item
-          className="wrapper-number"
-          label="Coinversión 1:"
-          name="investmentOnePayment"
-          rules={[{ required: true, message: "El campo es requerido" }]}>
-          <InputNumber
+            rules={[{ required: true, message: "El campo es requerido" }]}>
+            <InputNumber
+              name="ficosecPayment"
+              onChange={(value) => onChange("ficosecPaymentPercentage", value)}
+              formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+          </Form.Item>
+          <Typography.Title level={4}>{`${state?.ficosecPaymentPercentage}%`}</Typography.Title>
+        </Space>
+        <Space className="wrapper-number">
+          <Form.Item
+            label="Coinversión 1:"
             name="investmentOnePayment"
-            onChange={(value) => onChange("investmentOnePaymentPercentage", value)}
-            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value.replace(/\$\s?|(,*)/g, '')} />
-          <Typography.Title level={4}>{`${state?.investmentOnePaymentPercentage.toFixed(2)}%`}</Typography.Title>
-        </Form.Item>
-        <Form.Item
-          className="wrapper-number"
-          label="Coinversión 2:"
-          name="investmentTwoPayment"
-          rules={[{ required: true, message: "El campo es requerido" }]}>
-          <InputNumber
+            rules={[{ required: true, message: "El campo es requerido" }]}>
+            <InputNumber
+              name="investmentOnePayment"
+              onChange={(value) => onChange("investmentOnePaymentPercentage", value)}
+              formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+          </Form.Item>
+          <Typography.Title level={4}>{`${state?.investmentOnePaymentPercentage}%`}</Typography.Title>
+        </Space>
+        <Space className="wrapper-number">
+          <Form.Item
+            label="Coinversión 2:"
             name="investmentTwoPayment"
-            onChange={(value) => onChange("investmentTwoPaymentPercentage", value)}
-            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value.replace(/\$\s?|(,*)/g, '')} />
-          <Typography.Title level={4}>{`${state?.investmentTwoPaymentPercentage.toFixed(2)}%`}</Typography.Title>
-        </Form.Item>
-        <Form.Item
-          className="wrapper-number"
-          label="Implementadora:"
-          name="implementerPayment"
-          rules={[{ required: true, message: "El campo es requerido" }]}>
-          <InputNumber
+            rules={[{ required: true, message: "El campo es requerido" }]}>
+            <InputNumber
+              name="investmentTwoPayment"
+              onChange={(value) => onChange("investmentTwoPaymentPercentage", value)}
+              formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+          </Form.Item>
+          <Typography.Title level={4}>{`${state?.investmentTwoPaymentPercentage}%`}</Typography.Title>
+        </Space>
+        <Space className="wrapper-number">
+          <Form.Item
+            label="Implementadora:"
             name="implementerPayment"
-            onChange={(value) => onChange("implementerPaymentPercentage", value)}
-            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value.replace(/\$\s?|(,*)/g, '')} />
-          <Typography.Title level={4}>{`${state?.implementerPaymentPercentage.toFixed(2)}%`}</Typography.Title>
-        </Form.Item>
+            rules={[{ required: true, message: "El campo es requerido" }]}>
+            <InputNumber
+              name="implementerPayment"
+              onChange={(value) => onChange("implementerPaymentPercentage", value)}
+              formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+          </Form.Item>
+          <Typography.Title level={4}>{`${state?.implementerPaymentPercentage}%`}</Typography.Title>
+        </Space>
         <Divider orientation="left">Importe</Divider>
         <Form.Item
           label="Total:"
