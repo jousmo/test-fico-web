@@ -1,4 +1,5 @@
 import { Layout } from "../../../../../components/shared"
+import { ListByStatus } from "../../../../../components/admin/projects/status"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
@@ -36,7 +37,7 @@ function ProjectsByStatus({ client, query }) {
       }}>
       <AdminSubmissionContext.Provider value={injectActions}>
         <Layout>
-
+          <ListByStatus />
         </Layout>
       </AdminSubmissionContext.Provider>
     </PageContext.Provider>
