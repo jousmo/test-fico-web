@@ -1,32 +1,29 @@
 import { Upload, Button } from "antd"
 import { UploadOutlined } from "@ant-design/icons"
-import { useState } from "react"
 
-export function UploadButtonForm({ children, onDoneFile, defaultFileList }) {
-  const [state, setState] = useState([])
-
-  const onChange = info => {
-    let fileList = [...info.fileList]
+export function UploadButtonForm({ children, onChange, onRemoveFile, defaultFileList, accept }) {
+  const onUploadChange = info => {
+    let fileList = Array.from(info.fileList)
 
     fileList = fileList.map(file => {
       if (file.response) {
-        file.url = file.response.imageUrl || file.response.url
+        file.url = file.response.imageUrl
       }
       return file
     })
 
     if (info.file.status === "done") {
-      onDoneFile && onDoneFile(state)
+      onChange && onChange(fileList)
     }
-
-    setState(fileList)
   }
 
   return (
     <Upload
       defaultFileList={defaultFileList}
       action={`${process.env.NEXT_PUBLIC_S3_URI}/asset-upload`}
-      onChange={onChange}>
+      onChange={onUploadChange}
+      onRemove={onRemoveFile}
+      accept={accept}>
       <Button>
         <UploadOutlined /> {children}
       </Button>

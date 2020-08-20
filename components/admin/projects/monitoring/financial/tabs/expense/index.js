@@ -8,7 +8,8 @@ import { AdminSubmissionContext } from "../../../../../../../contexts/admin/subm
 
 export function Expense () {
   const { data: { Submission }, save, update } = useContext(AdminSubmissionContext)
-  const [state, setState] = useState({ isModalOpen: false, edit: false, filterInvoice: Submission?.invoices })
+
+  const [state, setState] = useState({ isModalOpen: false, edit: false, filterInvoice: false })
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
@@ -28,8 +29,8 @@ export function Expense () {
       replaceItemAtIndex(expense.index, expense)
       update(expense)
     } else {
-      save(expense)
       addNew(expense)
+      save(expense)
     }
     onCancel()
   }
@@ -46,7 +47,7 @@ export function Expense () {
     })
 
     if (!first || !end) {
-      setState({ ...state, filterInvoice: Submission?.invoices})
+      setState({ ...state, filterInvoice: false})
     } else {
       setState({ ...state, filterInvoice: filter})
     }
@@ -88,8 +89,7 @@ export function Expense () {
         <CompositeField
           onClickAdd={onClickAdd}
           onChange={onChange}
-          defaultValue={Submission?.invoices}
-          value={state?.filterInvoice}
+          value={state.filterInvoice ? state.filterInvoice : Submission?.invoices}
           addLabel="Subir factura"
           orientation="TOP">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>

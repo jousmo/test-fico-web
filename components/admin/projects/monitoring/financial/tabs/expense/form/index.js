@@ -9,7 +9,6 @@ import { merge } from "lodash"
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const [form] = Form.useForm()
   const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
-  const defaultFileList = edit?.documents?.map((doument, index) => ({ uid: index, status: "done", ...doument }))
 
   useEffect(() => {
     if(edit) {
@@ -43,11 +42,31 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const onDoneFile = async file => {
     const documents = file?.map(el => {
       const type = el.type === "text/xml" ? "XML" : "PDF"
-      return { type, name: el.name, url: el.url }
+      return { id: el.id, type, name: el.name, url: el.url }
     })
 
     const nodes = await readXmlFile(documents)
+
     await form.setFieldsValue({ documents, ...nodes })
+  }
+
+  const onRemoveFile = async ({ type, url }) => {
+    const oldDocuments = form.getFieldValue("documents")
+    const documents = oldDocuments.filter(document => document.url !== url)
+
+    if (type === "XML" || type === "text/xml") {
+      await form.setFieldsValue({
+        documents,
+        uuid: undefined,
+        issuedAt: undefined,
+        issuer: undefined,
+        rfc: undefined,
+        receptor: undefined,
+        amount: 0,
+        percentage: 0 })
+    } else {
+      await form.setFieldsValue({ documents })
+    }
   }
 
   const readXmlFile = async documents => {
@@ -70,11 +89,17 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     }
   }
 
+  const toFileList = (files) => {
+    return files?.map((document, index) => ({ uid: index, status: "done", ...document }))
+  }
+
   return (
     <Modal
       destroyOnClose
       title="&nbsp;"
       width={600}
+      okText="Guardar factura"
+      cancelText="Cancelar"
       onOk={onSubmit}
       onCancel={onCancelModal}
       {...props}>
@@ -87,11 +112,13 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         wrapperCol={{ span: 24 }}
         name="expense-form"
         form={form}>
-        <Form.Item name="documents">
+        <Form.Item
+          name="documents"
+          getValueFromEvent={onDoneFile}>
           <UploadButtonForm
-            defaultFileList={defaultFileList}
-            onDoneFile={onDoneFile}
-          >
+            defaultFileList={toFileList(edit?.documents)}
+            onRemoveFile={onRemoveFile}
+            accept={"application/pdf,application/xml"}>
             Subir factura
           </UploadButtonForm>
         </Form.Item>

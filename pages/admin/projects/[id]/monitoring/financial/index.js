@@ -20,7 +20,16 @@ function FinancialMonitoringPage({ client }) {
   })
 
   const [createProjectInvoice] = useMutation(
-    submission.mutations.createProjectInvoice, { client: client }
+    submission.mutations.createProjectInvoice, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getById,
+          variables: { id: router.query.id }
+        }
+      ]
+    }
   )
 
   const [updateProjectInvoice] = useMutation(
@@ -54,7 +63,7 @@ function FinancialMonitoringPage({ client }) {
     data,
     save,
     update
-  }), [loading])
+  }), [loading, data])
 
   return (
     <PageContext.Provider
