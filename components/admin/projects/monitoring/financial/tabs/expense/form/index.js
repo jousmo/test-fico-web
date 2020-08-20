@@ -1,4 +1,4 @@
-import { Modal, Form, Input, InputNumber, Divider, Alert } from "antd"
+import { Modal, Form, Input, InputNumber, Divider, Alert, Statistic, Space } from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
 import { getSelectValue } from "../../../../../../../../helpers/getSelectValue"
 import { warning } from "../../../../../../../../helpers/alert"
@@ -183,6 +183,11 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <Input name="entry" />
         </Form.Item>
+        <Divider orientation="left">Importe</Divider>
+        <Space>
+          <Statistic title="Importe de factura" value={0} />
+          <Statistic title="Uso del presupuesto" value="0%" />
+        </Space>
         <Form.Item
           label="Fecha de pago:"
           name="paymentAt"
