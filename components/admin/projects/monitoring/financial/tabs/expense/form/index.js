@@ -6,7 +6,15 @@ import { useEffect, useState } from "react"
 import { merge } from "lodash"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
-  const [state, setState] = useState({ amount: 0, percentage: 0 })
+  const [state, setState] = useState({
+    amount: 0,
+    percentage: 0,
+    ficosecPaymentPercentage: 0,
+    investmentOnePaymentPercentage: 0,
+    investmentTwoPaymentPercentage: 0,
+    implementerPaymentPercentage: 0
+  })
+
   const [form] = Form.useForm()
   const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
 
@@ -48,7 +56,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     const nodes = await readXmlFile(documents)
 
     await form.setFieldsValue({ documents, ...nodes })
-    setState({ amount: nodes.amount, percentage: nodes.percentage || 0 })
+    setState({ ...state, amount: nodes.amount, percentage: nodes.percentage || 0 })
   }
 
   const onRemoveFile = async ({ type, url }) => {
@@ -94,6 +102,14 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     return files?.map((document, index) => ({ uid: index, status: "done", ...document }))
   }
 
+  const onChange = (who, value) => {
+    const percentage = state?.amount ? ((value * 100) / state.amount) : 0
+    setState({
+      ...state,
+      [who]: percentage
+    })
+  }
+  
   return (
     <Modal
       destroyOnClose
@@ -181,7 +197,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           label="ID Rubro:"
           name="category"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input name="entry" />
+          <Input name="entry"/>
         </Form.Item>
         <Divider orientation="left">Importe</Divider>
         <Space>
@@ -205,9 +221,10 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="ficosecPayment"
+            onChange={(value) => onChange("ficosecPaymentPercentage", value)}
             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             parser={value => value.replace(/\$\s?|(,*)/g, '')} />
-          <Typography.Title level={4}>0%</Typography.Title>
+          <Typography.Title level={4}>{`${state?.ficosecPaymentPercentage.toFixed(2)}%`}</Typography.Title>
         </Form.Item>
         <Form.Item
           className="wrapper-number"
@@ -216,9 +233,10 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="investmentOnePayment"
+            onChange={(value) => onChange("investmentOnePaymentPercentage", value)}
             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             parser={value => value.replace(/\$\s?|(,*)/g, '')} />
-          <Typography.Title level={4}>10%</Typography.Title>
+          <Typography.Title level={4}>{`${state?.investmentOnePaymentPercentage.toFixed(2)}%`}</Typography.Title>
         </Form.Item>
         <Form.Item
           className="wrapper-number"
@@ -227,9 +245,10 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="investmentTwoPayment"
+            onChange={(value) => onChange("investmentTwoPaymentPercentage", value)}
             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             parser={value => value.replace(/\$\s?|(,*)/g, '')} />
-          <Typography.Title level={4}>0%</Typography.Title>
+          <Typography.Title level={4}>{`${state?.investmentTwoPaymentPercentage.toFixed(2)}%`}</Typography.Title>
         </Form.Item>
         <Form.Item
           className="wrapper-number"
@@ -238,9 +257,10 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <InputNumber
             name="implementerPayment"
+            onChange={(value) => onChange("implementerPaymentPercentage", value)}
             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             parser={value => value.replace(/\$\s?|(,*)/g, '')} />
-          <Typography.Title level={4}>0%</Typography.Title>
+          <Typography.Title level={4}>{`${state?.implementerPaymentPercentage.toFixed(2)}%`}</Typography.Title>
         </Form.Item>
         <Divider orientation="left">Importe</Divider>
         <Form.Item
