@@ -1,12 +1,12 @@
 import { Modal, Form, Input, InputNumber, Divider, Alert, Statistic, Space } from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
-import { getSelectValue } from "../../../../../../../../helpers/getSelectValue"
-import { warning } from "../../../../../../../../helpers/alert"
+import { cellFormat, getSelectValue, warning} from "../../../../../../../../helpers"
 import convert from "xml-js"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { merge } from "lodash"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
+  const [state, setState] = useState({ amount: 0, percentage: 0 })
   const [form] = Form.useForm()
   const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
 
@@ -48,6 +48,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     const nodes = await readXmlFile(documents)
 
     await form.setFieldsValue({ documents, ...nodes })
+    setState({ amount: nodes.amount, percentage: nodes.percentage || 0 })
   }
 
   const onRemoveFile = async ({ type, url }) => {
@@ -185,8 +186,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         </Form.Item>
         <Divider orientation="left">Importe</Divider>
         <Space>
-          <Statistic title="Importe de factura" value={0} />
-          <Statistic title="Uso del presupuesto" value="0%" />
+          <Statistic title="Importe de factura" value={cellFormat.money(state?.amount).children} />
+          <Statistic title="Uso del presupuesto" value={`${state.percentage}%`} />
         </Space>
         <Form.Item
           label="Fecha de pago:"
