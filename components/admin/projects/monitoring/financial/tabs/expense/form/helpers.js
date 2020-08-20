@@ -52,3 +52,7 @@ export const getPercentagePayment = formData => {
     investmentTwoPaymentPercentage: ((investmentTwoPayment * 100) / amount).toFixed(2)
   }
 }
+
+export const validateDocuments = documents => {
+  debugger
+}

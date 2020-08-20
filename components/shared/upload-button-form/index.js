@@ -11,7 +11,7 @@ export function UploadButtonForm({
   maxFile = 1,
   accept
 }) {
-  const [state, setState] = useState({ fileList })
+  const [state, setState] = useState({ fileList, disabled: false })
 
   const onUploadChange = info => {
     let fileList = [...info.fileList]
@@ -24,7 +24,7 @@ export function UploadButtonForm({
       return file
     })
 
-    setState({ fileList })
+    setState({ fileList, disabled: fileList.length >= maxFile })
 
     if (info.file.status === "done") {
       onChange && onChange(fileList)
@@ -41,7 +41,7 @@ export function UploadButtonForm({
       onRemove={onRemoveFile}
       accept={accept}
       multiple>
-      <Button>
+      <Button disabled={state.disabled}>
         <UploadOutlined /> {children}
       </Button>
     </Upload>

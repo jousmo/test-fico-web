@@ -3,7 +3,7 @@ import { DateField, SelectField, UploadButtonForm } from "../../../../../../../s
 import { cellFormat, getSelectValue, warning} from "../../../../../../../../helpers"
 import { useEffect, useState } from "react"
 import { merge } from "lodash"
-import { INIT_STATE, readXmlFile, toFileList, getPercentagePayment } from "./helpers"
+import { INIT_STATE, readXmlFile, toFileList, getPercentagePayment, validateDocuments } from "./helpers"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const [state, setState] = useState(INIT_STATE)
@@ -32,6 +32,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     try {
       await form.validateFields()
       let values = await form.getFieldsValue()
+      const isDocuments = validateDocuments(values.documents)
 
       if(typeof edit?.index !== "undefined") {
         delete edit.documents
@@ -39,7 +40,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         values = merge(edit, values)
       }
 
-      onSave && onSave(values)
+      // onSave && onSave(values)
     } catch (e) {
       warning("Llena los campos requeridos")
       console.error(e)
