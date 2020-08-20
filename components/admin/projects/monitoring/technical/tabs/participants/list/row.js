@@ -5,7 +5,7 @@ import {
   getReadableValue
 } from "../../../../../../../../helpers/selectOptions"
 
-export function ParticipantRow({ items = {}, age, onClick }){
+export function ParticipantRow({ items = {}, age, level, onClick }){
   const data = items?.reduce((res, item) => {
     if(item.gender === "M"){
       res.men += item.amount
@@ -30,7 +30,7 @@ export function ParticipantRow({ items = {}, age, onClick }){
       <Col span={1}>
         <Button
           ghost
-          onClick={() => onClick(data)}
+          onClick={() => onClick(items, level)}
           shape="circle"
           icon={<EyeFilled />}
           type="primary" />
