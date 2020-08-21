@@ -31,7 +31,7 @@ function ProjectClosureForm({ data }) {
           label="Descripción de cierre de proyecto"
           id="closureDescription"
           name="closureDescription">
-          <Input.TextArea rows={1} />
+          <Input.TextArea placeholder="Describe" rows={1} />
         </Form.Item>
         <Form.Item className="submit">
           <Button
