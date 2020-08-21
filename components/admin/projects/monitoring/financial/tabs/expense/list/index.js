@@ -2,10 +2,13 @@ import { Table, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined } from "@ant-design/icons"
 import { DateField, SelectField } from "../../../../../../../shared"
 import { cellFormat } from "../../../../../../../../helpers"
+import { getUrlPdf } from "../form/helpers"
 import moment from "moment"
 moment.locale("es")
 
 export function ListExpense ({ dataSource, onEdit }) {
+  const { url } = getUrlPdf(dataSource)
+
   return (
     <Table
       rowKey={a => a.id}
@@ -71,6 +74,8 @@ export function ListExpense ({ dataSource, onEdit }) {
             icon={<EditOutlined />}
             onClick={() => onEdit(record, index)} />
           <Button
+            href={url}
+            target="_blank"
             type="primary" shape="circle"
             icon={<EyeOutlined />} />
         </Space>} />

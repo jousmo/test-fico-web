@@ -9,6 +9,17 @@ export const INIT_STATE = {
   implementerPaymentPercentage: 0
 }
 
+export const RESET_XML_DATA = {
+  documents: [],
+  uuid: undefined,
+  issuedAt: undefined,
+  issuer: undefined,
+  rfc: undefined,
+  receptor: undefined,
+  amount: 0,
+  percentage: 0
+}
+
 export const readXmlFile = async (documents, budgeted) => {
   const document = documents?.find(el => el.type === "XML")
 
@@ -80,4 +91,10 @@ export const validateDocuments = (formData, { budgeted, evidenced, difference },
     return { error: true, message: "La distribucción de las coinversiones es menor que el monto de la factura" }
 
   return { error: false }
+}
+
+export const getUrlPdf = dataSource => {
+  return dataSource?.reduce((prev, current) => {
+    return current.documents.find(el => el.type === "PDF")
+  }, {})
 }

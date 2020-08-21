@@ -3,7 +3,7 @@ import { DateField, SelectField, UploadButtonForm } from "../../../../../../../s
 import { cellFormat, getSelectValue, warning} from "../../../../../../../../helpers"
 import { useEffect, useState } from "react"
 import { merge } from "lodash"
-import { INIT_STATE, readXmlFile, toFileList, getPercentagePayment, validateDocuments } from "./helpers"
+import { INIT_STATE, RESET_XML_DATA, readXmlFile, toFileList, getPercentagePayment, validateDocuments } from "./helpers"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const [state, setState] = useState(INIT_STATE)
@@ -64,7 +64,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       await form.setFieldsValue({ documents, ...nodes })
       setState({ ...state, amount: nodes.amount, percentage: nodes.percentage || 0 })
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -73,15 +73,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     const documents = oldDocuments.filter(document => document.url !== url)
 
     if (type === "XML" || type === "text/xml") {
-      await form.setFieldsValue({
-        documents,
-        uuid: undefined,
-        issuedAt: undefined,
-        issuer: undefined,
-        rfc: undefined,
-        receptor: undefined,
-        amount: 0,
-        percentage: 0 })
+      await form.setFieldsValue(RESET_XML_DATA)
     } else {
       await form.setFieldsValue({ documents })
     }
