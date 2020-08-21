@@ -7,6 +7,7 @@ import { INIT_STATE, readXmlFile, toFileList, getPercentagePayment, validateDocu
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const [state, setState] = useState(INIT_STATE)
+  const [stateOldAmount, setStateOldAmount] = useState(false)
   const [form] = Form.useForm()
   const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
 
@@ -14,6 +15,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     if(edit) {
       form.setFieldsValue(edit)
       loadPercentagePayment(edit)
+      setStateOldAmount(edit.amount)
     }
   }, [edit])
 
@@ -32,7 +34,6 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     try {
       await form.validateFields()
       let values = await form.getFieldsValue()
-      const isDocuments = validateDocuments(values.documents)
 
       if(typeof edit?.index !== "undefined") {
         delete edit.documents
@@ -40,7 +41,12 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         values = merge(edit, values)
       }
 
-      // onSave && onSave(values)
+      const { error, message } = validateDocuments(values, submission, stateOldAmount)
+      if (error) {
+        return warning(message)
+      }
+
+      onSave && onSave(values)
     } catch (e) {
       warning("Llena los campos requeridos")
       console.error(e)
@@ -49,7 +55,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
 
   const onDoneFile = async file => {
     const documents = file?.map(el => {
-      const type = el.type === "text/xml" ? "XML" : "PDF"
+      const type = (el.type === "text/xml" || el.type === "XML") ? "XML" : "PDF"
       return { id: el.id, type, name: el.name, url: el.url }
     })
 

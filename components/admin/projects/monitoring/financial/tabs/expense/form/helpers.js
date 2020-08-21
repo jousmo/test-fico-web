@@ -23,6 +23,7 @@ export const readXmlFile = async (documents, budgeted) => {
     const { Nombre: receptor } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
     const amount = +xmlJson["cfdi:Comprobante"]["_attributes"]["Total"]
     const percentage = +((amount * 100) / budgeted).toFixed(2)
+
     return { uuid, issuedAt, issuer, rfc, receptor, amount, percentage }
   } catch (err) {
     throw new Error(err)
@@ -53,6 +54,30 @@ export const getPercentagePayment = formData => {
   }
 }
 
-export const validateDocuments = documents => {
-  debugger
+export const validateDocuments = (formData, { budgeted, evidenced, difference }, oldAmount) => {
+  const { amount, documents, ficosecPayment, implementerPayment, investmentOnePayment, investmentTwoPayment } = formData
+
+  const isLength = documents.length < 2
+  if (isLength) return { error: true, message: "Se requiere que subas tu factura XML y PDF" }
+
+  const isXML = documents?.some(document => document.type === "XML")
+  const isPDF = documents?.some(document => document.type === "PDF")
+  if (!isXML) return { error: true, message: "Se requiere que subas tu archivo XML" }
+  if (!isPDF) return { error: true, message: "Se requiere que subas tu archivo PDF" }
+
+  if (oldAmount) {
+    const isValidAmountXml = (amount - oldAmount) > difference
+    if (isValidAmountXml) return { error: true, message: "El monto de la factura sobrepasa a lo presupuestado" }
+  } else {
+    const isValidAmountXml = amount > (budgeted - evidenced)
+    if (isValidAmountXml) return { error: true, message: "El monto de la factura sobrepasa a lo presupuestado" }
+  }
+
+  const totalDistribution = ficosecPayment + implementerPayment + investmentOnePayment + investmentTwoPayment
+  if (totalDistribution > amount)
+    return { error: true, message: "La distribucción de las coinversiones sobrepasa el monto de la factura" }
+  if (totalDistribution < amount)
+    return { error: true, message: "La distribucción de las coinversiones es menor que el monto de la factura" }
+
+  return { error: false }
 }

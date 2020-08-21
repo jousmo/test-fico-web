@@ -33,7 +33,16 @@ function FinancialMonitoringPage({ client }) {
   )
 
   const [updateProjectInvoice] = useMutation(
-    submission.mutations.updateProjectInvoice, { client: client }
+    submission.mutations.updateProjectInvoice, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getById,
+          variables: { id: router.query.id }
+        }
+      ]
+    }
   )
 
   const save = useCallback(async expense => {
