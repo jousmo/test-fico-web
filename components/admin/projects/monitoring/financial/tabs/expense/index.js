@@ -1,13 +1,15 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Alert, Col, Divider, Row, Statistic, Space, DatePicker } from "antd"
 import { Section, SearchFieldPrimary, CompositeField } from "../../../../../../shared"
-import { withForm } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 import moment from "moment"
+import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 
-function Expense ({ data, save, update }) {
-  const Submission = data || {}
+export function Expense () {
+  const { data } = useContext(AdminSubmissionContext)
+  const { Submission } = data || {}
+
   const [state, setState] = useState({ isModalOpen: false, edit: false, filterInvoice: Submission.invoices })
 
   const onClickAdd = () => {
@@ -53,7 +55,7 @@ function Expense ({ data, save, update }) {
   }
 
   return (
-    <div className="financial">
+    <>
       <Alert
         type="info"
         showIcon
@@ -108,8 +110,6 @@ function Expense ({ data, save, update }) {
           }
         </CompositeField>
       </Section>
-    </div>
+    </>
   )
 }
-
-export default withForm(Expense)
