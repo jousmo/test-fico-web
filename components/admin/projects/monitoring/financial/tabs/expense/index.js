@@ -14,7 +14,7 @@ export function Expense () {
   const dataStatistics = [
     { title: "Presupuesto a FICOSEC", value: cellFormat.money(Submission?.budgeted).children },
     { title: "Comprobado a FICOSEC", value: cellFormat.money(Submission?.evidenced).children },
-    { title: "Diferencia", value: cellFormat.money(Submission?.difference).children }
+    { title: "Diferencia", value: cellFormat.money(Submission?.difference).children, valueStyle:{ color: "#cf1322" }}
   ]
 
   const onClickAdd = () => {
@@ -67,7 +67,7 @@ export function Expense () {
         message="Adjunta tu conjunto de facturas y selecciona el concepto al que pertenecen, solo se admiten
         facturas emitidas a tu organización" />
       <SearchFieldPrimary style={{marginTop: "1rem"}} />
-      <StatisticHeader statistics={dataStatistics} styles={{padding: 0}} valueStyle={{ color: "#cf1322" }}/>
+      <StatisticHeader statistics={dataStatistics} styles={{padding: 0}} />
       <Section style={{padding: 0, margin: "1rem 0"}} title="Gastos">
         <Space>
           <DatePicker.RangePicker onChange={onChangeRageDate} />
