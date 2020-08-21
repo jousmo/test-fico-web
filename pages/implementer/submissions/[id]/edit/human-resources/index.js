@@ -8,7 +8,7 @@ import {
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
-import { useState, useCallback, useMemo, useEffect } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
 import {
@@ -30,14 +30,8 @@ function HumanResources({ client, query }) {
   const [state, setState] = useState({
     humanResources: {},
     dirty: false,
-    submissionId: undefined
+    isSaving: false
   })
-
-  useEffect(() => {
-    setState(state => (
-      { ...state, submissionId }
-    ))
-  }, [submissionId])
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
@@ -53,7 +47,7 @@ function HumanResources({ client, query }) {
   }, [state])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, state.submissionId)
+    await setSave(state, setState, updateSubmission, submissionId)
   }, [state])
 
   const injectActions = useMemo(() => ({
@@ -70,7 +64,7 @@ function HumanResources({ client, query }) {
         submission={data?.Submission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader save={save} />
+            <SaveHeader isSaving={state.isSaving} save={save} />
             <Heading />
             <ResourcesList />
           </Layout>

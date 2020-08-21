@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash"
-import { success, loadingAlert } from "../alert"
+import { success, loadingAlert, warning } from "../alert"
 
 export const setUpdateTechnicalSpecification = (technicalSpecification, state, setState) => {
   const newTechnicalSpecification = {
@@ -14,7 +14,8 @@ export const setUpdateTechnicalSpecification = (technicalSpecification, state, s
   })
 }
 
-export const setSave = async (state, updateSubmission, id) => {
+export const setSave = async (state, setState, updateSubmission, id) => {
+  setState({ ...state, isSaving: true })
   try {
     const saving = loadingAlert()
     const data = cloneDeep(state.technicalSpecification)
@@ -32,10 +33,12 @@ export const setSave = async (state, updateSubmission, id) => {
     await updateSubmission({
       variables: { data: data, id: id }
     })
+    setState({ ...state, isSaving: false })
     saving()
     success()
   }
   catch(e) {
+    warning()
     console.error(e)
   }
 }

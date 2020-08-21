@@ -48,9 +48,7 @@ function TechnicalSpecification({ client, query }) {
   }, [state])
 
   const save = useCallback(async () => {
-    setState({ ...state, isSaving: true })
-    await setSave(state, updateSubmission, submissionId)
-    setState({ ...state, isSaving: false })
+    await setSave(state, setState, updateSubmission, submissionId)
   }, [state])
 
   const injectActions = useMemo(() => ({

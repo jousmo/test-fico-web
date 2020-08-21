@@ -1,3 +1,4 @@
+import { success, loadingAlert, warning } from "../alert"
 
 export const setUpdateGeneralInformation = (generalInformation, state, setState) => {
   const newGeneralInformation = {
@@ -8,15 +9,19 @@ export const setUpdateGeneralInformation = (generalInformation, state, setState)
   setState({...state, dirty: true, generalInformation: newGeneralInformation})
 }
 
-export const setSave = async (state, updateSubmission, id) => {
+export const setSave = async (state, setState, updateSubmission, id) => {
+  setState({ ...state, isSaving: true })
+  const saving = loadingAlert()
   try {
-    const updatedSubmission = await updateSubmission({
+    await updateSubmission({
       variables: { data: { ...state.generalInformation }, id: id }
     })
-
-    /* TODO: Show feedback to the user */
+    setState({ ...state, isSaving: false })
+    success()
+    saving()
   }
   catch(e) {
+    warning()
     console.error(e)
   }
 }

@@ -1,3 +1,4 @@
+import { loadingAlert, success, warning } from "../alert"
 
 export const setUpdateBudget = (budget, state, setState) => {
   const newBudget = {
@@ -12,15 +13,19 @@ export const setUpdateBudget = (budget, state, setState) => {
   })
 }
 
-export const setSave = async (state, updateSubmission, id) => {
+export const setSave = async (state, setState, updateSubmission, id) => {
+  setState({ ...state, isSaving: true })
+  const saving = loadingAlert()
   try {
-    const updatedSubmission = await updateSubmission({
+    await updateSubmission({
       variables: { data: { ...state.budget }, id: id }
     })
-
-    /* TODO: Show feedback to the user */
+    setState({ ...state, isSaving: false })
+    success()
+    saving()
   }
   catch(e) {
+    warning()
     console.error(e)
   }
 }
