@@ -80,8 +80,7 @@ export function CompositeField({
   }
 
   const handleChange = items => {
-    const newItems = items.map(({...item}) => item)
-    onChange && onChange(newItems)
+    onChange && onChange(items)
   }
 
   const renderButtonDashed = () => (
