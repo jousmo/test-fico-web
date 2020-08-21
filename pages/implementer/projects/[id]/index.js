@@ -1,5 +1,4 @@
 import { Layout } from "../../../../components/shared"
-import { useRouter } from "next/router"
 import {
   ProjectClosure,
   ProjectMonitoring,
@@ -18,12 +17,10 @@ import { useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers/withApollo"
 
-function Project({ client }) {
-  const router = useRouter()
-
+function Project({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const injectActions = useMemo(() => ({
@@ -43,6 +40,12 @@ function Project({ client }) {
       </Layout>
     </AdminSubmissionContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(Project)

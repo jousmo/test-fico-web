@@ -2,7 +2,6 @@ import {
   Layout,
   SaveHeader
 } from "../../../../../../components/implementer/submissions"
-import { useRouter } from "next/router"
 import {
   data as pageData
 } from "../../../../../../contexts/admin/submissions/review"
@@ -27,9 +26,8 @@ import {
 } from "../../../../../../helpers/submissionFunctions/human-resources"
 
 
-function HumanResources({ client }) {
-  const router = useRouter()
-  const submissionId = router.query.id
+function HumanResources({ client, query }) {
+  const submissionId = query.id
 
   const [state, setState] = useState({
     humanResources: {},
@@ -49,7 +47,7 @@ function HumanResources({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const updateHumanResources = useCallback(humanResource => {
@@ -64,8 +62,7 @@ function HumanResources({ client }) {
     updateHumanResources,
     loading,
     error,
-    data,
-    router
+    data
   }), [state, loading])
 
   return (
@@ -83,6 +80,12 @@ function HumanResources({ client }) {
       </CommentsProvider>
     </PageContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(HumanResources)

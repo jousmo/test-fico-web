@@ -26,7 +26,6 @@ function ImplementerSubmissions({ client }) {
 
   const injectActions = useMemo(() => ({
     loading,
-    router,
     error,
     data
   }), [state, loading])

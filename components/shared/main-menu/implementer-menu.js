@@ -23,22 +23,22 @@ export default function ImplementerMenu({ step, submenu }) {
             <a>Todas las solicitudes</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key="on_council">
+        <Menu.Item key="ON_COUNCIL">
           <Link href="/implementer/submissions/status/on_council">
             <a>Consejo directivo</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key="on_committee">
+        <Menu.Item key="ON_COMMITTEE">
           <Link href="/implementer/submissions/status/on_committee">
             <a>Comité técnico</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key="on_agreement">
+        <Menu.Item key="ON_AGREEMENT">
           <Link href="/implementer/submissions/status/on_agreement">
             <a>Convenio</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key="rejected">
+        <Menu.Item key="REJECTED">
           <Link href="/implementer/submissions/status/rejected">
             <a>Rechazadas</a>
           </Link>
@@ -53,7 +53,7 @@ export default function ImplementerMenu({ step, submenu }) {
             <a>Activos</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key="on_closure">
+        <Menu.Item key="ON_CLOSURE">
           <Link href="/implementer/projects/status/on_closure">
             <a>Concluidos</a>
           </Link>

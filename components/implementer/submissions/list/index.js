@@ -8,7 +8,6 @@ import SubmissionsListingTable from "./table"
 export function SubmissionsListing() {
   const {
     loading,
-    router,
     error,
     data
   } = useContext(ImplementerSubmissionContext)
@@ -19,7 +18,6 @@ export function SubmissionsListing() {
       <SubmissionsListingTable
         data={data?.Submissions}
         error={error}
-        router={router}
         isLoading={loading} />
     </Section>
   )

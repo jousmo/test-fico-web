@@ -2,14 +2,13 @@ import {
   Layout,
   SaveHeader
 } from "../../../../../../components/implementer/submissions"
-import { useRouter } from "next/router"
 import {
   editData as pageData,
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
-import { useState, useCallback, useMemo, useEffect } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
 import {
@@ -24,21 +23,14 @@ import {
 } from "../../../../../../helpers/submissionFunctions/budget"
 
 
-function Budget({ client }) {
-  const router = useRouter()
-  const submissionId = router.query.id
+function Budget({ client, query }) {
+  const submissionId = query.id
 
   const [state, setState] = useState({
     budget: {},
     dirty: false,
-    submissionId: undefined
+    isSaving: false
   })
-
-  useEffect(() => {
-    setState(state => (
-      { ...state, submissionId }
-    ))
-  }, [submissionId])
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
@@ -46,7 +38,7 @@ function Budget({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const updateBudget = useCallback(budget => {
@@ -54,15 +46,14 @@ function Budget({ client }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, state.submissionId)
+    await setSave(state, setState, updateSubmission, submissionId)
   }, [state, updateSubmission])
 
   const injectActions = useMemo(() => ({
     updateBudget,
     loading,
     error,
-    data,
-    router
+    data
   }), [state, loading])
 
   return (
@@ -72,13 +63,19 @@ function Budget({ client }) {
         submission={data?.Submission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader save={save} />
+            <SaveHeader isSaving={state.isSaving} save={save} />
             <BudgetTable />
           </Layout>
         </ImplementerSubmissionContext.Provider>
       </CommentsProvider>
     </PageContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(Budget)

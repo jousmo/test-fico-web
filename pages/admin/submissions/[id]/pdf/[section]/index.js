@@ -1,4 +1,3 @@
-import { useRouter } from "next/router"
 import {
   BudgetPDF,
   GeneralInformationPDF,
@@ -15,15 +14,14 @@ import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
 
-function ViewPDF({ client }) {
-  const router = useRouter()
+function ViewPDF({ client, query }) {
   const [ state ] = useState({
     viewPDF: {}
   })
 
   const submissionResult = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const implementerResult = useQuery(implementer.queries.getById, {
@@ -37,7 +35,7 @@ function ViewPDF({ client }) {
   }), [state, submissionResult.loading])
 
   let sectionComponent
-  const section = router.query.section
+  const section = query.section
   if (section === "general-information"){
     sectionComponent = <GeneralInformationPDF />
   } else if (section === "reports"){
@@ -57,6 +55,12 @@ function ViewPDF({ client }) {
       {sectionComponent}
     </AdminSubmissionContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(ViewPDF)

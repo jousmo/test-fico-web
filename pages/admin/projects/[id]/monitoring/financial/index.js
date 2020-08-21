@@ -8,15 +8,12 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
-import { useRouter } from "next/router"
 import { success, warning } from "../../../../../../helpers/alert"
 
-function FinancialMonitoringPage({ client }) {
-  const router = useRouter()
-
+function FinancialMonitoringPage({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const [createProjectInvoice] = useMutation(
@@ -29,7 +26,7 @@ function FinancialMonitoringPage({ client }) {
 
   const save = useCallback(async expense => {
     try {
-      await createProjectInvoice({ variables: { data: expense, id: router.query.id } })
+      await createProjectInvoice({ variables: { data: expense, id: query.id } })
       success()
     } catch (e) {
       warning()

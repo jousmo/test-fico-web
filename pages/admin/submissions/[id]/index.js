@@ -15,11 +15,9 @@ import { useCallback, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers/withApollo"
 import { PageContext } from "../../../../contexts/page"
-import { useRouter } from "next/router"
 
-function Submission({ client }) {
-  const router = useRouter()
-  const submissionId = router.query.id
+function Submission({ client, query }) {
+  const submissionId = query.id
 
   const [ state, setState ] = useState({
     submissionDetail: {}
@@ -67,13 +65,13 @@ function Submission({ client }) {
         variables: { data: { status: "AWAITING_INFO", state: "PROJECT" }, id: submissionId }
       })
       success("Solicitud aprobada correctamente")
-      await router.push("/admin/submissions")
+      await push("/admin/submissions")
     }
     catch(e) {
       console.error(e)
       warning()
     }
-  }, [state, router])
+  }, [state])
 
   const injectActions = useMemo(() => ({
     updateSubmissionDetail,

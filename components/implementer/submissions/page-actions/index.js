@@ -1,13 +1,8 @@
 import { Button, Row, Col } from "antd"
-import { useContext } from "react"
-import {
-  ImplementerSubmissionContext
-} from "../../../../contexts/implementer/submissions/new/context"
+import { useRouter } from "next/router"
 
 export function PageActions() {
-  const {
-    router
-  } = useContext(ImplementerSubmissionContext)
+  const router = useRouter()
 
   const handleClose = () => {
     const { route } = router

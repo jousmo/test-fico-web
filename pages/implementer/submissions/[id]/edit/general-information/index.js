@@ -2,7 +2,6 @@ import {
   Layout,
   SaveHeader
 } from "../../../../../../components/implementer/submissions"
-import { useRouter } from "next/router"
 import {
   ProjectDetails,
   DevelopmentObjectives,
@@ -15,7 +14,7 @@ import {
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
-import { useState, useMemo, useCallback, useEffect } from "react"
+import { useState, useMemo, useCallback } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
 import {
@@ -27,21 +26,14 @@ import {
   setUpdateGeneralInformation
 } from "../../../../../../helpers/submissionFunctions/general-information"
 
-function GeneralInformation({ client }) {
-  const router = useRouter()
-  const submissionId = router.query.id
+function GeneralInformation({ client, query }) {
+  const submissionId = query.id
 
   const [state, setState] = useState({
     generalInformation: {},
     dirty: false,
-    submissionId: undefined
+    isSaving: false
   })
-
-  useEffect(() => {
-    setState(state => (
-      { ...state, submissionId }
-    ))
-  }, [submissionId])
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
@@ -49,7 +41,7 @@ function GeneralInformation({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: router.query.id }
+    variables: { id: query.id }
   })
 
   const updateGeneralInformation = useCallback(generalInformation => {
@@ -57,7 +49,7 @@ function GeneralInformation({ client }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, state.submissionId)
+    await setSave(state, setState, updateSubmission, submissionId)
   }, [state])
 
   const isCall = useCallback(() => {
@@ -70,7 +62,6 @@ function GeneralInformation({ client }) {
     loading,
     error,
     data,
-    router
   }), [state, loading])
 
   return (
@@ -80,7 +71,7 @@ function GeneralInformation({ client }) {
         submission={data?.Submission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader save={save} />
+            <SaveHeader isSaving={state.isSaving} save={save} />
             <ProjectDetails />
             <Consultant />
             <DevelopmentObjectives />
@@ -90,6 +81,12 @@ function GeneralInformation({ client }) {
       </CommentsProvider>
     </PageContext.Provider>
   )
+}
+
+export async function getServerSideProps({ query }){
+  return {
+    props: { query }
+  }
 }
 
 export default withApollo(GeneralInformation)

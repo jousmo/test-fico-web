@@ -1,4 +1,5 @@
 import { withForm } from "../../../../../helpers/withForm"
+import { useRouter } from "next/router"
 import { Table } from "antd"
 import Moment from "moment"
 Moment.locale("es")
@@ -12,7 +13,8 @@ import {
 import { getTotalApproved } from "../../../../admin/projects/list/table/helpers"
 import { Tooltip } from "../../../../shared/"
 
-function SubmissionsListingTable({ data, router }) {
+function SubmissionsListingTable({ data }) {
+  const router = useRouter()
   const { submissionStatusOptions } = shared
   const {
     submission: {

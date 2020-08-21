@@ -1,7 +1,6 @@
 import { withForm } from "../../../../../../../helpers/withForm"
 import { Form, Row, Col, Input } from "antd"
 import { CompositeField, DeleteButton, FieldLabel } from "../../../../../../shared"
-import { v4 as uuid } from "uuid"
 import { GeneralObjectiveText } from "./general-objective-text"
 import { DevelopmentObjectiveText } from "./development-objective-text"
 import { SpecificObjectiveText } from "./specific-objective-text"
@@ -76,7 +75,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
               onChange={onSpecificObjectivesChange}
               defaultValue={data?.Submission?.specificObjectives || []}
               addLabel="Agregar objetivo específico"
-              onClickAdd={(addNew) => addNew({description: "", uuid: uuid()})}>
+              onClickAdd={(addNew) => addNew({description: ""})}>
               {({ items, updateItem, removeItem }) =>
                 <div>
                   { items.map((item, index) =>
