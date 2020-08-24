@@ -17,11 +17,29 @@ function FinancialMonitoringPage({ client, query }) {
   })
 
   const [createProjectInvoice] = useMutation(
-    submission.mutations.createProjectInvoice, { client: client }
+    submission.mutations.createProjectInvoice, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getById,
+          variables: { id: router.query.id }
+        }
+      ]
+    }
   )
 
   const [updateProjectInvoice] = useMutation(
-    submission.mutations.updateProjectInvoice, { client: client }
+    submission.mutations.updateProjectInvoice, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getById,
+          variables: { id: router.query.id }
+        }
+      ]
+    }
   )
 
   const save = useCallback(async expense => {
@@ -51,7 +69,7 @@ function FinancialMonitoringPage({ client, query }) {
     data,
     save,
     update
-  }), [loading])
+  }), [loading, data])
 
   return (
     <PageContext.Provider

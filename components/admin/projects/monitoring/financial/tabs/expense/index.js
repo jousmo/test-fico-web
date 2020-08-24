@@ -1,16 +1,21 @@
 import { useContext, useState } from "react"
-import { Alert, Col, Divider, Row, Statistic, Space, DatePicker } from "antd"
-import { Section, SearchFieldPrimary, CompositeField } from "../../../../../../shared"
+import { Alert, Space, DatePicker } from "antd"
+import { Section, SearchFieldPrimary, CompositeField, StatisticHeader } from "../../../../../../shared"
+import { cellFormat } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 import moment from "moment"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 
 export function Expense () {
-  const { data } = useContext(AdminSubmissionContext)
-  const { Submission } = data || {}
+  const { data: { Submission }, save, update } = useContext(AdminSubmissionContext)
+  const [state, setState] = useState({ isModalOpen: false, edit: false, filterInvoice: false })
 
-  const [state, setState] = useState({ isModalOpen: false, edit: false, filterInvoice: Submission.invoices })
+  const dataStatistics = [
+    { title: "Presupuesto a FICOSEC", value: cellFormat.money(Submission?.budgeted).children },
+    { title: "Comprobado a FICOSEC", value: cellFormat.money(Submission?.evidenced).children },
+    { title: "Diferencia", value: cellFormat.money(Submission?.difference).children, valueStyle:{ color: "#cf1322" }}
+  ]
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
@@ -48,7 +53,7 @@ export function Expense () {
     })
 
     if (!first || !end) {
-      setState({ ...state, filterInvoice: Submission?.invoices})
+      setState({ ...state, filterInvoice: false})
     } else {
       setState({ ...state, filterInvoice: filter})
     }
@@ -62,27 +67,7 @@ export function Expense () {
         message="Adjunta tu conjunto de facturas y selecciona el concepto al que pertenecen, solo se admiten
         facturas emitidas a tu organización" />
       <SearchFieldPrimary style={{marginTop: "1rem"}} />
-      <Section style={{padding: 0, margin: "1rem 0"}}>
-        <Row>
-          <Col flex="auto">
-            <Statistic title="Presupuesto a FICOSEC" value={`$${Submission?.budgeted?.toFixed(2)}`} />
-          </Col>
-          <Col span={1}>
-            <Divider type="vertical" />
-          </Col>
-          <Col flex="auto">
-            <Statistic title="Comprobado a FICOSEC" value={`$${Submission?.evidenced?.toFixed(2)}`} />
-          </Col>
-          <Col span={1}>
-            <Divider type="vertical" />
-          </Col>
-          <Col flex="auto">
-            <Statistic
-              title="Diferencia" value={`$${Submission?.difference?.toFixed(2)}`}
-              valueStyle={{ color: "#cf1322" }} />
-          </Col>
-        </Row>
-      </Section>
+      <StatisticHeader statistics={dataStatistics} styles={{padding: 0}} />
       <Section style={{padding: 0, margin: "1rem 0"}} title="Gastos">
         <Space>
           <DatePicker.RangePicker onChange={onChangeRageDate} />
@@ -90,9 +75,8 @@ export function Expense () {
         <CompositeField
           onClickAdd={onClickAdd}
           onChange={onChange}
+          value={state.filterInvoice ? state.filterInvoice : Submission?.invoices}
           addLabel="Subir factura"
-          defaultValue={Submission?.invoices}
-          value={state?.filterInvoice}
           orientation="TOP">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <>

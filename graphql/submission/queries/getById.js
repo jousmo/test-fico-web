@@ -177,6 +177,7 @@ export const getById = gql`
         amount
         percentage
         documents {
+          id
           type
           name
           url

@@ -28,6 +28,8 @@ $white-color: #FFF
       padding-left: 0
       font-size: 0.9rem
   .ant-form
+    .ant-upload
+      margin-top: 1rem
     .ant-row
       margin-bottom: 1rem
       .ant-col
@@ -39,6 +41,22 @@ $white-color: #FFF
           width: 100%
     .ant-space
       margin-bottom: 1rem
+    .ant-space.wrapper-number
+      display: flex
+      margin: 0 0 1rem 0
+      .ant-space-item
+        .ant-typography
+          min-width: 70px
+          margin: 0
+          font-size: 1rem
+          text-align: right
+      .ant-space-item:first-child
+        width: 100%
+        .ant-row
+          margin: 0
+        .ant-form-item-control
+          margin-left: 23px
+
   .ant-alert-info
     background-color: $white-color
     border: none
@@ -46,13 +64,12 @@ $white-color: #FFF
     padding-left: 1.25rem
     .ant-alert-icon
       left: 0
-  .ant-modal-footer
-    display: flex
-    justify-content: space-between
     span
       text-align: left
   .ant-input-number
     width: 100%
+  .ant-space-item:last-child
+    margin-left: 1rem
 
 .fico.investment-modal
   .ant-statistic
