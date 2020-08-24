@@ -8,3 +8,11 @@ export const money = value => {
 export const getDate = value => {
   return moment(value).format("DD MMMM YYYY").toUpperCase()
 }
+
+export const getGoalBeneficiaries = data => {
+  let result = 0
+  data?.beneficiaries?.forEach(({number}) =>
+    result += number
+  )
+  return result
+}
