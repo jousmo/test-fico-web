@@ -5,13 +5,14 @@ import { withForm } from "../../../../../../helpers/withForm"
 import { ConfirmModal, UploadButton } from "../../../../../shared"
 import "./styles.sass"
 
-function ProjectClosureForm({ data }) {
+function ProjectClosureForm({ data, save }) {
   const [form] = Form.useForm()
   const [state, setState] = useState(false)
 
   const onCloseProject = async () => {
     const values = await form.getFieldsValue()
-    //Todo: close project
+    values.status = "ON_CLOSURE"
+    save(values)
     setState(false)
   }
 
