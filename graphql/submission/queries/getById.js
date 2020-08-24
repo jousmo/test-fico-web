@@ -208,6 +208,12 @@ export const getById = gql`
         challenges
         obstacles
       }
+      closureDescription
+      closureDocument{
+        id
+        url
+        name
+      }
     }
   }
 `
