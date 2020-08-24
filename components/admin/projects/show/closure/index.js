@@ -9,7 +9,8 @@ export function ProjectClosure() {
   const {
     loading,
     error,
-    data
+    data,
+    save
   } = useContext(AdminSubmissionContext)
 
   return (
@@ -17,6 +18,7 @@ export function ProjectClosure() {
       <ProjectClosureForm
         data={data?.Submission}
         error={error}
+        save={save}
         isLoading={loading} />
     </Section>
   )
