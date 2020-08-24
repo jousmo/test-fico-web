@@ -3,9 +3,11 @@ import { DownloadOutlined } from "@ant-design/icons/lib"
 import { useState } from "react"
 import { withForm } from "../../../../../../helpers/withForm"
 import { ConfirmModal, UploadButton } from "../../../../../shared"
+import { useRouter } from "next/router"
 import "./styles.sass"
 
 function ProjectClosureForm({ data, save }) {
+  const { query } = useRouter()
   const [form] = Form.useForm()
   const [state, setState] = useState(false)
 
@@ -14,6 +16,14 @@ function ProjectClosureForm({ data, save }) {
     values.status = "ON_CLOSURE"
     save(values)
     setState(false)
+  }
+
+  const readOnly = data?.status === "ON_CLOSURE"
+
+  const closureDocument = []
+  if (data?.closureDocument){
+    const { id: uid, ...document } = data?.closureDocument
+    closureDocument.push({ uid, ...document })
   }
 
   return (
@@ -38,13 +48,17 @@ function ProjectClosureForm({ data, save }) {
             </Typography.Text>
           </Col>
           <Col>
-            <Button icon={<DownloadOutlined />}>Descargar ficha técnica</Button>
+            <a href={`/admin/projects/${query.id}/pdf`} target="_blank">
+              <Button icon={<DownloadOutlined />}>
+                Descargar ficha técnica
+              </Button>
+            </a>
           </Col>
           <Col>
             <Form.Item
               id="closureDocument"
               name="closureDocument">
-              <UploadButton>
+              <UploadButton files={closureDocument}>
                 Subir documento de cierre
               </UploadButton>
             </Form.Item>
@@ -52,15 +66,20 @@ function ProjectClosureForm({ data, save }) {
           <Col span={24}>
             <Form.Item
               label="Descripción de cierre de proyecto"
+              initialValue={data?.closureDescription}
               id="closureDescription"
               name="closureDescription">
-              <Input.TextArea placeholder="Describe" rows={1} />
+              <Input.TextArea
+                placeholder="Describe"
+                readOnly={readOnly}
+                rows={1} />
             </Form.Item>
           </Col>
           <Col push={19}>
             <Form.Item className="submit">
               <Button
                 danger
+                disabled={readOnly}
                 onClick={() => setState(true)}>
                 Concluir proyecto
               </Button>
