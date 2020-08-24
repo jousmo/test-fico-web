@@ -1,4 +1,5 @@
 import { Col, Divider, Row, Typography } from "antd"
+import { getGoalBeneficiaries } from "./helpers"
 
 export function ProjectIndicators({ data }){
   const indicatorTypes = {
@@ -13,6 +14,8 @@ export function ProjectIndicators({ data }){
     return `${indicatorTypes[indicator]} ${number}`
   }
 
+  let totalB = 0
+
   return (
     <Row>
       <Col span={12}>
@@ -25,14 +28,21 @@ export function ProjectIndicators({ data }){
         <Typography.Text strong>Resultado</Typography.Text>
       </Col>
       <Divider />
-      {data?.technicalMonitoringReports?.map(report =>
-        <>
-          <Col span={12}>{getIndicatorName(report.key)}</Col>
-          <Col span={8}>{report.goal}</Col>
-          <Col span={4}>{report.completed}</Col>
-          <Divider />
-        </>
-      )}
+      {data?.technicalMonitoringReports?.map(report => {
+        totalB += report.completed
+        return (
+          <>
+            <Col span={12}>{getIndicatorName(report.key)}</Col>
+            <Col span={8}>{report.goal}</Col>
+            <Col span={4}>{report.completed}</Col>
+            <Divider />
+          </>
+        )
+      })}
+      <Col span={12}>Beneficiarios atendidos</Col>
+      <Col span={8}>{getGoalBeneficiaries(data)}</Col>
+      <Col span={4}>{totalB}</Col>
+      <Divider />
     </Row>
   )
 }
