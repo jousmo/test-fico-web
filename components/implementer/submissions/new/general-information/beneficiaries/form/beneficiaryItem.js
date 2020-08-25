@@ -9,7 +9,7 @@ import {
 import { DeleteButton, EditButton } from "../../../../../../shared"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 
-export function BeneficiaryItem({ data, onEdit, onDelete, index }) {
+export function BeneficiaryItem({ data, onEdit, onDelete, index, readOnly }) {
   const { description, number } = data
 
   const educationLevel = getReadableValue(
@@ -57,8 +57,12 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index }) {
       &nbsp;
       <Typography.Text strong>Nivel de intervención: </Typography.Text>
       <Typography.Text>{preventionLevel}</Typography.Text>
-      <DeleteButton onClick={onDelete} style={{marginLeft: "8px"}} />
-      <EditButton onClick={onEdit} />
+      {!readOnly && (
+        <>
+          <DeleteButton onClick={onDelete} style={{marginLeft: "8px"}} />
+          <EditButton onClick={onEdit} />
+        </>
+      )}
     </Card>
   )
 }
