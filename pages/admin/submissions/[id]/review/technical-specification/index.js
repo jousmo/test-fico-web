@@ -32,8 +32,7 @@ function TechnicalSpecification({ client, query }) {
 
   const [state, setState] = useState({
     technicalSpecification: {},
-    dirty: false,
-    submissionId: undefined
+    dirty: false
   })
 
   useEffect(() => {
@@ -56,7 +55,7 @@ function TechnicalSpecification({ client, query }) {
   }, [state])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, state.submissionId)
+    await setSave(state, updateSubmission, submissionId)
   }, [state])
 
   const injectActions = useMemo(() => ({

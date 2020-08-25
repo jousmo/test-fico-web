@@ -30,8 +30,7 @@ function Budget({ client, query }) {
 
   const [state, setState] = useState({
     budget: {},
-    dirty: false,
-    submissionId: undefined
+    dirty: false
   })
 
   useEffect(() => {
@@ -54,7 +53,7 @@ function Budget({ client, query }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, state.submissionId)
+    await setSave(state, updateSubmission, submissionId)
   }, [state, updateSubmission])
 
   const injectActions = useMemo(() => ({
