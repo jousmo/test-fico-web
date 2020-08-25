@@ -4,8 +4,6 @@ import {
 import { useContext } from "react"
 import { Section } from "../../../../../shared"
 import BudgetForm from "./form"
-import { Typography } from "antd"
-
 
 export function Budget() {
   const {
@@ -15,9 +13,8 @@ export function Budget() {
     data
   } = useContext(ImplementerSubmissionContext)
 
-  const onChange = (concepts) => {
+  const onChange = concepts => {
     const newConcepts = Array.from(concepts)
-    
     updateBudget({ concepts: newConcepts })
   }
 
