@@ -58,6 +58,8 @@ function TechnicalSpecification({ client, query }) {
     data
   }), [state, loading])
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <PageContext.Provider value={pageData({ save, step: 1 })}>
       <CommentsProvider
@@ -65,7 +67,7 @@ function TechnicalSpecification({ client, query }) {
         submission={data?.Submission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader isSaving={state.isSaving} save={save} />
+            <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
             <DevelopmentObjective />
             <GeneralObjective />
             <SpecificObjectives />
