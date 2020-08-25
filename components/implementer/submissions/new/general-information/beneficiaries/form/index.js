@@ -37,6 +37,8 @@ function BeneficiariesForm({data, onChange}) {
     setState({ isModalOpen: true, edit: data })
   }
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <Form layout="vertical">
       <Form.Item
@@ -45,6 +47,7 @@ function BeneficiariesForm({data, onChange}) {
           onChange={onChange}
           defaultValue={data?.Submission?.beneficiaries}
           onClickAdd={onClickAdd}
+          isAddDisabled={readOnly}
           addLabel="Agregar beneficiario">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <div>
@@ -58,6 +61,7 @@ function BeneficiariesForm({data, onChange}) {
                   key={key}
                   index={key}
                   data={item}
+                  readOnly={readOnly}
                   onEdit={onEdit(item, key)}
                   onDelete={removeItem(key)} />
               ) }
