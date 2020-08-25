@@ -48,6 +48,8 @@ function HumanResourcesTable({ data, onChange }) {
     return humanResource
   }
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <Form
       name="human-resources"
@@ -92,6 +94,7 @@ function HumanResourcesTable({ data, onChange }) {
                           name="position"
                           defaultValue={item.position}
                           onChange={updateItem(index)}
+                          disabled={readOnly}
                           type="text" />
                       </Col>
                       <Col flex="150px">
@@ -100,6 +103,7 @@ function HumanResourcesTable({ data, onChange }) {
                           name="name"
                           defaultValue={item.name}
                           onChange={updateItem(index)}
+                          disabled={readOnly}
                           type="text" />
                       </Col>
                       <Col flex="180px">
@@ -108,6 +112,7 @@ function HumanResourcesTable({ data, onChange }) {
                           name="tasks"
                           onChange={updateItem(index)}
                           defaultValue={item.tasks}
+                          disabled={readOnly}
                           type="text" />
                       </Col>
                       <Col flex="150px">
@@ -116,6 +121,7 @@ function HumanResourcesTable({ data, onChange }) {
                           name="overseer"
                           onChange={updateItem(index)}
                           defaultValue={item.overseer}
+                          disabled={readOnly}
                           type="text" />
                       </Col>
                       <Col flex="80px">
@@ -125,6 +131,7 @@ function HumanResourcesTable({ data, onChange }) {
                           min={1}
                           onChange={updateItem(index)}
                           defaultValue={item.hours}
+                          disabled={readOnly}
                           type="number" />
                       </Col>
                       <Col flex="150px">
@@ -133,6 +140,7 @@ function HumanResourcesTable({ data, onChange }) {
                           name="contractType"
                           options={contractTypes}
                           onChange={updateItem(index)}
+                          disabled={readOnly}
                           defaultValue={item.contractType} />
                       </Col>
                       <Col flex="150px">
@@ -143,6 +151,7 @@ function HumanResourcesTable({ data, onChange }) {
                           min={0}
                           onChange={updateItem(index)}
                           defaultValue={item.salary}
+                          disabled={readOnly}
                           type="number" />
                       </Col>
                       <Col flex="130px">
@@ -150,6 +159,7 @@ function HumanResourcesTable({ data, onChange }) {
                           id="benefits"
                           name="benefits"
                           onChange={updateItem(index)}
+                          disabled={readOnly}
                           defaultValue={item.benefits}>
                           <Radio value={true}>Si</Radio>
                           <Radio value={false}>No</Radio>
@@ -163,6 +173,7 @@ function HumanResourcesTable({ data, onChange }) {
                           name="taxes"
                           onChange={updateItem(index)}
                           defaultValue={item.taxes}
+                          disabled={readOnly}
                           type="number" />
                       </Col>
                       <Col flex="150px">
@@ -173,6 +184,7 @@ function HumanResourcesTable({ data, onChange }) {
                           disabled
                           onChange={updateItem(index)}
                           defaultValue={item.total}
+                          disabled={readOnly}
                           value={
                             Number(item.salary) + ((Number(item.taxes) * Number(item.salary)) / 100)
                           }
@@ -180,6 +192,7 @@ function HumanResourcesTable({ data, onChange }) {
                       </Col>
                       <Col flex="80px">
                         <UploadTooltip
+                          readOnly={readOnly}
                           body="Adjunta el CV y el documento que certifica los
                           estudios de esta persona"
                           title="Experiencia y profesión"
