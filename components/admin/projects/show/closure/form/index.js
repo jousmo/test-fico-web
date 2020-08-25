@@ -2,7 +2,7 @@ import { Button, Col, Form, Input, Row, Typography } from "antd"
 import { DownloadOutlined } from "@ant-design/icons/lib"
 import { useState } from "react"
 import { withForm } from "../../../../../../helpers/withForm"
-import { ConfirmModal, UploadButton } from "../../../../../shared"
+import { ConfirmModal, UploadButtonForm } from "../../../../../shared"
 import { useRouter } from "next/router"
 import "./styles.sass"
 
@@ -24,6 +24,21 @@ function ProjectClosureForm({ data, save }) {
   if (data?.closureDocument){
     const { id: uid, ...document } = data?.closureDocument
     closureDocument.push({ uid, ...document })
+  }
+
+  const onDoneFile = async file => {
+    const { name, url } = file[0]
+    const closureDocument = { name, url }
+
+    try {
+      await form.setFieldsValue({ closureDocument })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const onRemoveFile = () => {
+    form.setFieldsValue({ closureDocument: null })
   }
 
   return (
@@ -56,11 +71,15 @@ function ProjectClosureForm({ data, save }) {
           </Col>
           <Col>
             <Form.Item
-              id="closureDocument"
               name="closureDocument">
-              <UploadButton files={closureDocument}>
+              <UploadButtonForm
+                fileList={closureDocument}
+                onRemoveFile={onRemoveFile}
+                onChange={onDoneFile}
+                maxFile={1}
+                accept={"application/pdf,text/plain"}>
                 Subir documento de cierre
-              </UploadButton>
+              </UploadButtonForm>
             </Form.Item>
           </Col>
           <Col span={24}>
