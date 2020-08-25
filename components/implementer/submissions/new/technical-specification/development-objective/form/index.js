@@ -12,6 +12,8 @@ function DevelopmentObjectiveForm({data, onChange}) {
     })
   }
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <Form
       name="project-details"
@@ -23,6 +25,7 @@ function DevelopmentObjectiveForm({data, onChange}) {
         <IndicatorsField
           defaultValue={data?.Submission?.developmentObjectiveIndicators}
           indicatorType="DEVELOPMENT_INDICATOR"
+          readOnly={readOnly}
           onChange={onIndicatorsChange} />
       </Form.Item>
     </Form>
