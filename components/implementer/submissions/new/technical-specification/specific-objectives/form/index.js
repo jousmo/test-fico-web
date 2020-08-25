@@ -44,6 +44,8 @@ export default function SpecificObjectiveForm({
     onChange && onChange(newSpecificObjectives)
   }
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <>
       { specificObjectives.map((objective, index) =>
@@ -72,6 +74,7 @@ export default function SpecificObjectiveForm({
                 onChange={onSpecificObjectiveItemsChange(index, "indicators")}
                 indicatorType="SPECIFIC_INDICATOR"
                 objectiveIndex={index}
+                readOnly={readOnly}
                 defaultValue={objective.indicators} />
             </Form.Item>
             <Form.Item label="Actividades">
@@ -79,6 +82,7 @@ export default function SpecificObjectiveForm({
                 activityType="SPECIFIC_ACTIVITY"
                 objectiveIndex={index}
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}
+                readOnly={readOnly}
                 defaultValue={objective.activities} />
             </Form.Item>
           </Form>

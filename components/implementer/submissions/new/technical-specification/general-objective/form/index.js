@@ -12,6 +12,8 @@ function GeneralObjectiveForm({data, onChange}) {
     })
   }
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <Form
       name="project-details"
@@ -23,6 +25,7 @@ function GeneralObjectiveForm({data, onChange}) {
         <IndicatorsField
           defaultValue={data?.Submission?.generalObjectiveIndicators}
           indicatorType="GENERAL_INDICATOR"
+          readOnly={readOnly}
           onChange={onIndicatorsChange} />
       </Form.Item>
     </Form>
