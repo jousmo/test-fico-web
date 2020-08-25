@@ -16,7 +16,7 @@ import {
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
-import { useState, useCallback, useMemo, useEffect } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
 import {
@@ -34,14 +34,9 @@ function GeneralInformation({ client, query }) {
 
   const [state, setState] = useState({
     generalInformation: {},
-    dirty: false
+    dirty: false,
+    isSaving: false
   })
-
-  useEffect(() => {
-    setState(state => (
-      { ...state, submissionId }
-    ))
-  }, [submissionId])
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateById, { client: client }
@@ -57,7 +52,7 @@ function GeneralInformation({ client, query }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, submissionId)
+    await setSave(state, setState, updateSubmission, submissionId)
   }, [state])
 
   const isCall = useCallback(() => {
@@ -81,7 +76,7 @@ function GeneralInformation({ client, query }) {
         update={updateGeneralInformation}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader save={save} disabled={readOnly} />
+            <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
             <ProjectDetails />
             <Consultant />
             <DevelopmentObjectives />
