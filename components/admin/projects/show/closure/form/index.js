@@ -1,7 +1,7 @@
 import { Button, Col, Form, Input, Row, Typography } from "antd"
 import { DownloadOutlined } from "@ant-design/icons/lib"
 import { useState } from "react"
-import { withForm } from "../../../../../../helpers/withForm"
+import { withForm, warning } from "../../../../../../helpers"
 import { ConfirmModal, UploadButtonForm } from "../../../../../shared"
 import { useRouter } from "next/router"
 import "./styles.sass"
@@ -12,10 +12,18 @@ function ProjectClosureForm({ data, save }) {
   const [state, setState] = useState(false)
 
   const onCloseProject = async () => {
-    const values = await form.getFieldsValue()
-    values.status = "ON_CLOSURE"
-    save(values)
-    setState(false)
+    try {
+      await form.validateFields()
+
+      const values = await form.getFieldsValue()
+      values.status = "ON_CLOSURE"
+      save(values)
+      setState(false)
+    }
+    catch (e) {
+      warning("Llena los campos requeridos")
+      console.error(e)
+    }
   }
 
   const readOnly = data?.status === "ON_CLOSURE"
