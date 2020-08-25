@@ -6,6 +6,7 @@ export function TownshipSelect({
   onChange,
   defaultValue,
   setRegion,
+  ...props
 }) {
   const options = implementer.submission.townships
 
@@ -43,7 +44,8 @@ export function TownshipSelect({
       onChange={onSelectChange}
       placeholder="Selecciona..."
       defaultValue={defaultValue}
-      showSearch>
+      showSearch
+      {...props}>
       { options.map((o, i) => (
         <Select.OptGroup
           key={kebabCase(`${o.region}-${i}`)}
