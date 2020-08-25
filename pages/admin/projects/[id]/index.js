@@ -59,7 +59,7 @@ function Project({ client, query }) {
     error,
     data,
     save
-  }), [loading])
+  }), [data, loading])
 
   return (
     <PageContext.Provider
