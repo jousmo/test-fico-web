@@ -15,6 +15,8 @@ function DevelopmentObjectivesForm({data, onChange}) {
     })
   }
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <Form
       name="project-details"
@@ -38,6 +40,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
               name="developmentObjective"
               defaultValue={data?.Submission?.developmentObjective}
               onChange={onChange}
+              disabled={readOnly}
               autoSize={{minRows: 3}} />
           </Form.Item>
         </Col>
@@ -59,6 +62,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
               name="generalObjective"
               defaultValue={data?.Submission?.generalObjective}
               onChange={onChange}
+              disabled={readOnly}
               autoSize={{minRows: 3}} />
           </Form.Item>
         </Col>
@@ -75,6 +79,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
               onChange={onSpecificObjectivesChange}
               defaultValue={data?.Submission?.specificObjectives || []}
               addLabel="Agregar objetivo específico"
+              isAddDisabled={readOnly}
               onClickAdd={(addNew) => addNew({description: ""})}>
               {({ items, updateItem, removeItem }) =>
                 <div>
@@ -86,12 +91,15 @@ function DevelopmentObjectivesForm({data, onChange}) {
                             id="description"
                             name="description"
                             defaultValue={item.description}
+                            disabled={readOnly}
                             onBlur={updateItem(index)}
                             autoSize={{minRows: 3}} />
                         </Col>
-                        <Col>
-                          <DeleteButton style={{marginLeft: "10px"}} onClick={removeItem(index)} />
-                        </Col>
+                        {!readOnly && (
+                          <Col>
+                            <DeleteButton style={{marginLeft: "10px"}} onClick={removeItem(index)} />
+                          </Col>
+                        )}
                       </Row>
                     </Form.Item>
                   ) }
