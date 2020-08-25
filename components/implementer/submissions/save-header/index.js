@@ -2,7 +2,7 @@ import { Button, Row, Col } from "antd"
 import { SaveOutlined } from "@ant-design/icons"
 import "./style.sass"
 
-export function SaveHeader({ save, isSaving }){
+export function SaveHeader({ save, isSaving, ...props }){
   return (
     <Row justify="end" className="fico save-header">
       <Col>
@@ -10,7 +10,8 @@ export function SaveHeader({ save, isSaving }){
           icon={<SaveOutlined />}
           loading={isSaving}
           onClick={() => { save() }}
-          type="primary">
+          type="primary"
+          {...props}>
           Guardar
         </Button>
       </Col>
