@@ -31,8 +31,7 @@ function HumanResources({ client, query }) {
 
   const [state, setState] = useState({
     humanResources: {},
-    dirty: false,
-    submissionId: undefined
+    dirty: false
   })
 
   useEffect(() => {
@@ -55,7 +54,7 @@ function HumanResources({ client, query }) {
   }, [state])
 
   const save = useCallback(async () => {
-    await setSave(state, updateSubmission, state.submissionId)
+    await setSave(state, updateSubmission, submissionId)
   }, [state])
 
   const injectActions = useMemo(() => ({
