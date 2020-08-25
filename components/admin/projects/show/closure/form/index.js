@@ -81,6 +81,7 @@ function ProjectClosureForm({ data, save }) {
             <Form.Item
               name="closureDocument">
               <UploadButtonForm
+                disabled={readOnly}
                 fileList={closureDocument}
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
