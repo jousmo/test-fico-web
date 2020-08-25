@@ -5,16 +5,16 @@ import { extendMoment } from "moment-range"
 const moment = extendMoment(Moment)
 moment.locale("es")
 
-export function ActivityItem({data, onDelete, onEdit}) {
+export function ActivityItem({data, onDelete, onEdit, readOnly}) {
   const {
-    description="N/A",
-    responsible="N/A",
-    baseline="N/A",
-    goal="N/A",
-    meansOfVerification="N/A",
-    place="N/A",
-    months="N/A",
-    title="N/A",
+    description = "N/A",
+    responsible = "N/A",
+    baseline = "N/A",
+    goal = "N/A",
+    meansOfVerification = "N/A",
+    place = "N/A",
+    months = "N/A",
+    title = "N/A",
     key
   } = data
 
@@ -57,10 +57,14 @@ export function ActivityItem({data, onDelete, onEdit}) {
       &nbsp;
       <Typography.Text strong>Mes de implementación: </Typography.Text>
       <Typography.Text>{formattedMonths || "N/A"}</Typography.Text>
-      <DeleteButton
-        onClick={onDelete}
-        style={{marginLeft: "8px"}} />
-      <EditButton onClick={onEdit} />
+      {!readOnly && (
+        <>
+          <DeleteButton
+            onClick={onDelete}
+            style={{marginLeft: "8px"}} />
+          <EditButton onClick={onEdit} />
+        </>
+      )}
     </Card>
   )
 }
