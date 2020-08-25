@@ -5,13 +5,14 @@ import { useState } from "react"
 
 export function UploadButtonForm({
   children,
+  disabled = false,
   onChange,
   onRemoveFile,
   fileList = [],
   maxFile = 1,
   accept
 }) {
-  const [state, setState] = useState({ fileList, disabled: false })
+  const [state, setState] = useState({ fileList, disabled: disabled })
 
   const onUploadChange = info => {
     let fileList = [...info.fileList]
