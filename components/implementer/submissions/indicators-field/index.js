@@ -3,7 +3,7 @@ import { CompositeField } from "../../../shared"
 import { useState } from "react"
 import { IndicatorModal } from "./indicator-modal"
 
-export function IndicatorsField({defaultValue, indicatorType, objectiveIndex, onChange}) {
+export function IndicatorsField({defaultValue, indicatorType, objectiveIndex, onChange, readOnly}) {
   const [state, setState] = useState({ isModalOpen: false, edit: undefined })
 
   const onClickAdd = () => {
@@ -14,7 +14,7 @@ export function IndicatorsField({defaultValue, indicatorType, objectiveIndex, on
     setState({ isModalOpen: false, edit: undefined })
   }
 
-  const onSave = (addNew, replaceItemAtIndex) => (values) => {
+  const onSave = (addNew, replaceItemAtIndex) => values => {
     if(typeof values.index === "undefined") {
       addNew(values)
     }
@@ -37,6 +37,7 @@ export function IndicatorsField({defaultValue, indicatorType, objectiveIndex, on
       onChange={onChange}
       defaultValue={defaultValue}
       onClickAdd={onClickAdd}
+      isAddDisabled={readOnly}
       addLabel="Agregar indicador">
       {({ items, addNew, removeItem, replaceItemAtIndex }) =>
         <div>
@@ -51,6 +52,7 @@ export function IndicatorsField({defaultValue, indicatorType, objectiveIndex, on
             <IndicatorItem
               data={item}
               key={`indicator_${index}`}
+              readOnly={readOnly}
               onDelete={removeItem(index)}
               onEdit={onEdit(item, index)} />
           ) }
