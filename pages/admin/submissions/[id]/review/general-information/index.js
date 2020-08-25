@@ -73,6 +73,8 @@ function GeneralInformation({ client, query }) {
     data
   }), [state, loading])
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
       <CommentsProvider
@@ -80,7 +82,7 @@ function GeneralInformation({ client, query }) {
         update={updateGeneralInformation}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader save={save} />
+            <SaveHeader save={save} disabled={readOnly} />
             <ProjectDetails />
             <Consultant />
             <DevelopmentObjectives />

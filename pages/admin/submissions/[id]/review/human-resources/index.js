@@ -65,6 +65,8 @@ function HumanResources({ client, query }) {
     data
   }), [state, loading])
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
@@ -72,7 +74,7 @@ function HumanResources({ client, query }) {
         update={updateHumanResources}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader save={save} />
+            <SaveHeader save={save} disabled={readOnly} />
             <Heading />
             <ResourcesList />
           </Layout>
