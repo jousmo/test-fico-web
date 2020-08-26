@@ -27,6 +27,12 @@ export const getById = gql`
         charge
         remuneration
       }
+      documents{
+        id
+        name
+        type
+        url
+      }
     }
   }
 `
