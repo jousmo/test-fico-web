@@ -55,14 +55,46 @@ function Profile({ client }) {
   const isGovernment = useCallback(() => {
     return state.generalInformation.type === "GOVERNMENT" ||
       data?.Implementer?.type === "GOVERNMENT"
-  })
+  }, [state])
+
+  const addDocument = useCallback((file, type, docs) => {
+    const { name, url } = file
+    const doc = { name, url, type }
+
+    const documents = Array.from(docs) || []
+    const index = documents?.findIndex(doc => doc.type === type)
+
+    if(index >= 0){
+      documents[index] = doc
+    } else {
+      documents.push(doc)
+    }
+
+    updateGeneralInformation({ documents })
+  }, [updateGeneralInformation])
+
+  const removeDocument = useCallback((docs, type) => {
+    let documents = Array.from(docs) || []
+    const index = documents?.findIndex(doc => doc.type === type)
+
+    if (index >= 0){
+      if (documents.length === 1){
+        documents = []
+      } else {
+        documents[index] = null
+      }
+      updateGeneralInformation({ documents })
+    }
+  }, [updateGeneralInformation])
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
-    save,
+    removeDocument,
     isGovernment,
+    addDocument,
     loading,
     error,
+    save,
     data
   }), [state, loading])
 
