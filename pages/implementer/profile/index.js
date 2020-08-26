@@ -15,6 +15,7 @@ import { useState, useCallback, useMemo } from "react"
 import { withApollo } from "../../../helpers/withApollo"
 import { implementer } from "../../../graphql"
 import { useMutation, useQuery } from "@apollo/react-hooks"
+import { success, warning, loadingAlert } from "../../../helpers/alert"
 
 function Profile({ client }) {
   const [state, setState] = useState({ generalInformation: {} })
@@ -25,30 +26,31 @@ function Profile({ client }) {
   /* TODO: Update to use implementer id from application session */
   const { loading, error, data } = useQuery(implementer.queries.getById, {
     client: client,
-    variables: { id: "f3f13a59-337e-4989-b010-d7713a53c3c2" }
+    variables: { id: "d4f4b52c-71ff-4636-bd64-62e1e48e12ba" }
   })
 
   const updateGeneralInformation = useCallback(generalInformation => {
     const newGeneralInformation = { ...state.generalInformation, ...generalInformation }
-
     setState({...state, generalInformation: newGeneralInformation})
-  })
+  }, [state])
 
   const save = useCallback(async () => {
+    const saving = loadingAlert()
     try {
-      const updatedProfile = await updateProfile({
+      await updateProfile({
         variables: {
-          data: {...state.generalInformation},
-          id: "f3f13a59-337e-4989-b010-d7713a53c3c2"
+          data: { ...state.generalInformation },
+          id: "d4f4b52c-71ff-4636-bd64-62e1e48e12ba"
         }
       })
-
-      /* TODO: Show feedback to the user */
+      success()
     }
     catch(e) {
+      warning()
       console.error(e)
     }
-  })
+    saving()
+  }, [state, updateProfile])
 
   const isGovernment = useCallback(() => {
     return state.generalInformation.type === "GOVERNMENT" ||
