@@ -6,10 +6,9 @@ import {
   Input,
   Skeleton,
   Alert
-} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { SelectField, UploadButton, Visibility } from "../../../../shared";
-import { implementer } from "../../../../../helpers/selectOptions";
+} from "antd"
+import { SelectField, UploadButtonForm, Visibility } from "../../../../shared"
+import { implementer } from "../../../../../helpers/selectOptions"
 
 export function GeneralInformationForm({
   data,
@@ -32,6 +31,42 @@ export function GeneralInformationForm({
         showIcon />
     )
   }
+
+  const onDoneFile = files => {
+    const { name, url } = files[0]
+
+    const type = "DONATARY"
+    const doc = { name, url, type }
+
+    const documents = Array.from(data?.Implementer?.documents) || []
+    const index = documents?.findIndex(doc => doc.type === type)
+
+    if(index >= 0){
+      documents[index] = doc
+    } else {
+      documents.push(doc)
+    }
+
+    onChange({ currentTarget: { id: "documents", value: documents } })
+  }
+
+  const onRemoveFile = () => {
+    let documents = Array.from(data?.Implementer?.documents) || []
+    const index = documents?.findIndex(doc => doc.type === "DONATARY")
+
+    if (index >= 0){
+      if (documents.length === 1){
+        documents = []
+      } else {
+        documents[index] = null
+      }
+      onChange({ currentTarget: { id: "documents", value: documents } })
+    }
+  }
+
+  const donataryDocument = data?.Implementer?.documents?.map(({ id, ...doc}) => (
+    doc.type === "DONATARY" && { uid: id, ...doc }
+  )) || []
 
   return (
     <Form
@@ -172,9 +207,15 @@ export function GeneralInformationForm({
         <Visibility visible={!isGovernment}>
           <Col span={12}>
             <Form.Item
-              style={{display: "inline"}}
               label="Oficio de donataria">
-              <UploadButton>Subir oficio</UploadButton>
+              <UploadButtonForm
+                fileList={donataryDocument || []}
+                onRemoveFile={onRemoveFile}
+                onChange={onDoneFile}
+                maxFile={1}
+                accept={"application/pdf"}>
+                Subir oficio
+              </UploadButtonForm>
             </Form.Item>
           </Col>
         </Visibility>
