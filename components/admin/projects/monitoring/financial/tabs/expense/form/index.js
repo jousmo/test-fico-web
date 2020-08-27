@@ -1,6 +1,7 @@
 import { Modal, Form, Input, InputNumber, Divider, Alert, Statistic, Space, Typography } from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
-import { cellFormat, getSelectValue, warning, conceptTypes} from "../../../../../../../../helpers"
+import { cellFormat, getSelectValue, warning } from "../../../../../../../../helpers"
+import { conceptTypes }from "../../../../../../../../helpers/selectOptions/implementer/submission"
 import { useEffect, useState } from "react"
 import { merge } from "lodash"
 import {
@@ -42,8 +43,6 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     try {
       await form.validateFields()
       let values = await form.getFieldsValue()
-
-      debugger
 
       if(typeof edit?.index !== "undefined") {
         delete edit.documents
