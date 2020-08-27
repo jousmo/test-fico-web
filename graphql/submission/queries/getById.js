@@ -83,6 +83,11 @@ export const getById = gql`
           date
           amount
         }
+        documents {
+          id
+          name
+          url
+        }
       }
       developmentObjectiveIndicators {
         type
