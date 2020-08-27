@@ -36,6 +36,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
         edit.supports = null
+        edit.documents = null
         values = merge(edit, values)
       }
 
@@ -76,6 +77,30 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
     document += `constancia de situación fiscal, cotización firmada y CV
     empresarial y de los consultores`
     return document
+  }
+
+  const onDoneFile = async files => {
+    const documents = files?.map(el => {
+      return { name: el.name, url: el.url }
+    })
+
+    try {
+      await form.setFieldsValue({ documents })
+    }
+    catch (e) {
+      console.error(e)
+    }
+  }
+
+  const onRemoveFile = async ({ url }) => {
+    const oldDocuments = form.getFieldValue("documents")
+    const documents = oldDocuments.filter(document => document.url !== url)
+
+    await form.setFieldsValue({ documents })
+  }
+
+  const toFileList = files => {
+    return files?.map((document, index) => ({ uid: index, status: "done", ...document }))
   }
 
   return (
@@ -229,7 +254,13 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               name="documents"
               style={{display: "inline"}}
               label="Documentos">
-              <UploadTooltip body={getTooltipBody()}/>
+              <UploadTooltip
+                body={getTooltipBody()}
+                fileList={toFileList(edit?.documents) || []}
+                onRemoveFile={onRemoveFile}
+                onChange={onDoneFile}
+                maxFile={5}
+                accept={"application/pdf"}/>
             </Form.Item>
           </Col>
           <Col span={24}>
