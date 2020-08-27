@@ -97,7 +97,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
 
   const handleChangeListConcepts = ({currentTarget: { value }}) => {
     const { type } = submission?.concepts.find(concept => concept.id === value)
-
+    form.setFieldsValue({ category: type })
   }
 
   return (
@@ -191,7 +191,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <SelectField
             id="category"
-            options={conceptTypes}/>
+            options={conceptTypes}
+            disabled/>
         </Form.Item>
         <Divider orientation="left">Importe</Divider>
         <Space>
