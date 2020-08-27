@@ -24,7 +24,11 @@ export const RESET_XML_DATA = {
   percentage: 0
 }
 
+export const getConcept = (concepts, id) => concepts.find(concept => concept.id === id)?.name
+
 export const listConcepts = ({ concepts }) => concepts?.map(concept => ({ label: concept.name, value: concept.id }))
+
+export const monthYearConvert = date => _.capitalize(moment(date, "MMYYYY").format("MMMM"))
 
 export const projectMonths = ({ startDate, endDate }) => Array
   .from(
@@ -112,5 +116,5 @@ export const validateDocuments = (formData, { budgeted, evidenced, difference },
 export const getUrlPdf = dataSource => {
   return dataSource?.reduce((prev, current) => {
     return current.documents.find(el => el.type === "PDF")
-  }, {})
+  }, {})?.url
 }

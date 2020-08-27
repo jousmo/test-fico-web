@@ -44,6 +44,7 @@ function FinancialMonitoringPage({ client, query }) {
 
   const save = useCallback(async expense => {
     try {
+      debugger
       await createProjectInvoice({ variables: { data: expense, id: query.id } })
       success()
     } catch (e) {

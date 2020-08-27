@@ -13,7 +13,7 @@ import {
   validateDocuments,
   projectMonths,
   listConcepts
-} from "./helpers"
+} from "../../../helpers"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const [state, setState] = useState(INIT_STATE)
