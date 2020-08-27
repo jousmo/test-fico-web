@@ -6,7 +6,6 @@ import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 import moment from "moment"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
-import { submission } from "../../../../../../../graphql/submission"
 
 export function Expense () {
   const { data: { Submission }, save, update } = useContext(AdminSubmissionContext)
