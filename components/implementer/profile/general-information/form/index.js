@@ -15,7 +15,9 @@ export function GeneralInformationForm({
   isLoading,
   onChange,
   error,
-  isGovernment
+  isGovernment,
+  addDocument,
+  removeDocument
 }) {
   if(isLoading) {
     return <Skeleton active />
@@ -33,35 +35,11 @@ export function GeneralInformationForm({
   }
 
   const onDoneFile = files => {
-    const { name, url } = files[0]
-
-    const type = "DONATARY"
-    const doc = { name, url, type }
-
-    const documents = Array.from(data?.Implementer?.documents) || []
-    const index = documents?.findIndex(doc => doc.type === type)
-
-    if(index >= 0){
-      documents[index] = doc
-    } else {
-      documents.push(doc)
-    }
-
-    onChange({ currentTarget: { id: "documents", value: documents } })
+    addDocument(files[0], "DONATARY", data?.Implementer?.documents)
   }
 
   const onRemoveFile = () => {
-    let documents = Array.from(data?.Implementer?.documents) || []
-    const index = documents?.findIndex(doc => doc.type === "DONATARY")
-
-    if (index >= 0){
-      if (documents.length === 1){
-        documents = []
-      } else {
-        documents[index] = null
-      }
-      onChange({ currentTarget: { id: "documents", value: documents } })
-    }
+    removeDocument(data?.Implementer?.documents, "DONATARY")
   }
 
   const documents = []
