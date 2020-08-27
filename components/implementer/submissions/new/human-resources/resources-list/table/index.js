@@ -169,11 +169,10 @@ function HumanResourcesTable({ data, onChange }) {
                         <Input
                           addonBefore="%"
                           id="taxes"
-                          disabled={item.contractType === "EMPLOYEE"}
+                          disabled={readOnly || item.contractType === "EMPLOYEE"}
                           name="taxes"
                           onChange={updateItem(index)}
                           defaultValue={item.taxes}
-                          disabled={readOnly}
                           type="number" />
                       </Col>
                       <Col flex="150px">
@@ -184,7 +183,6 @@ function HumanResourcesTable({ data, onChange }) {
                           disabled
                           onChange={updateItem(index)}
                           defaultValue={item.total}
-                          disabled={readOnly}
                           value={
                             Number(item.salary) + ((Number(item.taxes) * Number(item.salary)) / 100)
                           }
