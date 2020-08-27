@@ -141,6 +141,11 @@ export const getById = gql`
           benefits
           taxes
           total
+          documents {
+            id
+            name
+            url
+          }
         }
       }
       state
