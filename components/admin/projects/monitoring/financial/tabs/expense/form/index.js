@@ -43,6 +43,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       await form.validateFields()
       let values = await form.getFieldsValue()
 
+      debugger
+
       if(typeof edit?.index !== "undefined") {
         delete edit.documents
         values.index = edit.index
@@ -261,13 +263,14 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           </Form.Item>
           <Typography.Title level={4}>{`${state?.implementerPaymentPercentage}%`}</Typography.Title>
         </Space>
-        <Divider orientation="left">Importe</Divider>
         <Form.Item
+          hidden
           label="Total:"
           name="amount">
           <InputNumber name="amount" readOnly />
         </Form.Item>
         <Form.Item
+          hidden
           label="Uso del presupuesto:"
           name="percentage">
           <InputNumber name="percentage" readOnly />
