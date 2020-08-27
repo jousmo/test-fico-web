@@ -64,9 +64,14 @@ export function GeneralInformationForm({
     }
   }
 
-  const donataryDocument = data?.Implementer?.documents?.map(({ id, ...doc}) => (
-    doc.type === "DONATARY" && { uid: id, ...doc }
-  )) || []
+  const documents = []
+  const donatary = data?.Implementer?.documents?.find(doc => (
+    doc.type === "DONATARY"
+  ))
+  if (donatary){
+    const { id, ...donataryDoc } = donatary
+    documents.push({ uid: id, status: "done", ...donataryDoc })
+  }
 
   return (
     <Form
@@ -209,7 +214,7 @@ export function GeneralInformationForm({
             <Form.Item
               label="Oficio de donataria">
               <UploadButtonForm
-                fileList={donataryDocument || []}
+                fileList={documents}
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
                 maxFile={1}
