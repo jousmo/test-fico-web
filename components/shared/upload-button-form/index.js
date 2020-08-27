@@ -12,7 +12,8 @@ export function UploadButtonForm({
   maxFile = 1,
   accept
 }) {
-  const [state, setState] = useState({ fileList, disabled: disabled })
+  const isDisabled = disabled || fileList?.length >= maxFile
+  const [state, setState] = useState({ fileList, disabled: isDisabled })
 
   const onUploadChange = info => {
     let fileList = [...info.fileList]
