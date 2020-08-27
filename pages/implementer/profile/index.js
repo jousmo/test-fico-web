@@ -81,7 +81,7 @@ function Profile({ client }) {
       if (documents.length === 1){
         documents = []
       } else {
-        delete documents[index]
+        documents.splice(index, 1)
       }
       updateGeneralInformation({ documents })
     }
