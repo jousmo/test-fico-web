@@ -54,10 +54,13 @@ function SummaryBody({ data, extra }) {
       <Descriptions.Item label="Eje">
         {getReadableValue(strategicAxisTypes, strategicAxis)}
       </Descriptions.Item>
-      <Descriptions.Item label="Monto autorizado">
+      <Descriptions.Item
+        label="Monto autorizado"
+        span={2}
+        style={{ paddingLeft: "50px" }}>
         {numeral(budgeted).format("$0,0.00")}
       </Descriptions.Item>
-      <Descriptions.Item span={5}>
+      <Descriptions.Item span={6}>
         {description}
       </Descriptions.Item>
       {extra}
