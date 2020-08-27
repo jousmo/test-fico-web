@@ -1,15 +1,23 @@
 import { Modal, Form, Input, InputNumber, Divider, Alert, Statistic, Space, Typography } from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
-import { cellFormat, getSelectValue, warning} from "../../../../../../../../helpers"
+import { cellFormat, getSelectValue, warning, conceptTypes} from "../../../../../../../../helpers"
 import { useEffect, useState } from "react"
 import { merge } from "lodash"
-import { INIT_STATE, RESET_XML_DATA, readXmlFile, toFileList, getPercentagePayment, validateDocuments } from "./helpers"
+import {
+  INIT_STATE,
+  RESET_XML_DATA,
+  readXmlFile,
+  toFileList,
+  getPercentagePayment,
+  validateDocuments,
+  projectMonths,
+  listConcepts
+} from "./helpers"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const [state, setState] = useState(INIT_STATE)
   const [stateOldAmount, setStateOldAmount] = useState(false)
   const [form] = Form.useForm()
-  const listConcepts = submission?.concepts?.map(concept => ({ label: concept.name, value: concept.name }))
 
   useEffect(() => {
     if(edit) {
@@ -87,6 +95,11 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     })
   }
 
+  const handleChangeListConcepts = ({currentTarget: { value }}) => {
+    const { type } = submission?.concepts.find(concept => concept.id === value)
+
+  }
+
   return (
     <Modal
       destroyOnClose
@@ -160,7 +173,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <SelectField
             id="monthAt"
-            options={[{ label: "Enero 2020", value:"Enero 2020"}]} />
+            options={projectMonths(submission)} />
         </Form.Item>
         <Form.Item
           label="ID Concepto:"
@@ -169,13 +182,16 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <SelectField
             id="concept"
-            options={listConcepts} />
+            onChange={handleChangeListConcepts}
+            options={listConcepts(submission)} />
         </Form.Item>
         <Form.Item
           label="ID Rubro:"
           name="category"
           rules={[{ required: true, message: "El campo es requerido" }]}>
-          <Input name="entry"/>
+          <SelectField
+            id="category"
+            options={conceptTypes}/>
         </Form.Item>
         <Divider orientation="left">Importe</Divider>
         <Space>
