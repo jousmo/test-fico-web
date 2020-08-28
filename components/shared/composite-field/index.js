@@ -64,6 +64,14 @@ export function CompositeField({
     }
   }
 
+  const onFilesChange = (index, documents, name) => {
+    const newItems = Array.from(state.items)
+    newItems[index][name] = documents
+
+    setState({ ...state, items: newItems })
+    handleChange(newItems)
+  }
+
   const replaceItemAtIndex = (index, data) => {
     const newItems = Array.from(state.items)
     newItems[index] = data
@@ -101,6 +109,7 @@ export function CompositeField({
       {
         children({
           items: state.items,
+          onFilesChange,
           updateItem,
           addNew,
           removeItem,
