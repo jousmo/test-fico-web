@@ -30,6 +30,8 @@ export const listConcepts = ({ concepts }) => concepts?.map(concept => ({ label:
 
 export const monthYearConvert = date => _.capitalize(moment(date, "MMYYYY").format("MMMM"))
 
+export const projectInitYear = ({ startDate }) => moment(startDate).format("YYYY")
+
 export const selectProjectYears = ({ startDate, endDate }) => Array
   .from(
     moment

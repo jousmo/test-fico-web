@@ -7,10 +7,15 @@ import { getConcept } from "../../../helpers"
 import moment from "moment"
 moment.locale("es")
 
-export function ListSummaryConcept ({ onChange }) {
+export function ListSummaryConcept ({ onChange, year }) {
   const { data: { Submission } } = useContext(AdminSubmissionContext)
 
-  const concepts = _.intersection(Submission?.invoices.map(invoice => invoice.concept))
+  const invoicesPerYear = Submission?.invoices.filter(invoice => {
+    const yearInvoice = moment(invoice.monthAt, "MMYYYY").format("YYYY")
+    if (yearInvoice === year) return invoice
+  })
+
+  const concepts = _.intersection(invoicesPerYear.map(invoice => invoice.concept))
 
   const dataSource = concepts.map(concept => {
     const amountMonths = {}
@@ -18,7 +23,7 @@ export function ListSummaryConcept ({ onChange }) {
     const months = moment.months()
 
     months.forEach(month => {
-      amountMonths[month] = Submission?.invoices.filter(invoice => {
+      amountMonths[month] = invoicesPerYear.filter(invoice => {
         const monthAt = moment(invoice.monthAt, "MMYYYY").format("MMMM")
         if (invoice.concept === concept && monthAt === month) return invoice
       }).reduce((prev, current) => prev + current.amount, 0)
