@@ -1,6 +1,6 @@
 import { withForm } from "../../../../../../helpers/withForm"
 import { Alert, Col, Form, List, Row } from "antd"
-import { FileInput } from "../../../../profile/legal-documents/form/fileInput"
+import { FileInput } from "./fileInput"
 import { useCallback } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
