@@ -4,9 +4,7 @@ import { ArrowsAltOutlined } from "@ant-design/icons"
 import { useContext } from "react"
 import { AdminSubmissionContext } from "../../../../../../../../contexts/admin/submissions/show"
 import { getConcept } from "../../../helpers"
-import Moment from "moment"
-import { extendMoment } from "moment-range"
-const moment = extendMoment(Moment)
+import moment from "moment"
 moment.locale("es")
 
 export function ListSummaryConcept ({ onChange }) {

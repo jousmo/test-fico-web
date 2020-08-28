@@ -3,9 +3,12 @@ import { SearchFieldPrimary } from "../../../../../../shared/search-field-primar
 import { Section } from "../../../../../../shared/section"
 import { ListSummary } from "./list"
 import { SelectField } from "../../../../../../shared/selectField"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
+import { selectProjectYears } from "../../helpers"
 
 export function SummaryConcept () {
+  const { data: { Submission } } = useContext(AdminSubmissionContext)
   const [state, setState] = useState({ checked: "Mensual" })
 
   const onChange = value => {
@@ -15,7 +18,7 @@ export function SummaryConcept () {
 
   const filterHeader = () => (
     <>
-      <SelectField value="Año 1" />
+      <SelectField value="Año 1" options={selectProjectYears(Submission)} />
       <Checkbox.Group
         style={{marginLeft: "1rem"}}
         options={["Mensual", "Trimestral"]}
