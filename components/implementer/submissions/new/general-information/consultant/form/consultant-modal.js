@@ -9,7 +9,11 @@ import {
   UploadTooltip,
   Visibility
 } from "../../../../../../shared"
-import { getSelectValue, selectOptions } from "../../../../../../../helpers"
+import {
+  getSelectValue,
+  selectOptions,
+  toFileList
+} from "../../../../../../../helpers"
 import { merge } from "lodash"
 
 export function ConsultantModal({edit, onCancel, onSave, ...props}) {
@@ -97,10 +101,6 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
     const documents = oldDocuments.filter(document => document.url !== url)
 
     await form.setFieldsValue({ documents })
-  }
-
-  const toFileList = files => {
-    return files?.map((document, index) => ({ uid: index, status: "done", ...document }))
   }
 
   return (
