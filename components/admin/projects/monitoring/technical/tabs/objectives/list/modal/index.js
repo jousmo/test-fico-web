@@ -112,6 +112,30 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
             plain
             orientation="left"
             style={{ margin: "10px 0" }}>
+            Indicador
+          </Divider>
+          <Col span={24}>
+            <Form.Item
+              label="Indicador"
+              style={{ marginBottom: "0" }}>
+              <Typography.Text strong>
+                {edit?.title}
+              </Typography.Text>
+            </Form.Item>
+          </Col>
+          <Col span={24}>
+            <Form.Item
+              label="Medio de verificación"
+              style={{ marginBottom: "0" }}>
+              <Typography.Text strong>
+                {edit?.meansOfVerification}
+              </Typography.Text>
+            </Form.Item>
+          </Col>
+          <Divider
+            plain
+            orientation="left"
+            style={{ margin: "10px 0" }}>
             Resultados
           </Divider>
           <Col span={7}>
@@ -156,30 +180,6 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
                 defaultValue={edit?.participants}
                 onChange={(p) => form.setFieldsValue({ participants: p })}
                 type={type} />
-            </Form.Item>
-          </Col>
-          <Divider
-            plain
-            orientation="left"
-            style={{ margin: "10px 0" }}>
-            Indicador
-          </Divider>
-          <Col span={24}>
-            <Form.Item
-              label="Indicador"
-              style={{ marginBottom: "0" }}>
-              <Typography.Text strong>
-                {edit?.title}
-              </Typography.Text>
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Form.Item
-              label="Medio de verificación"
-              style={{ marginBottom: "0" }}>
-              <Typography.Text strong>
-                {edit?.meansOfVerification}
-              </Typography.Text>
             </Form.Item>
           </Col>
           <Col span={24}>
