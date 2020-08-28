@@ -24,7 +24,7 @@ function LegalDocumentsForm({
 
   const getFile = type => {
     const doc = data?.documents?.find(doc => doc.type === type)
-    return doc ? toFileList(Array.from(doc)) : []
+    return doc ? toFileList([{ ...doc }]) : []
   }
 
   return (
