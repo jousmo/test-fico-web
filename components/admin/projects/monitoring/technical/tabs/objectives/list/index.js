@@ -1,4 +1,5 @@
 import { Button, Table } from "antd"
+import { Tooltip } from "../../../../../../../shared"
 import { CheckSquareTwoTone } from "@ant-design/icons/lib"
 import { EditOutlined } from "@ant-design/icons"
 import { decoratedData } from "./data-decorator"
@@ -85,6 +86,7 @@ export function ObjectivesList({ data, dateFilter }) {
           title="Nivel" />
         <Table.Column
           title="Resumen narrativo"
+          render={text => <Tooltip value={text || ""}/>}
           sorter={(a, b) => a.description?.localeCompare(b.description)}
           showSorterTooltip={false}
           dataIndex="description" />
