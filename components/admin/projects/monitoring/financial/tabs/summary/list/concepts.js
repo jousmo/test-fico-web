@@ -1,27 +1,34 @@
 import { Empty, Table } from "antd"
 import { cellFormat } from "../../../../../../../../helpers"
 import { ArrowsAltOutlined } from "@ant-design/icons"
+import { useContext } from "react"
+import { AdminSubmissionContext } from "../../../../../../../../contexts/admin/submissions/show"
+import { getConcept } from "../../../helpers"
+import Moment from "moment"
+import { extendMoment } from "moment-range"
+const moment = extendMoment(Moment)
+moment.locale("es")
 
 export function ListSummaryConcept ({ onChange }) {
-  const dataSource = [
-    {
-      key: "1",
-      concepto: "Telefono/Internet",
-      ene: 1368,
-      feb: 1368,
-      mar: 1368,
-      abr: 1368,
-      may: 1368,
-      jun: 1368,
-      jul: 1368,
-      ago: 1368,
-      sep: 1368,
-      oct: 1368,
-      nov: 1368,
-      dic: 1368,
-      total: 1368
-    }
-  ]
+  const { data: { Submission } } = useContext(AdminSubmissionContext)
+
+  const concepts = _.intersection(Submission?.invoices.map(invoice => invoice.concept))
+
+  const dataSource = concepts.map(concept => {
+    const amountMonths = {}
+    const nameConcept = getConcept(Submission?.concepts, concept)
+    const months = moment.months()
+
+    months.forEach(month => {
+      amountMonths[month] = Submission?.invoices.filter(invoice => {
+        const monthAt = moment(invoice.monthAt, "MMYYYY").format("MMMM")
+        if (invoice.concept === concept && monthAt === month) return invoice
+      }).reduce((prev, current) => prev + current.amount, 0)
+    })
+
+    const total = Object.values(amountMonths).reduce((prev, current) => prev + current, 0)
+    return { key: concept, concept: nameConcept, ...amountMonths, total }
+  })
 
   return (
     <Table
@@ -33,88 +40,88 @@ export function ListSummaryConcept ({ onChange }) {
       pagination={false}>
       <Table.Column
         width={1}
-        dataIndex="concepto"
+        dataIndex="concept"
         title="Concepto" />
       <Table.Column
         width={1}
-        dataIndex="ene"
+        dataIndex="enero"
         title={<><ArrowsAltOutlined /> Ene</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="feb"
+        dataIndex="febrero"
         title={<><ArrowsAltOutlined /> Feb</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="mar"
+        dataIndex="marzo"
         title={<><ArrowsAltOutlined /> Mar</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="abr"
+        dataIndex="abril"
         title={<><ArrowsAltOutlined /> Abr</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="may"
+        dataIndex="mayo"
         title={<><ArrowsAltOutlined /> May</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="jun"
+        dataIndex="junio"
         title={<><ArrowsAltOutlined /> Jun</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="jul"
+        dataIndex="julio"
         title={<><ArrowsAltOutlined /> Jul</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="ago"
+        dataIndex="agosto"
         title={<><ArrowsAltOutlined /> Ago</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="sep"
+        dataIndex="septiembre"
         title={<><ArrowsAltOutlined /> Sep</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="oct"
+        dataIndex="octubre"
         title={<><ArrowsAltOutlined /> Oct</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="nov"
+        dataIndex="noviembre"
         title={<><ArrowsAltOutlined /> Nov</>}
         render={text => cellFormat.money(text)}
         sorter
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="dic"
+        dataIndex="diciembre"
         title={<><ArrowsAltOutlined /> Dic</>}
         render={text => cellFormat.money(text)}
         sorter
