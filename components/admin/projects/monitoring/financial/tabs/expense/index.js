@@ -6,6 +6,7 @@ import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 import moment from "moment"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
+import { getConcept } from "../../helpers"
 
 export function Expense () {
   const { data: { Submission }, save, update } = useContext(AdminSubmissionContext)
@@ -59,6 +60,23 @@ export function Expense () {
     }
   }
 
+  const onSearch = (value) => {
+    const filter = Submission?.invoices?.filter(invoice => {
+      const { uuid, issuer, receptor, rfc, amount } = invoice
+      const nameConcept = getConcept(Submission?.concepts, invoice.concept)
+      const nameMonth = moment(invoice.monthAt, "MMYYYY").format("MMMM")
+      return `${uuid} ${issuer} ${receptor} ${rfc} ${amount} ${nameConcept} ${nameConcept} ${nameMonth}`
+        .toLowerCase()
+        .includes(value.toLowerCase())
+    })
+
+    if (!value) {
+      setState({ ...state, filterInvoice: false})
+    } else {
+      setState({ ...state, filterInvoice: filter})
+    }
+  }
+
   return (
     <>
       <Alert
@@ -66,7 +84,7 @@ export function Expense () {
         showIcon
         message="Adjunta tu conjunto de facturas y selecciona el concepto al que pertenecen, solo se admiten
         facturas emitidas a tu organización" />
-      <SearchFieldPrimary style={{marginTop: "1rem"}} />
+      <SearchFieldPrimary style={{marginTop: "1rem"}} onSearch={onSearch}/>
       <StatisticHeader statistics={dataStatistics} styles={{padding: 0}} />
       <Section style={{padding: 0, margin: "1rem 0"}} title="Gastos">
         <Space>
