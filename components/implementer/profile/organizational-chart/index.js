@@ -17,11 +17,11 @@ export function OrganizationalChart() {
   }
 
   const onDoneFile = async files => {
-    addDocument(files[0], "ORGANIZATION_CHART", data?.Implementer?.documents)
+    addDocument(files[0], "ORGANIZATION_CHART")
   }
 
   const onRemoveFile = () => {
-    removeDocument(data?.Implementer?.documents, "ORGANIZATION_CHART")
+    removeDocument("ORGANIZATION_CHART")
   }
 
   const documents = []

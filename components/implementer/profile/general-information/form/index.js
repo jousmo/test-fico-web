@@ -35,11 +35,11 @@ export function GeneralInformationForm({
   }
 
   const onDoneFile = files => {
-    addDocument(files[0], "DONATARY", data?.Implementer?.documents)
+    addDocument(files[0], "DONATARY")
   }
 
   const onRemoveFile = () => {
-    removeDocument(data?.Implementer?.documents, "DONATARY")
+    removeDocument("DONATARY")
   }
 
   const documents = []

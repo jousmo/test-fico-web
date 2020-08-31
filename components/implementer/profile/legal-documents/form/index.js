@@ -15,11 +15,11 @@ function LegalDocumentsForm({
     "representante legal"
 
   const onDoneFile = (files, type) => {
-    addDocument(files[0], type, data?.documents)
+    addDocument(files[0], type)
   }
 
   const onRemoveFile = type => {
-    removeDocument(data?.documents, type)
+    removeDocument(type)
   }
 
   const getFile = type => {

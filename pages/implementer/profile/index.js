@@ -11,7 +11,7 @@ import {
   data as contextData,
   ImplementerProfileContext
 } from "../../../contexts/implementer/profile"
-import { useState, useCallback, useMemo } from "react"
+import { useEffect, useState, useCallback, useMemo } from "react"
 import { withApollo } from "../../../helpers/withApollo"
 import { implementer } from "../../../graphql"
 import { useMutation, useQuery } from "@apollo/react-hooks"
@@ -28,6 +28,14 @@ function Profile({ client }) {
     client: client,
     variables: { id: "db183c7b-b8f9-46e1-a401-13d8299956d0" }
   })
+
+  useEffect(() => {
+    if (data?.Implementer?.documents) {
+      setState({
+        generalInformation: { documents: [ ...data?.Implementer?.documents ]}
+      })
+    }
+  }, [data?.Implementer])
 
   const updateGeneralInformation = useCallback(generalInformation => {
     const newGeneralInformation = { ...state.generalInformation, ...generalInformation }
@@ -57,11 +65,11 @@ function Profile({ client }) {
       data?.Implementer?.type === "GOVERNMENT"
   }, [state])
 
-  const addDocument = useCallback((file, type, docs) => {
+  const addDocument = useCallback((file, type) => {
     const { name, url } = file
     const doc = { name, url, type }
 
-    const documents = Array.from(docs) || []
+    const documents = Array.from(state.generalInformation.documents) || []
     const index = documents?.findIndex(doc => doc.type === type)
 
     if(index >= 0){
@@ -71,10 +79,10 @@ function Profile({ client }) {
     }
 
     updateGeneralInformation({ documents })
-  }, [updateGeneralInformation])
+  }, [state, updateGeneralInformation])
 
-  const removeDocument = useCallback((docs, type) => {
-    let documents = Array.from(docs) || []
+  const removeDocument = useCallback(type => {
+    let documents = Array.from(state.generalInformation.documents) || []
     const index = documents?.findIndex(doc => doc.type === type)
 
     if (index >= 0){
@@ -85,7 +93,7 @@ function Profile({ client }) {
       }
       updateGeneralInformation({ documents })
     }
-  }, [updateGeneralInformation])
+  }, [state, updateGeneralInformation])
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
