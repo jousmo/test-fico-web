@@ -1,38 +1,10 @@
 import { Empty, Table } from "antd"
 import { cellFormat } from "../../../../../../../../helpers"
 import { ArrowsAltOutlined } from "@ant-design/icons"
-import { useContext } from "react"
-import { AdminSubmissionContext } from "../../../../../../../../contexts/admin/submissions/show"
-import { getConcept } from "../../../helpers"
 import moment from "moment"
 moment.locale("es")
 
-export function ListSummaryConcept ({ onChange, year }) {
-  const { data: { Submission } } = useContext(AdminSubmissionContext)
-
-  const invoicesPerYear = Submission?.invoices.filter(invoice => {
-    const yearInvoice = moment(invoice.monthAt, "MMYYYY").format("YYYY")
-    if (yearInvoice === year) return invoice
-  })
-
-  const concepts = _.intersection(invoicesPerYear.map(invoice => invoice.concept))
-
-  const dataSource = concepts.map(concept => {
-    const amountMonths = {}
-    const nameConcept = getConcept(Submission?.concepts, concept)
-    const months = moment.months()
-
-    months.forEach(month => {
-      amountMonths[month] = invoicesPerYear.filter(invoice => {
-        const monthAt = moment(invoice.monthAt, "MMYYYY").format("MMMM")
-        if (invoice.concept === concept && monthAt === month) return invoice
-      }).reduce((prev, current) => prev + current.amount, 0)
-    })
-
-    const total = Object.values(amountMonths).reduce((prev, current) => prev + current, 0)
-    return { key: concept, concept: nameConcept, ...amountMonths, total }
-  })
-
+export function ListSummaryConcept ({ onChange, dataSource }) {
   return (
     <Table
       onChange={onChange}

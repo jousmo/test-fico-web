@@ -16,7 +16,7 @@ export function SummaryConcept () {
 
   const onChange = value => {
     const checked = value.find(el => el !== state.checked)
-    setState({ checked })
+    setState({ ...state, checked })
   }
 
   const onChangeYear = ({ currentTarget }) => {

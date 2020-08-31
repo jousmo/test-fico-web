@@ -1,11 +1,19 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Col, Divider, Modal, Row, Statistic } from "antd"
 import { ListSummaryConcept} from "./concepts"
 import { ListSummaryComparative } from "./comparative"
 import { ListSummaryInvestment } from "./investment"
+import { AdminSubmissionContext } from "../../../../../../../../contexts/admin/submissions/show"
+import { getInvoicesPerYear, getConceptsPerMonths, getConceptsPerTrimestre } from "../../../helpers"
 
 export function ListSummary({ view, year }) {
+  const { data: { Submission } } = useContext(AdminSubmissionContext)
   const [state, setState] = useState(false)
+
+  const invoicesPerYear = getInvoicesPerYear(Submission?.invoices, year)
+  const onlyConcepts = _.intersection(invoicesPerYear.map(invoice => invoice.concept))
+  const conceptsPerMonths = getConceptsPerMonths(Submission, onlyConcepts, invoicesPerYear)
+  const conceptsPerTrimestre = getConceptsPerTrimestre(Submission, onlyConcepts, invoicesPerYear)
 
   const onChange = () => {
     setState(true)
@@ -74,9 +82,9 @@ export function ListSummary({ view, year }) {
   return (
     <>
       {view === "Mensual" ? (
-        <ListSummaryConcept year={year} onChange={onChange} />
+        <ListSummaryConcept year={year} onChange={onChange} dataSource={conceptsPerMonths}/>
       ) : (
-        <ListSummaryComparative year={year} onChange={onChange} />
+        <ListSummaryComparative year={year} onChange={onChange} dataSource={conceptsPerTrimestre}/>
       )}
 
       <Modal

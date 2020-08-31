@@ -2,18 +2,7 @@ import { Empty, Table } from "antd"
 import { cellFormat } from "../../../../../../../../helpers"
 import { ArrowsAltOutlined } from "@ant-design/icons"
 
-export function ListSummaryComparative ({ onChange }) {
-  const dataSource = [
-    {
-      key: "1",
-      concepto: "Telefono/Internet",
-      "1er": 1368,
-      "2er": 1368,
-      "3er": 1368,
-      "4er": 1368,
-      total: 1368
-    }
-  ]
+export function ListSummaryComparative ({ onChange, dataSource }) {
   return (
     <Table
       onChange={onChange}
@@ -24,7 +13,7 @@ export function ListSummaryComparative ({ onChange }) {
       pagination={false}>
       <Table.Column
         width={1}
-        dataIndex="concepto"
+        dataIndex="concept"
         title="Concepto" />
       <Table.Column
         width={1}
@@ -35,7 +24,7 @@ export function ListSummaryComparative ({ onChange }) {
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="2er"
+        dataIndex="2do"
         title={<><ArrowsAltOutlined /> 2er</>}
         render={text => cellFormat.money(text)}
         sorter
@@ -49,7 +38,7 @@ export function ListSummaryComparative ({ onChange }) {
         showSorterTooltip={false} />
       <Table.Column
         width={1}
-        dataIndex="4er"
+        dataIndex="4to"
         title={<><ArrowsAltOutlined /> 4er</>}
         render={text => cellFormat.money(text)}
         sorter
