@@ -25,7 +25,7 @@ export const RESET_XML_DATA = {
 }
 
 export const getConceptsSummaryPerMonth = (Submission, concepts, invoicesPerYearOrSearch, field) => {
-  return concepts.map(concept => {
+  const summaryConcepts = concepts.map(concept => {
     const nameConcept = getConcept(Submission?.concepts, concept)
     const budgeted = getConceptBudget(Submission?.concepts, concept)
 
@@ -45,6 +45,26 @@ export const getConceptsSummaryPerMonth = (Submission, concepts, invoicesPerYear
 
     return { key: concept, concept: nameConcept, budgeted, ...filter }
   })
+
+  const totalsSummaryConcepts = summaryConcepts.reduce((prev, current) => {
+    return {
+      budgeted: (prev.budgeted || 0) + (current.budgeted || 0) ,
+      amount: (prev.amount || 0) + (current.amount || 0),
+      ficosecPayment: (prev.ficosecPayment || 0) + (current.ficosecPayment || 0),
+      implementerPayment: (prev.implementerPayment || 0) + (current.implementerPayment || 0),
+      investmentOnePayment: (prev.investmentOnePayment || 0) + (current.investmentOnePayment || 0),
+      investmentTwoPayment: (prev.investmentTwoPayment || 0) + (current.investmentTwoPayment || 0),
+      diference: (prev.budgeted || 0) - ((prev.amount || 0) + (current.amount || 0))
+    }
+  }, {})
+
+  return {
+    summaryConcepts,
+    totalsSummaryConcepts: {
+      totalConcepts: summaryConcepts.length,
+      ...totalsSummaryConcepts
+    }
+  }
 }
 
 export const getConceptsPerTrimestre = (Submission, concepts, invoicesPerYearOrSearch) => {
