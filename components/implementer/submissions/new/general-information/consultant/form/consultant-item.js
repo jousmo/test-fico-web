@@ -2,7 +2,7 @@ import { Card, Descriptions } from "antd"
 import { DeleteButton, EditButton } from "../../../../../../shared"
 import { selectOptions } from "../../../../../../../helpers"
 
-export function ConsultantItem({ data, onEdit, onDelete, index }) {
+export function ConsultantItem({ data, onEdit, onDelete, index, readOnly }) {
   const {
     description,
     commercialName,
@@ -12,7 +12,7 @@ export function ConsultantItem({ data, onEdit, onDelete, index }) {
     rfc,
     fiscalAddress,
     fiscalPersonType,
-    hadReceivedSupports,
+    hadReceivedSupports
   } = data
 
   const {
@@ -57,8 +57,12 @@ export function ConsultantItem({ data, onEdit, onDelete, index }) {
           {hasSupports}
         </Descriptions.Item>
       </Descriptions>
-      <DeleteButton onClick={onDelete} style={{marginLeft: "8px"}} />
-      <EditButton onClick={onEdit} />
+      {!readOnly && (
+        <>
+          <DeleteButton onClick={onDelete} style={{marginLeft: "8px"}} />
+          <EditButton onClick={onEdit} />
+        </>
+      )}
     </Card>
   )
 }

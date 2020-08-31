@@ -3,7 +3,7 @@ import { CompositeField } from "../../../shared"
 import { useState } from "react"
 import { ActivityModal } from "./activity-modal"
 
-export function ActivitiesField({activityType, defaultValue, objectiveIndex, onChange}) {
+export function ActivitiesField({activityType, defaultValue, objectiveIndex, onChange, readOnly}) {
   const [state, setState] = useState({ isModalOpen: false, edit: undefined })
 
   const onClickAdd = () => {
@@ -14,7 +14,7 @@ export function ActivitiesField({activityType, defaultValue, objectiveIndex, onC
     setState({ isModalOpen: false, edit: undefined })
   }
 
-  const onSave = (addNew, replaceItemAtIndex) => (values) => {
+  const onSave = (addNew, replaceItemAtIndex) => values => {
     if(typeof values.index === "undefined") {
       addNew(values)
     }
@@ -37,6 +37,7 @@ export function ActivitiesField({activityType, defaultValue, objectiveIndex, onC
       onChange={onChange}
       defaultValue={defaultValue}
       onClickAdd={onClickAdd}
+      isAddDisabled={readOnly}
       addLabel="Agregar actividad">
       {({ items, addNew, removeItem, replaceItemAtIndex }) =>
         <div>
@@ -51,6 +52,7 @@ export function ActivitiesField({activityType, defaultValue, objectiveIndex, onC
             <ActivityItem
               data={item}
               key={`activity_${index}`}
+              readOnly={readOnly}
               onDelete={removeItem(index)}
               onEdit={onEdit(item, index)} />
           ) }

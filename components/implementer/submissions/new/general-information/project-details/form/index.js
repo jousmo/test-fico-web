@@ -21,6 +21,8 @@ function ProjectDetailsForm({
     onChange(value)
   }
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <Form
       form={form}
@@ -40,6 +42,7 @@ function ProjectDetailsForm({
             <SelectField
               id="type"
               name="type"
+              disabled={readOnly}
               onChange={onChange}
               defaultValue={data?.Submission?.type || "DIRECT"}
               options={implementer.submission.submissionTypes} />
@@ -61,7 +64,7 @@ function ProjectDetailsForm({
               defaultValue={data?.Submission?.applyingCall}
               onChange={onChange}
               type="text"
-              disabled={!isCall} />
+              disabled={!isCall || readOnly} />
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -79,6 +82,7 @@ function ProjectDetailsForm({
               name="name"
               defaultValue={data?.Submission?.name}
               onChange={onChange}
+              disabled={readOnly}
               type="text" />
           </Form.Item>
         </Col>
@@ -95,6 +99,7 @@ function ProjectDetailsForm({
             <TownshipSelect
               defaultValue={data?.Submission?.township}
               onChange={onChange}
+              disabled={readOnly}
               setRegion={form.setFieldsValue} />
           </Form.Item>
         </Col>
@@ -134,6 +139,7 @@ function ProjectDetailsForm({
               defaultValue={data?.Submission?.allies || []}
               maxTagCount={2}
               mode="tags"
+              disabled={readOnly}
               onChange={onAddAlly} />
           </Form.Item>
         </Col>
@@ -146,6 +152,7 @@ function ProjectDetailsForm({
               name="implementationPlace"
               defaultValue={data?.Submission?.implementationPlace}
               onChange={onChange}
+              disabled={readOnly}
               type="text" />
           </Form.Item>
         </Col>
@@ -158,6 +165,7 @@ function ProjectDetailsForm({
               name="responsible"
               defaultValue={data?.Submission?.responsible}
               onChange={onChange}
+              disabled={readOnly}
               type="text" />
           </Form.Item>
         </Col>
@@ -176,6 +184,7 @@ function ProjectDetailsForm({
               name="startDate"
               defaultValue={data?.Submission?.startDate}
               onChange={onChange}
+              disabled={readOnly}
               fullWidth />
           </Form.Item>
         </Col>
@@ -194,6 +203,7 @@ function ProjectDetailsForm({
               name="endDate"
               defaultValue={data?.Submission?.endDate}
               onChange={onChange}
+              disabled={readOnly}
               fullWidth />
           </Form.Item>
         </Col>
@@ -212,6 +222,7 @@ function ProjectDetailsForm({
               name="strategicAxis"
               onChange={onChange}
               defaultValue={data?.Submission?.strategicAxis}
+              disabled={readOnly}
               options={implementer.submission.strategicAxisTypes} />
           </Form.Item>
         </Col>
@@ -233,6 +244,7 @@ function ProjectDetailsForm({
               onChange={onChange}
               mode="tags"
               defaultValue={data?.Submission?.preventionLevel || []}
+              disabled={readOnly}
               options={implementer.submission.preventionLevelTypes} />
           </Form.Item>
         </Col>
@@ -249,6 +261,7 @@ function ProjectDetailsForm({
               mode="tags"
               onChange={onChange}
               defaultValue={data?.Submission?.scope || []}
+              disabled={readOnly}
               options={implementer.submission.scopeTypes} />
           </Form.Item>
         </Col>
@@ -267,6 +280,7 @@ function ProjectDetailsForm({
               name="issueDescription"
               defaultValue={data?.Submission?.issueDescription}
               onChange={onChange}
+              disabled={readOnly}
               type="text" />
           </Form.Item>
         </Col>
@@ -285,6 +299,7 @@ function ProjectDetailsForm({
               name="description"
               defaultValue={data?.Submission?.description}
               onChange={onChange}
+              disabled={readOnly}
               autoSize={{minRows: 3}} />
           </Form.Item>
         </Col>
@@ -301,6 +316,7 @@ function ProjectDetailsForm({
               name="justification"
               defaultValue={data?.Submission?.justification}
               onChange={onChange}
+              disabled={readOnly}
               autoSize={{minRows: 3}} />
           </Form.Item>
         </Col>

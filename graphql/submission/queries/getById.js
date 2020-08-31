@@ -139,6 +139,7 @@ export const getById = gql`
           total
         }
       }
+      state
       status
       statusChangedAt
       deadline

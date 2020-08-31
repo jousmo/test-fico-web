@@ -39,6 +39,8 @@ function ConsultantForm({data, onChange}) {
 
   const consultants = data?.Submission?.consultants || []
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <Form layout="vertical">
       <Form.Item
@@ -47,6 +49,7 @@ function ConsultantForm({data, onChange}) {
           onChange={onChange}
           defaultValue={consultants}
           onClickAdd={onClickAdd}
+          isAddDisabled={readOnly}
           addLabel="Agregar consultor">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <div>
@@ -60,6 +63,7 @@ function ConsultantForm({data, onChange}) {
                   key={key}
                   index={key}
                   data={item}
+                  readOnly={readOnly}
                   onEdit={onEdit(item, key)}
                   onDelete={removeItem(key)} />
               ) }

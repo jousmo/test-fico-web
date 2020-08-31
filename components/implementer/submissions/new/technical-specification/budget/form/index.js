@@ -35,12 +35,15 @@ function BudgetForm({data, onChange}) {
     setState({ ...state, isModalOpen: true, edit: item })
   }
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+
   return (
     <>
       <CompositeField
         onClickAdd={onClickAdd}
         onChange={onChange}
         addLabel="Agregar concepto"
+        isAddDisabled={readOnly}
         defaultValue={Submission?.concepts}>
         {({ items, addNew, removeItem, replaceItemAtIndex }) =>
           <>
@@ -71,7 +74,7 @@ function BudgetForm({data, onChange}) {
                   title="Concepto"
                   key="name"
                   dataIndex="name"
-                  render={cellFormat.actions(onEdit, removeItem)} />
+                  render={!readOnly && cellFormat.actions(onEdit, removeItem)} />
                 <Table.Column
                   title="Región"
                   key="region"
