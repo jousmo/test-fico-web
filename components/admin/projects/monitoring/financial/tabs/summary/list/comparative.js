@@ -2,13 +2,13 @@ import { Empty, Table } from "antd"
 import { cellFormat } from "../../../../../../../../helpers"
 import { ArrowsAltOutlined } from "@ant-design/icons"
 
-export function ListSummaryComparative ({ onChange, dataSourceTrimestre }) {
+export function ListSummaryComparative ({ onChange, dataSource }) {
   return (
     <Table
       onChange={onChange}
       className="summary-concepts"
       size="small"
-      dataSource={dataSourceTrimestre}
+      dataSource={dataSource}
       locale={{emptyText: <Empty description="Resumen de conceptos" />}}
       pagination={false}>
       <Table.Column

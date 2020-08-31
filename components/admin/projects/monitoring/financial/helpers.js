@@ -24,6 +24,49 @@ export const RESET_XML_DATA = {
   percentage: 0
 }
 
+export const getConceptsPerTrimestre = (Submission, concepts, invoicesPerYear) => {
+  return concepts.map(concept => {
+    const amountTrimestre = {}
+    const nameConcept = getConcept(Submission?.concepts, concept)
+
+    for (let i = 1; i <= 4; i++) {
+      const sufix = (i === 1 || i === 3) ? 'er' : i === 2 ? "do" : "to"
+      amountTrimestre[`${i}${sufix}`] = invoicesPerYear.filter(invoice => {
+        const quarter = moment(invoice.monthAt, "MMYYYY").quarter()
+        if (invoice.concept === concept && quarter === i) return invoice
+      }).reduce((prev, current) => prev + current.amount, 0)
+    }
+
+    const total = Object.values(amountTrimestre).reduce((prev, current) => prev + current, 0)
+    return { key: concept, concept: nameConcept, ...amountTrimestre, total }
+  })
+}
+
+export const getConceptsPerMonths = (Submission, concepts, invoicesPerYear) => {
+  return concepts.map(concept => {
+    const amountMonths = {}
+    const nameConcept = getConcept(Submission?.concepts, concept)
+    const months = moment.months()
+
+    months.forEach(month => {
+      amountMonths[month] = invoicesPerYear.filter(invoice => {
+        const monthAt = moment(invoice.monthAt, "MMYYYY").format("MMMM")
+        if (invoice.concept === concept && monthAt === month) return invoice
+      }).reduce((prev, current) => prev + current.amount, 0)
+    })
+
+    const total = Object.values(amountMonths).reduce((prev, current) => prev + current, 0)
+    return { key: concept, concept: nameConcept, ...amountMonths, total }
+  })
+}
+
+export const getInvoicesPerYear = (invoices, year) => {
+  return invoices.filter(invoice => {
+    const yearInvoice = moment(invoice.monthAt, "MMYYYY").format("YYYY")
+    if (yearInvoice === year) return invoice
+  })
+}
+
 export const getConcept = (concepts, id) => concepts.find(concept => concept.id === id)?.name
 
 export const listConcepts = ({ concepts }) => concepts?.map(concept => ({ label: concept.name, value: concept.id }))

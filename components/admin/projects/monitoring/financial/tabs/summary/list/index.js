@@ -4,52 +4,16 @@ import { ListSummaryConcept} from "./concepts"
 import { ListSummaryComparative } from "./comparative"
 import { ListSummaryInvestment } from "./investment"
 import { AdminSubmissionContext } from "../../../../../../../../contexts/admin/submissions/show"
-import moment from "moment"
-import { getConcept } from "../../../helpers"
+import { getInvoicesPerYear, getConceptsPerMonths, getConceptsPerTrimestre } from "../../../helpers"
 
 export function ListSummary({ view, year }) {
   const { data: { Submission } } = useContext(AdminSubmissionContext)
   const [state, setState] = useState(false)
 
-  const invoicesPerYear = Submission?.invoices.filter(invoice => {
-    const yearInvoice = moment(invoice.monthAt, "MMYYYY").format("YYYY")
-    if (yearInvoice === year) return invoice
-  })
-
-  const concepts = _.intersection(invoicesPerYear.map(invoice => invoice.concept))
-
-  const dataSource = concepts.map(concept => {
-    const amountMonths = {}
-    const nameConcept = getConcept(Submission?.concepts, concept)
-    const months = moment.months()
-
-    months.forEach(month => {
-      amountMonths[month] = invoicesPerYear.filter(invoice => {
-        const monthAt = moment(invoice.monthAt, "MMYYYY").format("MMMM")
-        if (invoice.concept === concept && monthAt === month) return invoice
-      }).reduce((prev, current) => prev + current.amount, 0)
-    })
-
-    const total = Object.values(amountMonths).reduce((prev, current) => prev + current, 0)
-    return { key: concept, concept: nameConcept, ...amountMonths, total }
-  })
-
-
-  const dataSourceTrimestre = concepts.map(concept => {
-    const amountTrimestre = {}
-    const nameConcept = getConcept(Submission?.concepts, concept)
-
-    for (let i = 1; i <= 4; i++) {
-      const sufix = (i === 1 || i === 3) ? 'er' : i === 2 ? "do" : "to"
-      amountTrimestre[`${i}${sufix}`] = invoicesPerYear.filter(invoice => {
-        const quarter = moment(invoice.monthAt, "MMYYYY").quarter()
-        if (invoice.concept === concept && quarter === i) return invoice
-      }).reduce((prev, current) => prev + current.amount, 0)
-    }
-
-    const total = Object.values(amountTrimestre).reduce((prev, current) => prev + current, 0)
-    return { key: concept, concept: nameConcept, ...amountTrimestre, total }
-  })
+  const invoicesPerYear = getInvoicesPerYear(Submission?.invoices, year)
+  const onlyConcepts = _.intersection(invoicesPerYear.map(invoice => invoice.concept))
+  const conceptsPerMonths = getConceptsPerMonths(Submission, onlyConcepts, invoicesPerYear)
+  const conceptsPerTrimestre = getConceptsPerTrimestre(Submission, onlyConcepts, invoicesPerYear)
 
   const onChange = () => {
     setState(true)
@@ -118,9 +82,9 @@ export function ListSummary({ view, year }) {
   return (
     <>
       {view === "Mensual" ? (
-        <ListSummaryConcept year={year} onChange={onChange} dataSource={dataSource}/>
+        <ListSummaryConcept year={year} onChange={onChange} dataSource={conceptsPerMonths}/>
       ) : (
-        <ListSummaryComparative year={year} onChange={onChange} dataSourceTrimestre={dataSourceTrimestre}/>
+        <ListSummaryComparative year={year} onChange={onChange} dataSource={conceptsPerTrimestre}/>
       )}
 
       <Modal
