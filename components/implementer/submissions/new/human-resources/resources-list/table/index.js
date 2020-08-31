@@ -1,4 +1,4 @@
-import { withForm } from "../../../../../../../helpers/withForm"
+import { withForm, toFileList } from "../../../../../../../helpers"
 import { Alert, Col, Form, Input, Row, Radio } from "antd"
 import { UserOutlined } from "@ant-design/icons"
 import {
@@ -8,7 +8,6 @@ import {
 } from "../../../../../../shared"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 import {
-  benefits,
   contractTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { HumanResourcesColumns } from "./form-columns"
@@ -50,6 +49,19 @@ function HumanResourcesTable({ data, onChange }) {
 
   const readOnly = data?.Submission?.state === "PROJECT"
 
+  const onDoneFile = (index, files, onFilesChange) => {
+    const documents = files?.map(el => {
+      return { name: el.name, url: el.url }
+    })
+
+    onFilesChange(index, documents, "documents")
+  }
+
+  const onRemoveFile = (file, oldDocuments, index, onFilesChange) => {
+    const documents = oldDocuments.filter(document => document.url !== file.url)
+    onFilesChange(index, documents, "documents")
+  }
+
   return (
     <Form
       name="human-resources"
@@ -66,7 +78,7 @@ function HumanResourcesTable({ data, onChange }) {
             onChange={onConceptsChange}
             isAddDisabled
             defaultValue={humanResources}>
-            {({items, updateItem}) =>
+            {({items, updateItem, onFilesChange}) =>
               <div style={{overflowX: "auto"}}>
                 <div style={{width: "1650px"}}>
                   <HumanResourcesColumns />
@@ -169,11 +181,10 @@ function HumanResourcesTable({ data, onChange }) {
                         <Input
                           addonBefore="%"
                           id="taxes"
-                          disabled={item.contractType === "EMPLOYEE"}
+                          disabled={readOnly || item.contractType === "EMPLOYEE"}
                           name="taxes"
                           onChange={updateItem(index)}
                           defaultValue={item.taxes}
-                          disabled={readOnly}
                           type="number" />
                       </Col>
                       <Col flex="150px">
@@ -184,7 +195,6 @@ function HumanResourcesTable({ data, onChange }) {
                           disabled
                           onChange={updateItem(index)}
                           defaultValue={item.total}
-                          disabled={readOnly}
                           value={
                             Number(item.salary) + ((Number(item.taxes) * Number(item.salary)) / 100)
                           }
@@ -196,7 +206,16 @@ function HumanResourcesTable({ data, onChange }) {
                           body="Adjunta el CV y el documento que certifica los
                           estudios de esta persona"
                           title="Experiencia y profesión"
-                          small />
+                          small
+                          fileList={toFileList(item.documents) || []}
+                          onRemoveFile={file =>
+                            onRemoveFile(file, item.documents, index, onFilesChange)
+                          }
+                          onChange={files =>
+                            onDoneFile(index, files, onFilesChange)
+                          }
+                          maxFile={2}
+                          accept={"application/pdf"} />
                       </Col>
                     </Row>
                   )}

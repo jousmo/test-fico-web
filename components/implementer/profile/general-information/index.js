@@ -9,6 +9,8 @@ import { GeneralInformationForm } from "./form"
 export function GeneralInformation() {
   const {
     updateGeneralInformation,
+    removeDocument,
+    addDocument,
     loading,
     error,
     data,
@@ -29,6 +31,8 @@ export function GeneralInformation() {
         error={error}
         onChange={onChange}
         isLoading={loading}
+        addDocument={addDocument}
+        removeDocument={removeDocument}
         isGovernment={isGovernment()} />
     </Section>
   )

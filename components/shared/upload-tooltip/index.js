@@ -1,14 +1,16 @@
 import { Popover, Button } from "antd"
-import { UploadButton } from ".."
+import { UploadButtonForm } from ".."
 import { PaperClipOutlined, UploadOutlined } from "@ant-design/icons"
 
-export function UploadTooltip({ body, small, title, readOnly }){
+export function UploadTooltip({ body, small, title, readOnly, ...props }){
   const content = (
     <div style={{width: "300px"}}>
       <p>
         {body}
       </p>
-      <UploadButton disabled={readOnly}>Adjuntar documento</UploadButton>
+      <UploadButtonForm disabled={readOnly} {...props}>
+        Adjuntar documento
+      </UploadButtonForm>
     </div>
   )
 

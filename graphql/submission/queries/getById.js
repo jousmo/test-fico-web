@@ -83,6 +83,11 @@ export const getById = gql`
           date
           amount
         }
+        documents {
+          id
+          name
+          url
+        }
       }
       developmentObjectiveIndicators {
         type
@@ -137,6 +142,11 @@ export const getById = gql`
           benefits
           taxes
           total
+          documents {
+            id
+            name
+            url
+          }
         }
       }
       state

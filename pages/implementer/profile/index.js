@@ -11,10 +11,11 @@ import {
   data as contextData,
   ImplementerProfileContext
 } from "../../../contexts/implementer/profile"
-import { useState, useCallback, useMemo } from "react"
+import { useEffect, useState, useCallback, useMemo } from "react"
 import { withApollo } from "../../../helpers/withApollo"
 import { implementer } from "../../../graphql"
 import { useMutation, useQuery } from "@apollo/react-hooks"
+import { success, warning, loadingAlert } from "../../../helpers/alert"
 
 function Profile({ client }) {
   const [state, setState] = useState({ generalInformation: {} })
@@ -25,42 +26,83 @@ function Profile({ client }) {
   /* TODO: Update to use implementer id from application session */
   const { loading, error, data } = useQuery(implementer.queries.getById, {
     client: client,
-    variables: { id: "f3f13a59-337e-4989-b010-d7713a53c3c2" }
+    variables: { id: "db183c7b-b8f9-46e1-a401-13d8299956d0" }
   })
+
+  useEffect(() => {
+    if (data?.Implementer?.documents) {
+      setState({
+        generalInformation: { documents: [ ...data?.Implementer?.documents ]}
+      })
+    }
+  }, [data?.Implementer])
 
   const updateGeneralInformation = useCallback(generalInformation => {
     const newGeneralInformation = { ...state.generalInformation, ...generalInformation }
-
     setState({...state, generalInformation: newGeneralInformation})
-  })
+  }, [state])
 
   const save = useCallback(async () => {
+    const saving = loadingAlert()
     try {
-      const updatedProfile = await updateProfile({
+      await updateProfile({
         variables: {
-          data: {...state.generalInformation},
-          id: "f3f13a59-337e-4989-b010-d7713a53c3c2"
+          data: { ...state.generalInformation },
+          id: "db183c7b-b8f9-46e1-a401-13d8299956d0"
         }
       })
-
-      /* TODO: Show feedback to the user */
+      success()
     }
     catch(e) {
+      warning()
       console.error(e)
     }
-  })
+    saving()
+  }, [state, updateProfile])
 
   const isGovernment = useCallback(() => {
     return state.generalInformation.type === "GOVERNMENT" ||
       data?.Implementer?.type === "GOVERNMENT"
-  })
+  }, [state])
+
+  const addDocument = useCallback((file, type) => {
+    const { name, url } = file
+    const doc = { name, url, type }
+
+    const documents = Array.from(state.generalInformation.documents) || []
+    const index = documents?.findIndex(doc => doc.type === type)
+
+    if(index >= 0){
+      documents[index] = doc
+    } else {
+      documents.push(doc)
+    }
+
+    updateGeneralInformation({ documents })
+  }, [state, updateGeneralInformation])
+
+  const removeDocument = useCallback(type => {
+    let documents = Array.from(state.generalInformation.documents) || []
+    const index = documents?.findIndex(doc => doc.type === type)
+
+    if (index >= 0){
+      if (documents.length === 1){
+        documents = []
+      } else {
+        documents.splice(index, 1)
+      }
+      updateGeneralInformation({ documents })
+    }
+  }, [state, updateGeneralInformation])
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
-    save,
+    removeDocument,
     isGovernment,
+    addDocument,
     loading,
     error,
+    save,
     data
   }), [state, loading])
 

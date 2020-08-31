@@ -1,24 +1,21 @@
 import { List, Tooltip } from "antd"
 import { QuestionCircleFilled } from "@ant-design/icons"
-import { UploadButtonForm } from "../../../../shared"
+import { UploadButton } from "../../../../../shared"
 
-export function FileInputForm({label, helpText, ...props}) {
+export function FileInput({label, helpText, ...props}) {
   return (
     <List.Item
       actions={[
-        <UploadButtonForm
-          key="UploadButton"
-          maxFile={1}
-          {...props}>
+        <UploadButton key="Upload-Button" {...props}>
           Subir documento
-        </UploadButtonForm>
+        </UploadButton>
       ]}
       style={{borderBottom: 0}}>
       { helpText ?
         <Tooltip title={helpText}>
           {label} <QuestionCircleFilled style={{fontSize: "12px"}} />
         </Tooltip>
-        : label }
+      : label }
     </List.Item>
   )
 }

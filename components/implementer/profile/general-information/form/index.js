@@ -6,17 +6,18 @@ import {
   Input,
   Skeleton,
   Alert
-} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { SelectField, UploadButton, Visibility } from "../../../../shared";
-import { implementer } from "../../../../../helpers/selectOptions";
+} from "antd"
+import { SelectField, UploadButtonForm, Visibility } from "../../../../shared"
+import { implementer } from "../../../../../helpers/selectOptions"
 
 export function GeneralInformationForm({
   data,
   isLoading,
   onChange,
   error,
-  isGovernment
+  isGovernment,
+  addDocument,
+  removeDocument
 }) {
   if(isLoading) {
     return <Skeleton active />
@@ -31,6 +32,23 @@ export function GeneralInformationForm({
         type="error"
         showIcon />
     )
+  }
+
+  const onDoneFile = files => {
+    addDocument(files[0], "DONATARY")
+  }
+
+  const onRemoveFile = () => {
+    removeDocument("DONATARY")
+  }
+
+  const documents = []
+  const donatary = data?.Implementer?.documents?.find(doc => (
+    doc.type === "DONATARY"
+  ))
+  if (donatary){
+    const { id, ...donataryDoc } = donatary
+    documents.push({ uid: id, status: "done", ...donataryDoc })
   }
 
   return (
@@ -172,9 +190,15 @@ export function GeneralInformationForm({
         <Visibility visible={!isGovernment}>
           <Col span={12}>
             <Form.Item
-              style={{display: "inline"}}
               label="Oficio de donataria">
-              <UploadButton>Subir oficio</UploadButton>
+              <UploadButtonForm
+                fileList={documents}
+                onRemoveFile={onRemoveFile}
+                onChange={onDoneFile}
+                maxFile={1}
+                accept={"application/pdf"}>
+                Subir oficio
+              </UploadButtonForm>
             </Form.Item>
           </Col>
         </Visibility>

@@ -16,6 +16,7 @@ import { submission } from "../../../../graphql/submission"
 import { useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers/withApollo"
+import { PageContext } from "../../../../contexts/page"
 
 function Project({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -30,15 +31,18 @@ function Project({ client, query }) {
   }), [loading])
 
   return (
-    <AdminSubmissionContext.Provider value={injectActions}>
-      <Layout subheader={<ProjectSummary type="implementer" />}>
-        <Government />
-        <GeneralInformation />
-        <SignedAgreement />
-        <ProjectMonitoring />
-        <ProjectClosure />
-      </Layout>
-    </AdminSubmissionContext.Provider>
+    <PageContext.Provider
+      value={{ type: "implementer", submenu: "projects" }}>
+      <AdminSubmissionContext.Provider value={injectActions}>
+        <Layout subheader={<ProjectSummary type="implementer" />}>
+          <Government />
+          <GeneralInformation />
+          <SignedAgreement />
+          <ProjectMonitoring />
+          <ProjectClosure />
+        </Layout>
+      </AdminSubmissionContext.Provider>
+    </PageContext.Provider>
   )
 }
 
