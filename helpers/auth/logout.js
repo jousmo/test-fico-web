@@ -6,7 +6,7 @@ export function Logout(router) {
   auth.signOut().then(() => {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
-    router.push("/login")
+    router.push("/")
     loggingOut()
   }).catch(error => {
     message.error("Error al cerrar sesión")

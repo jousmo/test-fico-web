@@ -14,7 +14,7 @@ function UserHeader(){
       setUserState(claims.name)
     }
     catch(e){
-      router.push("/login")
+      router.push("/")
       message.warn("Favor de iniciar sesión")
     }
   }, [])

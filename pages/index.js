@@ -1,10 +1,43 @@
-import { Typography } from "antd"
-const { Title } = Typography
+import { useRouter } from "next/router"
+import { LoginContainer } from "../components/auth/login"
+import { AuthSubmissionContext } from "../contexts/auth"
+import { useMemo, useEffect } from "react"
+import { withApollo } from "../helpers/withApollo"
+import { Authenticate } from "../helpers/auth/login"
 
-export default function Index() {
+function Login() {
+  const router = useRouter()
+
+  const login = async ({ email, password }) => {
+    Authenticate(email, password, router)
+  }
+
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+
+    if (!user){
+      return
+    }
+
+    const {
+      expirationTime,
+      claims: { role }
+    } = JSON.parse(user)
+
+    if (new Date(expirationTime) > new Date()){
+      router.push(`/${role.toLowerCase()}/submissions`)
+    }
+  }, [])
+
+  const injectActions = useMemo(() => ({
+    login
+  }), [])
+
   return (
-    <div>
-      <Title>Homepage</Title>
-    </div>
+    <AuthSubmissionContext.Provider value={injectActions}>
+      <LoginContainer />
+    </AuthSubmissionContext.Provider>
   )
 }
+
+export default withApollo(Login)
