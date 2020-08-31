@@ -125,7 +125,8 @@ export const getById = gql`
         measurementUnit
         unitCost
         totalUnits
-        monthlyDistribution
+        monthlyDistribution,
+        budgeted
         investmentDistributions {
           name
           type

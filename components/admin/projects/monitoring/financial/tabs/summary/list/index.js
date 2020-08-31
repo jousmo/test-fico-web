@@ -4,23 +4,29 @@ import { ListSummaryConcept} from "./concepts"
 import { ListSummaryComparative } from "./comparative"
 import { ListSummaryInvestment } from "./investment"
 import { AdminSubmissionContext } from "../../../../../../../../contexts/admin/submissions/show"
-import { getInvoicesPerYearOrSearch, getConceptsPerMonths, getConceptsPerTrimestre } from "../../../helpers"
+import {
+  getInvoicesPerYearOrSearch,
+  getConceptsPerMonths,
+  getConceptsPerTrimestre,
+  getConceptsSummaryPerMonth
+} from "../../../helpers"
 
 export function ListSummary({ view, year, search }) {
   const { data: { Submission } } = useContext(AdminSubmissionContext)
-  const [state, setState] = useState({ showModal: false })
+  const [state, setState] = useState({ showModal: false, summaryConcepts: [] })
 
   const invoicesPerYearOrSearch = getInvoicesPerYearOrSearch(Submission, year, search)
   const onlyConcepts = _.intersection(invoicesPerYearOrSearch.map(invoice => invoice.concept))
   const conceptsPerMonths = getConceptsPerMonths(Submission, onlyConcepts, invoicesPerYearOrSearch)
   const conceptsPerTrimestre = getConceptsPerTrimestre(Submission, onlyConcepts, invoicesPerYearOrSearch)
 
-  const onChange = () => {
-    setState({ showModal: true })
+  const onChange = (a, b, { field }) => {
+    const summaryConcepts = getConceptsSummaryPerMonth(Submission, onlyConcepts, invoicesPerYearOrSearch, field)
+    setState({ ...state, showModal: true, summaryConcepts })
   }
 
   const onCancel = () => {
-    setState({ showModal: false })
+    setState({ ...state, showModal: false, summaryConcepts: [] })
   }
 
   const renderStatistics = () => (
@@ -98,7 +104,7 @@ export function ListSummary({ view, year, search }) {
         width={1400}
         onCancel={onCancel}
         footer={renderStatistics()}>
-        <ListSummaryInvestment />
+        <ListSummaryInvestment dataSource={state.summaryConcepts} />
       </Modal>
     </>
   )

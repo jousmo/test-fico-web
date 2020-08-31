@@ -1,20 +1,7 @@
 import { Empty, Table } from "antd"
 import { cellFormat } from "../../../../../../../../helpers"
 
-export function ListSummaryInvestment () {
-  const dataSource = [
-    {
-      key: "1",
-      concepto: "Telefono/Internet",
-      presupuesto: 1368,
-      ejercido: 1368,
-      ficosec: 1368,
-      implementadora: 1368,
-      coinversionista1: 1368,
-      coinversionista2: 1368,
-      remanente: 1368
-    }
-  ]
+export function ListSummaryInvestment ({ dataSource }) {
   return (
     <Table
       dataSource={dataSource}
@@ -23,41 +10,41 @@ export function ListSummaryInvestment () {
       pagination={false}>
       <Table.Column
         width={1}
-        dataIndex="concepto"
+        dataIndex="concept"
         title="Concepto" />
       <Table.Column
         width={1}
-        dataIndex="presupuesto"
+        dataIndex="budgeted"
         title="Presupuesto"
         render={text => cellFormat.money(text)} />
       <Table.Column
         width={1}
-        dataIndex="ejercido"
+        dataIndex="amount"
         title="Ejercido"
         render={text => cellFormat.money(text)} />
       <Table.Column
         width={1}
-        dataIndex="ficosec"
+        dataIndex="ficosecPayment"
         title="Ficosec"
         render={text => cellFormat.money(text)} />
       <Table.Column
         width={1}
-        dataIndex="implementadora"
+        dataIndex="implementerPayment"
         title="Implementadora"
         render={text => cellFormat.money(text)} />
       <Table.Column
         width={1}
-        dataIndex="coinversionista1"
+        dataIndex="investmentOnePayment"
         title="Coinversionista 1"
         render={text => cellFormat.money(text)} />
       <Table.Column
         width={1}
-        dataIndex="coinversionista2"
+        dataIndex="investmentTwoPayment"
         title="Coinversionista 2"
         render={text => cellFormat.money(text)} />
       <Table.Column
         width={1}
-        dataIndex="remanente"
+        dataIndex="diference"
         title="remanente"
         render={text => cellFormat.money(text)} />
     </Table>
