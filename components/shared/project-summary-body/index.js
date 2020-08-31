@@ -19,7 +19,7 @@ function SummaryBody({ data, extra }) {
     name,
     region,
     status,
-    concepts,
+    budgeted,
     implementer,
     description,
     strategicAxis,
@@ -27,19 +27,15 @@ function SummaryBody({ data, extra }) {
     agreementNumber,
   } = data
 
-  const totalBudget = concepts?.reduce((result, concept) => (
-    result + (concept.unitCost * concept.totalUnits)
-  ), 0)
-
   return (
     <Descriptions
-      column={5}
+      column={6}
       size="small"
       title={<Typography.Title level={3}>{name}</Typography.Title>}>
-      <Descriptions.Item label="Implementadora" span={5}>
+      <Descriptions.Item label="Implementadora" span={6}>
         {implementer?.name}
       </Descriptions.Item>
-      <Descriptions.Item span={5}>
+      <Descriptions.Item span={6}>
         <StatusTag options={projectStatusOptions} value={status} />
       </Descriptions.Item>
       <Descriptions.Item label="Acuerdo">
@@ -58,10 +54,13 @@ function SummaryBody({ data, extra }) {
       <Descriptions.Item label="Eje">
         {getReadableValue(strategicAxisTypes, strategicAxis)}
       </Descriptions.Item>
-      <Descriptions.Item label="Monto autorizado">
-        {numeral(totalBudget).format("$0,0.00")}
+      <Descriptions.Item
+        label="Monto autorizado"
+        span={2}
+        style={{ paddingLeft: "50px" }}>
+        {numeral(budgeted).format("$0,0.00")}
       </Descriptions.Item>
-      <Descriptions.Item span={5}>
+      <Descriptions.Item span={6}>
         {description}
       </Descriptions.Item>
       {extra}
