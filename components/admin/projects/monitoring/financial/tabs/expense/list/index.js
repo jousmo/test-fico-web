@@ -2,13 +2,11 @@ import { Table, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined } from "@ant-design/icons"
 import { DateField, SelectField } from "../../../../../../../shared"
 import { cellFormat } from "../../../../../../../../helpers"
-import { getUrlPdf } from "../form/helpers"
+import { getUrlPdf, monthYearConvert, getConcept } from "../../../helpers"
 import moment from "moment"
 moment.locale("es")
 
-export function ListExpense ({ dataSource, onEdit }) {
-  const { url } = getUrlPdf(dataSource)
-
+export function ListExpense ({ dataSource, concepts, onEdit }) {
   return (
     <Table
       rowKey={a => a.id}
@@ -25,7 +23,7 @@ export function ListExpense ({ dataSource, onEdit }) {
         width={1}
         dataIndex="monthAt"
         title="Mes"
-        render={text => <SelectField value={text} disabled />} />
+        render={text => <SelectField value={monthYearConvert(text)} disabled />} />
       <Table.Column
         width={1}
         dataIndex="issuedAt"
@@ -59,7 +57,7 @@ export function ListExpense ({ dataSource, onEdit }) {
         width={1}
         dataIndex="concept"
         title="ID Concepto"
-        render={text => <SelectField value={text} disabled />} />
+        render={text => <SelectField value={getConcept(concepts, text)} disabled />} />
       <Table.Column
         width={1}
         dataIndex="percentage"
@@ -74,7 +72,7 @@ export function ListExpense ({ dataSource, onEdit }) {
             icon={<EditOutlined />}
             onClick={() => onEdit(record, index)} />
           <Button
-            href={url}
+            href={getUrlPdf(dataSource)}
             target="_blank"
             type="primary" shape="circle"
             icon={<EyeOutlined />} />

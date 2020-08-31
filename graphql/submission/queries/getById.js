@@ -113,6 +113,7 @@ export const getById = gql`
         products
       }
       concepts {
+        id
         name
         region
         type

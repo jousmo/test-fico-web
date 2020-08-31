@@ -1,4 +1,8 @@
 import convert from "xml-js"
+import Moment from "moment"
+import { extendMoment } from "moment-range"
+const moment = extendMoment(Moment)
+moment.locale("es")
 
 export const INIT_STATE = {
   amount: 0,
@@ -19,6 +23,22 @@ export const RESET_XML_DATA = {
   amount: 0,
   percentage: 0
 }
+
+export const getConcept = (concepts, id) => concepts.find(concept => concept.id === id)?.name
+
+export const listConcepts = ({ concepts }) => concepts?.map(concept => ({ label: concept.name, value: concept.id }))
+
+export const monthYearConvert = date => _.capitalize(moment(date, "MMYYYY").format("MMMM"))
+
+export const projectMonths = ({ startDate, endDate }) => Array
+  .from(
+    moment
+      .range(
+        moment(startDate) || moment(),
+        moment(endDate) || moment())
+      .by("month")
+  )
+  .map(r => ({ label: _.capitalize(r.format("MMMM YYYY")), value: r.format("MMYYYY")}))
 
 export const readXmlFile = async (documents, budgeted) => {
   const document = documents?.find(el => el.type === "XML")
@@ -96,5 +116,5 @@ export const validateDocuments = (formData, { budgeted, evidenced, difference },
 export const getUrlPdf = dataSource => {
   return dataSource?.reduce((prev, current) => {
     return current.documents.find(el => el.type === "PDF")
-  }, {})
+  }, {})?.url
 }

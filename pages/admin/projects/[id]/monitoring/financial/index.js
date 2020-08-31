@@ -23,7 +23,7 @@ function FinancialMonitoringPage({ client, query }) {
       refetchQueries: [
         {
           query: submission.queries.getById,
-          variables: { id: router.query.id }
+          variables: { id: query.id }
         }
       ]
     }
@@ -36,7 +36,7 @@ function FinancialMonitoringPage({ client, query }) {
       refetchQueries: [
         {
           query: submission.queries.getById,
-          variables: { id: router.query.id }
+          variables: { id: query.id }
         }
       ]
     }

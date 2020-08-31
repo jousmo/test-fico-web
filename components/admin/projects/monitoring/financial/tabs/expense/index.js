@@ -89,6 +89,7 @@ export function Expense () {
                 className="fico expense-modal-form"/>
               <ListExpense
                 dataSource={items}
+                concepts={Submission?.concepts}
                 onEdit={onEdit}/>
             </>
           }
