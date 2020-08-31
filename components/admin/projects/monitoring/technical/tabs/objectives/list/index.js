@@ -1,4 +1,5 @@
 import { Button, Table } from "antd"
+import { Tooltip } from "../../../../../../../shared"
 import { CheckSquareTwoTone } from "@ant-design/icons/lib"
 import { EditOutlined } from "@ant-design/icons"
 import { decoratedData } from "./data-decorator"
@@ -83,32 +84,59 @@ export function ObjectivesList({ data, dateFilter }) {
         <Table.Column
           dataIndex="level"
           title="Nivel" />
-        <Table.Column title="Resumen narrativo" dataIndex="description" />
+        <Table.Column
+          title="Resumen narrativo"
+          render={text => <Tooltip value={text || ""}/>}
+          sorter={(a, b) => a.description?.localeCompare(b.description)}
+          showSorterTooltip={false}
+          dataIndex="description" />
         <Table.Column
           render={(t, row) => getAppliedAt(row)}
+          sorter={(a, b) =>
+            moment(getReport(a)?.appliedAt) > moment(getReport(b)?.appliedAt)
+          }
+          showSorterTooltip={false}
           title="Realizado" />
         <Table.Column
           dataIndex="title"
+          sorter={(a, b) => a.title?.localeCompare(b.title)}
+          showSorterTooltip={false}
           title="Indicador" />
         <Table.Column
           dataIndex="meansOfVerification"
+          sorter={(a, b) =>
+            a.meansOfVerification?.localeCompare(b.meansOfVerification)
+          }
+          showSorterTooltip={false}
           title="Medio de verificación" />
         <Table.Column
           align="center"
           dataIndex="goal"
+          sorter={(a, b) => (a.goal || 0) - (b.goal || 0)}
+          showSorterTooltip={false}
           title="Meta" />
         <Table.Column
           align="center"
           render={(t, row) => getReport(row)?.completed || 0}
           title="Real"
+          sorter={(a, b) =>
+            (getReport(a)?.completed || 0) - (getReport(b)?.completed || 0)
+          }
+          showSorterTooltip={false}
           width={90} />
         <Table.Column
           align="center"
           render={(t, row) => `${getReport(row)?.compliance || 0}%`}
+          sorter={(a, b) =>
+            (getReport(a)?.compliance || 0) - (getReport(b)?.compliance || 0)
+          }
+          showSorterTooltip={false}
           title="Cumplimiento" />
         <Table.Column
           align="center"
           render={(t, row) => getParticipants(row)}
+          sorter={(a, b) => getParticipants(a) - getParticipants(b)}
+          showSorterTooltip={false}
           title="Participantes" />
         <Table.Column
           render={(t, row) =>
