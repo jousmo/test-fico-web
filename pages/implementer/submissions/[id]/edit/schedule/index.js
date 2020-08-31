@@ -5,7 +5,7 @@ import {
 } from "../../../../../../contexts/implementer/submissions/new"
 import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
-import { useState, useMemo } from "react"
+import { useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
 import {
@@ -14,11 +14,6 @@ import {
 } from "../../../../../../components/implementer/submissions/new/schedule"
 
 function Schedule({ client, query }) {
-  const [state] = useState({
-    schedule: {},
-    dirty: false
-  })
-
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: query.id }
@@ -28,7 +23,7 @@ function Schedule({ client, query }) {
     loading,
     error,
     data
-  }), [state, loading])
+  }), [loading])
 
   return (
     <PageContext.Provider value={pageData({ step: 3 })}>
