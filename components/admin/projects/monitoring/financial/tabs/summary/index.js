@@ -11,7 +11,8 @@ export function SummaryConcept () {
   const { data: { Submission } } = useContext(AdminSubmissionContext)
   const [state, setState] = useState({
     year: projectInitYear(Submission),
-    checked: "Mensual"
+    checked: "Mensual",
+    search: ""
   })
 
   const onChange = value => {
@@ -20,10 +21,7 @@ export function SummaryConcept () {
   }
 
   const onChangeYear = ({ currentTarget }) => {
-    setState({
-      ...state,
-      year: currentTarget.value
-    })
+    setState({ ...state, year: currentTarget.value })
   }
 
   const filterHeader = () => (
@@ -41,14 +39,21 @@ export function SummaryConcept () {
     </>
   )
 
+  const onSearch = value => {
+    setState({ ...state, search: value })
+  }
+
   return (
     <>
-      <SearchFieldPrimary />
+      <SearchFieldPrimary onSearch={onSearch} />
       <Section
         style={{padding: 0, margin: "1rem 0"}}
         title={state.checked === "Mensual" ? "Conceptos" : "Resumen comparativo"}
         extra={filterHeader()}>
-        <ListSummary view={state.checked} year={state.year} />
+        <ListSummary
+          view={state.checked}
+          year={state.year}
+          search={state.search} />
       </Section>
     </>
   )

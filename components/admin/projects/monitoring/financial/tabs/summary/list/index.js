@@ -4,23 +4,23 @@ import { ListSummaryConcept} from "./concepts"
 import { ListSummaryComparative } from "./comparative"
 import { ListSummaryInvestment } from "./investment"
 import { AdminSubmissionContext } from "../../../../../../../../contexts/admin/submissions/show"
-import { getInvoicesPerYear, getConceptsPerMonths, getConceptsPerTrimestre } from "../../../helpers"
+import { getInvoicesPerYearOrSearch, getConceptsPerMonths, getConceptsPerTrimestre } from "../../../helpers"
 
-export function ListSummary({ view, year }) {
+export function ListSummary({ view, year, search }) {
   const { data: { Submission } } = useContext(AdminSubmissionContext)
-  const [state, setState] = useState(false)
+  const [state, setState] = useState({ showModal: false })
 
-  const invoicesPerYear = getInvoicesPerYear(Submission?.invoices, year)
-  const onlyConcepts = _.intersection(invoicesPerYear.map(invoice => invoice.concept))
-  const conceptsPerMonths = getConceptsPerMonths(Submission, onlyConcepts, invoicesPerYear)
-  const conceptsPerTrimestre = getConceptsPerTrimestre(Submission, onlyConcepts, invoicesPerYear)
+  const invoicesPerYearOrSearch = getInvoicesPerYearOrSearch(Submission, year, search)
+  const onlyConcepts = _.intersection(invoicesPerYearOrSearch.map(invoice => invoice.concept))
+  const conceptsPerMonths = getConceptsPerMonths(Submission, onlyConcepts, invoicesPerYearOrSearch)
+  const conceptsPerTrimestre = getConceptsPerTrimestre(Submission, onlyConcepts, invoicesPerYearOrSearch)
 
   const onChange = () => {
-    setState(true)
+    setState({ showModal: true })
   }
 
   const onCancel = () => {
-    setState(false)
+    setState({ showModal: false })
   }
 
   const renderStatistics = () => (
@@ -82,15 +82,19 @@ export function ListSummary({ view, year }) {
   return (
     <>
       {view === "Mensual" ? (
-        <ListSummaryConcept year={year} onChange={onChange} dataSource={conceptsPerMonths}/>
+        <ListSummaryConcept
+          onChange={onChange}
+          dataSource={conceptsPerMonths } />
       ) : (
-        <ListSummaryComparative year={year} onChange={onChange} dataSource={conceptsPerTrimestre}/>
+        <ListSummaryComparative
+          onChange={onChange}
+          dataSource={conceptsPerTrimestre} />
       )}
 
       <Modal
         className="fico investment-modal"
         title="Resumen de inversión Enero 2020"
-        visible={state}
+        visible={state.showModal}
         width={1400}
         onCancel={onCancel}
         footer={renderStatistics()}>
