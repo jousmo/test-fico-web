@@ -14,7 +14,7 @@ import {
 
 export function ListSummary({ view, year, search }) {
   const { data: { Submission } } = useContext(AdminSubmissionContext)
-  const [state, setState] = useState({ showModal: false, summaryConcepts: [], totalsSummaryConcepts: {} })
+  const [state, setState] = useState({ showModal: false, title: "", summaryConcepts: [], totalsSummaryConcepts: {} })
 
   const invoicesPerYearOrSearch = getInvoicesPerYearOrSearch(Submission, year, search)
   const onlyConcepts = _.intersection(invoicesPerYearOrSearch.map(invoice => invoice.concept))
@@ -26,13 +26,12 @@ export function ListSummary({ view, year, search }) {
       summaryConcepts,
       totalsSummaryConcepts
     } = getConceptsSummaryPerMonth(Submission, onlyConcepts, invoicesPerYearOrSearch, field)
-
-    debugger
-    setState({ ...state, showModal: true, summaryConcepts, totalsSummaryConcepts })
+    const title = `${_.capitalize(field)} ${year}`
+    setState({ showModal: true, title, summaryConcepts, totalsSummaryConcepts })
   }
 
   const onCancel = () => {
-    setState({ ...state, showModal: false, summaryConcepts: [], totalsSummaryConcepts: {} })
+    setState({ showModal: false, title: "", summaryConcepts: [], totalsSummaryConcepts: {} })
   }
 
   return (
@@ -49,7 +48,7 @@ export function ListSummary({ view, year, search }) {
 
       <Modal
         className="fico investment-modal"
-        title="Resumen de inversión Enero 2020"
+        title={`Resumen de inversión: ${state.title}`}
         visible={state.showModal}
         width={1400}
         onCancel={onCancel}
