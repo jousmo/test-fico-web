@@ -4,7 +4,7 @@ import { ListSummaryConcept} from "./concepts"
 import { ListSummaryComparative } from "./comparative"
 import { ListSummaryInvestment } from "./investment"
 
-export function ListSummary({ view }) {
+export function ListSummary({ view, year }) {
   const [state, setState] = useState(false)
 
   const onChange = () => {
@@ -74,9 +74,9 @@ export function ListSummary({ view }) {
   return (
     <>
       {view === "Mensual" ? (
-        <ListSummaryConcept onChange={onChange} />
+        <ListSummaryConcept year={year} onChange={onChange} />
       ) : (
-        <ListSummaryComparative onChange={onChange} />
+        <ListSummaryComparative year={year} onChange={onChange} />
       )}
 
       <Modal
