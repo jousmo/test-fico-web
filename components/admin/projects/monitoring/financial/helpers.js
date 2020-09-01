@@ -24,14 +24,57 @@ export const RESET_XML_DATA = {
   percentage: 0
 }
 
-export const getConceptsPerTrimestre = (Submission, concepts, invoicesPerYear) => {
+export const getConceptsSummaryPerMonth = (Submission, concepts, invoicesPerYearOrSearch, field) => {
+  const summaryConcepts = concepts.map(concept => {
+    const nameConcept = getConcept(Submission?.concepts, concept)
+    const budgeted = getConceptBudget(Submission?.concepts, concept)
+
+    const filter = invoicesPerYearOrSearch.filter(invoice => {
+      const monthAt = moment(invoice.monthAt, "MMYYYY").format("MMMM")
+      if (invoice.concept === concept && monthAt === field) return invoice
+    }).reduce((prev, current) => {
+        return {
+          amount: (prev.amount || 0) + current.amount,
+          ficosecPayment: (prev.ficosecPayment || 0) + current.ficosecPayment,
+          implementerPayment: (prev.implementerPayment || 0) + current.implementerPayment,
+          investmentOnePayment: (prev.investmentOnePayment || 0) + current.investmentOnePayment,
+          investmentTwoPayment: (prev.investmentTwoPayment || 0) + current.investmentTwoPayment,
+          diference: budgeted - ((prev.amount || 0) + current.amount)
+        }
+      }, {})
+
+    return { key: concept, concept: nameConcept, budgeted, ...filter }
+  })
+
+  const totalsSummaryConcepts = summaryConcepts.reduce((prev, current) => {
+    return {
+      budgeted: (prev.budgeted || 0) + (current.budgeted || 0) ,
+      amount: (prev.amount || 0) + (current.amount || 0),
+      ficosecPayment: (prev.ficosecPayment || 0) + (current.ficosecPayment || 0),
+      implementerPayment: (prev.implementerPayment || 0) + (current.implementerPayment || 0),
+      investmentOnePayment: (prev.investmentOnePayment || 0) + (current.investmentOnePayment || 0),
+      investmentTwoPayment: (prev.investmentTwoPayment || 0) + (current.investmentTwoPayment || 0),
+      diference: (prev.budgeted || 0) - ((prev.amount || 0) + (current.amount || 0))
+    }
+  }, {})
+
+  return {
+    summaryConcepts,
+    totalsSummaryConcepts: {
+      totalConcepts: summaryConcepts.length,
+      ...totalsSummaryConcepts
+    }
+  }
+}
+
+export const getConceptsPerTrimestre = (Submission, concepts, invoicesPerYearOrSearch) => {
   return concepts.map(concept => {
     const amountTrimestre = {}
     const nameConcept = getConcept(Submission?.concepts, concept)
 
     for (let i = 1; i <= 4; i++) {
       const sufix = (i === 1 || i === 3) ? 'er' : i === 2 ? "do" : "to"
-      amountTrimestre[`${i}${sufix}`] = invoicesPerYear.filter(invoice => {
+      amountTrimestre[`${i}${sufix}`] = invoicesPerYearOrSearch.filter(invoice => {
         const quarter = moment(invoice.monthAt, "MMYYYY").quarter()
         if (invoice.concept === concept && quarter === i) return invoice
       }).reduce((prev, current) => prev + current.amount, 0)
@@ -42,14 +85,14 @@ export const getConceptsPerTrimestre = (Submission, concepts, invoicesPerYear) =
   })
 }
 
-export const getConceptsPerMonths = (Submission, concepts, invoicesPerYear) => {
+export const getConceptsPerMonths = (Submission, concepts, invoicesPerYearOrSearch) => {
   return concepts.map(concept => {
     const amountMonths = {}
     const nameConcept = getConcept(Submission?.concepts, concept)
     const months = moment.months()
 
     months.forEach(month => {
-      amountMonths[month] = invoicesPerYear.filter(invoice => {
+      amountMonths[month] = invoicesPerYearOrSearch.filter(invoice => {
         const monthAt = moment(invoice.monthAt, "MMYYYY").format("MMMM")
         if (invoice.concept === concept && monthAt === month) return invoice
       }).reduce((prev, current) => prev + current.amount, 0)
@@ -72,6 +115,8 @@ export const getInvoicesPerYearOrSearch = ({ invoices, concepts }, year, search)
     }
   })
 }
+
+export const getConceptBudget = (concepts, id) => concepts.find(concept => concept.id === id)?.budgeted
 
 export const getConcept = (concepts, id) => concepts.find(concept => concept.id === id)?.name
 
