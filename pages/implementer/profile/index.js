@@ -4,6 +4,7 @@ import {
   GeneralInformation,
   OrganizationalChart,
   LegalDocuments,
+  BudgetSummary,
   Government,
   Projects
 } from "../../../components/implementer/profile"
@@ -108,6 +109,7 @@ function Profile({ client }) {
         <Layout>
           <GeneralInformation />
           <Projects />
+          <BudgetSummary />
           <LegalDocuments />
           <Visibility visible={!isGovernment()}>
             <Government />
