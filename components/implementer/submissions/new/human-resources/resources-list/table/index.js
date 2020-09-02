@@ -13,7 +13,7 @@ import {
 import { HumanResourcesColumns } from "./form-columns"
 
 function HumanResourcesTable({ data, onChange, hiddenComments }) {
-  const concepts = data?.Submission?.concepts || []
+  const concepts = data?.Submission?.concepts?.map(({ budgeted, ...concept }) => concept) || []
   const humanResources = concepts?.map((concept, index) =>
     concept.type === "HUMAN_RESOURCE" &&
     {
