@@ -24,12 +24,12 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     await updateSubmission({
       variables: { data: { ...humanResources }, id: id }
     })
-    setState({ ...state, isSaving: false })
-    success()
     saving()
+    success()
   }
   catch(e) {
     warning()
     console.error(e)
   }
+  setState({ ...state, isSaving: false })
 }
