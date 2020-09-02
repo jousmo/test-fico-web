@@ -1,9 +1,8 @@
 import { Modal, Form, Row, Col, Input } from "antd"
 import {
-  CompositeField,
-  DateField,
-  DeleteButton,
-  FieldLabel, MultipleTextField
+  FieldLabel,
+  MultipleTextField,
+  MultipleDateRangeField
 } from "../../../shared"
 import { merge } from "lodash"
 import { useEffect } from "react"
@@ -45,10 +44,6 @@ export function ActivityModal({
   const onCancelModal = () => {
     form.resetFields()
     onCancel && onCancel()
-  }
-
-  const onAddMonths = (addNew) => {
-    addNew({ months: undefined })
   }
 
   const commentIndex = `${objectiveIndex}-${edit?.index}`
@@ -242,32 +237,7 @@ export function ActivityModal({
                   Meses de implementación
                 </FieldLabel>
               }>
-              <CompositeField
-                onClickAdd={onAddMonths}
-                addLabel="Agregar fecha">
-                {({ items, updateItem, removeItem }) =>
-                  <div>
-                    { items.map((item, index) =>
-                      <Row
-                        gutter={[10, 8]}
-                        justify="start"
-                        key={`date_${index}`}>
-                        <Col span={24}>
-                          <DateField
-                            defaultValue={item.months}
-                            id="months"
-                            name="months"
-                            onChange={updateItem(index)}
-                            picker="month"
-                            range
-                            style={{width: "90%"}} />
-                          <DeleteButton onClick={removeItem(index)} />
-                        </Col>
-                      </Row>
-                    ) }
-                  </div>
-                }
-              </CompositeField>
+              <MultipleDateRangeField />
             </Form.Item>
           </Col>
           <Col span={24}>
