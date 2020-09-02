@@ -54,7 +54,7 @@ export function ConceptModal({
 
     try {
       let values = await form.getFieldsValue()
-
+      
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
         values = merge(edit, values)
