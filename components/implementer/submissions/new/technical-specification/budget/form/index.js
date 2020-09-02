@@ -21,9 +21,10 @@ function BudgetForm({data, onChange, hiddenComments}) {
 
   const onSave = (addNew, replaceItemAtIndex) => (concept) => {
     if(concept.index !== undefined) {
-      replaceItemAtIndex(concept.index, concept)
-    }
-    else {
+      const index = concept.index
+      const cleanConcept = cleanData(concept)
+      replaceItemAtIndex(index, cleanConcept)
+    } else {
       addNew(concept)
     }
 
@@ -34,6 +35,8 @@ function BudgetForm({data, onChange, hiddenComments}) {
     item.index = index
     setState({ ...state, isModalOpen: true, edit: item })
   }
+
+  const cleanData = concept => _.omit(concept, ['index', 'budgeted'])
 
   const readOnly = data?.Submission?.state === "PROJECT"
 
