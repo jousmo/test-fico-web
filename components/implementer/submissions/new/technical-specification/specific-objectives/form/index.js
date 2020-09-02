@@ -15,7 +15,8 @@ export default function SpecificObjectiveForm({
   data,
   onChange,
   error,
-  isLoading
+  isLoading,
+  hiddenComments
 }) {
   if(isLoading) {
     return <Section><Skeleton active /></Section>
@@ -56,10 +57,12 @@ export default function SpecificObjectiveForm({
                 helpText={<SpecificObjectiveText />}>
                 {`Objetivo específico ${index + 1}`}
               </FieldLabel>
-              <CommentButton
-                name={`specificObjective_${index}`}
-                index={index}
-                section="SPECIFIC_OBJECTIVE" />
+              {!hiddenComments &&
+                <CommentButton
+                  name={`specificObjective_${index}`}
+                  index={index}
+                  section="SPECIFIC_OBJECTIVE" />
+              }
             </>
           }
           key={uuid()}>
@@ -75,7 +78,8 @@ export default function SpecificObjectiveForm({
                 indicatorType="SPECIFIC_INDICATOR"
                 objectiveIndex={index}
                 readOnly={readOnly}
-                defaultValue={objective.indicators} />
+                defaultValue={objective.indicators}
+                hiddenComments={hiddenComments}/>
             </Form.Item>
             <Form.Item label="Actividades">
               <ActivitiesField
@@ -83,7 +87,8 @@ export default function SpecificObjectiveForm({
                 objectiveIndex={index}
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}
                 readOnly={readOnly}
-                defaultValue={objective.activities} />
+                defaultValue={objective.activities}
+                hiddenComments={hiddenComments}/>
             </Form.Item>
           </Form>
         </Section>

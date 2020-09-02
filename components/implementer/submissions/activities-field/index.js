@@ -2,8 +2,9 @@ import { ActivityItem } from "./activity-item"
 import { CompositeField } from "../../../shared"
 import { useState } from "react"
 import { ActivityModal } from "./activity-modal"
+import { IndicatorsField } from "../indicators-field"
 
-export function ActivitiesField({activityType, defaultValue, objectiveIndex, onChange, readOnly}) {
+export function ActivitiesField({activityType, defaultValue, objectiveIndex, onChange, readOnly, hiddenComments}) {
   const [state, setState] = useState({ isModalOpen: false, edit: undefined })
 
   const onClickAdd = () => {
@@ -47,7 +48,8 @@ export function ActivitiesField({activityType, defaultValue, objectiveIndex, onC
             onCancel={onCancel}
             onSave={onSave(addNew, replaceItemAtIndex)}
             visible={state.isModalOpen}
-            edit={state.edit} />
+            edit={state.edit}
+            hiddenComments={hiddenComments} />
           { items.map((item, index) =>
             <ActivityItem
               data={item}
