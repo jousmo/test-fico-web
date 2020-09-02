@@ -24,7 +24,6 @@ export function MonthlyDistributionField({
 
   const onChange = newItems => {
     const { total } = state
-
     const units = newItems.reduce((acc, item) => (
       acc += Number(item.value || 0)
     ), 0)

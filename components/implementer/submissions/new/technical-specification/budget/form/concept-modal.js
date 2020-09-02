@@ -64,6 +64,7 @@ export function ConceptModal({
 
       onSave(values)
       form.resetFields()
+      setState({})
     }
     catch(e) {
       console.error(e)
@@ -77,7 +78,6 @@ export function ConceptModal({
 
   const onFormChange = () => {
     const values = form.getFieldsValue()
-
     if (values.totalUnits !== unitsState.total){
       setUnitsState({ overLimit: false, total: values.totalUnits })
     }
