@@ -74,6 +74,7 @@ export function ConceptModal({
   const onCancelModal = () => {
     form.resetFields()
     onCancel && onCancel()
+    setState({})
   }
 
   const onFormChange = () => {
