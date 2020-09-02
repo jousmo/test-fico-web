@@ -27,8 +27,6 @@ import {
 } from "../../../../../../helpers/submissionFunctions/general-information"
 
 function GeneralInformation({ client, query }) {
-  const submissionId = query.id
-
   const [state, setState] = useState({
     generalInformation: {},
     dirty: false,
@@ -49,7 +47,7 @@ function GeneralInformation({ client, query }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, setState, updateSubmission, submissionId)
+    await setSave(state, setState, updateSubmission, query.id)
   }, [state])
 
   const isCall = useCallback(() => {

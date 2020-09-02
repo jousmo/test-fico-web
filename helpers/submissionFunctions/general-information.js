@@ -16,14 +16,14 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     await updateSubmission({
       variables: { data: { ...state.generalInformation }, id: id }
     })
-    setState({ ...state, isSaving: false })
-    success()
     saving()
+    success()
   }
   catch(e) {
     warning()
     console.error(e)
   }
+  setState({ ...state, isSaving: false })
 }
 
 export const getIsCall = (data, state) => {
