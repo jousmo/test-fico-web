@@ -1,4 +1,3 @@
-
 import { Section } from "../../../../../shared"
 import ProjectDetailsForm from "./form"
 import { useContext } from "react"
@@ -12,10 +11,11 @@ export function ProjectDetails() {
     loading,
     error,
     data,
-    isCall
+    isCall,
+    hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
-  const onChange = (data) => {
+  const onChange = data => {
     const newData = {}
     if (Array.isArray(data)){
       data.forEach(e => (
@@ -36,7 +36,8 @@ export function ProjectDetails() {
         error={error}
         data={data}
         onChange={onChange}
-        isCall={isCall()} />
+        isCall={isCall()}
+        hiddenComments={hiddenComments} />
     </Section>
   )
 }

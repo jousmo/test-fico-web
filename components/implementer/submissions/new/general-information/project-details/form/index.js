@@ -1,4 +1,4 @@
-import { Row, Form, Col, Input, Select } from "antd"
+import { Row, Form, Col, Input } from "antd"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers/withForm"
@@ -10,7 +10,8 @@ import { TownshipSelect } from "./township-select"
 function ProjectDetailsForm({
   data,
   onChange,
-  isCall
+  isCall,
+  hiddenComments
 }) {
   const [form] = Form.useForm()
 
@@ -34,6 +35,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "type",
                 section: "SUBMISSION"}}>
                 Tipo de solicitud
@@ -53,6 +55,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "applyingCall",
                 section: "SUBMISSION"}}>
                 Convocatoria a la que aplica
@@ -72,6 +75,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "name",
                 section: "SUBMISSION"}}>
                 Nombre del proyecto
@@ -91,6 +95,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "township",
                 section: "SUBMISSION"}}>
                 Municipio
@@ -109,6 +114,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "region",
                 section: "SUBMISSION"}}>
                 Región
@@ -128,6 +134,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "allies",
                 section: "SUBMISSION"}}>
                 Aliados del proyecto
@@ -174,6 +181,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "startDate",
                 section: "SUBMISSION"}}>
                 Fecha de inicio
@@ -193,6 +201,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "endDate",
                 section: "SUBMISSION"}}>
                 Fecha de conclusión
@@ -212,6 +221,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "strategicAxis",
                 section: "SUBMISSION"}}>
                 Eje estratégico
@@ -233,6 +243,7 @@ function ProjectDetailsForm({
               <FieldLabel
                 helpText={<PreventionLevelsText />}
                 comentable={{
+                  hidden: hiddenComments,
                   name: "preventionLevel",
                   section: "SUBMISSION"}}>
                 Nivel de prevención
@@ -270,6 +281,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "issueDescription",
                 section: "SUBMISSION"}}>
                 Problemática a tratar
@@ -289,6 +301,7 @@ function ProjectDetailsForm({
             style={{display: "inline"}}
             label={
               <FieldLabel comentable={{
+                hidden: hiddenComments,
                 name: "description",
                 section: "SUBMISSION"}}>
                 Descripción del proyecto

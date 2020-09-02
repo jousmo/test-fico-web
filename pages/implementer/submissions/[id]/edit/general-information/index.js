@@ -54,15 +54,17 @@ function GeneralInformation({ client, query }) {
     return getIsCall(data, state)
   }, [data, state])
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+  const hiddenComments = data?.Submission?.status === "CREATED"
+
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
     isCall,
     loading,
     error,
     data,
+    hiddenComments
   }), [state, loading])
-
-  const readOnly = data?.Submission?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>

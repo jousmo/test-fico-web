@@ -5,7 +5,7 @@ import { GeneralObjectiveText } from "./general-objective-text"
 import { DevelopmentObjectiveText } from "./development-objective-text"
 import { SpecificObjectiveText } from "./specific-objective-text"
 
-function DevelopmentObjectivesForm({data, onChange}) {
+function DevelopmentObjectivesForm({data, onChange, hiddenComments}) {
   const onSpecificObjectivesChange = (newObjectives) => {
     onChange && onChange({
       currentTarget: {
@@ -29,6 +29,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
               <FieldLabel
                 helpText={<DevelopmentObjectiveText />}
                 comentable={{
+                  hidden: hiddenComments,
                   name: "developmentObjective",
                   section: "SUBMISSION"
                 }}>
@@ -51,6 +52,7 @@ function DevelopmentObjectivesForm({data, onChange}) {
               <FieldLabel
                 helpText={<GeneralObjectiveText />}
                 comentable={{
+                  hidden: hiddenComments,
                   name: "generalObjective",
                   section: "SUBMISSION"
                 }}>
