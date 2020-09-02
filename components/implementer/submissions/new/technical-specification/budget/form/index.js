@@ -7,7 +7,7 @@ import { conceptTypes } from "../../../../../../../helpers/selectOptions/impleme
 import { renderInvestment, renderTotal } from "./helpers"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 
-function BudgetForm({data, onChange}) {
+function BudgetForm({data, onChange, hiddenComments}) {
   const [state, setState] = useState({ isModalOpen: false, edit: false })
   const { Submission } = data || {}
 
@@ -63,11 +63,12 @@ function BudgetForm({data, onChange}) {
                 <Table.Column
                   key="comments"
                   render={(text, row, index) => (
-                    <CommentButton
-                      index={index}
-                      name={`concept_${index}`}
-                      section="BUDGET"
-                      small />
+                    !hiddenComments &&
+                      <CommentButton
+                        index={index}
+                        name={`concept_${index}`}
+                        section="BUDGET"
+                        small />
                   )
                   }/>
                 <Table.Column

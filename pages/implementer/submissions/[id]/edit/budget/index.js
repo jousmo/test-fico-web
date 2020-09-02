@@ -47,14 +47,16 @@ function Budget({ client, query }) {
     await setSave(state, setState, updateSubmission, query.id)
   }, [state, updateSubmission])
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+  const hiddenComments = data?.Submission?.status === "CREATED"
+
   const injectActions = useMemo(() => ({
     updateBudget,
     loading,
     error,
-    data
+    data,
+    hiddenComments
   }), [state, loading])
-
-  const readOnly = data?.Submission?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 2 })}>
