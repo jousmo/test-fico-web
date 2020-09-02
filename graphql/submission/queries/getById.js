@@ -30,8 +30,10 @@ export const getById = gql`
       developmentObjective
       generalObjective
       specificObjectives {
+        id
         description
         indicators {
+          id
           type
           title
           description
@@ -46,6 +48,7 @@ export const getById = gql`
           products
         }
         activities {
+          id
           title
           description
           responsible
@@ -61,6 +64,7 @@ export const getById = gql`
         }
       }
       beneficiaries {
+        id
         description
         number
         gender
@@ -69,6 +73,7 @@ export const getById = gql`
         preventionLevel
       }
       consultants {
+        id
         description
         commercialName
         commercialAddress
@@ -79,6 +84,7 @@ export const getById = gql`
         fiscalPersonType
         hadReceivedSupports
         supports {
+          id
           name
           date
           amount
@@ -90,6 +96,7 @@ export const getById = gql`
         }
       }
       developmentObjectiveIndicators {
+        id
         type
         title
         description
@@ -104,6 +111,7 @@ export const getById = gql`
         products
       }
       generalObjectiveIndicators {
+        id
         type
         title
         description
@@ -128,11 +136,13 @@ export const getById = gql`
         monthlyDistribution,
         budgeted
         investmentDistribution {
+          id
           name
           type
           percentage
         }
         humanResource {
+          id
           position
           name
           tasks
@@ -209,6 +219,7 @@ export const getById = gql`
           url
         }
         participants{
+          id
           amount
           type
           age
@@ -217,6 +228,7 @@ export const getById = gql`
         }
       }
       technicalUpdates{
+        id
         correctiveActions
         challenges
         obstacles
