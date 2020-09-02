@@ -36,6 +36,7 @@ export function ConsultantModal({edit, onCancel, onSave, hiddenComments, ...prop
   const onOk = async () => {
     try {
       let values = await form.getFieldsValue()
+      values.supports = values?.supports?.map(el => ({ ...el, amount: +el.amount }))
 
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
@@ -329,6 +330,7 @@ export function ConsultantModal({edit, onCancel, onSave, hiddenComments, ...prop
                               style={{display: "inline"}}
                               label="Monto recibido">
                               <Input
+                                type="number"
                                 style={{width: "auto"}}
                                 addonBefore="$"
                                 id="amount"
