@@ -63,6 +63,7 @@ export function ConceptModal({
       values.totalUnits = Number(values.totalUnits)
 
       onSave(values)
+      form.resetFields()
     }
     catch(e) {
       console.error(e)
