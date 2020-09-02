@@ -1,7 +1,7 @@
 import { Alert, Empty, Table, Skeleton } from "antd"
 import * as cellFormat from "../../../../helpers/cellFormat"
 
-export function BudgetSummaryTable1({data, error, isLoading}) {
+export function BudgetSummaryTable({data, error, isLoading}) {
   if(isLoading) {
     return <Skeleton active />
   }
