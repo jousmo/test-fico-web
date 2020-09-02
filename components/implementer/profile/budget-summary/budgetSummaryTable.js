@@ -1,6 +1,7 @@
-import * as cellFormat from "../../../../helpers/cellFormat";
+import { Alert, Empty, Table, Skeleton } from "antd"
+import * as cellFormat from "../../../../helpers/cellFormat"
 
-export function BudgetSummaryTable({data, error, isLoading}) {
+export function BudgetSummaryTable1({data, error, isLoading}) {
   if(isLoading) {
     return <Skeleton active />
   }
@@ -15,37 +16,35 @@ export function BudgetSummaryTable({data, error, isLoading}) {
         showIcon />
     )
   }
-  
+
   return (
-    <Table
-      dataSource={items}
-      pagination={false}
-      locale={{emptyText: <Empty description="Agrega proyectos en la sección anterior para generar el resumen" />}}
-      >
-      <Table.Column
-        title="Año"
-        key="year"
-        dataIndex="year" />
-      <Table.Column
-        title="Presupuesto público"
-        key="publicBudget"
-        dataIndex="publicBudget"
-        render={cellFormat.budget} />
-      <Table.Column
-        title="Presupuesto propio"
-        key="ownBudget"
-        dataIndex="ownBudget"
-        render={cellFormat.budget} />
-      <Table.Column
-        title="Presupuesto privado"
-        key="privateBudget"
-        dataIndex="privateBudget"
-        render={cellFormat.budget} />
-      <Table.Column
-        title="Total"
-        key="total"
-        dataIndex="total"
-        render={cellFormat.money} />
-    </Table>
+    <>
+      <Table
+        pagination={false}
+        locale={{emptyText: <Empty description="Agrega proyectos en la sección anterior para generar el resumen" />}}>
+        <Table.Column
+          title="Año"
+          key="year"
+          dataIndex="year" />
+        <Table.Column
+          title="Presupuesto público"
+          key="publicBudget"
+          dataIndex="publicBudget" />
+        <Table.Column
+          title="Presupuesto propio"
+          key="ownBudget"
+          dataIndex="ownBudget" />
+        <Table.Column
+          title="Presupuesto privado"
+          key="privateBudget"
+          dataIndex="privateBudget" />
+        <Table.Column
+          title="Total"
+          key="total"
+          dataIndex="total"
+          render={cellFormat.money} />
+      </Table>
+      (%) Porcentaje de financiamiento del total anual
+    </>
   )
 }
