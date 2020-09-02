@@ -10,7 +10,8 @@ export function ResourcesList() {
     updateHumanResources,
     loading,
     error,
-    data
+    data,
+    hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = newConcepts => {
@@ -23,7 +24,8 @@ export function ResourcesList() {
         isLoading={loading}
         error={error}
         data={data}
-        onChange={onChange} />
+        onChange={onChange}
+        hiddenComments={hiddenComments} />
     </Section>
   )
 }
