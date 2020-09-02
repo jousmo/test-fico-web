@@ -14,7 +14,7 @@ export function LegalDocuments() {
   } = useContext(ImplementerProfileContext)
 
   return (
-    <Section title="3. Documentos legales">
+    <Section title="4. Documentos legales">
       <LegalDocumentsForm
         error={error}
         isLoading={loading}
