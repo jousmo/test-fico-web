@@ -45,10 +45,10 @@ export function ApprovalModal({ onSave, onCancel, ...props }) {
           </small>
         </Typography.Text>
         <Form.Item
-          name="technicalNotes"
+          name="technicalOpinion"
           style={{display: "inline"}}>
           <Input.TextArea
-            id="technicalNotes"
+            id="technicalOpinion"
             type="text"
             placeholder="Describe" />
         </Form.Item>
