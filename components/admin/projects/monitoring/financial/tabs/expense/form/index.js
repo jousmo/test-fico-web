@@ -55,6 +55,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         return warning(message)
       }
 
+      form.resetFields()
       onSave && onSave(values)
     } catch (e) {
       warning("Llena los campos requeridos")
