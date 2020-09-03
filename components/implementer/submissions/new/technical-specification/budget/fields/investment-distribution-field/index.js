@@ -28,7 +28,7 @@ export function InvestmentDistributionField({
     return numeral(percentage * total / 100).format("$0,0.00")
   }
 
-  if (allies?.[1] ===  undefined){
+  if (defaultValue.length === 4 && allies?.[1] ===  undefined){
     defaultValue.pop()
   }
 

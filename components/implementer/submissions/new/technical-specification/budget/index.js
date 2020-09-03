@@ -15,9 +15,11 @@ export function Budget() {
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = concepts => {
-    const newConcepts = Array.from(concepts)
+    const newConcepts = Array.from(concepts).map(cleanData)
     updateBudget({ concepts: newConcepts })
   }
+
+  const cleanData = concept => _.omit(concept, ["index", "budgeted"])
 
   return (
     <Section
