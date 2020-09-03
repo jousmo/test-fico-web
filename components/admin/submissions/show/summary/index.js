@@ -3,15 +3,16 @@ import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
 import { Button, Col, Descriptions, Modal } from "antd"
-import { EyeOutlined, BarChartOutlined, ExclamationCircleOutlined } from "@ant-design/icons"
 import Link from "next/link"
 import {
+  EyeOutlined,
   CloseOutlined,
+  CheckOutlined,
   RetweetOutlined,
-  SelectOutlined,
-  UploadOutlined
+  BarChartOutlined,
+  ExclamationCircleOutlined
 } from "@ant-design/icons"
-import { BreadcrumbHeading } from "../../../../shared/breadcrum-heading"
+import { BreadcrumbHeading, ConfirmButton } from "../../../../shared"
 import { ApprovalModal } from "./approval-modal"
 import SummaryBody from "../../../../shared/submission-summary-body"
 import "./style.sass"
@@ -61,17 +62,17 @@ export function SubmissionSummary() {
   const headingButtons = (
     !onAgreement ? (
       <Col>
-        <Button
-          ghost
-          shape="circle"
+        <ConfirmButton
           icon={<RetweetOutlined />}
+          confirmText="Solicitar revisión"
           onClick={onRequestReview} />
-        <Button ghost shape="circle" icon={<CloseOutlined />} />
-        <Button ghost shape="circle" icon={<SelectOutlined />} />
+        <ConfirmButton
+          icon={<CloseOutlined />}
+          confirmText="Rechazar solicitud" />
         <Button
           ghost
           shape="circle"
-          icon={<UploadOutlined rotate={90}/>}
+          icon={<CheckOutlined />}
           onClick={onClickApprove} />
       </Col>
     ) : (
