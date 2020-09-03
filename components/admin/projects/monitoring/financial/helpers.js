@@ -27,34 +27,50 @@ export const RESET_XML_DATA = {
 export const getConceptsSummaryPerMonth = (Submission, concepts, invoicesPerYearOrSearch, field) => {
   const summaryConcepts = concepts.map(concept => {
     const nameConcept = getConcept(Submission?.concepts, concept)
-    const budgeted = getConceptBudget(Submission?.concepts, concept)
+    const budgetedGeneral = getConceptBudget(Submission?.concepts, concept)
 
-    const filter = invoicesPerYearOrSearch.filter(invoice => {
-      const monthAt = moment(invoice.monthAt, "MMYYYY").format("MMMM")
-      if (invoice.concept === concept && monthAt === field) return invoice
+    const sortInvoicesPerYearOrSearch = invoicesPerYearOrSearch.sort((a, b) => a.monthAt - b.monthAt)
+    const filter = sortInvoicesPerYearOrSearch.filter((invoice, index) => {
+
+      if (field === "total") {
+        if (invoice?.concept === concept) return invoice
+      } else {
+        const monthAt = moment(invoice.monthAt, "MMYYYY").format("MMMM")
+        if (invoice?.concept === concept && monthAt === field) {
+          invoice.budgeted = getConceptBudget(Submission?.concepts, concept, index)
+          return invoice
+        }
+      }
     }).reduce((prev, current) => {
         return {
+          budgeted: !current?.budgeted ? budgetedGeneral : (prev.budgeted || 0) + current.budgeted,
           amount: (prev.amount || 0) + current.amount,
           ficosecPayment: (prev.ficosecPayment || 0) + current.ficosecPayment,
           implementerPayment: (prev.implementerPayment || 0) + current.implementerPayment,
           investmentOnePayment: (prev.investmentOnePayment || 0) + current.investmentOnePayment,
           investmentTwoPayment: (prev.investmentTwoPayment || 0) + current.investmentTwoPayment,
-          diference: budgeted - ((prev.amount || 0) + current.amount)
+          diference: !current?.budgeted
+            ? budgetedGeneral - ((prev.amount || 0) + current.amount)
+            : ((prev.budgeted || 0) + current.budgeted) - ((prev.amount || 0) + current.amount)
         }
       }, {})
 
-    return { key: concept, concept: nameConcept, budgeted, ...filter }
+    return { key: concept, concept: nameConcept, ...filter, budgetedGeneral }
   })
 
   const totalsSummaryConcepts = summaryConcepts.reduce((prev, current) => {
     return {
-      budgeted: (prev.budgeted || 0) + (current.budgeted || 0) ,
-      amount: (prev.amount || 0) + (current.amount || 0),
-      ficosecPayment: (prev.ficosecPayment || 0) + (current.ficosecPayment || 0),
-      implementerPayment: (prev.implementerPayment || 0) + (current.implementerPayment || 0),
-      investmentOnePayment: (prev.investmentOnePayment || 0) + (current.investmentOnePayment || 0),
-      investmentTwoPayment: (prev.investmentTwoPayment || 0) + (current.investmentTwoPayment || 0),
-      diference: (prev.budgeted || 0) - ((prev.amount || 0) + (current.amount || 0))
+      budgeted: !current?.budgeted
+        ? (prev.budgetedGeneral || 0) + current.budgetedGeneral
+        : (prev.budgeted || 0) + current.budgeted,
+      amount: (prev.amount || 0) + current.amount,
+      ficosecPayment: (prev.ficosecPayment || 0) + current.ficosecPayment,
+      implementerPayment: (prev.implementerPayment || 0) + current.implementerPayment,
+      investmentOnePayment: (prev.investmentOnePayment || 0) + current.investmentOnePayment,
+      investmentTwoPayment: (prev.investmentTwoPayment || 0) + current.investmentTwoPayment,
+      diference: !current?.budgeted
+        ? current.budgetedGeneral - ((prev.amount || 0) + current.amount)
+        : current.budgeted - ((prev.amount || 0) + current.amount)
     }
   }, {})
 
@@ -116,7 +132,15 @@ export const getInvoicesPerYearOrSearch = ({ invoices, concepts }, year, search)
   })
 }
 
-export const getConceptBudget = (concepts, id) => concepts.find(concept => concept.id === id)?.budgeted
+export const getConceptBudget = (concepts, id, index) => {
+  if (index !== undefined) {
+    const find = concepts.find(concept => concept.id === id)
+    return find?.unitCost * find?.monthlyDistribution[index]
+  } else {
+    const find = concepts.find(concept => concept.id === id)
+    return find.budgeted
+  }
+}
 
 export const getConcept = (concepts, id) => concepts.find(concept => concept.id === id)?.name
 
