@@ -8,6 +8,7 @@ export const submissionStatusOptions = [
   { label: "Revisión de implementadora 2", value: "REVISION_2" },
   { label: "Revisión de administrador 3", value: "REVIEW_3" },
   { label: "Revisión de implementadora 3", value: "REVISION_3" },
+  { label: "Revisión de administrador final", value: "REVIEW_4" },
   { label: "Solicitud rechazada", value: "REJECTED" },
   { label: "En consejo directivo", value: "ON_COUNCIL" },
   { label: "En comité técnico", value: "ON_COMMITTEE" },
