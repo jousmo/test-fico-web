@@ -52,8 +52,8 @@ export function SubmissionSummary() {
     });
   }
 
-  const onSave = (values) => {
-    /* TODO: Change status of submission */
+  const onSave = value => {
+    save({ status: "ON_COUNCIL",  ...value })
     onCancel()
   }
 
