@@ -19,9 +19,9 @@ import "./style.sass"
 
 export function SubmissionSummary() {
   const {
-    saveApproveMonitoring,
     loading,
     error,
+    save,
     data
   } = useContext(AdminSubmissionContext)
 
@@ -45,7 +45,7 @@ export function SubmissionSummary() {
       title: `¿Quieres aprobar la solicitud para monitoreo?`,
       icon: <ExclamationCircleOutlined />,
       onOk() {
-        saveApproveMonitoring()
+        save({ status: "AWAITING_INFO", state: "PROJECT" })
       }
     });
   }
