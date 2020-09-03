@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import { Button, Col, Descriptions, Modal } from "antd"
+import { Button, Col, Descriptions, Modal, message } from "antd"
 import Link from "next/link"
 import {
   EyeOutlined,
@@ -58,7 +58,16 @@ export function SubmissionSummary() {
   }
 
   const onRequestReview = () => {
-    /* TODO: Request review to implementer */
+    if (statusIndex === 9) {
+      message.warning("La solicitud se encuentra en la revisión final")
+      return
+    }
+
+    if (status.includes("REVIEW")){
+      save({ status: submissionStatusOptions[statusIndex + 1].value })
+    } else {
+      message.warning("La solicitud ya se encuentra en revisión")
+    }
   }
 
   let headingButtons = null
