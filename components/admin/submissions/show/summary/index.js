@@ -15,6 +15,7 @@ import {
 import { BreadcrumbHeading, ConfirmButton } from "../../../../shared"
 import { ApprovalModal } from "./approval-modal"
 import SummaryBody from "../../../../shared/submission-summary-body"
+import { submissionStatusOptions } from "../../../../../helpers/selectOptions/shared/submission-status"
 import "./style.sass"
 
 export function SubmissionSummary() {
@@ -25,7 +26,8 @@ export function SubmissionSummary() {
     data
   } = useContext(AdminSubmissionContext)
 
-  const onAgreement = data?.Submission?.status === "ON_AGREEMENT"
+  const status = data?.Submission?.status
+  const statusIndex = submissionStatusOptions.findIndex(e => e.value === status)
   const findDocument = data?.Submission?.documents.filter(document => document.type === "AGREEMENT")
 
   const [state, setState] = useState({
@@ -59,8 +61,9 @@ export function SubmissionSummary() {
     /* TODO: Request review to implementer */
   }
 
-  const headingButtons = (
-    !onAgreement ? (
+  let headingButtons = null
+  if (statusIndex < 9) {
+    headingButtons = (
       <Col>
         <ConfirmButton
           icon={<RetweetOutlined />}
@@ -75,7 +78,9 @@ export function SubmissionSummary() {
           icon={<CheckOutlined />}
           onClick={onClickApprove} />
       </Col>
-    ) : (
+    )
+  } else if (status === "ON_AGREEMENT") {
+    headingButtons = (
       <Col>
         <Button
           type="ficosuccess"
@@ -86,7 +91,7 @@ export function SubmissionSummary() {
         </Button>
       </Col>
     )
-  )
+  }
 
   const goToSubmission = (
     <Descriptions.Item>
