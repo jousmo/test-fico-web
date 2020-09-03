@@ -27,7 +27,7 @@ export const RESET_XML_DATA = {
 export const getConceptsSummaryPerMonth = (Submission, concepts, invoicesPerYearOrSearch, field) => {
   const summaryConcepts = concepts.map(concept => {
     const nameConcept = getConcept(Submission?.concepts, concept)
-    const budgetedGeneral = getConceptBudget(Submission?.concepts, concept)
+    const budgetedGeneral = field === "total" ? getConceptBudget(Submission?.concepts, concept) : 0
 
     const sortInvoicesPerYearOrSearch = invoicesPerYearOrSearch.sort((a, b) => a.monthAt - b.monthAt)
     const filter = sortInvoicesPerYearOrSearch.filter((invoice, index) => {
@@ -42,16 +42,17 @@ export const getConceptsSummaryPerMonth = (Submission, concepts, invoicesPerYear
         }
       }
     }).reduce((prev, current) => {
+        const budgeted = !current?.budgeted ? budgetedGeneral : (prev.budgeted || 0) + current.budgeted
+        const amount = (prev.amount || 0) + current.amount
+
         return {
-          budgeted: !current?.budgeted ? budgetedGeneral : (prev.budgeted || 0) + current.budgeted,
-          amount: (prev.amount || 0) + current.amount,
+          budgeted,
+          amount,
           ficosecPayment: (prev.ficosecPayment || 0) + current.ficosecPayment,
           implementerPayment: (prev.implementerPayment || 0) + current.implementerPayment,
           investmentOnePayment: (prev.investmentOnePayment || 0) + current.investmentOnePayment,
           investmentTwoPayment: (prev.investmentTwoPayment || 0) + current.investmentTwoPayment,
-          diference: !current?.budgeted
-            ? budgetedGeneral - ((prev.amount || 0) + current.amount)
-            : ((prev.budgeted || 0) + current.budgeted) - ((prev.amount || 0) + current.amount)
+          diference: budgeted - amount
         }
       }, {})
 
@@ -59,18 +60,20 @@ export const getConceptsSummaryPerMonth = (Submission, concepts, invoicesPerYear
   })
 
   const totalsSummaryConcepts = summaryConcepts.reduce((prev, current) => {
+    const budgeted = !current?.budgeted
+      ? (prev.budgetedGeneral || 0) + current.budgetedGeneral
+      : (prev.budgeted || 0) + current.budgeted
+
+    const amount = (prev.amount || 0) + current.amount
+
     return {
-      budgeted: !current?.budgeted
-        ? (prev.budgetedGeneral || 0) + current.budgetedGeneral
-        : (prev.budgeted || 0) + current.budgeted,
-      amount: (prev.amount || 0) + current.amount,
+      budgeted,
+      amount,
       ficosecPayment: (prev.ficosecPayment || 0) + current.ficosecPayment,
       implementerPayment: (prev.implementerPayment || 0) + current.implementerPayment,
       investmentOnePayment: (prev.investmentOnePayment || 0) + current.investmentOnePayment,
       investmentTwoPayment: (prev.investmentTwoPayment || 0) + current.investmentTwoPayment,
-      diference: !current?.budgeted
-        ? current.budgetedGeneral - ((prev.amount || 0) + current.amount)
-        : current.budgeted - ((prev.amount || 0) + current.amount)
+      diference: budgeted - amount
     }
   }, {})
 
