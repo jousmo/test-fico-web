@@ -1,10 +1,6 @@
 import { Form, Input } from "antd"
 
-export function SearchField() {
-  const onSearch = value => {
-    /* TODO: Add logic to filter data by search value */
-  }
-
+export function SearchField({ onSearch }) {
   return (
     <Form
       layout="horizontal"

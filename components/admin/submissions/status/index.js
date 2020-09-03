@@ -1,5 +1,5 @@
 import { SearchField, Section } from "../../../shared"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
@@ -12,11 +12,20 @@ export function ListByStatus() {
     data
   } = useContext(AdminSubmissionContext)
 
+  const [state, setState] = useState(false)
+
+  const onSearch = (value) => {
+    const filter = data?.Submissions?.filter(submission => submission.name.toLowerCase().includes(value.toLowerCase()))
+
+    if (!value) setState(false)
+    setState(filter)
+  }
+
   return (
     <Section>
-      <SearchField />
+      <SearchField onSearch={onSearch}/>
       <ListByStatusTable
-        data={data?.Submissions}
+        data={state ? state : data?.Submissions}
         error={error}
         isLoading={loading} />
     </Section>
