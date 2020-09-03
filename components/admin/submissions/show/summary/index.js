@@ -16,6 +16,7 @@ import { BreadcrumbHeading, ConfirmButton } from "../../../../shared"
 import { ApprovalModal } from "./approval-modal"
 import SummaryBody from "../../../../shared/submission-summary-body"
 import { submissionStatusOptions } from "../../../../../helpers/selectOptions/shared/submission-status"
+import moment from "moment"
 import "./style.sass"
 
 export function SubmissionSummary() {
@@ -47,13 +48,13 @@ export function SubmissionSummary() {
       title: `¿Quieres aprobar la solicitud para monitoreo?`,
       icon: <ExclamationCircleOutlined />,
       onOk() {
-        save({ status: "AWAITING_INFO", state: "PROJECT" })
+        save({ status: "AWAITING_INFO", state: "PROJECT", statusChangedAt: moment().format() })
       }
     });
   }
 
   const onSave = value => {
-    save({ status: "ON_COUNCIL",  ...value })
+    save({ status: "ON_COUNCIL", statusChangedAt: moment().format(), ...value })
     onCancel()
   }
 
@@ -64,7 +65,7 @@ export function SubmissionSummary() {
     }
 
     if (status.includes("REVIEW")){
-      save({ status: submissionStatusOptions[statusIndex + 1].value })
+      save({ status: submissionStatusOptions[statusIndex + 1].value, statusChangedAt: moment().format() })
     } else {
       message.warning("La solicitud ya se encuentra en revisión")
     }
