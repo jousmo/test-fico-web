@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import {
   ImplementerSubmissionContext
 } from "../../../../../contexts/implementer/submissions/show"
-import { Button } from "antd"
+import { Button, Popconfirm } from "antd"
 import { RightCircleOutlined, SendOutlined } from "@ant-design/icons"
 import { BreadcrumbHeading } from "../../../../shared/breadcrum-heading"
 import SummaryBody from "../../../../shared/submission-summary-body"
@@ -18,6 +18,10 @@ export function SubmissionSummary() {
   } = useContext(ImplementerSubmissionContext)
 
   const editRoute = `/implementer/submissions/${data?.Submission?.id}/edit/general-information`
+
+  const onReview = () => {
+
+  }
 
   return (
     <div className="fico submission summary implementer">
@@ -40,11 +44,17 @@ export function SubmissionSummary() {
           className="implementer continue-submission">
           Continuar solicitud
         </Button>
-        <Button
-          icon={<SendOutlined />}
-          className="implementer send-submission">
-          Enviar solicitud
-        </Button>
+        <Popconfirm
+          title="¿Enviar solocitud a revisión?"
+          onConfirm={onReview}
+          okText="Aceptar"
+          cancelText="Cancelar">
+          <Button
+            icon={<SendOutlined />}
+            className="implementer send-submission">
+            Enviar solicitud
+          </Button>
+        </Popconfirm>
       </div>
     </div>
   )
