@@ -6,11 +6,7 @@ import {
 import SubmissionAttachments from "./documents"
 
 export function Attachments() {
-  const {
-    loading,
-    error,
-    data
-  } = useContext(AdminSubmissionContext)
+  const { loading, error, data } = useContext(AdminSubmissionContext)
 
   return (
     <Section title="Anexos">
