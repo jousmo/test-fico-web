@@ -3,24 +3,34 @@ import { useRouter } from "next/router"
 import {
   ImplementerSubmissionContext
 } from "../../../../../contexts/implementer/submissions/show"
-import { Button, Popconfirm } from "antd"
+import { Button, Popconfirm, message } from "antd"
 import { RightCircleOutlined, SendOutlined } from "@ant-design/icons"
 import { BreadcrumbHeading } from "../../../../shared/breadcrum-heading"
 import SummaryBody from "../../../../shared/submission-summary-body"
 import "./style.sass"
+import { submissionStatusOptions } from "../../../../../helpers/selectOptions/shared/submission-status"
+import moment from "moment"
 
 export function SubmissionSummary() {
   const router = useRouter()
   const {
     loading,
     error,
-    data
+    data,
+    save
   } = useContext(ImplementerSubmissionContext)
 
   const editRoute = `/implementer/submissions/${data?.Submission?.id}/edit/general-information`
 
   const onReview = () => {
+    const { status } = data?.Submission
+    const statusIndex = submissionStatusOptions.findIndex(e => e.value === status)
 
+    if (status.includes("REVIEW")){
+      message.warning("La solicitud ya se encuentra en revisión")
+    } else {
+      save({ status: submissionStatusOptions[statusIndex + 1].value, statusChangedAt: moment().format() })
+    }
   }
 
   return (
