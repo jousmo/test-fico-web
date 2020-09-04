@@ -1,5 +1,5 @@
 import { Layout } from "../../../../components/shared"
-import { success, warning } from "../../../../helpers"
+import { success, warning, loadingAlert } from "../../../../helpers"
 import {
   AgreementDocuments,
   Attachments,
@@ -11,7 +11,7 @@ import {
 } from "../../../../components/admin/submissions/show"
 import { AdminSubmissionContext } from "../../../../contexts/admin/submissions/show"
 import { submission } from "../../../../graphql/submission"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers/withApollo"
 import { PageContext } from "../../../../contexts/page"
@@ -19,12 +19,17 @@ import { PageContext } from "../../../../contexts/page"
 function Submission({ client, query }) {
   const submissionId = query.id
 
-  const [ state, setState ] = useState({
-    submissionDetail: {}
-  })
-
   const [ updateSubmission ] = useMutation(
-    submission.mutations.updateById, { client: client }
+    submission.mutations.updateById, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getById,
+          variables: { id: submissionId }
+        }
+      ]
+    }
   )
 
   const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
@@ -32,57 +37,29 @@ function Submission({ client, query }) {
     variables: { id: submissionId }
   })
 
-  const updateSubmissionDetail = useCallback(submission => {
-    const newSubmission = {
-      ...state.submissionDetail,
-      ...submission
-    }
-
-    setState({
-      ...state,
-      dirty: true,
-      submissionDetail: newSubmission
-    })
-  }, [state])
-
-  const save = useCallback(async () => {
+  const save = useCallback(async submissionData => {
+    const saving = loadingAlert()
     try {
       await updateSubmission({
-        variables: { data: { ...state.submissionDetail }, id: submissionId }
+        variables: { data: submissionData, id: submissionId }
       })
       success()
-      await refetch()
     }
-    catch(e) {
+    catch (e) {
       console.error(e)
       warning()
     }
-  }, [state, refetch])
-
-  const saveApproveMonitoring = useCallback(async () => {
-    try {
-      await updateSubmission({
-        variables: { data: { status: "AWAITING_INFO", state: "PROJECT" }, id: submissionId }
-      })
-      success("Solicitud aprobada correctamente")
-      await push("/admin/submissions")
-    }
-    catch(e) {
-      console.error(e)
-      warning()
-    }
-  }, [state])
+    saving()
+  }, [submissionId])
 
   const injectActions = useMemo(() => ({
-    updateSubmissionDetail,
-    save,
-    saveApproveMonitoring,
+    refetch,
     loading,
-    error,
-    data,
     client,
-    refetch
-  }), [state, loading, data])
+    error,
+    save,
+    data
+  }), [loading, data])
 
   return (
     <PageContext.Provider
