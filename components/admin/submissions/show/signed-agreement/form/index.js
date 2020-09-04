@@ -1,11 +1,13 @@
 import { withForm } from "../../../../../../helpers/withForm"
 import { Button, Form, Input } from "antd"
 import { DateField, UploadButton, Visibility } from "../../../../../shared"
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
 
-function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, refetch }) {
+function SubmissionAgreementForm({ data, client, onSave, hasContract, refetch }) {
+  const [state, setState] = useState({})
+
   const { id: submissionId, status, documents } = data || {}
   const onAgreement = status === "ON_AGREEMENT"
   const files = documents?.filter(document => document.type === "AGREEMENT").map(item => ({...item, uid: item.id}))
@@ -22,6 +24,10 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, 
     const { id: name, value } = currentTarget
     const target = { name, value }
     onChange({ target })
+  }
+
+  const onChange = ({ target: { name, value } }) => {
+    setState({ ...state, [name]: value })
   }
 
   const onDoneFile = useCallback(async (info, cb) => {
@@ -62,7 +68,7 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, 
             style={{width: "140px", marginRight: "5px"}}
             placeholder="Numero de acuerdo"
             defaultValue={data?.agreementNumber}
-            onChange={onChange} />
+            onBlur={onChange} />
           <DateField
             id="signedContractAt"
             name="signedContractAt"
@@ -70,7 +76,7 @@ function SubmissionAgreementForm({ data, client, onChange, onSave, hasContract, 
             onChange={onDateChange} />
           &nbsp;
           <Button
-            onClick={onSave}>
+            onClick={() => onSave(state)}>
             Guardar
           </Button>
         </Form.Item>
