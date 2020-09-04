@@ -1,6 +1,7 @@
 import { withForm, toFileList } from "../../../../../../../helpers"
 import { Alert, Col, Form, Input, Row, Radio } from "antd"
 import { UserOutlined } from "@ant-design/icons"
+import { useState } from "react"
 import {
   CompositeField,
   SelectField,
@@ -13,15 +14,25 @@ import {
 import { HumanResourcesColumns } from "./form-columns"
 
 function HumanResourcesTable({ data, onChange, hiddenComments }) {
+  const hrState = {}
   const concepts = data?.Submission?.concepts?.map(({ budgeted, ...concept }) => concept) || []
-  const humanResources = concepts?.map((concept, index) =>
-    concept.type === "HUMAN_RESOURCE" &&
-    {
-      key: index,
-      position: concept.name,
-      ...concept.humanResource[0]
+  const humanResources = concepts?.map((concept, index) => {
+    hrState[index] = {
+      salary: concept.humanResource[0]?.salary || 0,
+      hasTax: concept.humanResource[0]?.contractType !== "EMPLOYEE",
+      tax: concept.humanResource[0]?.taxes
     }
-  ).filter(e => e !== false) || []
+    return (
+      concept.type === "HUMAN_RESOURCE" &&
+      {
+        key: index,
+        position: concept.name,
+        ...concept.humanResource[0]
+      }
+    )
+  }).filter(e => e !== false) || []
+
+  const [state, setState] = useState(hrState)
 
   const hasDuplicates = humanResources
     .map(r => r.position)
@@ -60,6 +71,23 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
   const onRemoveFile = (file, oldDocuments, index, onFilesChange) => {
     const documents = oldDocuments.filter(document => document.url !== file.url)
     onFilesChange(index, documents, "documents")
+  }
+
+  const onContracyTypeChange = (event, updateItem, index) => {
+    const { currentTarget: { value } } = event
+    if (value === "EMPLOYEE"){
+      setState({ ...state, [index]: { ...state[index], hasTax: false, tax: 0 } })
+      updateItem(index)({ currentTarget: { id: "taxes", value: null }})
+    } else {
+      setState({ ...state, [index]: { ...state[index], hasTax: true } })
+    }
+    updateItem(index)(event)
+  }
+
+  const onNumberChange = (event, updateItem, index, type) => {
+    const { currentTarget: { value } } = event
+    setState({ ...state, [index]: { ...state[index], [type]: Number(value) } })
+    updateItem(index)(event)
   }
 
   return (
@@ -153,7 +181,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           id="contractType"
                           name="contractType"
                           options={contractTypes}
-                          onChange={updateItem(index)}
+                          onChange={event => onContracyTypeChange(event, updateItem, index)}
                           disabled={readOnly}
                           defaultValue={item.contractType} />
                       </Col>
@@ -163,7 +191,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           id="salary"
                           name="salary"
                           min={0}
-                          onChange={updateItem(index)}
+                          onBlur={event => onNumberChange(event, updateItem, index, "salary")}
                           defaultValue={item.salary}
                           disabled={readOnly}
                           type="number" />
@@ -183,9 +211,9 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                         <Input
                           addonBefore="%"
                           id="taxes"
-                          disabled={readOnly || item.contractType === "EMPLOYEE"}
+                          disabled={readOnly || !state[index]?.hasTax}
                           name="taxes"
-                          onChange={updateItem(index)}
+                          onBlur={event => onNumberChange(event, updateItem, index, "tax")}
                           defaultValue={item.taxes}
                           type="number" />
                       </Col>
@@ -198,7 +226,11 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           onChange={updateItem(index)}
                           defaultValue={item.total}
                           value={
-                            Number(item.salary) + ((Number(item.taxes) * Number(item.salary)) / 100)
+                            state[index].hasTax ? (
+                              state[index].salary + ((state[index].tax * state[index].salary) / 100)
+                            ) : (
+                              state[index].salary
+                            )
                           }
                           type="number" />
                       </Col>
