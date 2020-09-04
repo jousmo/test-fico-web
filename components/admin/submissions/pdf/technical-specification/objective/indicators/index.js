@@ -23,7 +23,7 @@ export default function ObjectiveIndicatorPDF({ indicator }){
           {indicator.formula}
         </Descriptions.Item>
         <Descriptions.Item label="Insumos">
-          {indicator.inputs.length}
+          {indicator.inputs?.length}
         </Descriptions.Item>
         <Descriptions.Item label="Medio de verificación">
           {indicator.meansOfVerification}
