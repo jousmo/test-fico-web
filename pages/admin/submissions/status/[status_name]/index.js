@@ -10,21 +10,30 @@ import {
 } from "../../../../../contexts/admin/submissions/show"
 import { PageContext } from "../../../../../contexts/page"
 import { submission } from "../../../../../graphql/submission"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
 import {
-  selectOptions
+  success,
+  loadingAlert,
+  selectOptions, warning
 } from "../../../../../helpers"
+import moment from "moment"
 
 function SubmissionsByStatus({ client, query }) {
   const status = query.status_name?.toUpperCase()
-  const [ state ] = useState({
-    submissionsList: {}
-  })
 
   const [updateSubmissionStatus] = useMutation(
-    submission.mutations.updateById, { client }
+    submission.mutations.updateById, {
+      client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getAll,
+          variables: { state: "SUBMISSION", status: status }
+        }
+      ]
+    }
   )
 
   const { loading, error, data } = useQuery(submission.queries.getAll, {
@@ -33,22 +42,26 @@ function SubmissionsByStatus({ client, query }) {
   })
 
   const save = useCallback(async (id, status) => {
+    const saving = loadingAlert()
     try {
       await updateSubmissionStatus({
-        variables: { data: { status }, id: id }
+        variables: { data: { status, statusChangedAt: moment().format() }, id: id }
       })
+      success()
     }
     catch(e){
       console.error(e)
+      warning()
     }
-  }, [state])
+    saving()
+  }, [])
 
   const injectActions = useMemo(() => ({
     loading,
     error,
     data,
     save
-  }), [state, loading])
+  }), [data, loading])
 
   const pageTitle = selectOptions
     .getReadableValue(selectOptions.shared.submissionStatusOptions, status)
