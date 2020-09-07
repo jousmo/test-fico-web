@@ -179,6 +179,7 @@ export const selectProjectYears = ({ startDate, endDate }) => Array
       .range(
         moment(startDate) || moment(),
         moment(endDate) || moment())
+      .snapTo("year")
       .by("year")
   )
   .map((r, index) => ({ label: `Año ${index + 1}`, value: r.format("YYYY")}))
