@@ -1,25 +1,25 @@
-export const deleteSpecificOComments = (submission, toDelete, index) => {
+export const deleteSpecificOComments = (submission, toDelete, i) => {
   const objectives = [...submission?.specificObjectives]
-  const objective = objectives[index]
+  const { index, ...objective } = objectives[i]
   const newComments = objective?.comments?.filter(e =>
     (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
   )
-  objectives[index] = {
+  objectives[i] = {
     ...objective,
     comments: newComments
   }
   return objectives
 }
 
-export const addSpecificOComment = (submission, comment, index) => {
+export const addSpecificOComment = (submission, comment, i) => {
   const objectives = [...submission?.specificObjectives]
-  const objective = objectives[index]
+  const { index, ...objective } = objectives[i]
   const comments = objective?.comments || []
   const newComments = [
     ...comments,
     comment
   ]
-  objectives[index] = {
+  objectives[i] = {
     ...objective,
     comments: newComments
   }
