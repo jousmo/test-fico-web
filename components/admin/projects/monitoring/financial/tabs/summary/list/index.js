@@ -22,11 +22,11 @@ export function ListSummary({ view, year, search }) {
   const conceptsPerTrimestre = getConceptsPerTrimestre(Submission, onlyConcepts, invoicesPerYearOrSearch)
 
   const onChange = (a, b, { field }) => {
+    const title = `${_.capitalize(field)} ${year}`
     const {
       summaryConcepts,
       totalsSummaryConcepts
-    } = getConceptsSummaryPerMonth(Submission, onlyConcepts, invoicesPerYearOrSearch, field)
-    const title = `${_.capitalize(field)} ${year}`
+    } = getConceptsSummaryPerMonth(Submission, onlyConcepts, invoicesPerYearOrSearch, title)
     setState({ showModal: true, title, summaryConcepts, totalsSummaryConcepts })
   }
 
