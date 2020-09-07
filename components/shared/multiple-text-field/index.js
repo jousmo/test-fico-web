@@ -1,8 +1,5 @@
 import { Form, Input, Row, Col } from "antd"
-import { CompositeField } from "../composite-field"
-import { DeleteButton } from "../delete-button"
-import { v4 as uuid } from "uuid"
-import { itemGenUuid } from "../../../helpers"
+import { CompositeField, DeleteButton } from ".."
 
 export function MultipleTextField({
   onChange,
@@ -13,18 +10,17 @@ export function MultipleTextField({
   const onCompositeFieldChange = value => {
     onChange && onChange(value.map(i => i.value))
   }
-  const transformDefaultValue = string => {
-    const item = { value: string }
-    return item
+  const transformDefaultValue = value => {
+    return { value }
   }
 
   return (
     <CompositeField
       onChange={onCompositeFieldChange}
       addLabel={addLabel}
-      defaultValue={defaultValue?.map(transformDefaultValue)?.map(itemGenUuid)}
-      value={value?.map(transformDefaultValue)?.map(itemGenUuid)}
-      onClickAdd={addNew => addNew({ value: "", uuid: uuid() })}>
+      defaultValue={defaultValue?.map(transformDefaultValue)}
+      value={value?.map(transformDefaultValue)}
+      onClickAdd={addNew => addNew({ value: "" })}>
       {({items, removeItem, updateItem}) =>
         <div>
           {items?.map((item, index) =>
@@ -34,12 +30,11 @@ export function MultipleTextField({
                   <Input
                     name="value"
                     defaultValue={item.value}
-                    onBlur={updateItem(index)}
-                    defaultValue={item.value} />
+                    onBlur={updateItem(index)} />
                 </Col>
                 <Col>
                   <DeleteButton
-                    style={{marginLeft: "10px"}}
+                    style={{ marginLeft: "10px" }}
                     onClick={removeItem(index)} />
                 </Col>
               </Row>
