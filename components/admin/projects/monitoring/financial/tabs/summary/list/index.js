@@ -9,7 +9,8 @@ import {
   getInvoicesPerYearOrSearch,
   getConceptsPerMonths,
   getConceptsPerTrimestre,
-  getConceptsSummaryPerMonth
+  getConceptsSummaryPerMonth,
+  getConceptsSummaryPerTrimestre
 } from "../../../helpers"
 
 export function ListSummary({ view, year, search }) {
@@ -30,6 +31,16 @@ export function ListSummary({ view, year, search }) {
     setState({ showModal: true, title, summaryConcepts, totalsSummaryConcepts })
   }
 
+  const onChangeTrimestre = (a, b, { field }) => {
+    const title = field === "total" ? `${_.capitalize(field)} ${year}` : `${field} trimestre del ${year}`
+    const {
+      summaryConcepts,
+      totalsSummaryConcepts
+    } = getConceptsSummaryPerTrimestre(Submission, onlyConcepts, invoicesPerYearOrSearch, title)
+
+    setState({ showModal: true, title, summaryConcepts, totalsSummaryConcepts })
+  }
+
   const onCancel = () => {
     setState({ showModal: false, title: "", summaryConcepts: [], totalsSummaryConcepts: {} })
   }
@@ -42,7 +53,7 @@ export function ListSummary({ view, year, search }) {
           dataSource={conceptsPerMonths } />
       ) : (
         <ListSummaryComparative
-          onChange={onChange}
+          onChange={onChangeTrimestre}
           dataSource={conceptsPerTrimestre} />
       )}
 
