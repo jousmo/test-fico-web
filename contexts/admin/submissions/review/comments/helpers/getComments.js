@@ -21,7 +21,7 @@ export const getCommentsHelper = (index, name, section, submission) => {
       comments = submission?.concepts[index]?.comments
       break
     case "HUMAN_RESOURCE":
-      comments = submission?.concepts[index]?.humanResource?.comments
+      comments = submission?.concepts[index]?.humanResource[0]?.comments
       break
     case "SPECIFIC_OBJECTIVE":
       comments = submission?.specificObjectives[index]?.comments
