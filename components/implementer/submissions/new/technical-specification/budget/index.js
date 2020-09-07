@@ -9,6 +9,7 @@ export function Budget() {
   const {
     updateBudget,
     loading,
+    review,
     error,
     data,
     hiddenComments
@@ -29,6 +30,7 @@ export function Budget() {
         isLoading={loading}
         error={error}
         data={data}
+        review={review}
         onChange={onChange}
         hiddenComments={hiddenComments} />
     </Section>

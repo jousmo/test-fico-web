@@ -19,6 +19,7 @@ export function ConceptModal({
   onCancel,
   edit,
   submission,
+  review,
   ...props
 }) {
   const [form] = Form.useForm()
@@ -100,9 +101,10 @@ export function ConceptModal({
       title={`${edit ? "Editar" : "Agregar"} concepto`}
       onOk={onOk}
       onCancel={onCancelModal}
+      okButtonProps={{ disabled: review }}
       width={800}
       okText={`${edit ? "Guardar" : "Agregar"}`}
-      cancelText="Cancelar"
+      cancelText={review ? "Cerrar" : "Cancelar"}
       {...props}>
       <Form
         form={form}

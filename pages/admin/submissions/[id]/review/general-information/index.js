@@ -64,7 +64,8 @@ function GeneralInformation({ client, query }) {
     isCall,
     loading,
     error,
-    data
+    data,
+    review: true
   }), [state, loading])
 
   const readOnly = data?.Submission?.state === "PROJECT"

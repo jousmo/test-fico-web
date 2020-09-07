@@ -9,6 +9,7 @@ export function Beneficiaries() {
   const {
     updateGeneralInformation,
     loading,
+    review,
     error,
     data,
     hiddenComments
@@ -22,6 +23,7 @@ export function Beneficiaries() {
     <Section title="4. Beneficiarios">
       <BeneficiaryForm
         data={data}
+        review={review}
         isLoading={loading}
         error={error}
         onChange={onChange}

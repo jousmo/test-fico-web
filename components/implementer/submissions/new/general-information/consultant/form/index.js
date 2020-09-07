@@ -5,7 +5,7 @@ import { ConsultantModal } from "./consultant-modal"
 import { ConsultantItem } from "./consultant-item"
 import { useState } from "react"
 
-function ConsultantForm({data, onChange, hiddenComments}) {
+function ConsultantForm({ data, onChange, hiddenComments, review }) {
   const [state, setState] = useState({
     isModalOpen: false,
     edit: undefined
@@ -49,12 +49,13 @@ function ConsultantForm({data, onChange, hiddenComments}) {
           onChange={onChange}
           defaultValue={consultants}
           onClickAdd={onClickAdd}
-          isAddDisabled={readOnly}
+          isAddDisabled={readOnly || review}
           addLabel="Agregar consultor">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <div>
               <ConsultantModal
                 edit={state.edit}
+                review={review}
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 visible={state.isModalOpen}
                 onCancel={onCancel}
@@ -65,6 +66,7 @@ function ConsultantForm({data, onChange, hiddenComments}) {
                   index={key}
                   data={item}
                   readOnly={readOnly}
+                  review={review}
                   onEdit={onEdit(item, key)}
                   onDelete={removeItem(key)} />
               ) }

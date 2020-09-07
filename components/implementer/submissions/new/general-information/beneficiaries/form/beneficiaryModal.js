@@ -10,7 +10,7 @@ import {
 import { getSelectValue } from "../../../../../../../helpers/getSelectValue"
 import { merge } from "lodash"
 
-export function BeneficiaryModal({edit, onCancel, onSave, ...props}) {
+export function BeneficiaryModal({ edit, onCancel, onSave, review, ...props }) {
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -49,7 +49,8 @@ export function BeneficiaryModal({edit, onCancel, onSave, ...props}) {
       onOk={onOk}
       onCancel={onCancelModal}
       okText={`${edit ? "Guardar" : "Agregar"}`}
-      cancelText="Cancelar"
+      okButtonProps={{ disabled: review }}
+      cancelText={review ? "Cerrar" : "Cancelar"}
       {...props}>
       <Form
         form={form}

@@ -2,9 +2,16 @@ import { ActivityItem } from "./activity-item"
 import { CompositeField } from "../../../shared"
 import { useState } from "react"
 import { ActivityModal } from "./activity-modal"
-import { IndicatorsField } from "../indicators-field"
 
-export function ActivitiesField({activityType, defaultValue, objectiveIndex, onChange, readOnly, hiddenComments}) {
+export function ActivitiesField({
+  activityType,
+  defaultValue,
+  objectiveIndex,
+  onChange,
+  readOnly,
+  hiddenComments,
+  review
+}) {
   const [state, setState] = useState({ isModalOpen: false, edit: undefined })
 
   const onClickAdd = () => {
@@ -38,7 +45,7 @@ export function ActivitiesField({activityType, defaultValue, objectiveIndex, onC
       onChange={onChange}
       defaultValue={defaultValue}
       onClickAdd={onClickAdd}
-      isAddDisabled={readOnly}
+      isAddDisabled={readOnly || review}
       addLabel="Agregar actividad">
       {({ items, addNew, removeItem, replaceItemAtIndex }) =>
         <div>
@@ -49,12 +56,14 @@ export function ActivitiesField({activityType, defaultValue, objectiveIndex, onC
             onSave={onSave(addNew, replaceItemAtIndex)}
             visible={state.isModalOpen}
             edit={state.edit}
+            review={review}
             hiddenComments={hiddenComments} />
           { items.map((item, index) =>
             <ActivityItem
               data={item}
               key={`activity_${index}`}
               readOnly={readOnly}
+              review={review}
               onDelete={removeItem(index)}
               onEdit={onEdit(item, index)} />
           ) }

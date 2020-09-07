@@ -16,7 +16,8 @@ export default function SpecificObjectiveForm({
   onChange,
   error,
   isLoading,
-  hiddenComments
+  hiddenComments,
+  review
 }) {
   if(isLoading) {
     return <Section><Skeleton active /></Section>
@@ -74,6 +75,7 @@ export default function SpecificObjectiveForm({
             </Form.Item>
             <Form.Item label="Indicadores">
               <IndicatorsField
+                review={review}
                 onChange={onSpecificObjectiveItemsChange(index, "indicators")}
                 indicatorType="SPECIFIC_INDICATOR"
                 objectiveIndex={index}
@@ -83,6 +85,7 @@ export default function SpecificObjectiveForm({
             </Form.Item>
             <Form.Item label="Actividades">
               <ActivitiesField
+                review={review}
                 activityType="SPECIFIC_ACTIVITY"
                 objectiveIndex={index}
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}

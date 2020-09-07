@@ -5,7 +5,7 @@ import { BeneficiaryModal } from "./beneficiaryModal"
 import { BeneficiaryItem } from "./beneficiaryItem"
 import { useState } from "react"
 
-function BeneficiariesForm({data, onChange, hiddenComments}) {
+function BeneficiariesForm({ data, onChange, hiddenComments, review }) {
   const [state, setState] = useState({
     isModalOpen: false,
     edit: undefined
@@ -47,12 +47,13 @@ function BeneficiariesForm({data, onChange, hiddenComments}) {
           onChange={onChange}
           defaultValue={data?.Submission?.beneficiaries}
           onClickAdd={onClickAdd}
-          isAddDisabled={readOnly}
+          isAddDisabled={readOnly || review}
           addLabel="Agregar beneficiario">
           {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <div>
               <BeneficiaryModal
                 edit={state.edit}
+                review={review}
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 visible={state.isModalOpen}
                 onCancel={onCancel} />
@@ -64,6 +65,7 @@ function BeneficiariesForm({data, onChange, hiddenComments}) {
                   readOnly={readOnly}
                   onEdit={onEdit(item, key)}
                   onDelete={removeItem(key)}
+                  review={review}
                   hiddenComments={hiddenComments}/>
               ) }
             </div>

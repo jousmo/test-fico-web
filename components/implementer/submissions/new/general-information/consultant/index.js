@@ -8,6 +8,7 @@ import ConsultantForm from "./form"
 export function Consultant() {
   const {
     updateGeneralInformation,
+    review,
     loading,
     error,
     data,
@@ -24,6 +25,7 @@ export function Consultant() {
         isLoading={loading}
         error={error}
         data={data}
+        review={review}
         onChange={onChange}
         hiddenComments={hiddenComments} />
     </Section>

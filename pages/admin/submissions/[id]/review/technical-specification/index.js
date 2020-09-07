@@ -57,7 +57,8 @@ function TechnicalSpecification({ client, query }) {
     updateTechnicalSpecification,
     loading,
     error,
-    data
+    data,
+    review: true
   }), [state, loading])
 
   const readOnly = data?.Submission?.state === "PROJECT"

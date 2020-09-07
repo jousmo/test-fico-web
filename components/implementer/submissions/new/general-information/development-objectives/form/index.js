@@ -5,7 +5,7 @@ import { GeneralObjectiveText } from "./general-objective-text"
 import { DevelopmentObjectiveText } from "./development-objective-text"
 import { SpecificObjectiveText } from "./specific-objective-text"
 
-function DevelopmentObjectivesForm({data, onChange, hiddenComments}) {
+function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
   const onSpecificObjectivesChange = (newObjectives) => {
     onChange && onChange({
       currentTarget: {
@@ -81,7 +81,7 @@ function DevelopmentObjectivesForm({data, onChange, hiddenComments}) {
               onChange={onSpecificObjectivesChange}
               defaultValue={data?.Submission?.specificObjectives || []}
               addLabel="Agregar objetivo específico"
-              isAddDisabled={readOnly}
+              isAddDisabled={readOnly || review}
               onClickAdd={(addNew) => addNew({description: ""})}>
               {({ items, updateItem, removeItem }) =>
                 <div>
@@ -97,7 +97,7 @@ function DevelopmentObjectivesForm({data, onChange, hiddenComments}) {
                             onBlur={updateItem(index)}
                             autoSize={{minRows: 3}} />
                         </Col>
-                        {!readOnly && (
+                        {(!readOnly && !review) && (
                           <Col>
                             <DeleteButton style={{marginLeft: "10px"}} onClick={removeItem(index)} />
                           </Col>

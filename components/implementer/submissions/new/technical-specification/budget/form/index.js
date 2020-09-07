@@ -7,7 +7,7 @@ import { conceptTypes } from "../../../../../../../helpers/selectOptions/impleme
 import { renderInvestment, renderTotal } from "./helpers"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 
-function BudgetForm({data, onChange, hiddenComments}) {
+function BudgetForm({ data, onChange, hiddenComments, review }) {
   const [state, setState] = useState({ isModalOpen: false, edit: false })
   const { Submission } = data || {}
 
@@ -46,7 +46,7 @@ function BudgetForm({data, onChange, hiddenComments}) {
         onClickAdd={onClickAdd}
         onChange={onChange}
         addLabel="Agregar concepto"
-        isAddDisabled={readOnly}
+        isAddDisabled={readOnly || review}
         defaultValue={Submission?.concepts}>
         {({ items, addNew, removeItem, replaceItemAtIndex }) =>
           <>
@@ -55,6 +55,7 @@ function BudgetForm({data, onChange, hiddenComments}) {
               submission={Submission}
               onCancel={onCancel}
               onSave={onSave(addNew, replaceItemAtIndex)}
+              review={review}
               edit={state.edit} />
             <ScrollableView contentWidth="1600px">
               <Table
@@ -78,7 +79,7 @@ function BudgetForm({data, onChange, hiddenComments}) {
                   title="Concepto"
                   key="name"
                   dataIndex="name"
-                  render={!readOnly && cellFormat.actions(onEdit, removeItem)} />
+                  render={!readOnly && cellFormat.actions(onEdit, removeItem, review)} />
                 <Table.Column
                   title="Región"
                   key="region"
