@@ -122,7 +122,7 @@ export const getConceptsPerMonths = (Submission, concepts, invoicesPerYearOrSear
 }
 
 export const getInvoicesPerYearOrSearch = ({ invoices, concepts }, year, search) => {
-  return invoices.filter(invoice => {
+  return invoices?.filter(invoice => {
     const yearInvoice = moment(invoice.monthAt, "MMYYYY").format("YYYY")
 
     if (search) {
@@ -137,11 +137,11 @@ export const getInvoicesPerYearOrSearch = ({ invoices, concepts }, year, search)
 export const getConceptBudgetGeneral = (concepts, concept, title, monthlyDistributionIndex) => {
   const months = Object.keys(monthlyDistributionIndex)
   const year = title.substring(6)
-  const filterMonths = months.filter(month => moment(month, "MMYYYY").format("YYYY") === year).map(el => el)
-  const findConcept = concepts.find(el => el.id === concept)
+  const filterMonths = months?.filter(month => moment(month, "MMYYYY").format("YYYY") === year).map(el => el)
+  const findConcept = concepts?.find(el => el.id === concept)
   let budgeted = 0
 
-  filterMonths.forEach(el => {
+  filterMonths?.forEach(el => {
     const index = monthlyDistributionIndex[el]
     budgeted += findConcept.monthlyDistribution[index] * findConcept.unitCost || 0
   })
