@@ -120,7 +120,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                         {!hiddenComments &&
                           <CommentButton
                             index={item.key}
-                            name={item.name}
+                            name={item.key.toString()}
                             small
                             section="HUMAN_RESOURCE" />
                         }
