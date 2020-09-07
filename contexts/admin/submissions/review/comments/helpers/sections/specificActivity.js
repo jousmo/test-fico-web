@@ -6,8 +6,10 @@ export const deleteSpecificAComments = (submission, toDelete, index) => {
 
   const objectives = [...submission?.specificObjectives]
   const objective = objectives[indices[0]]
+  delete objective.index
   const activities = objective?.activities
   const activity = activities[indices[1]]
+  delete activity.index
 
   const newComments = activity?.comments?.filter(e =>
     (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
@@ -34,8 +36,10 @@ export const addSpecificAComment = (submission, comment, index) => {
 
   const objectives = [...submission?.specificObjectives]
   const objective = objectives[indices[0]]
+  delete objective.index
   const activities = objective?.activities
   const activity = activities[indices[1]]
+  delete activity.index
   const comments = activity?.comments || []
 
   activities[indices[1]] = {
