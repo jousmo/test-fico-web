@@ -14,7 +14,8 @@ export function GeneralObjective() {
     updateTechnicalSpecification,
     loading,
     error,
-    data
+    data,
+    hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = ({ currentTarget: { id, value } }) => {
@@ -36,7 +37,8 @@ export function GeneralObjective() {
         isLoading={loading}
         error={error}
         data={data}
-        onChange={onChange} />
+        onChange={onChange}
+        hiddenComments={hiddenComments} />
     </Section>
   )
 }

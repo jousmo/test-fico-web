@@ -9,7 +9,8 @@ export function SpecificObjectives() {
     updateTechnicalSpecification,
     loading,
     error,
-    data
+    data,
+    hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = newSpecificObjectives => {
@@ -24,6 +25,7 @@ export function SpecificObjectives() {
       isLoading={loading}
       error={error}
       data={data}
-      onChange={onChange} />
+      onChange={onChange}
+      hiddenComments={hiddenComments} />
   )
 }

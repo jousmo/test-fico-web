@@ -14,6 +14,7 @@ export function ActivityModal({
   onSave,
   onCancel,
   edit,
+  hiddenComments,
   ...props
 }) {
   const [form] = Form.useForm()
@@ -72,6 +73,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "title",
                   section: activityType,
                   index: commentIndex}}>
@@ -89,6 +91,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "description",
                   section: activityType,
                   index: commentIndex}}>
@@ -106,6 +109,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "responsible",
                   section: activityType,
                   index: commentIndex}}>
@@ -123,6 +127,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "methodology",
                   section: activityType,
                   index: commentIndex}}>
@@ -140,6 +145,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "formula",
                   section: activityType,
                   index: commentIndex}}>
@@ -157,6 +163,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "meansOfVerification",
                   section: activityType,
                   index: commentIndex}}>
@@ -174,6 +181,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "baseline",
                   section: activityType,
                   index: commentIndex}}>
@@ -191,6 +199,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "goal",
                   section: activityType,
                   index: commentIndex}}>
@@ -208,6 +217,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "place",
                   section: activityType,
                   index: commentIndex}}>
@@ -225,6 +235,7 @@ export function ActivityModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "months",
                   section: activityType,
                   index: commentIndex}}>

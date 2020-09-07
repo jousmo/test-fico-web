@@ -16,7 +16,7 @@ import {
 } from "../../../../../../../helpers"
 import { merge } from "lodash"
 
-export function ConsultantModal({edit, onCancel, onSave, ...props}) {
+export function ConsultantModal({edit, onCancel, onSave, hiddenComments, ...props}) {
   const [form] = Form.useForm()
   const [state, setState] = useState({
     hasSupport: false,
@@ -36,6 +36,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
   const onOk = async () => {
     try {
       let values = await form.getFieldsValue()
+      values.supports = values?.supports?.map(el => ({ ...el, amount: +el.amount }))
 
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
@@ -134,6 +135,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   index: edit?.index,
                   name: "commercialName",
                   section: "CONSULTANT"}}>
@@ -152,6 +154,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   index: edit?.index,
                   name: "commercialAddress",
                   section: "CONSULTANT"}}>
@@ -170,6 +173,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   index: edit?.index,
                   name: "contactName",
                   section: "CONSULTANT"}}>
@@ -188,6 +192,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   index: edit?.index,
                   name: "phone",
                   section: "CONSULTANT"}}>
@@ -206,6 +211,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   index: edit?.index,
                   name: "rfc",
                   section: "CONSULTANT"}}>
@@ -224,6 +230,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   index: edit?.index,
                   name: "fiscalAddress",
                   section: "CONSULTANT"}}>
@@ -323,6 +330,7 @@ export function ConsultantModal({edit, onCancel, onSave, ...props}) {
                               style={{display: "inline"}}
                               label="Monto recibido">
                               <Input
+                                type="number"
                                 style={{width: "auto"}}
                                 addonBefore="$"
                                 id="amount"

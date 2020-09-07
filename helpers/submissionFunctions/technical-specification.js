@@ -16,8 +16,8 @@ export const setUpdateTechnicalSpecification = (technicalSpecification, state, s
 
 export const setSave = async (state, setState, updateSubmission, id) => {
   setState({ ...state, isSaving: true })
+  const saving = loadingAlert()
   try {
-    const saving = loadingAlert()
     const data = cloneDeep(state.technicalSpecification)
     data.specificObjectives = data.specificObjectives?.map(objective => {
       objective.activities = objective.activities.map(({uuid, ...activity}) =>
@@ -30,10 +30,7 @@ export const setSave = async (state, setState, updateSubmission, id) => {
 
       return objective
     })
-    await updateSubmission({
-      variables: { data: data, id: id }
-    })
-    setState({ ...state, isSaving: false })
+    await updateSubmission({ variables: { data: data, id: id } })
     saving()
     success()
   }
@@ -41,4 +38,5 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     warning()
     console.error(e)
   }
+  setState({ ...state, isSaving: false })
 }

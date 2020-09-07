@@ -7,7 +7,7 @@ import { conceptTypes } from "../../../../../../../helpers/selectOptions/impleme
 import { renderInvestment, renderTotal } from "./helpers"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 
-function BudgetForm({data, onChange}) {
+function BudgetForm({data, onChange, hiddenComments}) {
   const [state, setState] = useState({ isModalOpen: false, edit: false })
   const { Submission } = data || {}
 
@@ -21,9 +21,10 @@ function BudgetForm({data, onChange}) {
 
   const onSave = (addNew, replaceItemAtIndex) => (concept) => {
     if(concept.index !== undefined) {
-      replaceItemAtIndex(concept.index, concept)
-    }
-    else {
+      const index = concept.index
+      const cleanConcept = cleanData(concept)
+      replaceItemAtIndex(index, cleanConcept)
+    } else {
       addNew(concept)
     }
 
@@ -34,6 +35,8 @@ function BudgetForm({data, onChange}) {
     item.index = index
     setState({ ...state, isModalOpen: true, edit: item })
   }
+
+  const cleanData = concept => _.omit(concept, ['index', 'budgeted'])
 
   const readOnly = data?.Submission?.state === "PROJECT"
 
@@ -63,11 +66,12 @@ function BudgetForm({data, onChange}) {
                 <Table.Column
                   key="comments"
                   render={(text, row, index) => (
-                    <CommentButton
-                      index={index}
-                      name={`concept_${index}`}
-                      section="BUDGET"
-                      small />
+                    !hiddenComments &&
+                      <CommentButton
+                        index={index}
+                        name={`concept_${index}`}
+                        section="BUDGET"
+                        small />
                   )
                   }/>
                 <Table.Column

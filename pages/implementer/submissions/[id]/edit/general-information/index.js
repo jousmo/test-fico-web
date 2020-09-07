@@ -27,8 +27,6 @@ import {
 } from "../../../../../../helpers/submissionFunctions/general-information"
 
 function GeneralInformation({ client, query }) {
-  const submissionId = query.id
-
   const [state, setState] = useState({
     generalInformation: {},
     dirty: false,
@@ -49,12 +47,15 @@ function GeneralInformation({ client, query }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, setState, updateSubmission, submissionId)
+    await setSave(state, setState, updateSubmission, query.id)
   }, [state])
 
   const isCall = useCallback(() => {
     return getIsCall(data, state)
   }, [data, state])
+
+  const readOnly = data?.Submission?.state === "PROJECT"
+  const hiddenComments = data?.Submission?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
@@ -62,9 +63,8 @@ function GeneralInformation({ client, query }) {
     loading,
     error,
     data,
+    hiddenComments
   }), [state, loading])
-
-  const readOnly = data?.Submission?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>

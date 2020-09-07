@@ -8,7 +8,8 @@ export function DevelopmentObjectives() {
     updateGeneralInformation,
     loading,
     error,
-    data
+    data,
+    hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = ({ currentTarget: { id, value } }) => {
@@ -24,7 +25,8 @@ export function DevelopmentObjectives() {
         isLoading={loading}
         error={error}
         data={data}
-        onChange={onChange} />
+        onChange={onChange}
+        hiddenComments={hiddenComments} />
     </Section>
   )
 }

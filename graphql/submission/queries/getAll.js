@@ -32,7 +32,7 @@ export const getAll = gql`
         unitCost
         totalUnits
         monthlyDistribution
-        investmentDistributions {
+        investmentDistribution {
           name
           type
           percentage

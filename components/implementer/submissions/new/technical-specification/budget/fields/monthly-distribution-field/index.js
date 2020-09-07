@@ -4,6 +4,7 @@ import { CompositeField, Visibility } from "../../../../../../../shared"
 import numeral from "numeral"
 
 export function MonthlyDistributionField({
+  onChange,
   defaultValue = [],
   months = [],
   unitCost = 0.0,
@@ -22,13 +23,13 @@ export function MonthlyDistributionField({
   const displayMonthTotal = value =>
     numeral(unitCost * Number(value || 0)).format("$0,0.00")
 
-  const onChange = newItems => {
+  const onChangeInput = newItems => {
     const { total } = state
-
     const units = newItems.reduce((acc, item) => (
       acc += Number(item.value || 0)
     ), 0)
 
+    onChange && onChange(newItems.map(el => +el.value || 0))
     setState({ total, overLimit: units > total })
   }
 
@@ -50,7 +51,7 @@ export function MonthlyDistributionField({
     <CompositeField
       defaultValue={rows}
       isAddDisabled
-      onChange={onChange}>
+      onChange={onChangeInput}>
       {({ items, updateItem }) => {
         const total = items.reduce((t, r) =>
           t + unitCost * Number(r.value || 0), 0

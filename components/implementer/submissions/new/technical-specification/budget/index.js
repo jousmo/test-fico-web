@@ -10,13 +10,16 @@ export function Budget() {
     updateBudget,
     loading,
     error,
-    data
+    data,
+    hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = concepts => {
-    const newConcepts = Array.from(concepts)
+    const newConcepts = Array.from(concepts).map(cleanData)
     updateBudget({ concepts: newConcepts })
   }
+
+  const cleanData = concept => _.omit(concept, ["index", "budgeted"])
 
   return (
     <Section
@@ -26,7 +29,8 @@ export function Budget() {
         isLoading={loading}
         error={error}
         data={data}
-        onChange={onChange} />
+        onChange={onChange}
+        hiddenComments={hiddenComments} />
     </Section>
   )
 }

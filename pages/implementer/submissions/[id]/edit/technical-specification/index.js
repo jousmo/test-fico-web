@@ -51,14 +51,16 @@ function TechnicalSpecification({ client, query }) {
     await setSave(state, setState, updateSubmission, submissionId)
   }, [state])
 
+  const readOnly = data?.Submission?.state === "PROJECT"
+  const hiddenComments = data?.Submission?.status === "CREATED"
+
   const injectActions = useMemo(() => ({
     updateTechnicalSpecification,
     loading,
     error,
-    data
+    data,
+    hiddenComments
   }), [state, loading])
-
-  const readOnly = data?.Submission?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 1 })}>

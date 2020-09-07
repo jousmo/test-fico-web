@@ -10,7 +10,8 @@ export function Consultant() {
     updateGeneralInformation,
     loading,
     error,
-    data
+    data,
+    hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = data => {
@@ -23,7 +24,8 @@ export function Consultant() {
         isLoading={loading}
         error={error}
         data={data}
-        onChange={onChange} />
+        onChange={onChange}
+        hiddenComments={hiddenComments} />
     </Section>
   )
 }

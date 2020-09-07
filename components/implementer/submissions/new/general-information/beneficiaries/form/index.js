@@ -1,11 +1,11 @@
 import { withForm } from "../../../../../../../helpers/withForm"
-import { Form, Card, Descriptions, Typography } from "antd"
+import { Form } from "antd"
 import { CompositeField } from "../../../../../../shared"
 import { BeneficiaryModal } from "./beneficiaryModal"
 import { BeneficiaryItem } from "./beneficiaryItem"
 import { useState } from "react"
 
-function BeneficiariesForm({data, onChange}) {
+function BeneficiariesForm({data, onChange, hiddenComments}) {
   const [state, setState] = useState({
     isModalOpen: false,
     edit: undefined
@@ -63,7 +63,8 @@ function BeneficiariesForm({data, onChange}) {
                   data={item}
                   readOnly={readOnly}
                   onEdit={onEdit(item, key)}
-                  onDelete={removeItem(key)} />
+                  onDelete={removeItem(key)}
+                  hiddenComments={hiddenComments}/>
               ) }
             </div>
           }

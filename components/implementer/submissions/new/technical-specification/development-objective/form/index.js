@@ -2,7 +2,7 @@ import { withForm } from "../../../../../../../helpers/withForm"
 import { Form } from "antd"
 import { IndicatorsField } from "../../../../indicators-field"
 
-function DevelopmentObjectiveForm({data, onChange}) {
+function DevelopmentObjectiveForm({data, onChange, hiddenComments}) {
   const onIndicatorsChange = newIndicators => {
     onChange && onChange({
       currentTarget: {
@@ -26,7 +26,8 @@ function DevelopmentObjectiveForm({data, onChange}) {
           defaultValue={data?.Submission?.developmentObjectiveIndicators}
           indicatorType="DEVELOPMENT_INDICATOR"
           readOnly={readOnly}
-          onChange={onIndicatorsChange} />
+          onChange={onIndicatorsChange}
+          hiddenComments={hiddenComments}/>
       </Form.Item>
     </Form>
   )

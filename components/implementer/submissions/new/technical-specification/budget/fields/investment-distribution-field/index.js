@@ -3,6 +3,7 @@ import { CompositeField, Visibility } from "../../../../../../../shared"
 import numeral from "numeral"
 
 export function InvestmentDistributionField({
+  onChange,
   allies,
   defaultValue = [
     { type: "IMPLEMENTER", name: "Implementadora", percentage: undefined },
@@ -27,14 +28,16 @@ export function InvestmentDistributionField({
     return numeral(percentage * total / 100).format("$0,0.00")
   }
 
-  if (allies?.[1] ===  undefined){
+  if (defaultValue.length === 4 && allies?.[1] ===  undefined){
     defaultValue.pop()
   }
 
-  const onChange = newItems => {
+  const onChangeInput = newItems => {
     const percentage = newItems.reduce((acc, item) => (
       acc += Number(item.percentage || 0)
     ), 0)
+
+    onChange && onChange(newItems.map(el => ({ ...el, percentage: +el.percentage || 0})))
     setState(percentage > 100)
   }
 
@@ -42,7 +45,7 @@ export function InvestmentDistributionField({
     <CompositeField
       defaultValue={defaultValue}
       isAddDisabled
-      onChange={onChange}>
+      onChange={onChangeInput}>
       {({ items, updateItem }) =>
         <>
           <Row gutter={[10, 8]}>

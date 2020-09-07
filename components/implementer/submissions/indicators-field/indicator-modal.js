@@ -18,6 +18,7 @@ export function IndicatorModal({
   onSave,
   onCancel,
   edit,
+  hiddenComments,
   ...props
 }) {
   const [form] = Form.useForm()
@@ -77,6 +78,7 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "title",
                   section: indicatorType,
                   index: commentIndex}}>
@@ -94,6 +96,7 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "description",
                   section: indicatorType,
                   index: commentIndex}}>
@@ -111,6 +114,7 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "methodology",
                   section: indicatorType,
                   index: commentIndex}}>
@@ -128,6 +132,7 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "formula",
                   section: indicatorType,
                   index: commentIndex}}>
@@ -145,6 +150,7 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "meansOfVerification",
                   section: indicatorType,
                   index: commentIndex}}>
@@ -162,6 +168,7 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "baseline",
                   section: indicatorType,
                   index: commentIndex}}>
@@ -179,6 +186,7 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label={
                 <FieldLabel comentable={{
+                  hidden: hiddenComments,
                   name: "goal",
                   section: indicatorType,
                   index: commentIndex}}>

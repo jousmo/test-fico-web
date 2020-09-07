@@ -5,7 +5,7 @@ import { ConsultantModal } from "./consultant-modal"
 import { ConsultantItem } from "./consultant-item"
 import { useState } from "react"
 
-function ConsultantForm({data, onChange}) {
+function ConsultantForm({data, onChange, hiddenComments}) {
   const [state, setState] = useState({
     isModalOpen: false,
     edit: undefined
@@ -57,7 +57,8 @@ function ConsultantForm({data, onChange}) {
                 edit={state.edit}
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 visible={state.isModalOpen}
-                onCancel={onCancel} />
+                onCancel={onCancel}
+                hiddenComments={hiddenComments}/>
               { items.map((item, key) =>
                 <ConsultantItem
                   key={key}

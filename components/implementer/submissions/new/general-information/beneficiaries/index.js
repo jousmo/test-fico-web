@@ -10,7 +10,8 @@ export function Beneficiaries() {
     updateGeneralInformation,
     loading,
     error,
-    data
+    data,
+    hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = data => {
@@ -23,7 +24,8 @@ export function Beneficiaries() {
         data={data}
         isLoading={loading}
         error={error}
-        onChange={onChange} />
+        onChange={onChange}
+        hiddenComments={hiddenComments} />
     </Section>
   )
 }

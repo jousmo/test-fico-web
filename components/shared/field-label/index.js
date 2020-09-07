@@ -12,11 +12,13 @@ export function FieldLabel({helpText, children, comentable}) {
         <><QuestionCircleFilled />&nbsp;</>
       : null }
       { comentable ?
-        <CommentButton
-          index={comentable?.index}
-          name={comentable?.name}
-          section={comentable?.section} />
-      : null }
+        !comentable?.hidden &&
+          <CommentButton
+            index={comentable?.index}
+            name={comentable?.name}
+            section={comentable?.section} />
+        : null
+      }
     </Popover>
   )
 }

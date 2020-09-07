@@ -12,7 +12,7 @@ import {
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { HumanResourcesColumns } from "./form-columns"
 
-function HumanResourcesTable({ data, onChange }) {
+function HumanResourcesTable({ data, onChange, hiddenComments }) {
   const concepts = data?.Submission?.concepts || []
   const humanResources = concepts?.map((concept, index) =>
     concept.type === "HUMAN_RESOURCE" &&
@@ -89,11 +89,13 @@ function HumanResourcesTable({ data, onChange }) {
                       justify="start"
                       key={index}>
                       <Col flex="50px">
-                        <CommentButton
-                          index={item.key}
-                          name={item.name}
-                          small
-                          section="HUMAN_RESOURCE" />
+                        {!hiddenComments &&
+                          <CommentButton
+                            index={item.key}
+                            name={item.name}
+                            small
+                            section="HUMAN_RESOURCE" />
+                        }
                       </Col>
                       <Col flex="30px">
                         <span key={`userIcon-${index}`}>

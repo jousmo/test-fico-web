@@ -9,7 +9,7 @@ import {
 import { DeleteButton, EditButton } from "../../../../../../shared"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 
-export function BeneficiaryItem({ data, onEdit, onDelete, index, readOnly }) {
+export function BeneficiaryItem({ data, onEdit, onDelete, index, readOnly, hiddenComments }) {
   const { description, number } = data
 
   const educationLevel = getReadableValue(
@@ -38,10 +38,12 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index, readOnly }) {
     <Card key={`beneficiary_${index}`} style={{marginBottom: "20px"}}>
       <Typography.Title level={4}>
         {description}
-        <CommentButton
-          name={`beneficiary_${index}`}
-          index={index}
-          section="beneficiary" />
+        {!hiddenComments &&
+          <CommentButton
+            name={`beneficiary_${index}`}
+            index={index}
+            section="beneficiary" />
+        }
       </Typography.Title>
       <Typography.Text type="secondary">
         {number} beneficiarios

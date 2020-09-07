@@ -127,7 +127,7 @@ export const getById = gql`
         totalUnits
         monthlyDistribution,
         budgeted
-        investmentDistributions {
+        investmentDistribution {
           name
           type
           percentage
