@@ -245,7 +245,7 @@ export const getConcept = (concepts, id) => concepts.find(concept => concept.id 
 
 export const listConcepts = ({ concepts }) => concepts?.map(concept => ({ label: concept.name, value: concept.id }))
 
-export const monthYearConvert = date => _.capitalize(moment(date, "MMYYYY").format("MMMM"))
+export const monthYearConvert = date => _.capitalize(moment(date, "MMYYYY").format("MMMM YYYY"))
 
 export const projectInitYear = ({ startDate }) => moment(startDate).format("YYYY")
 
