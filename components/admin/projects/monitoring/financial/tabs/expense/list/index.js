@@ -14,7 +14,8 @@ export function ListExpense ({ dataSource, concepts, onEdit }) {
       dataSource={dataSource}
       size="small"
       locale={{emptyText: <Empty description="Agrega todas las facturas" />}}
-      pagination={false}>
+      scroll={{ x: true }}
+      pagination={true}>
       <Table.Column
         width={1}
         title=""
