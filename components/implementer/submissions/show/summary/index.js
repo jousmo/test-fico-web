@@ -21,11 +21,10 @@ export function SubmissionSummary() {
   } = useContext(ImplementerSubmissionContext)
 
   const editRoute = `/implementer/submissions/${data?.Submission?.id}/edit/general-information`
+  const status = data?.Submission?.status
+  const statusIndex = submissionStatusOptions.findIndex(e => e.value === status)
 
   const onReview = () => {
-    const { status } = data?.Submission
-    const statusIndex = submissionStatusOptions.findIndex(e => e.value === status)
-
     if (status.includes("REVIEW")){
       message.warning("La solicitud ya se encuentra en revisión")
     } else {
@@ -52,19 +51,21 @@ export function SubmissionSummary() {
           icon={<RightCircleOutlined />}
           onClick={() => router.push(editRoute)}
           className="implementer continue-submission">
-          Continuar solicitud
+          {statusIndex > 9 ? "Ver" : "Continuar"} solicitud
         </Button>
-        <Popconfirm
-          title="¿Enviar solocitud a revisión?"
-          onConfirm={onReview}
-          okText="Aceptar"
-          cancelText="Cancelar">
-          <Button
-            icon={<SendOutlined />}
-            className="implementer send-submission">
-            Enviar solicitud
-          </Button>
-        </Popconfirm>
+        {statusIndex < 9 && (
+          <Popconfirm
+            title="¿Enviar solocitud a revisión?"
+            onConfirm={onReview}
+            okText="Aceptar"
+            cancelText="Cancelar">
+            <Button
+              icon={<SendOutlined />}
+              className="implementer send-submission">
+              Enviar solicitud
+            </Button>
+          </Popconfirm>
+        )}
       </div>
     </div>
   )
