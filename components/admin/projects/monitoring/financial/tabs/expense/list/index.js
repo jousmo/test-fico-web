@@ -31,7 +31,7 @@ export function ListExpense ({ dataSource, concepts, onEdit }) {
         width={1}
         dataIndex="issuedAt"
         title="Emisión"
-        sorter={(a, b) => moment(a.issuedAt) > moment(b.issuedAt)}
+        sorter={(a, b) => a.issuedAt?.localeCompare(b.issuedAt)}
         showSorterTooltip={false}
         render={text => moment(text).format("DD/MMMM/YYYY").toUpperCase()} />
       <Table.Column
@@ -63,7 +63,7 @@ export function ListExpense ({ dataSource, concepts, onEdit }) {
         width={2}
         dataIndex="paymentAt"
         title="Fecha de pago"
-        sorter={(a, b) => moment(a.paymentAt) > moment(b.paymentAt)}
+        sorter={(a, b) => a.paymentAt?.localeCompare(b.paymentAt)}
         showSorterTooltip={false}
         render={text => <DateField
           value={text} format="DD/MM/YYYY"
@@ -73,7 +73,7 @@ export function ListExpense ({ dataSource, concepts, onEdit }) {
         dataIndex="concept"
         title="ID Concepto"
         render={text => <SelectField value={getConcept(concepts, text)} disabled />}
-        sorter={(a, b) => a.concept?.localeCompare(b.concept)}
+        sorter={(a, b) => getConcept(concepts, a.concept).localeCompare(getConcept(concepts, b.concept))}
         showSorterTooltip={false} />
       <Table.Column
         width={1}
