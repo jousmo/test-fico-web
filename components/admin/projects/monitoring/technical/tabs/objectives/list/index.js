@@ -79,7 +79,7 @@ export function ObjectivesList({ data, dateFilter }) {
         <Table.Column
           render={(t, row) => getAppliedAt(data, row)}
           sorter={(a, b) =>
-            moment(getReport(data, a)?.appliedAt) > moment(getReport(data, b)?.appliedAt)
+            getReport(data, a)?.appliedAt?.localeCompare(getReport(data, b)?.appliedAt)
           }
           showSorterTooltip={false}
           title="Realizado" />
