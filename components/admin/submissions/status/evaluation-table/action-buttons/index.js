@@ -1,4 +1,3 @@
-import { useContext } from "react"
 import { Button, Tooltip } from "antd"
 import { useRouter } from "next/router"
 import {
@@ -8,17 +7,13 @@ import {
 } from "@ant-design/icons"
 import { ConfirmButton } from "../../../../../shared"
 import {
-  AdminSubmissionContext
-} from "../../../../../../contexts/admin/submissions/show"
-import {
   handleApprove,
   handleReject,
   handleView
 } from "./helpers"
 
-export function EvaluationActionButtons({ id, onChange }){
+export function EvaluationActionButtons({ id, save }){
   const router = useRouter()
-  const { save } = useContext(AdminSubmissionContext)
 
   return (
     <div>
@@ -32,12 +27,12 @@ export function EvaluationActionButtons({ id, onChange }){
       <ConfirmButton
         icon={<CloseOutlined />}
         confirmText="Rechazar solicitud"
-        onClick={() => handleReject(id, save, onChange)} />
+        onClick={() => handleReject(id, save)} />
       &nbsp;
       <ConfirmButton
         icon={<CheckOutlined />}
         confirmText="Aprobar solicitud"
-        onClick={() => handleApprove(id, router, save, onChange)}
+        onClick={() => handleApprove(id, router, save)}
         style={{ backgroundColor: "green", color: "white" }} />
     </div>
   )

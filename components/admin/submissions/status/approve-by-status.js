@@ -9,6 +9,7 @@ export function ApproveByStatus() {
   const {
     loading,
     error,
+    save,
     data
   } = useContext(AdminSubmissionContext)
 
@@ -27,6 +28,7 @@ export function ApproveByStatus() {
       <EvaluationTable
         data={state ? state : data?.Submissions}
         error={error}
+        save={save}
         isLoading={loading} />
     </Section>
   )

@@ -13,14 +13,10 @@ function SummaryBody({ data, extra }) {
   const {
     name,
     scope,
-    concepts,
+    budgeted,
     description,
     preventionLevel
   } = data
-
-  const totalBudget = concepts?.reduce((result, concept) => (
-    result + (concept.unitCost * concept.totalUnits)
-  ), 0)
 
   return (
     <Descriptions
@@ -30,13 +26,17 @@ function SummaryBody({ data, extra }) {
         {description}
       </Descriptions.Item>
       <Descriptions.Item label="Ámbito">
-        {getReadableValue(scopeTypes, scope)}
+        {scope?.map(el =>
+          getReadableValue(scopeTypes, el)
+        )}
       </Descriptions.Item>
       <Descriptions.Item  span={2} label="Nivel de prevención">
-        {getReadableValue(preventionLevelTypes, preventionLevel)}
+        {preventionLevel?.map(el =>
+          getReadableValue(preventionLevelTypes, el)
+        )}
       </Descriptions.Item>
       <Descriptions.Item  span={3} label="Presupuesto total">
-        {numeral(totalBudget).format("$0,0.00")}
+        {numeral(budgeted).format("$0,0.00")}
       </Descriptions.Item>
       {extra}
     </Descriptions>

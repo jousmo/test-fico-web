@@ -1,5 +1,5 @@
 import { withForm } from "../../../../../../helpers/withForm"
-import { Button, Form } from "antd"
+import { Form } from "antd"
 import moment from "moment"
 import {
   getReadableValue
@@ -10,11 +10,10 @@ import {
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 import { DateField, Visibility } from "../../../../../shared"
 
-function StatusForm({ data, onChange, onSave }) {
-
-  const onDateChange = dateObject => {
-    const newDeadline = getSelectValue(dateObject)
-    onChange(newDeadline)
+function StatusForm({ data, onSave }) {
+  const onSaveDate = date => {
+    const deadline = getSelectValue(date)
+    onSave({ deadline: deadline })
   }
 
   return (
@@ -35,9 +34,7 @@ function StatusForm({ data, onChange, onSave }) {
           <DateField
             id="deadline"
             defaultValue={data?.deadline}
-            onChange={onDateChange} />
-          &nbsp;
-          <Button onClick={onSave}>Guardar</Button>
+            onChange={onSaveDate}/>
         </Form.Item>
       </Visibility>
     </Form>

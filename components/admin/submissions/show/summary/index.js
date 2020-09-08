@@ -2,29 +2,33 @@ import { useContext, useState } from "react"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
-import { Button, Col, Descriptions, Modal } from "antd"
-import { EyeOutlined, BarChartOutlined, ExclamationCircleOutlined } from "@ant-design/icons"
+import { Button, Col, Descriptions, Modal, message } from "antd"
 import Link from "next/link"
 import {
+  EyeOutlined,
   CloseOutlined,
+  CheckOutlined,
   RetweetOutlined,
-  SelectOutlined,
-  UploadOutlined
+  BarChartOutlined,
+  ExclamationCircleOutlined
 } from "@ant-design/icons"
-import { BreadcrumbHeading } from "../../../../shared/breadcrum-heading"
+import { BreadcrumbHeading, ConfirmButton } from "../../../../shared"
 import { ApprovalModal } from "./approval-modal"
 import SummaryBody from "../../../../shared/submission-summary-body"
+import { submissionStatusOptions } from "../../../../../helpers/selectOptions/shared/submission-status"
+import moment from "moment"
 import "./style.sass"
 
 export function SubmissionSummary() {
   const {
-    saveApproveMonitoring,
     loading,
     error,
+    save,
     data
   } = useContext(AdminSubmissionContext)
 
-  const onAgreement = data?.Submission?.status === "ON_AGREEMENT"
+  const status = data?.Submission?.status
+  const statusIndex = submissionStatusOptions.findIndex(e => e.value === status)
   const findDocument = data?.Submission?.documents.filter(document => document.type === "AGREEMENT")
 
   const [state, setState] = useState({
@@ -44,37 +48,49 @@ export function SubmissionSummary() {
       title: `¿Quieres aprobar la solicitud para monitoreo?`,
       icon: <ExclamationCircleOutlined />,
       onOk() {
-        saveApproveMonitoring()
+        save({ status: "AWAITING_INFO", state: "PROJECT", statusChangedAt: moment().format() })
       }
     });
   }
 
-  const onSave = (values) => {
-    /* TODO: Change status of submission */
+  const onSave = value => {
+    save({ status: "ON_COUNCIL", statusChangedAt: moment().format(), ...value })
     onCancel()
   }
 
   const onRequestReview = () => {
-    /* TODO: Request review to implementer */
+    if (statusIndex === 9) {
+      message.warning("La solicitud se encuentra en la revisión final")
+      return
+    }
+
+    if (status.includes("REVIEW")){
+      save({ status: submissionStatusOptions[statusIndex + 1].value, statusChangedAt: moment().format() })
+    } else {
+      message.warning("La solicitud ya se encuentra en revisión")
+    }
   }
 
-  const headingButtons = (
-    !onAgreement ? (
+  let headingButtons = null
+  if (statusIndex < 9) {
+    headingButtons = (
       <Col>
-        <Button
-          ghost
-          shape="circle"
+        <ConfirmButton
           icon={<RetweetOutlined />}
+          confirmText="Solicitar revisión"
           onClick={onRequestReview} />
-        <Button ghost shape="circle" icon={<CloseOutlined />} />
-        <Button ghost shape="circle" icon={<SelectOutlined />} />
+        <ConfirmButton
+          icon={<CloseOutlined />}
+          confirmText="Rechazar solicitud" />
         <Button
           ghost
           shape="circle"
-          icon={<UploadOutlined rotate={90}/>}
+          icon={<CheckOutlined />}
           onClick={onClickApprove} />
       </Col>
-    ) : (
+    )
+  } else if (status === "ON_AGREEMENT") {
+    headingButtons = (
       <Col>
         <Button
           type="ficosuccess"
@@ -85,7 +101,7 @@ export function SubmissionSummary() {
         </Button>
       </Col>
     )
-  )
+  }
 
   const goToSubmission = (
     <Descriptions.Item>
