@@ -24,6 +24,7 @@ export const getAll = gql`
       deadline
       agreementNumber
       technicalOpinion
+      createdAt
       concepts {
         name
         region
