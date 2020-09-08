@@ -19,3 +19,18 @@ export const getAppliedAt = (data, row) => {
 
   return moment(appliedAt).format("DD/MM/YYYY")
 }
+
+export const onSearch = (data, value, setState) => {
+  if (!value) {
+    setState(false)
+    return
+  }
+
+  const loweredValue = value.toLowerCase()
+  const filter = data?.filter(el =>
+    el.description?.toLowerCase().includes(loweredValue) ||
+    el.title?.toLowerCase().includes(loweredValue) ||
+    el.meansOfVerification?.toLowerCase().includes(loweredValue)
+  )
+  setState(filter)
+}

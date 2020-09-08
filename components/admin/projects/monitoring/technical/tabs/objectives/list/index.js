@@ -1,5 +1,5 @@
-import { Button, Table } from "antd"
-import { Tooltip } from "../../../../../../../shared"
+import { Alert, Button, Table } from "antd"
+import { SearchFieldPrimary, Tooltip } from "../../../../../../../shared"
 import { CheckSquareTwoTone } from "@ant-design/icons/lib"
 import { EditOutlined } from "@ant-design/icons"
 import { decoratedData } from "./data-decorator"
@@ -10,10 +10,11 @@ moment.locale("es")
 import {
   AdminSubmissionContext
 } from "../../../../../../../../contexts/admin/submissions/show"
-import { getReport, getParticipants, getAppliedAt } from "./helpers"
+import { getReport, getParticipants, getAppliedAt, onSearch } from "./helpers"
 
 export function ObjectivesList({ data, dateFilter }) {
   const [state, setState] = useState({ isModalOpen: false, edit: undefined })
+  const [filterState, setFilterState] = useState(false)
 
   const dataSource = decoratedData(data, dateFilter)
   const { save, update } = useContext(AdminSubmissionContext)
@@ -46,6 +47,14 @@ export function ObjectivesList({ data, dateFilter }) {
 
   return (
     <>
+      <SearchFieldPrimary
+        onSearch={value => onSearch(dataSource, value, setFilterState)}
+        style={{marginBottom: "1rem"}} />
+      <Alert
+        type="info"
+        showIcon
+        message="Especifica cuántos participantes fueron atendidos y adjunta la
+        evidencia necesaria en cada objetivo y actividad" />
       <ObjectivesModal
         edit={state.edit}
         onCancel={onCancel}
@@ -53,7 +62,7 @@ export function ObjectivesList({ data, dateFilter }) {
         visible={state.isModalOpen} />
       <Table
         className="table-list"
-        dataSource={dataSource}
+        dataSource={filterState ? filterState : dataSource}
         size="middle">
         <Table.Column
           render={(t, row) => getReport(data, row) && <CheckSquareTwoTone />}
