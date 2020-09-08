@@ -37,13 +37,13 @@ export function InvestmentDistributionField({
       acc += Number(item.percentage || 0)
     ), 0)
 
-    onChange && onChange(newItems.map(el => ({ ...el, percentage: +el.percentage || 0})))
+    onChange && onChange(newItems.map(el => ({ ...el, percentage: Number(el.percentage) || 0})))
     setState(percentage > 100)
   }
 
   return (
     <CompositeField
-      defaultValue={defaultValue}
+      value={defaultValue}
       isAddDisabled
       onChange={onChangeInput}>
       {({ items, updateItem }) =>
@@ -63,7 +63,7 @@ export function InvestmentDistributionField({
                 <Input
                   type="number"
                   name="percentage"
-                  defaultValue={item.percentage}
+                  value={item.percentage}
                   onChange={updateItem(index)}
                   suffix="%"
                   max={100}

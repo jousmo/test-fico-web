@@ -203,18 +203,20 @@ export function ConceptModal({
             <Form.Item
               name="monthlyDistribution"
               style={{display: "inline"}}
-              label={<FieldLabel>
-                Distribución mensual
-                <br />
-                <Typography.Text type="secondary">
-                  Selecciona el número de unidades que utilizarás por mes. 20
-                  unidades máximo por mes.
-                </Typography.Text>
-              </FieldLabel>}>
+              label={
+                <FieldLabel>
+                  Distribución mensual
+                  <br />
+                  <Typography.Text type="secondary">
+                    Selecciona el número de unidades que utilizarás por mes. 20
+                    unidades máximo por mes.
+                  </Typography.Text>
+                </FieldLabel>
+              }>
               <MonthlyDistributionField
                 defaultValue={edit?.monthlyDistribution}
                 unitCost={state.unitCost}
-                months={projectMonths}
+                months={edit ? projectMonths : []}
                 state={unitsState}
                 setState={setUnitsState}/>
             </Form.Item>

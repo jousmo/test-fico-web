@@ -11,7 +11,7 @@ export function MonthlyDistributionField({
   setState,
   state
 }) {
-  const rows = months.map((label, index) => {
+  const rows = months?.map((label, index) => {
     const data = {}
 
     data.label = label
