@@ -10,36 +10,13 @@ moment.locale("es")
 import {
   AdminSubmissionContext
 } from "../../../../../../../../contexts/admin/submissions/show"
+import { getReport, getParticipants, getAppliedAt } from "./helpers"
 
 export function ObjectivesList({ data, dateFilter }) {
-  const [state, setState] = useState({
-    isModalOpen: false,
-    edit: undefined,
-    test: 0
-  })
+  const [state, setState] = useState({ isModalOpen: false, edit: undefined })
 
   const dataSource = decoratedData(data, dateFilter)
   const { save, update } = useContext(AdminSubmissionContext)
-
-  const getReport = row => {
-    return data.technicalMonitoringReports?.find(r => r.key === row.key)
-  }
-
-  const getParticipants = row => {
-    const report = getReport(row)
-    return report?.participants?.reduce((acc, item) => (
-      acc += Number(item.amount || 0)
-    ), 0) || 0
-  }
-
-  const getAppliedAt = row => {
-    const { appliedAt } = getReport(row) || {}
-    if (!appliedAt){
-      return null
-    }
-
-    return moment(appliedAt).format("DD/MM/YYYY")
-  }
 
   const onSave = monitoring => {
     const newReports = [ ...data.technicalMonitoringReports ]
@@ -79,7 +56,7 @@ export function ObjectivesList({ data, dateFilter }) {
         dataSource={dataSource}
         size="middle">
         <Table.Column
-          render={(t, row) => getReport(row) && <CheckSquareTwoTone />}
+          render={(t, row) => getReport(data, row) && <CheckSquareTwoTone />}
           title={<CheckSquareTwoTone />}/>
         <Table.Column
           dataIndex="level"
@@ -91,9 +68,9 @@ export function ObjectivesList({ data, dateFilter }) {
           showSorterTooltip={false}
           dataIndex="description" />
         <Table.Column
-          render={(t, row) => getAppliedAt(row)}
+          render={(t, row) => getAppliedAt(data, row)}
           sorter={(a, b) =>
-            moment(getReport(a)?.appliedAt) > moment(getReport(b)?.appliedAt)
+            moment(getReport(data, a)?.appliedAt) > moment(getReport(data, b)?.appliedAt)
           }
           showSorterTooltip={false}
           title="Realizado" />
@@ -117,25 +94,25 @@ export function ObjectivesList({ data, dateFilter }) {
           title="Meta" />
         <Table.Column
           align="center"
-          render={(t, row) => getReport(row)?.completed || 0}
+          render={(t, row) => getReport(data, row)?.completed || 0}
           title="Real"
           sorter={(a, b) =>
-            (getReport(a)?.completed || 0) - (getReport(b)?.completed || 0)
+            (getReport(data, a)?.completed || 0) - (getReport(data, b)?.completed || 0)
           }
           showSorterTooltip={false}
           width={90} />
         <Table.Column
           align="center"
-          render={(t, row) => `${getReport(row)?.compliance || 0}%`}
+          render={(t, row) => `${getReport(data, row)?.compliance || 0}%`}
           sorter={(a, b) =>
-            (getReport(a)?.compliance || 0) - (getReport(b)?.compliance || 0)
+            (getReport(data, a)?.compliance || 0) - (getReport(data, b)?.compliance || 0)
           }
           showSorterTooltip={false}
           title="Cumplimiento" />
         <Table.Column
           align="center"
-          render={(t, row) => getParticipants(row)}
-          sorter={(a, b) => getParticipants(a) - getParticipants(b)}
+          render={(t, row) => getParticipants(data, row)}
+          sorter={(a, b) => getParticipants(data, a) - getParticipants(data, b)}
           showSorterTooltip={false}
           title="Participantes" />
         <Table.Column
