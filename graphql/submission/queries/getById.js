@@ -280,6 +280,7 @@ export const getById = gql`
         correctiveActions
         challenges
         obstacles
+        createdAt
       }
       closureDescription
       closureDocument{
