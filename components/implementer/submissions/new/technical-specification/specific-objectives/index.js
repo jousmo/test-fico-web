@@ -8,6 +8,7 @@ export function SpecificObjectives() {
   const {
     updateTechnicalSpecification,
     loading,
+    review,
     error,
     data,
     hiddenComments
@@ -25,6 +26,7 @@ export function SpecificObjectives() {
       isLoading={loading}
       error={error}
       data={data}
+      review={review}
       onChange={onChange}
       hiddenComments={hiddenComments} />
   )

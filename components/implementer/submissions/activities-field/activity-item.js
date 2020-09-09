@@ -5,7 +5,7 @@ import { extendMoment } from "moment-range"
 const moment = extendMoment(Moment)
 moment.locale("es")
 
-export function ActivityItem({data, onDelete, onEdit, readOnly}) {
+export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
   const {
     description = "N/A",
     responsible = "N/A",
@@ -59,9 +59,11 @@ export function ActivityItem({data, onDelete, onEdit, readOnly}) {
       <Typography.Text>{formattedMonths || "N/A"}</Typography.Text>
       {!readOnly && (
         <>
-          <DeleteButton
-            onClick={onDelete}
-            style={{marginLeft: "8px"}} />
+          {!review &&
+            <DeleteButton
+              onClick={onDelete}
+              style={{marginLeft: "8px"}} />
+          }
           <EditButton onClick={onEdit} />
         </>
       )}

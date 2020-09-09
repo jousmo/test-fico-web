@@ -1,7 +1,7 @@
 import { Card, Typography } from "antd"
 import { EditButton, DeleteButton } from "../../../shared"
 
-export function IndicatorItem({data, onDelete, onEdit, readOnly}) {
+export function IndicatorItem({ data, onDelete, onEdit, readOnly, review }) {
   const {
     title = "Indicador sin título",
     description = "N/A",
@@ -40,9 +40,11 @@ export function IndicatorItem({data, onDelete, onEdit, readOnly}) {
       <Typography.Text>{meansOfVerification || "N/A"}</Typography.Text>
       {!readOnly && (
         <>
-          <DeleteButton
-            onClick={onDelete}
-            style={{marginLeft: "8px"}} />
+          {!review &&
+            <DeleteButton
+              onClick={onDelete}
+              style={{marginLeft: "8px"}} />
+          }
           <EditButton onClick={onEdit} />
         </>
       )}

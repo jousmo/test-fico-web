@@ -2,7 +2,7 @@ import { withForm } from "../../../../../../../helpers/withForm"
 import { Form } from "antd"
 import { IndicatorsField } from "../../../../indicators-field"
 
-function GeneralObjectiveForm({data, onChange, hiddenComments}) {
+function GeneralObjectiveForm({ data, onChange, hiddenComments, review }) {
   const onIndicatorsChange = newIndicators => {
     onChange && onChange({
       currentTarget: {
@@ -23,6 +23,7 @@ function GeneralObjectiveForm({data, onChange, hiddenComments}) {
       </Form.Item>
       <Form.Item label="Indicadores">
         <IndicatorsField
+          review={review}
           defaultValue={data?.Submission?.generalObjectiveIndicators}
           indicatorType="GENERAL_INDICATOR"
           readOnly={readOnly}

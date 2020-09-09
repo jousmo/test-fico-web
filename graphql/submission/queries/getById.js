@@ -46,6 +46,12 @@ export const getById = gql`
           endDate
           measurementPeriodicity
           products
+          comments {
+            fieldName
+            revision
+            comment
+            type
+          }
         }
         activities {
           id
@@ -61,6 +67,12 @@ export const getById = gql`
           months
           inputs
           products
+          comments {
+            fieldName
+            revision
+            comment
+            type
+          }
         }
       }
       beneficiaries {
@@ -71,6 +83,12 @@ export const getById = gql`
         educationLevel
         age
         preventionLevel
+        comments {
+          fieldName
+          revision
+          comment
+          type
+        }
       }
       consultants {
         id
@@ -94,6 +112,12 @@ export const getById = gql`
           name
           url
         }
+        comments {
+          fieldName
+          revision
+          comment
+          type
+        }
       }
       developmentObjectiveIndicators {
         id
@@ -109,6 +133,12 @@ export const getById = gql`
         endDate
         measurementPeriodicity
         products
+        comments {
+          fieldName
+          revision
+          comment
+          type
+        }
       }
       generalObjectiveIndicators {
         id
@@ -124,6 +154,12 @@ export const getById = gql`
         endDate
         measurementPeriodicity
         products
+        comments {
+          fieldName
+          revision
+          comment
+          type
+        }
       }
       concepts {
         id
@@ -158,6 +194,18 @@ export const getById = gql`
             name
             url
           }
+          comments {
+            fieldName
+            revision
+            comment
+            type
+          }
+        }
+        comments {
+          fieldName
+          revision
+          comment
+          type
         }
       }
       state

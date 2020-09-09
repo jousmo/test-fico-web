@@ -13,6 +13,7 @@ export function DevelopmentObjective() {
   const {
     updateTechnicalSpecification,
     loading,
+    review,
     error,
     data,
     hiddenComments
@@ -37,6 +38,7 @@ export function DevelopmentObjective() {
         isLoading={loading}
         error={error}
         data={data}
+        review={review}
         onChange={onChange}
         hiddenComments={hiddenComments} />
     </Section>

@@ -14,6 +14,7 @@ export function ActivityModal({
   onCancel,
   edit,
   hiddenComments,
+  review,
   ...props
 }) {
   const [form] = Form.useForm()
@@ -53,9 +54,10 @@ export function ActivityModal({
       title={`${edit ? "Editar" : "Agregar"} indicador`}
       onOk={onOk}
       onCancel={onCancelModal}
+      okButtonProps={{ disabled: review }}
       width={800}
       okText={`${edit ? "Guardar" : "Agregar"}`}
-      cancelText="Cancelar"
+      cancelText={review ? "Cerrar" : "Cancelar"}
       {...props}>
       <Form
         form={form}

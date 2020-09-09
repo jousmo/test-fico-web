@@ -13,6 +13,7 @@ export function GeneralObjective() {
   const {
     updateTechnicalSpecification,
     loading,
+    review,
     error,
     data,
     hiddenComments
@@ -37,6 +38,7 @@ export function GeneralObjective() {
         isLoading={loading}
         error={error}
         data={data}
+        review={review}
         onChange={onChange}
         hiddenComments={hiddenComments} />
     </Section>

@@ -55,7 +55,8 @@ function Budget({ client, query }) {
     updateBudget,
     loading,
     error,
-    data
+    data,
+    review: true
   }), [state, loading])
 
   const readOnly = data?.Submission?.state === "PROJECT"
