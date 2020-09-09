@@ -8,7 +8,7 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
-import { success, warning } from "../../../../../../helpers/alert"
+import { success, warning, loadingAlert } from "../../../../../../helpers/alert"
 
 function FinancialMonitoringPage({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -43,8 +43,10 @@ function FinancialMonitoringPage({ client, query }) {
   )
 
   const save = useCallback(async expense => {
+    const saving = loadingAlert()
     try {
       await createProjectInvoice({ variables: { data: expense, id: query.id } })
+      saving()
       success()
     } catch (e) {
       warning()
@@ -53,9 +55,11 @@ function FinancialMonitoringPage({ client, query }) {
   }, [createProjectInvoice])
 
   const update = useCallback(async expense => {
+    const saving = loadingAlert()
     try {
       const { id, index, ...newExpense } = expense
       await updateProjectInvoice({ variables: { data: newExpense, id } })
+      saving()
       success()
     } catch (e) {
       warning()

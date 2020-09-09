@@ -12,6 +12,7 @@ export function ListSummaryConcept ({ onChange, dataSource }) {
       size="small"
       dataSource={dataSource}
       locale={{emptyText: <Empty description="Resumen de conceptos" />}}
+      scroll={{ x: true }}
       pagination={false}>
       <Table.Column
         width={1}
