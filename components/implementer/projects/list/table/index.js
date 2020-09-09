@@ -24,12 +24,9 @@ function ProjectListingTable({ data }) {
   const axisFilterOptions = getFilterOptions(strategicAxisTypes)
   const regionFilterOptions = getFilterOptions(regions)
 
-  // Will not need to filter data in client once server is fully working
-  const dataSource = data?.filter(e => e.implementer?.id === 1)
-
   return (
     <Table
-      dataSource={dataSource}
+      dataSource={data}
       rowKey={(row, index) => index}
       size="small">
       <Table.Column
