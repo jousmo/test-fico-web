@@ -1,7 +1,25 @@
 import moment from "moment"
 
 export const getReport = (data, row) => {
-  return data?.technicalMonitoringReports?.find(r => r.key === row.key)
+  if (row.key.includes("OE")) {
+    const result = {
+      completed: 0,
+      compliance: 0,
+      participants: []
+    }
+
+    data?.technicalMonitoringReports?.forEach(report => {
+      if (report.key.includes(`E_${row.key.split("_")[1]}`)){
+        result.completed += Number(report.completed)
+        result.participants.push(...report.participants)
+      }
+    })
+    result.compliance = (result.completed * 100) / row.goal
+
+    return result
+  } else {
+    return data?.technicalMonitoringReports?.find(r => r.key === row.key)
+  }
 }
 
 export const getParticipants = (data, row) => {

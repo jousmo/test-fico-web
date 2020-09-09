@@ -65,7 +65,7 @@ export function ObjectivesList({ data, dateFilter }) {
         dataSource={filterState ? filterState : dataSource}
         size="middle">
         <Table.Column
-          render={(t, row) => getReport(data, row) && <CheckSquareTwoTone />}
+          render={(t, row) => getReport(data, row)?.appliedAt && <CheckSquareTwoTone />}
           title={<CheckSquareTwoTone />}/>
         <Table.Column
           dataIndex="level"
