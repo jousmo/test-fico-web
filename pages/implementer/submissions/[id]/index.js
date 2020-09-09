@@ -7,21 +7,50 @@ import {
   ImplementerSubmissionContext
 } from "../../../../contexts/implementer/submissions/show"
 import { submission } from "../../../../graphql/submission"
-import { useMemo } from "react"
-import { useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../helpers"
+import { useCallback, useMemo } from "react"
+import { useMutation, useQuery } from "@apollo/react-hooks"
+import { loadingAlert, success, warning, withApollo } from "../../../../helpers"
 import { PageContext } from "../../../../contexts/page"
 
 function Submission({ client, query }) {
+  const [ updateSubmission ] = useMutation(
+    submission.mutations.updateById, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getById,
+          variables: { id: query.id }
+        }
+      ]
+    }
+  )
+
   const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: query.id }
   })
 
+  const save = useCallback(async submissionData => {
+    const saving = loadingAlert()
+    try {
+      await updateSubmission({
+        variables: { data: submissionData, id: query.id }
+      })
+      success()
+    }
+    catch (e) {
+      console.error(e)
+      warning()
+    }
+    saving()
+  }, [query.id])
+
   const injectActions = useMemo(() => ({
     loading,
     error,
     data,
+    save,
     client,
     refetch
   }), [loading, data])

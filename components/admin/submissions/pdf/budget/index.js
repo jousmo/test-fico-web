@@ -25,8 +25,8 @@ export function BudgetPDF() {
   }
 
   const getSummary = (concepts) => {
-    const firstAlly = submission?.allies[0]
-    const secondAlly = submission?.allies[1]
+    const firstAlly = submission?.allies?.[0]
+    const secondAlly = submission?.allies?.[1]
 
     let totalAllies = 0
     let totalFirstAlly = 0
@@ -40,7 +40,7 @@ export function BudgetPDF() {
         .find(e => e.name === firstAlly).percentage
       const secondAllyPercentage = secondAlly ? concept.investmentDistribution
         .find(e => e.name === secondAlly).percentage : 0
-      
+
       absoluteTotal += totalCost
       totalFirstAlly += getAmount(concept, firstAllyPercentage)
       totalSecondAlly += secondAlly ? getAmount(concept, secondAllyPercentage) : 0
@@ -57,7 +57,7 @@ export function BudgetPDF() {
           <Table.Summary.Cell>
             ${totalFirstAlly}&nbsp;<Tag>{getPercentage(totalAllies, totalFirstAlly)}%</Tag>
           </Table.Summary.Cell>
-          {submission?.allies[1] && (
+          {submission?.allies?.[1] && (
             <Table.Summary.Cell>
               ${totalSecondAlly}&nbsp;<Tag>{getPercentage(totalAllies, totalSecondAlly)}%</Tag>
             </Table.Summary.Cell>
