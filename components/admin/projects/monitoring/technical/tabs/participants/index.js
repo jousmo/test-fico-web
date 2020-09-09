@@ -5,8 +5,8 @@ import { decoratedData, getStatistics } from "./helpers"
 import { ParticipantsList } from "./list"
 import { ParticipantsModal } from "./modal"
 
-export function MonitoringParticipants({ data }) {
-  const { beneficiaries, participants, summary } = decoratedData(data)
+export function MonitoringParticipants({ data, dateFilter }) {
+  const { beneficiaries, participants, summary } = decoratedData(data, dateFilter)
   const statistics = getStatistics(summary)
 
   const [state, setState] = useState({
