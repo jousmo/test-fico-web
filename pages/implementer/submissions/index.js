@@ -35,15 +35,11 @@ function ImplementerSubmissions({ client }) {
   )
 
   const handleNewSubmission = async () => {
-    //Todo Update implementer id
     const { data } = await createSubmission({
-      variables: {
-        id: "f3f13a59-337e-4989-b010-d7713a53c3c2",
-        data: { state: "SUBMISSION", status: "CREATED" }
-      }
+      variables: { data: { state: "SUBMISSION", status: "CREATED" } }
     })
     const { CreateSubmission: { id } } = data || {}
-    router.push(`/implementer/submissions/${id}/edit/general-information`)
+    await router.push(`/implementer/submissions/${id}/edit/general-information`)
   }
 
   const newSubmissionButton = (
