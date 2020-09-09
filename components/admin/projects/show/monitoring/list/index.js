@@ -2,10 +2,13 @@ import { List, Typography, Button } from "antd"
 import { useRouter } from "next/router"
 
 function MonitoringList( ){
-  const router = useRouter()
+  const router = useRouter() || {}
+  const { query } = router || {}
+
+  const userType = router?.route.includes("admin") ? "admin" : "implementer"
+
   const getButton = type => {
-    const { query } = router || {}
-    const url = `/admin/projects/${query?.id}/monitoring/${type}`
+    const url = `/${userType}/projects/${query?.id}/monitoring/${type}`
 
     return (
       <Button

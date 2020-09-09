@@ -1,5 +1,5 @@
 import { SearchField, Section } from "../../../shared"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import {
   ImplementerSubmissionContext
 } from "../../../../contexts/implementer/submissions/show"
@@ -12,11 +12,25 @@ export function SubmissionsListing() {
     data
   } = useContext(ImplementerSubmissionContext)
 
+  const [state, setState] = useState(false)
+
+  const onSearch = value => {
+    if (!value) {
+      setState(false)
+      return
+    }
+
+    const filter = data?.Submissions?.filter(submission =>
+      submission.name?.toLowerCase().includes(value.toLowerCase())
+    )
+    setState(filter)
+  }
+
   return (
     <Section style={{padding: 0}}>
-      <SearchField />
+      <SearchField onSearch={onSearch} />
       <SubmissionsListingTable
-        data={data?.Submissions}
+        data={state ? state : data?.Submissions}
         error={error}
         isLoading={loading} />
     </Section>

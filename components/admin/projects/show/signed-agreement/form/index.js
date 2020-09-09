@@ -3,7 +3,9 @@ import { Typography } from "antd"
 import { PaperClipOutlined } from "@ant-design/icons"
 
 function ProjectAgreementForm({ data }) {
-  /* Todo: Update to show actual agreement document */
+  const signedAgreement = data?.documents?.find(document =>
+    document.type === "AGREEMENT"
+  )
 
   return (
     <div>
@@ -11,8 +13,8 @@ function ProjectAgreementForm({ data }) {
         Este es el convenido firmado por tu organización y FICOSEC
       </Typography.Text>
       <br />
-      <a>
-        <PaperClipOutlined /> Convenio2020.PDF
+      <a href={signedAgreement?.url} target="_blank">
+        <PaperClipOutlined /> &nbsp;{signedAgreement?.name}
       </a>
     </div>
   )
