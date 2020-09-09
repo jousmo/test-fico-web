@@ -22,7 +22,6 @@ import {
   setUpdateBudget
 } from "../../../../../../helpers/submissionFunctions/budget"
 
-
 function Budget({ client, query }) {
   const [state, setState] = useState({
     budget: {},
