@@ -5,17 +5,17 @@ import numeral from "numeral"
 
 export function MonthlyDistributionField({
   onChange,
-  defaultValue = [],
+  value = [],
   months = [],
   unitCost = 0.0,
   setState,
   state
 }) {
-  const rows = months.map((label, index) => {
+  const rows = months?.map((label, index) => {
     const data = {}
 
     data.label = label
-    data.value = defaultValue?.[index]
+    data.value = value?.[index]
 
     return data
   })
@@ -49,7 +49,7 @@ export function MonthlyDistributionField({
 
   return (
     <CompositeField
-      defaultValue={rows}
+      value={rows}
       isAddDisabled
       onChange={onChangeInput}>
       {({ items, updateItem }) => {
@@ -73,7 +73,7 @@ export function MonthlyDistributionField({
                 <Input
                   type="number"
                   name="value"
-                  defaultValue={item.value}
+                  value={item.value}
                   onChange={updateItem(index)}
                   max={20}
                   min={0} />
