@@ -214,9 +214,9 @@ export function ConceptModal({
                 </FieldLabel>
               }>
               <MonthlyDistributionField
-                defaultValue={edit?.monthlyDistribution}
+                value={edit?.monthlyDistribution}
                 unitCost={state.unitCost}
-                months={edit ? projectMonths : []}
+                months={projectMonths}
                 state={unitsState}
                 setState={setUnitsState}/>
             </Form.Item>
@@ -234,7 +234,7 @@ export function ConceptModal({
               </FieldLabel>}>
               <InvestmentDistributionField
                 allies={submission?.allies}
-                defaultValue={edit?.investmentDistribution}
+                value={edit?.investmentDistribution}
                 unitCost={state.unitCost}
                 totalUnits={state.totalUnits}
                 state={investmentState}

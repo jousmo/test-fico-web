@@ -5,7 +5,7 @@ import numeral from "numeral"
 export function InvestmentDistributionField({
   onChange,
   allies,
-  defaultValue = [
+  value = [
     { type: "IMPLEMENTER", name: "Implementadora", percentage: undefined },
     { type: "FICOSEC", name: "FICOSEC", percentage: undefined },
     { type: "ALLIED", name: allies?.[0], percentage: undefined },
@@ -28,8 +28,8 @@ export function InvestmentDistributionField({
     return numeral(percentage * total / 100).format("$0,0.00")
   }
 
-  if (defaultValue.length === 4 && allies?.[1] ===  undefined){
-    defaultValue.pop()
+  if (value.length === 4 && allies?.[1] ===  undefined){
+    value.pop()
   }
 
   const onChangeInput = newItems => {
@@ -43,7 +43,7 @@ export function InvestmentDistributionField({
 
   return (
     <CompositeField
-      value={defaultValue}
+      value={value}
       isAddDisabled
       onChange={onChangeInput}>
       {({ items, updateItem }) =>
