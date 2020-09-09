@@ -26,10 +26,10 @@ function TechnicalMonitoringTabs({ data }) {
         <MonitoringObjectives data={data} dateFilter={filterState} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Retos y obstáculos" key="2">
-        <MonitoringObstacles data={data} />
+        <MonitoringObstacles data={data} dateFilter={filterState} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Participantes" key="3">
-        <MonitoringParticipants data={data}/>
+        <MonitoringParticipants data={data} dateFilter={filterState} />
       </Tabs.TabPane>
     </Tabs>
   )
