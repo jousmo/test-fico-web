@@ -6,7 +6,9 @@ export function MonitoringObjectives({ data, dateFilter }) {
 
   return (
     <div className="objectives" style={{ marginTop: "-2.5rem"}}>
-      <ObjectivesSummary data={Submission} />
+      <ObjectivesSummary
+        dateFilter={dateFilter}
+        data={Submission} />
       <ObjectivesList
         dateFilter={dateFilter}
         data={Submission} />
