@@ -1,15 +1,15 @@
 import { message } from "antd"
 import { auth } from "./index"
 
-export function Logout(router) {
+export function Logout() {
   const loggingOut = message.loading("Cerrando sesión")
   auth.signOut().then(() => {
     localStorage.removeItem("token")
     localStorage.removeItem("user")
-    router.push("/")
+    window.location.href = "/"
     loggingOut()
   }).catch(error => {
     message.error("Error al cerrar sesión")
-    console.error("Error signing in with password and email", error)
+    console.error("Error singing out", error)
   })
 }
