@@ -4,6 +4,9 @@ import { withApollo } from "../../../../../helpers/withApollo"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
+import {
+  ProjectSchedule
+} from "../../../../../components/admin/projects/schedule"
 import { submission } from "../../../../../graphql/submission"
 import { useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
@@ -25,6 +28,7 @@ function ProjectSchedulePage({ client, query }) {
       value={{ type: "admin", step: "active", submenu: "projects" }}>
       <AdminSubmissionContext.Provider value={injectActions}>
         <Layout subheader={false}>
+          <ProjectSchedule />
         </Layout>
       </AdminSubmissionContext.Provider>
     </PageContext.Provider>
