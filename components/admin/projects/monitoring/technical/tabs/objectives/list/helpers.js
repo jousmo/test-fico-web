@@ -14,7 +14,7 @@ export const getReport = (data, row) => {
         result.participants.push(...report.participants)
       }
     })
-    result.compliance = (result.completed * 100) / row.goal
+    result.compliance = ((result.completed * 100) / row.goal).toFixed(2)
 
     return result
   } else {
