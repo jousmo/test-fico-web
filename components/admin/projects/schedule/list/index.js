@@ -2,9 +2,11 @@ import { withForm } from "../../../../../helpers/withForm"
 import { Button, Table } from "antd"
 import { CheckSquareTwoTone, EditOutlined } from "@ant-design/icons"
 import { Tooltip } from "../../../../shared/tooltip"
+import { decoratedData } from "./data-decorator"
 
 function ProjectScheduleList({ data }) {
-  const dataSource = []
+  const dataSource = decoratedData(data)
+
   return (
     <>
       <Table
