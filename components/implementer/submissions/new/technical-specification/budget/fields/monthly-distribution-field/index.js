@@ -2,6 +2,7 @@ import * as _ from "lodash"
 import { Input, Row, Col, Alert } from "antd"
 import { CompositeField, Visibility } from "../../../../../../../shared"
 import numeral from "numeral"
+import { useEffect } from "react"
 
 export function MonthlyDistributionField({
   onChange,
@@ -20,6 +21,10 @@ export function MonthlyDistributionField({
     return data
   })
 
+  useEffect(() => {
+    onChange && onChange(rows.map(el => Number(el.value) || 0))
+  },[])
+
   const displayMonthTotal = value =>
     numeral(unitCost * Number(value || 0)).format("$0,0.00")
 
@@ -29,7 +34,7 @@ export function MonthlyDistributionField({
       acc += Number(item.value || 0)
     ), 0)
 
-    onChange && onChange(newItems.map(el => +el.value || 0))
+    onChange && onChange(newItems.map(el => Number(el.value) || 0))
     setState({ total, overLimit: units > total })
   }
 
@@ -73,6 +78,7 @@ export function MonthlyDistributionField({
                 <Input
                   type="number"
                   name="value"
+                  defaultValue={0}
                   value={item.value}
                   onChange={updateItem(index)}
                   max={20}
