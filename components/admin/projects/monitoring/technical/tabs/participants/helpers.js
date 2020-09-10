@@ -1,5 +1,7 @@
+import moment from "moment"
+
 export const getStatistics = values => {
-  const { beneficiaries, participants, total }= values
+  const { beneficiaries, participants, total } = values
   return [
     { title: "Asistentes", value: participants },
     { title: "Beneficiarios", value: beneficiaries },
@@ -7,8 +9,8 @@ export const getStatistics = values => {
   ]
 }
 
-export const decoratedData = data => {
-  const { Submission: { technicalMonitoringReports: reports } } = data
+export const decoratedData = (data, dateFilter) => {
+  const { Submission: { technicalMonitoringReports } } = data
   const result = {
     beneficiaries: {
       PRIMARY: {},
@@ -25,6 +27,11 @@ export const decoratedData = data => {
       participants: 0,
       total: 0
     }
+  }
+
+  let reports = technicalMonitoringReports
+  if (dateFilter?.length > 0){
+    reports = reports?.filter(report => moment(report.appliedAt).isBetween(dateFilter[0], dateFilter[1]))
   }
 
   reports?.forEach(({ key, participants }) => {

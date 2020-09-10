@@ -7,10 +7,15 @@ import {
   AdminSubmissionContext
 } from "../../../../../../../contexts/admin/submissions/show"
 
-export function MonitoringObstacles({ data = {} }){
+export function MonitoringObstacles({ data = {}, dateFilter }){
   const { updateSubmission } = useContext(AdminSubmissionContext)
 
-  const { Submission } = data
+  let obstacles = data?.Submission?.technicalUpdates
+  if (dateFilter?.length > 0) {
+    obstacles = obstacles.filter(obstacle =>
+      moment(obstacle.createdAt).isBetween(dateFilter[0], dateFilter[1])
+    )
+  }
 
   const [state, setState] = useState({
     isModalOpen: false,
@@ -51,7 +56,7 @@ export function MonitoringObstacles({ data = {} }){
     <Card className="obstacles">
       <CompositeField
         onChange={onChange}
-        defaultValue={Submission?.technicalUpdates}
+        value={obstacles}
         onClickAdd={onClickAdd}
         orientation="TOP"
         addLabel="Agregar actividad">

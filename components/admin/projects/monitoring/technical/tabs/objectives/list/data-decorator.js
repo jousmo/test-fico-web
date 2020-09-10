@@ -54,8 +54,11 @@ export const decoratedData = (data, dateFilter) => {
       ...objective
     })
 
+    let accumulatedGoal = 0
+
     indicators?.forEach((indicator, index) => {
       const indicatorNumber = `${objNumber}.${index + 1}`
+      accumulatedGoal += Number(indicator.goal)
 
       const key = `IE_${indicatorNumber}`
       addItem(key, {
@@ -67,6 +70,7 @@ export const decoratedData = (data, dateFilter) => {
 
     activities?.forEach((activity, index) => {
       const activityNumber = `${objNumber}.${index + 1}`
+      accumulatedGoal += Number(activity.goal)
 
       const key = `AE_${activityNumber}`
       addItem(key, {
@@ -75,6 +79,12 @@ export const decoratedData = (data, dateFilter) => {
         ...activity
       })
     })
+
+    const objectiveIndex = result.findIndex(el => el.key === key)
+    result[objectiveIndex] = {
+      ...result[objectiveIndex],
+      goal: accumulatedGoal
+    }
   })
 
   return result
