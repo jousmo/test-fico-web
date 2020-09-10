@@ -5,10 +5,14 @@ import {
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
 import { PageHeader } from "../../../shared"
+import ProjectScheduleList from "./list"
 import "./styles.sass"
 
 export function ProjectSchedule() {
   const {
+    loading,
+    error,
+    data,
     save
   } = useContext(AdminSubmissionContext)
 
@@ -27,6 +31,10 @@ export function ProjectSchedule() {
         <ExclamationCircleTwoTone />&nbsp;
         Selecciona las actividades que realizarás durante este periodo
       </Card>
+      <ProjectScheduleList
+        data={data}
+        error={error}
+        isLoading={loading} />
     </section>
   )
 }
