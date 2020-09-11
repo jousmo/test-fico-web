@@ -11,7 +11,7 @@ export function ScheduleField({ ...props }){
   return (
     <CompositeField
       onClickAdd={onAddSupport}
-      addLabel="Agregar apoyo"
+      addLabel="Agregar evento"
       {...props}>
       {({ items, updateItem, removeItem }) =>
         <div>
