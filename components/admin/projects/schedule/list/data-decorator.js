@@ -11,6 +11,7 @@ export const decoratedData = (data) => {
         description: indicator.description,
         key,
         level: <Tag color="processing">{key}</Tag>,
+        ...indicator
       })
     })
 
@@ -20,6 +21,7 @@ export const decoratedData = (data) => {
         description: activity.description,
         key,
         level: <Tag color="processing">{key}</Tag>,
+        ...activity
       })
     })
   })
