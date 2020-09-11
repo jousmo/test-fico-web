@@ -1,8 +1,8 @@
 import { gql } from "apollo-boost"
 
 export const getById = gql`
-  query ImplementerById($id: ID!) {
-    Implementer(id: $id) {
+  query ImplementerById($id: ID) {
+    Implementer(implementerId: $id) {
       id
       type
       name

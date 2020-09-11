@@ -23,10 +23,8 @@ function Profile({ client }) {
     client: client
   })
 
-  /* TODO: Update to use implementer id from application session */
   const { loading, error, data } = useQuery(implementer.queries.getById, {
-    client: client,
-    variables: { id: "db183c7b-b8f9-46e1-a401-13d8299956d0" }
+    client: client
   })
 
   useEffect(() => {
@@ -46,10 +44,7 @@ function Profile({ client }) {
     const saving = loadingAlert()
     try {
       await updateProfile({
-        variables: {
-          data: { ...state.generalInformation },
-          id: "db183c7b-b8f9-46e1-a401-13d8299956d0"
-        }
+        variables: { data: { ...state.generalInformation } }
       })
       success()
     }

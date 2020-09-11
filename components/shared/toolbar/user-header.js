@@ -20,7 +20,7 @@ function UserHeader(){
   }, [])
 
   const menu = (
-    <Menu onClick={() => Logout(router)}>
+    <Menu onClick={() => Logout()}>
       <Menu.Item key="0">
         Cerrar sesión
       </Menu.Item>
