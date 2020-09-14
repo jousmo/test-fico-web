@@ -11,6 +11,7 @@ export const decoratedData = (data) => {
         description: activity.description,
         key,
         level: <Tag color="processing">{key}</Tag>,
+        objective: objective.id,
         ...activity
       })
     })
