@@ -71,12 +71,12 @@ function ProjectScheduleList({ data, save }) {
           <Table.Column
             title="Fecha y hora"
             render={(t, row) => row.schedules && getSchedule(row).date}
-            sorter={(a, b) => a.date?.localeCompare(b.date)}
+            sorter={(a, b) => getSchedule(a).date?.localeCompare(getSchedule(b).date)}
             showSorterTooltip={false} />
           <Table.Column
             title="Lugar"
             render={(t, row) => row.schedules && getSchedule(row).place}
-            sorter={(a, b) => a.location?.localeCompare(b.location)}
+            sorter={(a, b) => getSchedule(a).place?.localeCompare(getSchedule(b).place)}
             showSorterTooltip={false} />
         <Table.Column
           render={(t, row) =>
