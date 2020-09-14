@@ -19,7 +19,7 @@ export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
       await form.validateFields()
       const values = await form.getFieldsValue()
 
-      onSave(values)
+      onSave(values.schedules, edit.id, edit.objective)
     }
     catch(e) {
       console.error(e)
@@ -90,7 +90,7 @@ export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
           <Form
             form={form}
             name="activities-schedule-form">
-            <Form.Item name="activitySchedule">
+            <Form.Item name="schedules">
               <ScheduleField />
             </Form.Item>
           </Form>
