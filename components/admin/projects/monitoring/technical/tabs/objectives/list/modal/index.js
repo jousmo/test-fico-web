@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { DateField, UploadButton } from "../../../../../../../../shared"
 import { getSelectValue } from "../../../../../../../../../helpers"
 import { ParticipantsField } from "./participants-field"
+import moment from "moment"
 
 export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
   const [form] = Form.useForm()
@@ -96,21 +97,56 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
           <Col span={24}>
             <Typography.Text>{edit?.description}</Typography.Text>
           </Col>
-          <Col span={24}>
-            <Form.Item
-              getValueFromEvent={getSelectValue}
-              initialValue={edit?.appliedAt}
-              style={{ marginBottom: "0" }}
-              rules={[{ required: true, message: "Campo requerido" }]}
-              id="appliedAt"
-              name="appliedAt">
-              <DateField
-                bordered={false}
-                style={{ width: "15rem" }}
-                placeholder="Selecciona fecha de realización"
-                size="small"/>
-            </Form.Item>
-          </Col>
+          {type === "ACTIVITY"
+            ? (
+              <>
+                <Divider
+                  plain
+                  orientation="left"
+                  style={{ margin: "10px 0" }}>
+                  Implementación
+                </Divider>
+                {edit?.schedules?.map(schedule =>
+                  <>
+                    <Col span={12} style={{ padding: "0 5px"}}>
+                      <Form.Item
+                        label="Fecha de realización"
+                        style={{ marginBottom: "0" }}>
+                        <Typography.Text strong style={{ marginBottom: "0" }}>
+                          {moment(schedule.date).format("DD/MM/YYYY")}
+                        </Typography.Text>
+                      </Form.Item>
+                    </Col>
+                    <Col span={12} style={{ padding: "0 5px"}}>
+                      <Form.Item
+                        label="Lugar"
+                        style={{ marginBottom: "0" }}>
+                        <Typography.Text strong>
+                          {schedule.place}
+                        </Typography.Text>
+                      </Form.Item>
+                    </Col>
+                  </>
+                )}
+              </>
+            )
+            : (
+              <Col span={24}>
+                <Form.Item
+                  getValueFromEvent={getSelectValue}
+                  initialValue={edit?.appliedAt}
+                  style={{ marginBottom: "0" }}
+                  rules={[{ required: true, message: "Campo requerido" }]}
+                  id="appliedAt"
+                  name="appliedAt">
+                  <DateField
+                    bordered={false}
+                    style={{ width: "15rem" }}
+                    placeholder="Selecciona fecha de realización"
+                    size="small"/>
+                </Form.Item>
+              </Col>
+            )}
           <Divider
             plain
             orientation="left"
