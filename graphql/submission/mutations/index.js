@@ -6,3 +6,6 @@ export * from "./createProjectInvoice"
 export * from "./updateProjectInvoice"
 export * from "./createTechnicalMonitoring"
 export * from "./updateTechnicalMonitoring"
+export * from "./createCommentInvoice"
+export * from "./createCommentTechnical"
+

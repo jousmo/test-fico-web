@@ -1,20 +1,89 @@
-import { Avatar, Modal, Form, Input, List, Divider, Typography } from "antd"
-import { UserOutlined } from "@ant-design/icons"
+import { Modal, Form, Input } from "antd"
+import { CommentMonitoringListing } from "../comment-monitoring-listing"
+import { useMutation, useQuery } from "@apollo/react-hooks"
+import { submission } from "../../../graphql/submission"
+import { withApollo } from "../../../helpers/withApollo"
+import { useCallback, useEffect, useState } from "react"
+import { loadingAlert, success, warning } from "../../../helpers/alert"
 import "./style.sass"
 
-export function ModalCommentMonitoring({ onCancel, ...props }) {
+function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
   const [form] = Form.useForm()
+  const [state, setState] = useState({
+    loading: true,
+    comments: []
+  })
+
+  const query = data?.type === "INVOICE"
+    ? submission.queries.getCommentsFinancial
+    : submission.queries.getCommentsTechnical
+
+  const mutation = data?.type === "INVOICE"
+    ? submission.mutations.createCommentInvoice
+    : submission.mutations.createCommentTechnical
+
+  const variables = data?.type === "INVOICE" ? { monitoringInvoice: data?.id } : { monitoringTechnical: data?.id }
+
+  const { loading, error, data: result  } = useQuery(query, {
+    client: client,
+    variables
+  })
+
+  const [createComment] = useMutation(
+    mutation, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query,
+          variables
+        }
+      ]
+    }
+  )
+
+  useEffect(() => {
+    if (!loading) {
+      setState({
+        loading: false,
+        comments: result?.InvoiceMonitoringComments || result?.TechnicalMonitoringComments
+      })
+    }
+  }, [loading, result])
 
   const onCancelModal = () => {
     form.resetFields()
     onCancel && onCancel()
   }
 
+  const onOk = useCallback(async () => {
+    try {
+      const saving = loadingAlert()
+      const values = await form.getFieldsValue()
+
+      if (values.comment === undefined || values.comment.trim() === ""){
+        return
+      }
+
+      const variables = data?.type === "INVOICE"
+        ? { monitoringInvoice: data?.id, data: values }
+        : { monitoringTechnical: data?.id, data: values }
+
+      await createComment({ variables })
+      saving()
+      success()
+      form.resetFields()
+    } catch (e) {
+      warning()
+      console.error(e)
+    }
+  }, [createComment])
+
   return (
     <Modal
       destroyOnClose
-      title="Comentarios del folio: C0ED6D4A"
-      onOk={null}
+      title={`Comentarios`}
+      onOk={onOk}
       okText="Agregar"
       onCancel={onCancelModal}
       cancelText="Cerrar"
@@ -28,41 +97,13 @@ export function ModalCommentMonitoring({ onCancel, ...props }) {
           name="comment">
           <Input.TextArea
             id="comment"
-            placeholder="Describe tus comentarios" />
+            placeholder="Describe tu comentario" />
         </Form.Item>
       </Form>
 
-      <List
-        header={<Divider orientation="left">Comentarios 0</Divider>}>
-        <List.Item>
-          <List.Item.Meta
-            avatar={<Avatar style={{ backgroundColor: "#87d068" }} icon={<UserOutlined />} />}
-            title={
-              <Typography.Text type="secondary">
-                Tú <Typography.Text disabled>20 Enero 2020</Typography.Text>
-              </Typography.Text>
-            }
-            description={
-              <Typography.Text>
-                Logramos los objetivos conforme a lo planteado, queremos agradecer el apoyo.
-              </Typography.Text>
-            } />
-        </List.Item>
-        <List.Item>
-          <List.Item.Meta
-            avatar={<Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>F</Avatar>}
-            title={
-              <Typography.Text type="secondary">
-                FICOSEC <Typography.Text disabled>21 Enero 2020</Typography.Text>
-              </Typography.Text>
-            }
-            description={
-              <Typography.Text>
-                ¡De nada para eso estamos, para mejorar!
-              </Typography.Text>
-            } />
-        </List.Item>
-      </List>
+      <CommentMonitoringListing loading={state.loading} comments={state.comments} />
     </Modal>
   )
 }
+
+export default withApollo(ModalCommentMonitoring)

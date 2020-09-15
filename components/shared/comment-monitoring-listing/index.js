@@ -1,35 +1,54 @@
-import { List, Typography } from "antd"
+import { Avatar, Divider, List, Typography, Skeleton, Empty } from "antd"
 import moment from "moment"
+import { UserOutlined } from "@ant-design/icons"
+import { getUserStorage } from "../../../helpers"
 
-export function CommentMonitoringListing({ comments, onDelete, revision }){
+export function CommentMonitoringListing({ loading, comments = [] }){
+  const user = getUserStorage()
   return (
-    <List
-      header={
-        <Typography.Text>Comentarios ({comments?.length || 0})</Typography.Text>
-      }>
-      {comments?.map((element, index) => {
-        let action = []
-        if (element.revision === revision){
-          action.push(<DeleteButton onClick={() => onDelete(element, index)}/>)
-        }
-        return (
-          <List.Item key={index} actions={action}>
-            <List.Item.Meta
-              title={
-                <Typography.Text>
-                  {element.comment}
-                </Typography.Text>
-              }
-              description={
-                <Typography.Text type="secondary">
-                  {getReadableValue(submissionStatusOptions, element.revision)} -
-                  &nbsp;
-                  {moment(element.createdAt).format("DD/MM/YYYY HH:MM")}
-                </Typography.Text>
-              } />
-          </List.Item>
-        )
-      })}
-    </List>
+    loading
+      ? <Skeleton avatar active paragraph={{ rows: 2 }} />
+      : (
+        <List
+          header={
+            comments.length === 0
+              ? <Empty description="No hay comentarios aún" />
+              : <Divider orientation="left">{`Comentarios ${comments.length}`}</Divider>
+          }>
+
+          {comments?.map(({ userType, createdAt, comment }, index) => {
+            return (
+              <List.Item key={index}>
+                <List.Item.Meta
+                  avatar={
+                    userType === user?.claims?.role
+                      ? <Avatar style={{ backgroundColor: "#87d068" }} icon={<UserOutlined />} />
+                      : user?.claims?.role === "ADMIN"
+                        ? <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>I</Avatar>
+                        : <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>F</Avatar>
+                  }
+                  title={
+                    <Typography.Text type="secondary">
+                      {userType === user?.claims?.role
+                        ? "Tú"
+                        : user?.claims?.role === "ADMIN"
+                          ? "IMPLEMENTADORA"
+                          : "FICOSEC"
+                      }
+                      <Typography.Text disabled>
+                        {moment(createdAt).format("DD MMMM YYYY").toUpperCase()}
+                      </Typography.Text>
+                    </Typography.Text>
+                  }
+                  description={
+                    <Typography.Text>
+                      {comment}
+                    </Typography.Text>
+                  } />
+              </List.Item>
+            )
+          })}
+        </List>
+      )
   )
 }

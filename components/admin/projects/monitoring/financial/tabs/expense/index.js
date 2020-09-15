@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { Alert, Space, DatePicker } from "antd"
-import { Section, SearchFieldPrimary, CompositeField, StatisticHeader, ModalCommentMonitoring } from "../../../../../../shared"
+import { Section, SearchFieldPrimary, CompositeField, StatisticHeader } from "../../../../../../shared"
+import ModalCommentMonitoring from "../../../../../../shared/modal-comment-monitoring"
 import { cellFormat } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
@@ -14,7 +15,8 @@ export function Expense () {
     isModalOpen: false,
     edit: false,
     filterInvoice: false,
-    isModalCommentOpen: false
+    isModalCommentOpen: false,
+    projectInvoice: { id: "", type: "INVOICE" }
   })
 
   const dataStatistics = [
@@ -52,8 +54,16 @@ export function Expense () {
     setState({ ...state, isModalOpen: true, edit: item })
   }
 
-  const onComment = (item, index) => {
-    setState({ ...state, isModalCommentOpen: true })
+  const onComment = (item) => {
+    setState({
+      ...state,
+      isModalCommentOpen: true,
+      projectInvoice: {
+        ...state.projectInvoice,
+        id: item?.id,
+        uuid: item?.uuid.substring(0,8)
+      },
+    })
   }
 
   const onChangeRageDate = (value) => {
@@ -119,14 +129,16 @@ export function Expense () {
                 concepts={Submission?.concepts}
                 onEdit={onEdit}
                 onComment={onComment}/>
-              <ModalCommentMonitoring
-                visible={state.isModalCommentOpen}
-                onCancel={onCancel}/>
-              />
             </>
           }
         </CompositeField>
       </Section>
+      {state.isModalCommentOpen && (
+        <ModalCommentMonitoring
+          visible={state.isModalCommentOpen}
+          data={state.projectInvoice}
+          onCancel={onCancel}/>
+      )}
     </>
   )
 }
