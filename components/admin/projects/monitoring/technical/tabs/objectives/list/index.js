@@ -41,10 +41,7 @@ export function ObjectivesList({ data, dateFilter }) {
   }
 
   const onEdit = row => {
-    const report = data.technicalMonitoringReports?.find(report =>
-      report.key === row.key
-    ) || {}
-    setState({ ...state, isModalOpen: true, edit: { ...row, ...report } })
+    setState({ ...state, isModalOpen: true, edit: row })
   }
 
   const onComment = row => {
@@ -53,7 +50,7 @@ export function ObjectivesList({ data, dateFilter }) {
       isModalCommentOpen: true,
       objective: {
         ...state.projectInvoice,
-        id: row?.id,
+        id: row?.reportId,
         title: `del objetivo: ${row?.title}`
       }
     })
@@ -145,6 +142,7 @@ export function ObjectivesList({ data, dateFilter }) {
         <Table.Column
           render={(t, row) =>
             <Button
+              disabled={!row?.reportId}
               icon={<CommentOutlined />}
               onClick={() => onComment(row)}
               shape="circle" />

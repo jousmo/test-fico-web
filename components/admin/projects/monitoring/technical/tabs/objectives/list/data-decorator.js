@@ -87,5 +87,14 @@ export const decoratedData = (data, dateFilter) => {
     }
   })
 
-  return result
+  const reportResult = result.map(el => {
+    const report = data?.technicalMonitoringReports?.find(report => report.key === el.key)
+    return {
+      ...el,
+      ...report,
+      reportId: report?.id
+    }
+  })
+
+  return reportResult
 }

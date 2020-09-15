@@ -23,8 +23,11 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
       const values = await form.getFieldsValue()
 
       values.key = edit.key
-      values.id = edit.id
       values.goal = Number(edit.goal)
+
+      if (edit?.reportId) {
+        values.id = edit?.reportId
+      }
 
       onSave(values)
     }

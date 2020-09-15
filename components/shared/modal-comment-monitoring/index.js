@@ -57,8 +57,8 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
   }
 
   const onOk = useCallback(async () => {
+    const saving = loadingAlert()
     try {
-      const saving = loadingAlert()
       const values = await form.getFieldsValue()
 
       if (values.comment === undefined || values.comment.trim() === ""){
@@ -69,16 +69,14 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
         ? { monitoringInvoice: data?.id, data: values }
         : { monitoringTechnical: data?.id, data: values }
 
-
-        debugger
       await createComment({ variables })
-      saving()
       success()
       form.resetFields()
     } catch (e) {
       warning()
       console.error(e)
     }
+    saving()
   }, [createComment])
 
   return (
