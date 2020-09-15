@@ -266,7 +266,7 @@ export const getById = gql`
         appliedAt
         completed
         compliance
-        verificationDocument{
+        verificationDocuments{
           id
           name
           url
