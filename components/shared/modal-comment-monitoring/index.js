@@ -69,6 +69,8 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
         ? { monitoringInvoice: data?.id, data: values }
         : { monitoringTechnical: data?.id, data: values }
 
+
+        debugger
       await createComment({ variables })
       saving()
       success()
@@ -82,7 +84,7 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
   return (
     <Modal
       destroyOnClose
-      title={`Comentarios`}
+      title={`Comentarios ${data?.title}`}
       onOk={onOk}
       okText="Agregar"
       onCancel={onCancelModal}

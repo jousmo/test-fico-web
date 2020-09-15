@@ -54,15 +54,15 @@ export function Expense () {
     setState({ ...state, isModalOpen: true, edit: item })
   }
 
-  const onComment = (item) => {
+  const onComment = row => {
     setState({
       ...state,
       isModalCommentOpen: true,
       projectInvoice: {
         ...state.projectInvoice,
-        id: item?.id,
-        uuid: item?.uuid.substring(0,8)
-      },
+        id: row?.id,
+        title: `del folio: ${row?.uuid.substring(0,8)}`
+      }
     })
   }
 

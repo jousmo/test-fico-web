@@ -1,7 +1,7 @@
 import { Alert, Button, Table } from "antd"
 import { SearchFieldPrimary, Tooltip } from "../../../../../../../shared"
 import { CheckSquareTwoTone } from "@ant-design/icons/lib"
-import { EditOutlined } from "@ant-design/icons"
+import { CommentOutlined, EditOutlined } from "@ant-design/icons"
 import { decoratedData } from "./data-decorator"
 import { ObjectivesModal } from "./modal"
 import { useContext, useState } from "react"
@@ -11,9 +11,15 @@ import {
   AdminSubmissionContext
 } from "../../../../../../../../contexts/admin/submissions/show"
 import { getReport, getParticipants, getAppliedAt, onSearch } from "./helpers"
+import ModalCommentMonitoring from "../../../../../../../shared/modal-comment-monitoring"
 
 export function ObjectivesList({ data, dateFilter }) {
-  const [state, setState] = useState({ isModalOpen: false, edit: undefined })
+  const [state, setState] = useState({
+    isModalOpen: false,
+    edit: undefined,
+    isModalCommentOpen: false,
+    objective: { id: "", type: "OBJECTIVE" }
+  })
   const [filterState, setFilterState] = useState(false)
 
   const dataSource = decoratedData(data, dateFilter)
@@ -41,8 +47,20 @@ export function ObjectivesList({ data, dateFilter }) {
     setState({ ...state, isModalOpen: true, edit: { ...row, ...report } })
   }
 
+  const onComment = row => {
+    setState({
+      ...state,
+      isModalCommentOpen: true,
+      objective: {
+        ...state.projectInvoice,
+        id: row?.id,
+        title: `del objetivo: ${row?.title}`
+      }
+    })
+  }
+
   const onCancel = () => {
-    setState({ ...state, isModalOpen: false, edit: undefined })
+    setState({ ...state, isModalOpen: false, isModalCommentOpen: false, edit: undefined })
   }
 
   return (
@@ -127,11 +145,24 @@ export function ObjectivesList({ data, dateFilter }) {
         <Table.Column
           render={(t, row) =>
             <Button
+              icon={<CommentOutlined />}
+              onClick={() => onComment(row)}
+              shape="circle" />
+          } />
+        <Table.Column
+          render={(t, row) =>
+            <Button
               icon={<EditOutlined />}
               onClick={() => onEdit(row)}
               shape="circle" />
           } />
       </Table>
+      {state.isModalCommentOpen && (
+        <ModalCommentMonitoring
+          visible={state.isModalCommentOpen}
+          data={state.objective}
+          onCancel={onCancel}/>
+      )}
     </>
   )
 }

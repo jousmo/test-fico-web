@@ -89,7 +89,7 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment }) {
           <Button
             type="primary" shape="circle"
             icon={<CommentOutlined />}
-            onClick={() => onComment(record, index)} />
+            onClick={() => onComment(record)} />
           <Button
             type="primary" shape="circle"
             icon={<EditOutlined />}
