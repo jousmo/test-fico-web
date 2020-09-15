@@ -178,13 +178,20 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
             <Form.Item
               id="participants"
               name="participants"
-              rules={[{ required: true, message: "Campo requerido" }]}>
+              rules={[{ required: true, message: "Campo requerido" }]}
+              style={{ marginBottom: "0" }}>
               <ParticipantsField
                 defaultValue={edit?.participants}
                 onChange={(p) => form.setFieldsValue({ participants: p })}
                 type={type} />
             </Form.Item>
           </Col>
+          <Divider
+            plain
+            orientation="left"
+            style={{ margin: "10px 0" }}>
+            Medios de verificación
+          </Divider>
           <Col span={24}>
             <Form.Item
               id="verificationDocument"
