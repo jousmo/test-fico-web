@@ -3,7 +3,7 @@ import {
   Modal, Row, Tag, Typography
 } from "antd"
 import { useEffect, useState } from "react"
-import { DateField, UploadButton } from "../../../../../../../../shared"
+import { DateField, UploadButtonForm } from "../../../../../../../../shared"
 import { getSelectValue } from "../../../../../../../../../helpers"
 import { ParticipantsField } from "./participants-field"
 import moment from "moment"
@@ -42,16 +42,13 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
     onCancel()
   }
 
-  const onUploadFile = (info, cb) => {
-    const { file: { name, response } } = info
-    const url = response?.imageUrl
-    const newDocument = { name, url }
-
-    form.setFieldsValue({ verificationDocument: newDocument })
+  const onUploadFile = files => {
+    const documents = files?.map(el => ({ id: el.id, name: el.name, url: el.url }))
+    form.setFieldsValue({ verificationDocuments: documents })
   }
 
   const onRemoveFile = () => {
-    form.setFieldsValue({ verificationDocument: undefined })
+    form.setFieldsValue({ verificationDocuments: undefined })
   }
 
   const getPercentage = () => {
@@ -71,11 +68,10 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
   }
   const indicatorType = `${types[edit?.key.split("_")[0]]} ${edit?.key.split("_")[1]}`
 
-  const files = []
-  if (edit?.verificationDocument){
-    const { id: uid, ...document } = edit?.verificationDocument
-    files.push({ uid, ...document })
-  }
+  const files = edit?.verificationDocuments?.map(doc => {
+    const { id: uid, ...document } = doc
+    return { uid, ...document }
+  }) || []
 
   return (
     <Modal
@@ -230,17 +226,18 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
           </Divider>
           <Col span={24}>
             <Form.Item
-              id="verificationDocument"
-              name="verificationDocument"
+              id="verificationDocuments"
+              name="verificationDocuments"
               initialValue={files}
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
-              <UploadButton
-                onDoneFile={onUploadFile}
+              <UploadButtonForm
+                fileList={files}
                 onRemoveFile={onRemoveFile}
-                files={files}>
+                onChange={onUploadFile}
+                maxFile={type === "ACTIVITY" ? edit?.schedules.length : 1}>
                 Subir medio de verificación
-              </UploadButton>
+              </UploadButtonForm>
             </Form.Item>
           </Col>
         </Row>
