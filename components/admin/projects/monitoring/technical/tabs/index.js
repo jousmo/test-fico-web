@@ -1,9 +1,10 @@
-import { DatePicker, Tabs } from "antd"
+import { DatePicker, Table, Tabs } from "antd"
 import { useState } from "react"
 import { withForm } from "../../../../../../helpers"
 import { MonitoringObjectives } from "./objectives"
 import { MonitoringParticipants } from "./participants"
 import { MonitoringObstacles } from "./obstacles"
+import { MonitoringSchedule } from "./schedule"
 import "./style.sass"
 
 function TechnicalMonitoringTabs({ data }) {
@@ -30,6 +31,9 @@ function TechnicalMonitoringTabs({ data }) {
       </Tabs.TabPane>
       <Tabs.TabPane tab="Participantes" key="3">
         <MonitoringParticipants data={data} dateFilter={filterState} />
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Cronograma" key="4">
+        <MonitoringSchedule />
       </Tabs.TabPane>
     </Tabs>
   )
