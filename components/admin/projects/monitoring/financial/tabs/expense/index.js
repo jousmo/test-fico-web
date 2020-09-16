@@ -1,6 +1,7 @@
 import { useContext, useState } from "react"
 import { Alert, Space, DatePicker } from "antd"
 import { Section, SearchFieldPrimary, CompositeField, StatisticHeader } from "../../../../../../shared"
+import ModalCommentMonitoring from "../../../../../../shared/modal-comment-monitoring"
 import { cellFormat } from "../../../../../../../helpers"
 import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
@@ -10,7 +11,13 @@ import { getConcept } from "../../helpers"
 
 export function Expense () {
   const { data: { Submission }, save, update } = useContext(AdminSubmissionContext)
-  const [state, setState] = useState({ isModalOpen: false, edit: false, filterInvoice: false })
+  const [state, setState] = useState({
+    isModalOpen: false,
+    edit: false,
+    filterInvoice: false,
+    isModalCommentOpen: false,
+    projectInvoice: { id: "", type: "INVOICE" }
+  })
 
   const dataStatistics = [
     { title: "Presupuesto a FICOSEC", value: cellFormat.money(Submission?.budgeted).children },
@@ -23,7 +30,7 @@ export function Expense () {
   }
 
   const onCancel = () => {
-    setState({ ...state, isModalOpen: false, edit: false })
+    setState({ ...state, isModalOpen: false, isModalCommentOpen: false, edit: false })
   }
 
   const onChange = expense => {
@@ -45,6 +52,18 @@ export function Expense () {
   const onEdit = (item, index) => {
     item.index = index
     setState({ ...state, isModalOpen: true, edit: item })
+  }
+
+  const onComment = row => {
+    setState({
+      ...state,
+      isModalCommentOpen: true,
+      projectInvoice: {
+        ...state.projectInvoice,
+        id: row?.id,
+        title: `del folio: ${row?.uuid.substring(0,8)}`
+      }
+    })
   }
 
   const onChangeRageDate = (value) => {
@@ -108,11 +127,18 @@ export function Expense () {
               <ListExpense
                 dataSource={items}
                 concepts={Submission?.concepts}
-                onEdit={onEdit}/>
+                onEdit={onEdit}
+                onComment={onComment}/>
             </>
           }
         </CompositeField>
       </Section>
+      {state.isModalCommentOpen && (
+        <ModalCommentMonitoring
+          visible={state.isModalCommentOpen}
+          data={state.projectInvoice}
+          onCancel={onCancel}/>
+      )}
     </>
   )
 }

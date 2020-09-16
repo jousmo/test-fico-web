@@ -1,12 +1,12 @@
 import { Table, Button, Space, Empty } from "antd"
-import { EditOutlined, EyeOutlined } from "@ant-design/icons"
+import { EditOutlined, EyeOutlined, CommentOutlined } from "@ant-design/icons"
 import { DateField, SelectField } from "../../../../../../../shared"
 import { cellFormat } from "../../../../../../../../helpers"
 import { getUrlPdf, monthYearConvert, getConcept } from "../../../helpers"
 import moment from "moment"
 moment.locale("es")
 
-export function ListExpense ({ dataSource, concepts, onEdit }) {
+export function ListExpense ({ dataSource, concepts, onEdit, onComment }) {
   return (
     <Table
       rowKey={a => a.id}
@@ -86,6 +86,10 @@ export function ListExpense ({ dataSource, concepts, onEdit }) {
         width={1}
         title=""
         render={(text, record, index) => <Space>
+          <Button
+            type="primary" shape="circle"
+            icon={<CommentOutlined />}
+            onClick={() => onComment(record)} />
           <Button
             type="primary" shape="circle"
             icon={<EditOutlined />}

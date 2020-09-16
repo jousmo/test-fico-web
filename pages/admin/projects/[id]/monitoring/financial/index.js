@@ -46,12 +46,12 @@ function FinancialMonitoringPage({ client, query }) {
     const saving = loadingAlert()
     try {
       await createProjectInvoice({ variables: { data: expense, id: query.id } })
-      saving()
       success()
     } catch (e) {
       warning()
       console.error(e)
     }
+    saving()
   }, [createProjectInvoice])
 
   const update = useCallback(async expense => {
@@ -59,12 +59,12 @@ function FinancialMonitoringPage({ client, query }) {
     try {
       const { id, index, ...newExpense } = expense
       await updateProjectInvoice({ variables: { data: newExpense, id } })
-      saving()
       success()
     } catch (e) {
       warning()
       console.error(e)
     }
+    saving()
   }, [updateProjectInvoice])
 
   const injectActions = useMemo(() => ({
