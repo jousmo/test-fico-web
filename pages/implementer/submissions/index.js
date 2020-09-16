@@ -15,9 +15,7 @@ import { withApollo } from "../../../helpers/withApollo"
 
 function ImplementerSubmissions({ client }) {
   const router = useRouter()
-  const [ state ] = useState({
-    submissionsList: {}
-  })
+  const [ state, setState ] = useState({ isLoading: false })
 
   const { loading, error, data } = useQuery(submission.queries.getAll, {
     client: client,
@@ -35,6 +33,7 @@ function ImplementerSubmissions({ client }) {
   )
 
   const handleNewSubmission = async () => {
+    setState({ isLoading: true })
     const { data } = await createSubmission({
       variables: { data: { state: "SUBMISSION", status: "CREATED" } }
     })
@@ -43,7 +42,10 @@ function ImplementerSubmissions({ client }) {
   }
 
   const newSubmissionButton = (
-    <Button onClick={handleNewSubmission} type="primary">
+    <Button
+      disabled={state.isLoading}
+      onClick={handleNewSubmission}
+      type="primary">
       Nueva solicitud
     </Button>
   )
