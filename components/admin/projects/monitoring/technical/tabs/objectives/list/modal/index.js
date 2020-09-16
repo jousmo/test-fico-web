@@ -78,7 +78,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
       destroyOnClose
       cancelText="Cancelar"
       onOk={onOk}
-      width={600}
+      width={650}
       onCancel={onClose}
       okText="Guardar"
       {...props}>
@@ -104,18 +104,27 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
                 </Divider>
                 {edit?.schedules?.map(schedule =>
                   <>
-                    <Col span={12} style={{ padding: "0 5px"}}>
+                    <Col span={10} style={{ padding: "0 5px"}}>
                       <Form.Item
-                        label="Fecha de realización"
+                        label="Fecha planeada"
                         style={{ marginBottom: "0" }}>
-                        {moment(schedule.date).format("DD/MM/YYYY")}
+                        {moment(schedule.scheduledAt).format("DD/MM/YYYY")}
                       </Form.Item>
                     </Col>
-                    <Col span={12} style={{ padding: "0 5px"}}>
+                    <Col span={8} style={{ padding: "0 5px"}}>
                       <Form.Item
                         label="Lugar"
                         style={{ marginBottom: "0" }}>
                         {schedule.place}
+                      </Form.Item>
+                    </Col>
+                    <Col span={6} style={{ padding: "0 5px"}}>
+                      <Form.Item
+                        style={{ marginBottom: "0" }}>
+                        <DateField
+                          bordered={false}
+                          placeholder="Realizado"
+                          size="small"/>
                       </Form.Item>
                     </Col>
                   </>
