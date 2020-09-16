@@ -67,6 +67,11 @@ export const getById = gql`
           months
           inputs
           products
+          schedules {
+            id
+            date
+            place
+          }
           comments {
             fieldName
             revision

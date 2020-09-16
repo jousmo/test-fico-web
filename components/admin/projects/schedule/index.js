@@ -1,4 +1,4 @@
-import { Button, Card } from "antd"
+import { Card } from "antd"
 import { ExclamationCircleTwoTone } from "@ant-design/icons"
 import { useContext } from "react"
 import {
@@ -16,23 +16,16 @@ export function ProjectSchedule() {
     save
   } = useContext(AdminSubmissionContext)
 
-  const saveButton = (
-    <Button
-      className="save-button"
-      onClick={save}>
-      Guardar
-    </Button>
-  )
-
   return (
     <section className="project schedule">
-      <PageHeader extra={saveButton} title="Calendarización" />
+      <PageHeader title="Calendarización" />
       <Card>
         <ExclamationCircleTwoTone />&nbsp;
         Selecciona las actividades que realizarás durante este periodo
       </Card>
       <ProjectScheduleList
         data={data}
+        save={save}
         error={error}
         isLoading={loading} />
     </section>

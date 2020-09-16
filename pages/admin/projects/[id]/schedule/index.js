@@ -8,8 +8,9 @@ import {
   ProjectSchedule
 } from "../../../../../components/admin/projects/schedule"
 import { submission } from "../../../../../graphql/submission"
-import { useMemo } from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useCallback, useMemo } from "react"
+import { useMutation, useQuery } from "@apollo/react-hooks"
+import { loadingAlert, success, warning } from "../../../../../helpers/alert"
 
 function ProjectSchedulePage({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -17,9 +18,39 @@ function ProjectSchedulePage({ client, query }) {
     variables: { id: query.id }
   })
 
+  const [updateSubmission] = useMutation(
+    submission.mutations.updateById, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getById,
+          variables: { id: query.id }
+        }
+      ]
+    }
+  )
+
+  const save = useCallback(async submission => {
+    const saving = loadingAlert()
+
+    try {
+      await updateSubmission({
+        variables: { data: submission, id: query.id }
+      })
+      success()
+      saving()
+    }
+    catch(e) {
+      warning()
+      console.error(e)
+    }
+  }, [updateSubmission])
+
   const injectActions = useMemo(() => ({
     loading,
     error,
+    save,
     data
   }), [loading, data])
 
