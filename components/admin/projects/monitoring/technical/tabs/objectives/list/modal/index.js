@@ -108,18 +108,14 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
                       <Form.Item
                         label="Fecha de realización"
                         style={{ marginBottom: "0" }}>
-                        <Typography.Text strong style={{ marginBottom: "0" }}>
-                          {moment(schedule.date).format("DD/MM/YYYY")}
-                        </Typography.Text>
+                        {moment(schedule.date).format("DD/MM/YYYY")}
                       </Form.Item>
                     </Col>
                     <Col span={12} style={{ padding: "0 5px"}}>
                       <Form.Item
                         label="Lugar"
                         style={{ marginBottom: "0" }}>
-                        <Typography.Text strong>
-                          {schedule.place}
-                        </Typography.Text>
+                        {schedule.place}
                       </Form.Item>
                     </Col>
                   </>
