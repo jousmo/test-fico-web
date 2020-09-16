@@ -69,8 +69,9 @@ export const getById = gql`
           products
           schedules {
             id
-            date
             place
+            scheduledAt
+            completedAt
           }
           comments {
             fieldName
