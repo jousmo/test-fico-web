@@ -9,6 +9,30 @@ moment.locale("es")
 export function MonitoringSchedule({ data }) {
   const months = moment.months()
 
+  const selectColor = filterSchedule => {
+    let color = null
+    let counter = 0
+
+    for (const item of filterSchedule) {
+      const dateOne = item.scheduledAt?.split("T")[0]
+      const dateTwo = item.completedAt?.split("T")[0]
+
+      if (dateTwo === undefined) {
+        counter++
+        continue
+      }
+
+      if (dateOne !== dateTwo) {
+        color = "orange"
+        break
+      }
+
+      color = "green"
+    }
+
+    return counter === filterSchedule.length ? "red" : color
+  }
+
   const activities = data?.Submission?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []
   ) || []
@@ -17,9 +41,10 @@ export function MonitoringSchedule({ data }) {
     const obj = {}
 
     for (const month of months) {
-      const filterSchedule = activity?.schedules?.filter(schedule => moment(schedule?.date).format("MMMM") === month)
+      const filterSchedule = activity?.schedules?.filter(schedule => moment(schedule?.scheduledAt).format("MMMM") === month)
       if (filterSchedule?.length) {
-        obj[month] = <ScheduleBox color="green" />
+        const color = selectColor(filterSchedule)
+        obj[month] = <ScheduleBox color={color} />
       }
     }
 
@@ -44,7 +69,7 @@ export function MonitoringSchedule({ data }) {
             dataIndex="activity"
             title="Actividad"
             render={t =>
-              <Tooltip title="Cumplimiento del 90%" placement="right">
+              <Tooltip title="Cumplimiento del 0%" placement="right">
                 <span>{t}</span>
               </Tooltip>
             } />
