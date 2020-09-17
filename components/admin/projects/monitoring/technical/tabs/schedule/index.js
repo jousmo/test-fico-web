@@ -8,37 +8,27 @@ moment.locale("es")
 
 export function MonitoringSchedule({ data }) {
   const months = moment.months()
-  const dataSource = [
-    {
-      activity: "La 4T hoy en día",
-      enero: <ScheduleBox color="green" />,
-      febrero: <ScheduleBox color="green" />,
-      marzo: <ScheduleBox color="orange" />,
-      abril: <ScheduleBox color="red" />,
-      mayo: <ScheduleBox color="transparent" />,
-      junio: <ScheduleBox color="red" />,
-      julio: <ScheduleBox color="red" />,
-      agosto: <ScheduleBox color="green" />,
-      septiembre: <ScheduleBox color="green" />,
-      octubre: <ScheduleBox color="green" />,
-      noviembre: <ScheduleBox color="red" />,
-      diciembre: <ScheduleBox color="red" />
-    },{
-      activity: "Seguimos o paramos",
-      enero: <ScheduleBox color="red" />,
-      febrero: <ScheduleBox color="transparent" />,
-      marzo: <ScheduleBox color="transparent" />,
-      abril: <ScheduleBox color="green" />,
-      mayo: <ScheduleBox color="green" />,
-      junio: <ScheduleBox color="orange" />,
-      julio: <ScheduleBox color="orange" />,
-      agosto: <ScheduleBox color="orange" />,
-      septiembre: <ScheduleBox color="green" />,
-      octubre: <ScheduleBox color="green" />,
-      noviembre: <ScheduleBox color="red" />,
-      diciembre: <ScheduleBox color="green" />
+
+  const activities = data?.Submission?.specificObjectives?.reduce(
+    (prev, { activities }) => activities ? prev.concat(activities) : null, []
+  ) || []
+
+  const dataSource = activities?.map(activity => {
+    const obj = {}
+
+    for (const month of months) {
+      const filterSchedule = activity?.schedules?.filter(schedule => moment(schedule?.date).format("MMMM") === month)
+      if (filterSchedule?.length) {
+        obj[month] = <ScheduleBox color="green" />
+      }
     }
-  ]
+
+    return {
+      key: activity?.id,
+      activity: activity?.title,
+      ...obj
+    }
+  })
 
   return (
     <div style={{ marginTop: "-2.5rem"}}>

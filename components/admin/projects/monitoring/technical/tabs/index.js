@@ -33,7 +33,7 @@ function TechnicalMonitoringTabs({ data }) {
         <MonitoringParticipants data={data} dateFilter={filterState} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Cronograma" key="4">
-        <MonitoringSchedule />
+        <MonitoringSchedule data={data} />
       </Tabs.TabPane>
     </Tabs>
   )
