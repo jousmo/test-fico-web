@@ -1,4 +1,4 @@
-import { DatePicker, Table, Tabs } from "antd"
+import { DatePicker, Tabs } from "antd"
 import { useState } from "react"
 import { withForm } from "../../../../../../helpers"
 import { MonitoringObjectives } from "./objectives"
