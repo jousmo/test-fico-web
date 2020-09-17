@@ -31,6 +31,10 @@ function TechnicalMonitoringPage({ client, query }) {
     submission.mutations.updateById, { client: client }
   )
 
+  const [updateActivity] = useMutation(
+    submission.mutations.updateActivity, { client: client }
+  )
+
   const updateSubmission = useCallback(async submission => {
     const saving = loadingAlert()
     try {
@@ -45,6 +49,17 @@ function TechnicalMonitoringPage({ client, query }) {
     }
     saving()
   }, [updateSub])
+
+  const saveActivity = useCallback(async activity => {
+    try {
+      await updateActivity({
+        variables: { data: activity }
+      })
+    }
+    catch(e) {
+      warning()
+    }
+  }, [updateActivity])
 
   const save = useCallback(async monitoring => {
     const saving = loadingAlert()
@@ -86,6 +101,7 @@ function TechnicalMonitoringPage({ client, query }) {
 
   const injectActions = useMemo(() => ({
     updateSubmission,
+    saveActivity,
     loading,
     update,
     error,
