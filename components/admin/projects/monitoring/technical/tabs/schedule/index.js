@@ -4,34 +4,11 @@ import moment from "moment"
 import { capitalize } from "lodash"
 import { ScheduleBox } from "./box"
 import { CommentOutlined } from "@ant-design/icons"
+import { getColor } from "./helpers"
 moment.locale("es")
 
 export function MonitoringSchedule({ data }) {
   const months = moment.months()
-
-  const selectColor = filterSchedule => {
-    let color = null
-    let counter = 0
-
-    for (const item of filterSchedule) {
-      const dateOne = item.scheduledAt?.split("T")[0]
-      const dateTwo = item.completedAt?.split("T")[0]
-
-      if (dateTwo === undefined) {
-        counter++
-        continue
-      }
-
-      if (dateOne !== dateTwo) {
-        color = "orange"
-        break
-      }
-
-      color = "green"
-    }
-
-    return counter === filterSchedule.length ? "red" : color
-  }
 
   const activities = data?.Submission?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []
@@ -43,7 +20,7 @@ export function MonitoringSchedule({ data }) {
     for (const month of months) {
       const filterSchedule = activity?.schedules?.filter(schedule => moment(schedule?.scheduledAt).format("MMMM") === month)
       if (filterSchedule?.length) {
-        const color = selectColor(filterSchedule)
+        const color = getColor(filterSchedule)
         obj[month] = <ScheduleBox color={color} />
       }
     }
