@@ -1,3 +1,5 @@
+import moment from "moment"
+
 export const getColor = filterSchedule => {
   let color = null
   let counter = 0
@@ -21,3 +23,11 @@ export const getColor = filterSchedule => {
 
   return counter === filterSchedule.length ? "red" : color
 }
+
+export const getMonths = dateFilter => Array
+  .from(
+    moment
+      .range(moment(dateFilter[0]), moment(dateFilter[1]))
+      .snapTo("month")
+      .by("month")
+  ).map(r => r.format("MMMM"))

@@ -4,13 +4,20 @@ import moment from "moment"
 import { capitalize } from "lodash"
 import { ScheduleBox } from "./box"
 import { CommentOutlined } from "@ant-design/icons"
-import { getColor } from "./helpers"
+import { getColor, getMonths } from "./helpers"
 moment.locale("es")
 
-export function MonitoringSchedule({ data }) {
-  const months = moment.months()
+export function MonitoringSchedule({ data, dateFilter }) {
+  const monthsFull = moment.months()
+  let months = null
 
-  const activities = data?.Submission?.specificObjectives?.reduce(
+  if (dateFilter?.length > 0) {
+    months =  getMonths(dateFilter)
+  } else {
+    months = monthsFull
+  }
+
+  let activities = data?.Submission?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []
   ) || []
 
@@ -43,6 +50,7 @@ export function MonitoringSchedule({ data }) {
           scroll={{ x: true }}>
 
           <Table.Column
+            className="activity"
             dataIndex="activity"
             title="Actividad"
             render={t =>
@@ -61,7 +69,7 @@ export function MonitoringSchedule({ data }) {
                 shape="circle" />
             } />
 
-          {months.map((month, index) => {
+          {monthsFull?.map((month, index) => {
             return (
               <Table.Column
                 className="months"
