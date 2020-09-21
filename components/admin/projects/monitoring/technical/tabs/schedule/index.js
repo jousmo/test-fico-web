@@ -3,8 +3,8 @@ import { Section } from "../../../../../../shared/section"
 import moment from "moment"
 import { capitalize } from "lodash"
 import { ScheduleBox } from "./box"
-import { CommentOutlined } from "@ant-design/icons"
-import { getColor, getMonths } from "./helpers"
+import { CommentOutlined, QuestionCircleFilled } from "@ant-design/icons"
+import { getColor, getMonths, getCompliance } from "./helpers"
 moment.locale("es")
 
 export function MonitoringSchedule({ data, dateFilter }) {
@@ -17,7 +17,7 @@ export function MonitoringSchedule({ data, dateFilter }) {
     months = monthsFull
   }
 
-  let activities = data?.Submission?.specificObjectives?.reduce(
+  const activities = data?.Submission?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []
   ) || []
 
@@ -35,6 +35,7 @@ export function MonitoringSchedule({ data, dateFilter }) {
     return {
       key: activity?.id,
       activity: activity?.title,
+      compliance: getCompliance(activity),
       ...obj
     }
   })
@@ -53,9 +54,9 @@ export function MonitoringSchedule({ data, dateFilter }) {
             className="activity"
             dataIndex="activity"
             title="Actividad"
-            render={t =>
-              <Tooltip title="Cumplimiento del 0%" placement="right">
-                <span>{t}</span>
+            render={(t, row) =>
+              <Tooltip title={`Cumplimiento del ${row.compliance}%`} placement="right">
+                <span>{t} <QuestionCircleFilled /></span>
               </Tooltip>
             } />
 

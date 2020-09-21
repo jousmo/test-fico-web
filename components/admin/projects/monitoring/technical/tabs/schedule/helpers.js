@@ -8,7 +8,7 @@ export const getColor = filterSchedule => {
     const dateOne = item.scheduledAt?.split("T")[0]
     const dateTwo = item.completedAt?.split("T")[0]
 
-    if (dateTwo === undefined) {
+    if (!dateTwo) {
       counter++
       continue
     }
@@ -22,6 +22,16 @@ export const getColor = filterSchedule => {
   }
 
   return counter === filterSchedule.length ? "red" : color
+}
+
+export const getCompliance = activity => {
+
+  const compliance = activity?.schedules?.reduce((prev, current) => {
+    const dateCompliance = current?.completedAt?.split("T")[0]
+    return dateCompliance ? prev + 1 : prev + 0
+  }, 0)
+
+  return ((compliance * 100) / activity?.schedules?.length).toFixed(2)
 }
 
 export const getMonths = dateFilter => Array
