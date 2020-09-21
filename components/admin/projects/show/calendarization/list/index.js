@@ -34,7 +34,8 @@ function CalendarizationList({ data }){
           </Button>
         ]}>
         <Typography.Text strong>
-          Fecha de ultima actividad agendada {moment(latestUpdated).format("DD/MM/YYYY")}
+          Fecha de ultima actividad agendada
+          {latestUpdated !== "" && moment(latestUpdated).format("DD/MM/YYYY")}
         </Typography.Text>
       </List.Item>
     </List>
