@@ -35,7 +35,10 @@ function ProjectScheduleList({ data, save }) {
 
   const getSchedule = row => {
     const { schedules } = row
-    if (schedules?.length === 1){
+    if (schedules?.length === 0){
+      return ""
+    }
+    else if (schedules?.length === 1){
       return {
         date: moment(schedules[0].date).format("DD/MM/YYYY H:MMA"),
         place: schedules[0].place
