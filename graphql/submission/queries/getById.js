@@ -37,6 +37,7 @@ export const getById = gql`
           id
           type
           title
+          orderIndex
           description
           methodology
           formula
@@ -57,6 +58,7 @@ export const getById = gql`
         activities {
           id
           title
+          orderIndex
           description
           responsible
           methodology
