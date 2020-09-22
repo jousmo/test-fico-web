@@ -32,6 +32,7 @@ export const getById = gql`
       specificObjectives {
         id
         description
+        orderIndex
         indicators {
           id
           type
