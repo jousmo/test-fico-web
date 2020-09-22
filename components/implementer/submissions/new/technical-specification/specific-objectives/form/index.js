@@ -43,7 +43,7 @@ export default function SpecificObjectiveForm({
   const onSpecificObjectiveItemsChange = (index, type) => (indicators) => {
     const newSpecificObjectives = Array.from(specificObjectives)
 
-    newSpecificObjectives[index][type] = indicators
+    newSpecificObjectives[index][type] = indicators.map((el, index) => ({ ...el, orderIndex: index + 1 }))
 
     onChange && onChange(newSpecificObjectives)
   }
@@ -82,7 +82,7 @@ export default function SpecificObjectiveForm({
                 indicatorType="SPECIFIC_INDICATOR"
                 objectiveIndex={index}
                 readOnly={readOnly}
-                defaultValue={objective.indicators}
+                defaultValue={objective.indicators.sort((a, b) => a.orderIndex - b.orderIndex)}
                 hiddenComments={hiddenComments}/>
             </Form.Item>
             <Form.Item label="Actividades">
@@ -92,7 +92,7 @@ export default function SpecificObjectiveForm({
                 objectiveIndex={index}
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}
                 readOnly={readOnly}
-                defaultValue={objective.activities}
+                defaultValue={objective.activities.sort((a, b) => a.orderIndex - b.orderIndex)}
                 hiddenComments={hiddenComments}/>
             </Form.Item>
           </Form>
