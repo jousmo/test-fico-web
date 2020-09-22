@@ -1,21 +1,14 @@
 import { Button, Table, Tooltip } from "antd"
 import { Section } from "../../../../../../shared/section"
 import moment from "moment"
-import { capitalize } from "lodash"
 import { ScheduleBox } from "./box"
 import { CommentOutlined, QuestionCircleFilled } from "@ant-design/icons"
 import { getColor, getMonths, getCompliance } from "./helpers"
 moment.locale("es")
 
 export function MonitoringSchedule({ data, dateFilter }) {
-  const monthsFull = moment.months()
-  let months = null
-
-  if (dateFilter?.length > 0) {
-    months =  getMonths(dateFilter)
-  } else {
-    months = monthsFull
-  }
+  const fullMonths = getMonths(data?.Submission)
+  let months = dateFilter?.length ? getMonths(dateFilter) : fullMonths
 
   const activities = data?.Submission?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []
@@ -23,6 +16,14 @@ export function MonitoringSchedule({ data, dateFilter }) {
 
   const dataSource = activities?.map(activity => {
     const obj = {}
+
+    months?.forEach(month => {
+      const filterSchedule = activity?.schedules?.filter(schedule => moment(schedule?.scheduledAt).format("MMYYYY") === month?.value)
+      if (filterSchedule?.length) {
+        obj[month.value] = <ScheduleBox color={getColor(filterSchedule)} />
+      }
+    })
+
 
     for (const month of months) {
       const filterSchedule = activity?.schedules?.filter(schedule => moment(schedule?.scheduledAt).format("MMMM") === month)
@@ -54,6 +55,7 @@ export function MonitoringSchedule({ data, dateFilter }) {
             className="activity"
             dataIndex="activity"
             title="Actividad"
+            fixed="left"
             render={(t, row) =>
               <Tooltip title={`Cumplimiento del ${row.compliance}%`} placement="right">
                 <span>{t} <QuestionCircleFilled /></span>
@@ -61,8 +63,8 @@ export function MonitoringSchedule({ data, dateFilter }) {
             } />
 
           <Table.Column
-            className="comment"
             align="center"
+            fixed="left"
             render={(t, row) =>
               <Button
                 icon={<CommentOutlined />}
@@ -70,13 +72,12 @@ export function MonitoringSchedule({ data, dateFilter }) {
                 shape="circle" />
             } />
 
-          {monthsFull?.map((month, index) => {
+          {fullMonths?.map((month, index) => {
             return (
               <Table.Column
-                className="months"
                 key={index}
-                dataIndex={month}
-                title={capitalize(month)}
+                dataIndex={month.value}
+                title={month.label}
                 align="center" />
             )
           })}

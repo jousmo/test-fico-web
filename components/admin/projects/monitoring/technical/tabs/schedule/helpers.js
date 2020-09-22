@@ -34,10 +34,18 @@ export const getCompliance = activity => {
   return ((compliance * 100) / activity?.schedules?.length).toFixed(2)
 }
 
-export const getMonths = dateFilter => Array
-  .from(
-    moment
-      .range(moment(dateFilter[0]), moment(dateFilter[1]))
-      .snapTo("month")
-      .by("month")
-  ).map(r => r.format("MMMM"))
+export const getMonths = dates => {
+  let startDate = null
+  let endDate = null
+
+  if (Array.isArray(dates)) {
+    startDate = moment(dates[0])
+    endDate = moment(dates[1])
+  } else {
+    startDate = moment(dates?.startDate)
+    endDate = moment(dates?.endDate)
+  }
+
+  return Array.from(moment.range(startDate, endDate).by("month"))
+    .map(r => ({ label: _.capitalize(r.format("MMM YY")), value: r.format("MMYYYY")}))
+}
