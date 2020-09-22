@@ -36,7 +36,9 @@ export default function SpecificObjectiveForm({
     )
   }
 
-  const specificObjectives = data?.Submission?.specificObjectives || []
+  const specificObjectives = data?.Submission?.specificObjectives?.sort((a, b) =>
+    a.orderIndex - b.orderIndex
+  ) || []
 
   const onSpecificObjectiveItemsChange = (index, type) => (indicators) => {
     const newSpecificObjectives = Array.from(specificObjectives)
@@ -56,11 +58,11 @@ export default function SpecificObjectiveForm({
             <>
               <FieldLabel
                 helpText={<SpecificObjectiveText />}>
-                {`Objetivo específico ${index + 1}`}
+                {`Objetivo específico ${objective.orderIndex}`}
               </FieldLabel>
               {!hiddenComments &&
                 <CommentButton
-                  name={`specificObjective_${index}`}
+                  name={`specificObjective_${objective.orderIndex}`}
                   index={index}
                   section="SPECIFIC_OBJECTIVE" />
               }
