@@ -9,4 +9,4 @@ export * from "./updateTechnicalMonitoring"
 export * from "./createCommentInvoice"
 export * from "./createCommentTechnical"
 export * from "./updateActivity"
-
+export * from "./createCommentTechnicalActivity"

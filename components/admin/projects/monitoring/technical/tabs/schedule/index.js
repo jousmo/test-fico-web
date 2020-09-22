@@ -4,9 +4,16 @@ import moment from "moment"
 import { ScheduleBox } from "./box"
 import { CommentOutlined, QuestionCircleFilled } from "@ant-design/icons"
 import { getColor, getMonths, getCompliance } from "./helpers"
+import ModalCommentMonitoring from "../../../../../../shared/modal-comment-monitoring"
+import { useState } from "react"
 moment.locale("es")
 
 export function MonitoringSchedule({ data, dateFilter }) {
+  const [state, setState] = useState({
+    isModalCommentOpen: false,
+    activity: { id: "", type: "ACTIVITY" }
+  })
+
   const fullMonths = getMonths(data?.Submission)
   let months = dateFilter?.length ? getMonths(dateFilter) : fullMonths
 
@@ -35,11 +42,28 @@ export function MonitoringSchedule({ data, dateFilter }) {
 
     return {
       key: activity?.id,
+      id: activity?.id,
       activity: activity?.title,
       compliance: getCompliance(activity),
       ...obj
     }
   })
+
+  const onComment = row => {
+    setState({
+      ...state,
+      isModalCommentOpen: true,
+      activity: {
+        ...state.activity,
+        id: row?.id,
+        title: `de la actividad: ${row?.activity}`
+      }
+    })
+  }
+
+  const onCancel = () => {
+    setState({ isModalCommentOpen: false, activity: { id: "", type: "ACTIVITY" } })
+  }
 
   return (
     <div style={{ marginTop: "-2.5rem"}}>
@@ -69,7 +93,8 @@ export function MonitoringSchedule({ data, dateFilter }) {
               <Button
                 icon={<CommentOutlined />}
                 onClick={null}
-                shape="circle" />
+                shape="circle"
+                onClick={() => onComment(row)}/>
             } />
 
           {fullMonths?.map((month, index) => {
@@ -83,6 +108,12 @@ export function MonitoringSchedule({ data, dateFilter }) {
           })}
         </Table>
       </Section>
+      {state.isModalCommentOpen && (
+        <ModalCommentMonitoring
+          visible={state.isModalCommentOpen}
+          data={state.activity}
+          onCancel={onCancel}/>
+      )}
     </div>
   )
 }
