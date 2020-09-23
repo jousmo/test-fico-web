@@ -1,25 +1,15 @@
 import { message } from "antd"
-import { auth } from "./index"
+import { firebase } from "./index"
 
-export function Authenticate(email, password, router) {
+export async function Authenticate(email, password) {
   const loggingIn = message.loading("Iniciando sesión")
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      auth.currentUser.getIdTokenResult().then(res => {
-        loggingIn()
-        message.success("Iniciado exitosamente")
-        const { claims, token } = res
-        localStorage.setItem("token", JSON.stringify(token))
-        localStorage.setItem("user", JSON.stringify(res))
-
-        if (claims.role === "ADMIN"){
-          router.push("/admin/submissions")
-        } else {
-          router.push("/implementer/submissions")
-        }
-      })
-    }).catch(error => {
+  try {
+    await firebase.auth().signInWithEmailAndPassword(email, password)
+    message.success("Iniciado exitosamente...")
+    window.location.href = "/admin/submissions"
+  } catch (e) {
     message.error("Error al iniciar sesión")
-    console.error("Error signing in with password and email", error)
-  })
+    console.error("Error signing in", e)
+  }
+  loggingIn()
 }
