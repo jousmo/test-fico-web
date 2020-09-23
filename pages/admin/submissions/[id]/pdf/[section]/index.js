@@ -10,15 +10,12 @@ import {
   AdminSubmissionContext
 } from "../../../../../../contexts/admin/submissions/show"
 import { submission, implementer } from "../../../../../../graphql"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../../helpers/withApollo"
+import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function ViewPDF({ client, query }) {
-  const [ state ] = useState({
-    viewPDF: {}
-  })
-
   const submissionResult = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: query.id }
@@ -32,7 +29,7 @@ function ViewPDF({ client, query }) {
   const injectActions = useMemo(() => ({
     implementerResult,
     submissionResult
-  }), [state, submissionResult.loading])
+  }), [submissionResult.loading])
 
   let sectionComponent
   const section = query.section
@@ -57,10 +54,8 @@ function ViewPDF({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "ADMIN")
 }
 
 export default withApollo(ViewPDF)

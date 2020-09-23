@@ -11,6 +11,7 @@ import { submission } from "../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { loadingAlert, success, warning } from "../../../../../helpers/alert"
+import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 
 function ProjectSchedulePage({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -66,10 +67,8 @@ function ProjectSchedulePage({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "ADMIN")
 }
 
 export default withApollo(ProjectSchedulePage)

@@ -6,6 +6,7 @@ import { submission } from "../../../../../graphql"
 import { useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
+import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 
 function ViewPDF({ client, query }) {
   const { data } = useQuery(submission.queries.getById, {
@@ -24,10 +25,8 @@ function ViewPDF({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "ADMIN")
 }
 
 export default withApollo(ViewPDF)

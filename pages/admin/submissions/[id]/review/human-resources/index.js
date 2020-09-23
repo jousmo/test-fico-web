@@ -24,6 +24,7 @@ import {
   setSave,
   setUpdateHumanResources
 } from "../../../../../../helpers/submissionFunctions/human-resources"
+import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
 function HumanResources({ client, query }) {
@@ -78,10 +79,8 @@ function HumanResources({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "ADMIN")
 }
 
 export default withApollo(HumanResources)

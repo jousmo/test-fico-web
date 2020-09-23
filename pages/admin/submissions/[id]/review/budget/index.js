@@ -23,6 +23,7 @@ import {
   setSave,
   setUpdateBudget
 } from "../../../../../../helpers/submissionFunctions/budget"
+import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
 function Budget({ client, query }) {
@@ -77,10 +78,8 @@ function Budget({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "ADMIN")
 }
 
 export default withApollo(Budget)
