@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import nookies from "nookies"
+import nookies, { destroyCookie } from "nookies"
 import { firebase } from "../../helpers/auth"
 
 const AuthContext = React.createContext({
@@ -13,14 +13,15 @@ export function AuthProvider({ children }) {
     return firebase.auth().onIdTokenChanged(async user => {
       if (!user) {
         setUser(null)
-        nookies.set(undefined, "token", "", null)
+        nookies.set(undefined, "token", "", { path: "/" })
+        destroyCookie(null, "token")
         return
       }
       const { claims } = await user.getIdTokenResult()
 
       const token = await user.getIdToken()
       setUser({ ...user, claims })
-      nookies.set(undefined, "token", token, null)
+      nookies.set(undefined, "token", token, { path: "/" })
     })
   }, [])
 
