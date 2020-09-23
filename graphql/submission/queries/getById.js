@@ -32,10 +32,12 @@ export const getById = gql`
       specificObjectives {
         id
         description
+        orderIndex
         indicators {
           id
           type
           title
+          orderIndex
           description
           methodology
           formula
@@ -56,6 +58,7 @@ export const getById = gql`
         activities {
           id
           title
+          orderIndex
           description
           responsible
           methodology
@@ -69,8 +72,9 @@ export const getById = gql`
           products
           schedules {
             id
-            date
             place
+            scheduledAt
+            completedAt
           }
           comments {
             fieldName
@@ -266,7 +270,7 @@ export const getById = gql`
         appliedAt
         completed
         compliance
-        verificationDocument{
+        verificationDocuments{
           id
           name
           url

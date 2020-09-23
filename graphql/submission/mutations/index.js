@@ -8,4 +8,5 @@ export * from "./createTechnicalMonitoring"
 export * from "./updateTechnicalMonitoring"
 export * from "./createCommentInvoice"
 export * from "./createCommentTechnical"
+export * from "./updateActivity"
 

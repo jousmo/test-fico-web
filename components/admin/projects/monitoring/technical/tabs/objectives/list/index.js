@@ -23,18 +23,20 @@ export function ObjectivesList({ data, dateFilter }) {
   const [filterState, setFilterState] = useState(false)
 
   const dataSource = decoratedData(data, dateFilter)
-  const { save, update } = useContext(AdminSubmissionContext)
+  const { save, update, saveActivity } = useContext(AdminSubmissionContext)
 
-  const onSave = monitoring => {
-    const newReports = [ ...data.technicalMonitoringReports ]
+  const onSave = (monitoring, id = null) => {
+    const { schedules = [], ...report  } = monitoring
 
-    const index = newReports.findIndex(r => r.key === monitoring.key)
+    if (schedules.length > 0) {
+      saveActivity({ id, schedules })
+    }
+
+    const index = data?.technicalMonitoringReports?.findIndex(r => r.key === report.key)
     if (index >= 0){
-      newReports[index] = monitoring
-      update(monitoring)
+      update(report)
     } else {
-      newReports.push(monitoring)
-      save(monitoring)
+      save(report)
     }
 
     onCancel()
@@ -148,12 +150,14 @@ export function ObjectivesList({ data, dateFilter }) {
               shape="circle" />
           } />
         <Table.Column
-          render={(t, row) =>
-            <Button
-              icon={<EditOutlined />}
-              onClick={() => onEdit(row)}
-              shape="circle" />
-          } />
+          render={(t, row) => {
+            return !row.key.includes("OE") && (
+              <Button
+                icon={<EditOutlined />}
+                onClick={() => onEdit(row)}
+                shape="circle" />
+            )
+          }}/>
       </Table>
       {state.isModalCommentOpen && (
         <ModalCommentMonitoring

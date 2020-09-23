@@ -3,9 +3,10 @@ import {
   Modal, Row, Tag, Typography
 } from "antd"
 import { useEffect, useState } from "react"
-import { DateField, UploadButton } from "../../../../../../../../shared"
+import { DateField, UploadButtonForm } from "../../../../../../../../shared"
 import { getSelectValue } from "../../../../../../../../../helpers"
 import { ParticipantsField } from "./participants-field"
+import { SchedulesField } from "./schedules-field"
 
 export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
   const [form] = Form.useForm()
@@ -29,7 +30,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
         values.id = edit?.reportId
       }
 
-      onSave(values)
+      onSave(values, edit?.id)
     }
     catch(e) {
       console.error(e)
@@ -41,16 +42,13 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
     onCancel()
   }
 
-  const onUploadFile = (info, cb) => {
-    const { file: { name, response } } = info
-    const url = response?.imageUrl
-    const newDocument = { name, url }
-
-    form.setFieldsValue({ verificationDocument: newDocument })
+  const onUploadFile = files => {
+    const documents = files?.map(el => ({ id: el.id, name: el.name, url: el.url }))
+    form.setFieldsValue({ verificationDocuments: documents })
   }
 
   const onRemoveFile = () => {
-    form.setFieldsValue({ verificationDocument: undefined })
+    form.setFieldsValue({ verificationDocuments: undefined })
   }
 
   const getPercentage = () => {
@@ -70,18 +68,17 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
   }
   const indicatorType = `${types[edit?.key.split("_")[0]]} ${edit?.key.split("_")[1]}`
 
-  const files = []
-  if (edit?.verificationDocument){
-    const { id: uid, ...document } = edit?.verificationDocument
-    files.push({ uid, ...document })
-  }
+  const files = edit?.verificationDocuments?.map(doc => {
+    const { id: uid, ...document } = doc
+    return { uid, ...document }
+  }) || []
 
   return (
     <Modal
       destroyOnClose
       cancelText="Cancelar"
       onOk={onOk}
-      width={600}
+      width={650}
       onCancel={onClose}
       okText="Guardar"
       {...props}>
@@ -96,21 +93,41 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
           <Col span={24}>
             <Typography.Text>{edit?.description}</Typography.Text>
           </Col>
-          <Col span={24}>
-            <Form.Item
-              getValueFromEvent={getSelectValue}
-              initialValue={edit?.appliedAt}
-              style={{ marginBottom: "0" }}
-              rules={[{ required: true, message: "Campo requerido" }]}
-              id="appliedAt"
-              name="appliedAt">
-              <DateField
-                bordered={false}
-                style={{ width: "15rem" }}
-                placeholder="Selecciona fecha de realización"
-                size="small"/>
-            </Form.Item>
-          </Col>
+          {type === "ACTIVITY"
+            ? (
+              <>
+                <Divider
+                  plain
+                  orientation="left"
+                  style={{ margin: "10px 0" }}>
+                  Implementación
+                </Divider>
+                <Col span={24}>
+                  <Form.Item
+                    name="schedules"
+                    rules={[{ required: true, message: "Campo requerido" }]}>
+                    <SchedulesField />
+                  </Form.Item>
+                </Col>
+              </>
+            )
+            : (
+              <Col span={24}>
+                <Form.Item
+                  getValueFromEvent={getSelectValue}
+                  initialValue={edit?.appliedAt}
+                  style={{ marginBottom: "0" }}
+                  rules={[{ required: true, message: "Campo requerido" }]}
+                  id="appliedAt"
+                  name="appliedAt">
+                  <DateField
+                    bordered={false}
+                    style={{ width: "15rem" }}
+                    placeholder="Selecciona fecha de realización"
+                    size="small"/>
+                </Form.Item>
+              </Col>
+            )}
           <Divider
             plain
             orientation="left"
@@ -178,26 +195,34 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
             <Form.Item
               id="participants"
               name="participants"
-              rules={[{ required: true, message: "Campo requerido" }]}>
+              rules={[{ required: true, message: "Campo requerido" }]}
+              style={{ marginBottom: "0" }}>
               <ParticipantsField
                 defaultValue={edit?.participants}
                 onChange={(p) => form.setFieldsValue({ participants: p })}
                 type={type} />
             </Form.Item>
           </Col>
+          <Divider
+            plain
+            orientation="left"
+            style={{ margin: "10px 0" }}>
+            Medios de verificación
+          </Divider>
           <Col span={24}>
             <Form.Item
-              id="verificationDocument"
-              name="verificationDocument"
+              id="verificationDocuments"
+              name="verificationDocuments"
               initialValue={files}
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
-              <UploadButton
-                onDoneFile={onUploadFile}
+              <UploadButtonForm
+                fileList={files}
                 onRemoveFile={onRemoveFile}
-                files={files}>
+                onChange={onUploadFile}
+                maxFile={type === "ACTIVITY" ? edit?.schedules.length : 1}>
                 Subir medio de verificación
-              </UploadButton>
+              </UploadButtonForm>
             </Form.Item>
           </Col>
         </Row>

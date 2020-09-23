@@ -2,19 +2,19 @@ import { Tag } from "antd"
 
 export const decoratedData = (data) => {
   const result = []
-  data?.Submission?.specificObjectives?.forEach((objective, index) => {
-    const objNumber = index + 1
-
-    objective.activities.forEach((activity, i) => {
-      const key = `A${objNumber}.${i + 1}`
-      result.push({
-        description: activity.description,
-        key,
-        level: <Tag color="processing">{key}</Tag>,
-        objective: objective.id,
-        ...activity
+  data?.Submission?.specificObjectives?.sort((a, b) => a.orderIndex - b.orderIndex)
+    .forEach(objective => {
+      objective.activities.sort((a, b) => a.orderIndex - b.orderIndex)
+        .forEach((activity, i) => {
+          const key = `A${objective.orderIndex}.${activity.orderIndex}`
+          result.push({
+            description: activity.description,
+            key,
+            level: <Tag color="processing">{key}</Tag>,
+            objective: objective.id,
+            ...activity
+          })
       })
-    })
   })
   return result
 }

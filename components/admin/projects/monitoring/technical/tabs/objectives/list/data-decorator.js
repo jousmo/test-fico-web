@@ -43,58 +43,57 @@ export const decoratedData = (data, dateFilter) => {
     })
   })
 
-  data?.specificObjectives?.forEach((obj, index) => {
-    const objNumber = index + 1
-    const { activities, indicators, ...objective } = obj
+  data?.specificObjectives?.sort((a, b) => a.orderIndex - b.orderIndex)
+    .forEach(obj => {
+      const objNumber = obj.orderIndex
+      const { activities, indicators, ...objective } = obj
 
-    const key = `OE_${objNumber}`
-    addItem(key, {
-      key,
-      level: <Tag color="processing">{`OE${objNumber}`}</Tag>,
-      ...objective
-    })
-
-    let accumulatedGoal = 0
-
-    indicators?.forEach((indicator, index) => {
-      const indicatorNumber = `${objNumber}.${index + 1}`
-      accumulatedGoal += Number(indicator.goal)
-
-      const key = `IE_${indicatorNumber}`
+      const key = `OE_${objNumber}`
       addItem(key, {
         key,
-        level: <Tag color="processing">{`I${indicatorNumber}`}</Tag>,
-        ...indicator
+        level: <Tag color="processing">{`OE${objNumber}`}</Tag>,
+        ...objective
       })
-    })
 
-    activities?.forEach((activity, index) => {
-      const activityNumber = `${objNumber}.${index + 1}`
-      accumulatedGoal += Number(activity.goal)
+      let accumulatedGoal = 0
 
-      const key = `AE_${activityNumber}`
-      addItem(key, {
-        key,
-        level: <Tag color="processing">{`A${activityNumber}`}</Tag>,
-        ...activity
+      indicators?.sort((a, b) => a.orderIndex - b.orderIndex).forEach(indicator => {
+        const indicatorNumber = `${objNumber}.${indicator.orderIndex}`
+        accumulatedGoal += Number(indicator.goal)
+
+        const key = `IE_${indicatorNumber}`
+        addItem(key, {
+          key,
+          level: <Tag color="processing">{`I${indicatorNumber}`}</Tag>,
+          ...indicator
+        })
       })
-    })
 
-    const objectiveIndex = result.findIndex(el => el.key === key)
-    result[objectiveIndex] = {
-      ...result[objectiveIndex],
-      goal: accumulatedGoal
-    }
+      activities?.sort((a, b) => a.orderIndex - b.orderIndex).forEach(activity => {
+        const activityNumber = `${objNumber}.${activity.orderIndex}`
+        accumulatedGoal += Number(activity.goal)
+
+        const key = `AE_${activityNumber}`
+        addItem(key, {
+          key,
+          level: <Tag color="processing">{`A${activityNumber}`}</Tag>,
+          ...activity
+        })
+      })
+
+      const objectiveIndex = result.findIndex(el => el.key === key)
+      result[objectiveIndex] = {
+        ...result[objectiveIndex],
+        goal: accumulatedGoal
+      }
   })
 
-  const reportResult = result.map(el => {
-    const report = data?.technicalMonitoringReports?.find(report => report.key === el.key)
+  return result.map(el => {
+    const { id, ...report } = data?.technicalMonitoringReports?.find(report => report.key === el.key) || {}
     return {
       ...el,
       ...report,
-      reportId: report?.id
+      reportId: id
     }
   })
-
-  return reportResult
 }

@@ -4,6 +4,7 @@ import {
   ProjectMonitoring,
   ProjectSummary,
   SignedAgreement,
+  Calendarization,
   Government
 } from "../../../../components/admin/projects/show"
 import {
@@ -38,6 +39,7 @@ function Project({ client, query }) {
           <Government />
           <GeneralInformation />
           <SignedAgreement />
+          <Calendarization />
           <ProjectMonitoring />
           <ProjectClosure />
         </Layout>

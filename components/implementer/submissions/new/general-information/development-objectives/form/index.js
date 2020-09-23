@@ -6,14 +6,19 @@ import { DevelopmentObjectiveText } from "./development-objective-text"
 import { SpecificObjectiveText } from "./specific-objective-text"
 
 function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
-  const onSpecificObjectivesChange = (newObjectives) => {
+  const onSpecificObjectivesChange = newObjectives => {
+    const objectives = newObjectives.map((el, index) => ({ ...el, orderIndex: index + 1 }))
     onChange && onChange({
       currentTarget: {
         id: "specificObjectives",
-        value: newObjectives
+        value: objectives
       }
     })
   }
+
+  const specificObjectives = data?.Submission?.specificObjectives?.sort((a, b) =>
+    a.orderIndex - b.orderIndex
+  ) || []
 
   const readOnly = data?.Submission?.state === "PROJECT"
 
@@ -79,14 +84,14 @@ function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
             <CompositeField
               maxItems={5}
               onChange={onSpecificObjectivesChange}
-              defaultValue={data?.Submission?.specificObjectives || []}
+              defaultValue={specificObjectives}
               addLabel="Agregar objetivo específico"
               isAddDisabled={readOnly || review}
               onClickAdd={(addNew) => addNew({description: ""})}>
               {({ items, updateItem, removeItem }) =>
                 <div>
                   { items.map((item, index) =>
-                    <Form.Item key={`specific_objective_${index}`}>
+                    <Form.Item key={`specific_objective_${item.orderIndex}`}>
                       <Row>
                         <Col flex="auto">
                           <Input.TextArea

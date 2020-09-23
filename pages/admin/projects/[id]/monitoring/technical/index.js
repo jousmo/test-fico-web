@@ -10,7 +10,7 @@ import {
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { loadingAlert, success, warning } from "../../../../../../helpers/alert"
+import { success, warning, loadingAlert } from "../../../../../../helpers/alert"
 import { cloneDeep } from "lodash"
 
 function TechnicalMonitoringPage({ client, query }) {
@@ -31,7 +31,12 @@ function TechnicalMonitoringPage({ client, query }) {
     submission.mutations.updateById, { client: client }
   )
 
+  const [updateActivity] = useMutation(
+    submission.mutations.updateActivity, { client: client }
+  )
+
   const updateSubmission = useCallback(async submission => {
+    const saving = loadingAlert()
     try {
       await updateSub({
         variables: { data: submission, id: query.id }
@@ -42,7 +47,19 @@ function TechnicalMonitoringPage({ client, query }) {
       warning()
       console.error(e)
     }
+    saving()
   }, [updateSub])
+
+  const saveActivity = useCallback(async activity => {
+    try {
+      await updateActivity({
+        variables: { data: activity }
+      })
+    }
+    catch(e) {
+      warning()
+    }
+  }, [updateActivity])
 
   const save = useCallback(async monitoring => {
     const saving = loadingAlert()
@@ -61,14 +78,13 @@ function TechnicalMonitoringPage({ client, query }) {
   }, [createMonitoring, refetch])
 
   const update = useCallback(async monitoring => {
+    const saving = loadingAlert()
     const newMonitoring = cloneDeep(monitoring)
     const { id, ...updatedMonitoring } = newMonitoring
 
-    delete updatedMonitoring.verificationDocument.id
     updatedMonitoring.participants = [...updatedMonitoring.participants]
       .map(({uuid, ...p}) => p)
 
-    const saving = loadingAlert()
     try {
       await updateMonitoring({
         variables: { data: updatedMonitoring, id: id }
@@ -85,6 +101,7 @@ function TechnicalMonitoringPage({ client, query }) {
 
   const injectActions = useMemo(() => ({
     updateSubmission,
+    saveActivity,
     loading,
     update,
     error,

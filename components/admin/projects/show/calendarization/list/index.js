@@ -1,10 +1,22 @@
 import { withForm } from "../../../../../../helpers"
 import { Button, List, Typography } from "antd"
 import { useRouter } from "next/router"
+import moment from "moment"
 
 function CalendarizationList({ data }){
   const router = useRouter() || {}
   const { query } = router || {}
+
+  const latestUpdated = data?.Submission?.specificObjectives?.reduce((result, objective) => {
+    objective.activities?.forEach(activity => {
+      activity.schedules.map(({ scheduledAt }) => {
+        if (scheduledAt > result){
+          result = scheduledAt
+        }
+      })
+    })
+    return result
+  }, "")
 
   const userType = router?.route.includes("admin") ? "admin" : "implementer"
 
@@ -22,7 +34,8 @@ function CalendarizationList({ data }){
           </Button>
         ]}>
         <Typography.Text strong>
-          Ultima actualización 10/01/2020
+          Fecha de ultima actividad agendada
+          {latestUpdated !== "" && moment(latestUpdated).format("DD/MM/YYYY")}
         </Typography.Text>
       </List.Item>
     </List>

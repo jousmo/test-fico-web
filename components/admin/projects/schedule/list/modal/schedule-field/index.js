@@ -24,9 +24,9 @@ export function ScheduleField({ ...props }){
                 <Form.Item
                   label="Fecha">
                   <DateField
-                    id="date"
-                    name="date"
-                    defaultValue={item.date}
+                    id="scheduledAt"
+                    name="scheduledAt"
+                    defaultValue={item.scheduledAt}
                     onChange={updateItem(index)}
                     fullWidth />
                 </Form.Item>
