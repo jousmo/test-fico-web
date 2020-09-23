@@ -1,16 +1,13 @@
 import { Row, Col } from "antd"
-import { useContext } from "react"
-import {
-  AuthSubmissionContext
-} from "../../../contexts/auth"
 import { LoginForm } from "./form"
 import { LoginHeading } from "./heading"
+import { Authenticate } from "../../../helpers/auth/login"
 import "./style.sass"
 
 export function LoginContainer() {
-  const {
-    login
-  } = useContext(AuthSubmissionContext)
+  const onFinish = async ({ email, password }) => {
+    await Authenticate(email, password)
+  }
 
   const sizeProps = {
     xs: 16,
@@ -26,7 +23,7 @@ export function LoginContainer() {
       justify="center">
       <Col {...sizeProps}>
         <LoginHeading />
-        <LoginForm onSubmit={login} />
+        <LoginForm onSubmit={onFinish} />
       </Col>
     </Row>
   )
