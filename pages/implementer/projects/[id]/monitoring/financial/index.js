@@ -9,6 +9,7 @@ import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
 import { success, warning } from "../../../../../../helpers/alert"
+import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function FinancialMonitoringPage({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -83,10 +84,8 @@ function FinancialMonitoringPage({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(FinancialMonitoringPage)

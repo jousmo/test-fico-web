@@ -16,6 +16,7 @@ import { withApollo } from "../../../helpers/withApollo"
 import { implementer } from "../../../graphql"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { success, warning, loadingAlert } from "../../../helpers/alert"
+import { AuthCheck } from "../../../helpers/auth/auth-check"
 
 function Profile({ client }) {
   const [state, setState] = useState({ generalInformation: {} })
@@ -118,6 +119,10 @@ function Profile({ client }) {
       </PageContext.Provider>
     </ImplementerProfileContext.Provider>
   )
+}
+
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(Profile)

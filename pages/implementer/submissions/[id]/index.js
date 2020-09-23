@@ -11,6 +11,7 @@ import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { loadingAlert, success, warning, withApollo } from "../../../../helpers"
 import { PageContext } from "../../../../contexts/page"
+import { AuthCheck } from "../../../../helpers/auth/auth-check"
 
 function Submission({ client, query }) {
   const [ updateSubmission ] = useMutation(
@@ -67,10 +68,8 @@ function Submission({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(Submission)

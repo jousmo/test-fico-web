@@ -9,6 +9,7 @@ import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../../helpers/withApollo"
 import { PageContext } from "../../../../../contexts/page"
 import { selectOptions } from "../../../../../helpers"
+import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 
 function ProjectsByStatus({ client, query }) {
   const status = query.status_name?.toUpperCase()
@@ -44,10 +45,8 @@ function ProjectsByStatus({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(ProjectsByStatus)

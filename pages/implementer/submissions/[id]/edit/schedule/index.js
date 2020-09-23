@@ -12,6 +12,7 @@ import {
   Heading,
   ActivitiesSchedule
 } from "../../../../../../components/implementer/submissions/new/schedule"
+import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function Schedule({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -37,10 +38,8 @@ function Schedule({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(Schedule)

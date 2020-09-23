@@ -12,6 +12,7 @@ import { submission } from "../../../graphql/submission"
 import { useMemo, useState } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../helpers/withApollo"
+import { AuthCheck } from "../../../helpers/auth/auth-check"
 
 function ImplementerSubmissions({ client }) {
   const router = useRouter()
@@ -66,6 +67,10 @@ function ImplementerSubmissions({ client }) {
       </ImplementerSubmissionContext.Provider>
     </PageContext.Provider>
   )
+}
+
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(ImplementerSubmissions)
