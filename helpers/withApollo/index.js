@@ -3,6 +3,7 @@ import { InMemoryCache } from "apollo-cache-inmemory"
 import { createHttpLink } from "apollo-link-http"
 import fetch from "node-fetch"
 import { setContext } from "apollo-link-context"
+import { parseCookies } from "nookies"
 
 const link = createHttpLink({
   uri: process.env.NEXT_PUBLIC_SERVER_URI,
@@ -10,7 +11,7 @@ const link = createHttpLink({
 })
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("token")
+  const { token } = parseCookies()
 
   if(!token)
     return {}
