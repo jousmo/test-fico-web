@@ -265,7 +265,8 @@ function ProjectDetailsForm({
             label={
               <FieldLabel helpText={<ScopeText />}>
                 Ámbitos de intervención del Proyecto
-              </FieldLabel>}>
+              </FieldLabel>
+            }>
             <SelectField
               id="scope"
               name="scope"
@@ -287,13 +288,17 @@ function ProjectDetailsForm({
                 Problemática a tratar
               </FieldLabel>
             }>
-            <Input
+            <SelectField
               id="issueDescription"
               name="issueDescription"
               defaultValue={data?.Submission?.issueDescription}
               onChange={onChange}
+              filterOption={(value, option) =>
+                option.children.toLowerCase().includes(value.toLowerCase())
+              }
               disabled={readOnly}
-              type="text" />
+              showSearch
+              options={implementer.submission.issueTypes} />
           </Form.Item>
         </Col>
         <Col span={24}>

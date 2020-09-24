@@ -12,6 +12,7 @@ import {
 } from "../../../../../helpers/selectOptions"
 import { getTotalApproved } from "../../../projects/list/table/helpers"
 import { Tooltip } from "../../../../shared/tooltip"
+import "./styles.sass"
 
 function SubmissionsListingTable({ data }) {
   const router = useRouter()
@@ -37,6 +38,7 @@ function SubmissionsListingTable({ data }) {
 
   return (
     <Table
+      className="fico submissions list table"
       dataSource={data}
       rowKey={(row, index) => index}
       onRow={record => handleClick(record)}

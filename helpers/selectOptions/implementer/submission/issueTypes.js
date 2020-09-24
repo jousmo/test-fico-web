@@ -1,0 +1,20 @@
+export const issueTypes = [
+  { label: "Violencia familiar", value: "DOMESTIC_VIOLENCE" },
+  { label: "Adicciones", value: "ADDICTIONS" },
+  { label: "Fomento de cultura de denuncia", value: "COMPLAINT_CULTURE" },
+  { label: "Estado de derecho", value: "STATE_LAW" },
+  { label: "Cultura de la legalidad", value: "LEGAL_CULTURE" },
+  { label: "Participación ciudadana", value: "CITIZEN_PARTICIPATION" },
+  { label: "Dignificación de la labor policial", value: "OFFICER_DIGNIFICATION" },
+  { label: "Incidencia en políticas públicas", value: "PUBLIC_POLICIES" },
+  { label: "Prevención situacional", value: "SITUATIONAL_PREVENTION" },
+  { label: "Prevención comunitaria", value: "COMMUNITY_PREVENTION" },
+  { label: "Reinserción social", value: "SOCIAL_REINSERTION" },
+  { label: "Violencia sexual", value: "SEXUAL_VIOLENCE" },
+  { label: "Capacitación", value: "TRAINING" },
+  { label: "Suicidio", value: "SUICIDE" },
+  { label: "Deserción escolar", value: "ACADEMIC_DROPOUT" },
+  { label: "Generadores de violencia", value: "VIOLENCE_GENERATORS" },
+  { label: "Combate a la corrupción", value: "CORRUPTION_COMBAT" },
+  { label: "Otro", value: "OTHER" }
+]
