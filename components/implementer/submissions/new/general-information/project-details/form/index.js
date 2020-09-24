@@ -263,9 +263,15 @@ function ProjectDetailsForm({
           <Form.Item
             style={{display: "inline"}}
             label={
-              <FieldLabel helpText={<ScopeText />}>
+              <FieldLabel
+                helpText={<ScopeText />}
+                comentable={{
+                  hidden: hiddenComments,
+                  name: "scope",
+                  section: "SUBMISSION"}}>
                 Ámbitos de intervención del Proyecto
-              </FieldLabel>}>
+              </FieldLabel>
+            }>
             <SelectField
               id="scope"
               name="scope"
@@ -319,7 +325,12 @@ function ProjectDetailsForm({
         <Col span={24}>
           <Form.Item
             label={
-              <FieldLabel helpText={<JustificationText />}>
+              <FieldLabel
+                helpText={<JustificationText />}
+                comentable={{
+                  hidden: hiddenComments,
+                  name: "justification",
+                  section: "SUBMISSION"}}>
                 Justificación
               </FieldLabel>
             }
