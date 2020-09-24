@@ -239,25 +239,47 @@ export function ActivityModal({
                   Meses de implementación
                 </FieldLabel>
               }>
-              <MultipleDateRangeField />
+              <MultipleDateRangeField
+                isAddDisabled={review}
+                review={review} />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
               name="inputs"
               style={{display: "inline"}}
-              label="Insumos">
+              label={
+                <FieldLabel comentable={{
+                  hidden: hiddenComments,
+                  name: "inputs",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Insumos
+                </FieldLabel>
+              }>
               <MultipleTextField
-                addLabel="Agregar insumo" />
+                isAddDisabled={review}
+                addLabel="Agregar insumo"
+                review={review} />
             </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
               name="products"
               style={{display: "inline"}}
-              label="Productos">
+              label={
+                <FieldLabel comentable={{
+                  hidden: hiddenComments,
+                  name: "products",
+                  section: activityType,
+                  index: commentIndex}}>
+                  Productos
+                </FieldLabel>
+              }>
               <MultipleTextField
-                addLabel="Agregar producto" />
+                isAddDisabled={review}
+                addLabel="Agregar producto"
+                review={review} />
             </Form.Item>
           </Col>
         </Row>
