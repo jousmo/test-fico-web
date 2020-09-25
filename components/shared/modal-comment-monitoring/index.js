@@ -16,13 +16,21 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
 
   const query = data?.type === "INVOICE"
     ? submission.queries.getCommentsFinancial
-    : submission.queries.getCommentsTechnical
+    : data?.type === "OBJECTIVE"
+      ? submission.queries.getCommentsTechnical
+      : submission.queries.getCommentsTechnicalActivity
 
   const mutation = data?.type === "INVOICE"
     ? submission.mutations.createCommentInvoice
-    : submission.mutations.createCommentTechnical
+    : data?.type === "OBJECTIVE"
+      ? submission.mutations.createCommentTechnical
+      : submission.mutations.createCommentTechnicalActivity
 
-  const variables = data?.type === "INVOICE" ? { monitoringInvoice: data?.id } : { monitoringTechnical: data?.id }
+  const variables = data?.type === "INVOICE"
+    ? { monitoringInvoice: data?.id }
+    : data?.type === "OBJECTIVE"
+      ? { monitoringTechnical: data?.id }
+      : { monitoringTechnicalActivity: data?.id }
 
   const { loading, error, data: result  } = useQuery(query, {
     client: client,
@@ -46,7 +54,9 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
     if (!loading) {
       setState({
         loading: false,
-        comments: result?.InvoiceMonitoringComments || result?.TechnicalMonitoringComments
+        comments: result?.InvoiceMonitoringComments
+          || result?.TechnicalMonitoringComments
+          || result?.TechnicalMonitoringActivityComments
       })
     }
   }, [loading, result])
@@ -67,7 +77,9 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
 
       const variables = data?.type === "INVOICE"
         ? { monitoringInvoice: data?.id, data: values }
-        : { monitoringTechnical: data?.id, data: values }
+        : data?.type === "OBJECTIVE"
+          ? { monitoringTechnical: data?.id, data: values }
+          : { monitoringTechnicalActivity: data?.id, data: values }
 
       await createComment({ variables })
       success()

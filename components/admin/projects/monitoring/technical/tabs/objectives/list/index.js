@@ -51,7 +51,7 @@ export function ObjectivesList({ data, dateFilter }) {
       ...state,
       isModalCommentOpen: true,
       objective: {
-        ...state.projectInvoice,
+        ...state.objective,
         id: row?.reportId,
         title: `del objetivo: ${row?.title}`
       }
