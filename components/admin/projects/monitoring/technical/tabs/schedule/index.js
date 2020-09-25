@@ -1,44 +1,45 @@
 import { Button, Table, Tooltip } from "antd"
 import { Section } from "../../../../../../shared/section"
 import moment from "moment"
-import { capitalize } from "lodash"
 import { ScheduleBox } from "./box"
-import { CommentOutlined } from "@ant-design/icons"
+import { CommentOutlined, QuestionCircleFilled } from "@ant-design/icons"
+import { getColor, getMonths, getCompliance } from "./helpers"
 moment.locale("es")
 
-export function MonitoringSchedule({ data }) {
-  const months = moment.months()
-  const dataSource = [
-    {
-      activity: "La 4T hoy en día",
-      enero: <ScheduleBox color="green" />,
-      febrero: <ScheduleBox color="green" />,
-      marzo: <ScheduleBox color="orange" />,
-      abril: <ScheduleBox color="red" />,
-      mayo: <ScheduleBox color="transparent" />,
-      junio: <ScheduleBox color="red" />,
-      julio: <ScheduleBox color="red" />,
-      agosto: <ScheduleBox color="green" />,
-      septiembre: <ScheduleBox color="green" />,
-      octubre: <ScheduleBox color="green" />,
-      noviembre: <ScheduleBox color="red" />,
-      diciembre: <ScheduleBox color="red" />
-    },{
-      activity: "Seguimos o paramos",
-      enero: <ScheduleBox color="red" />,
-      febrero: <ScheduleBox color="transparent" />,
-      marzo: <ScheduleBox color="transparent" />,
-      abril: <ScheduleBox color="green" />,
-      mayo: <ScheduleBox color="green" />,
-      junio: <ScheduleBox color="orange" />,
-      julio: <ScheduleBox color="orange" />,
-      agosto: <ScheduleBox color="orange" />,
-      septiembre: <ScheduleBox color="green" />,
-      octubre: <ScheduleBox color="green" />,
-      noviembre: <ScheduleBox color="red" />,
-      diciembre: <ScheduleBox color="green" />
+export function MonitoringSchedule({ data, dateFilter }) {
+  const fullMonths = getMonths(data?.Submission)
+  let months = dateFilter?.length ? getMonths(dateFilter) : fullMonths
+
+  const activities = data?.Submission?.specificObjectives?.reduce(
+    (prev, { activities }) => activities ? prev.concat(activities) : null, []
+  ) || []
+
+  const dataSource = activities?.map(activity => {
+    const obj = {}
+
+    months?.forEach(month => {
+      const filterSchedule = activity?.schedules?.filter(schedule => moment(schedule?.scheduledAt).format("MMYYYY") === month?.value)
+      if (filterSchedule?.length) {
+        obj[month.value] = <ScheduleBox color={getColor(filterSchedule)} />
+      }
+    })
+
+
+    for (const month of months) {
+      const filterSchedule = activity?.schedules?.filter(schedule => moment(schedule?.scheduledAt).format("MMMM") === month)
+      if (filterSchedule?.length) {
+        const color = getColor(filterSchedule)
+        obj[month] = <ScheduleBox color={color} />
+      }
     }
-  ]
+
+    return {
+      key: activity?.id,
+      activity: activity?.title,
+      compliance: getCompliance(activity),
+      ...obj
+    }
+  })
 
   return (
     <div style={{ marginTop: "-2.5rem"}}>
@@ -51,17 +52,19 @@ export function MonitoringSchedule({ data }) {
           scroll={{ x: true }}>
 
           <Table.Column
+            className="activity"
             dataIndex="activity"
             title="Actividad"
-            render={t =>
-              <Tooltip title="Cumplimiento del 90%" placement="right">
-                <span>{t}</span>
+            fixed="left"
+            render={(t, row) =>
+              <Tooltip title={`Cumplimiento del ${row.compliance}%`} placement="right">
+                <span>{t} <QuestionCircleFilled /></span>
               </Tooltip>
             } />
 
           <Table.Column
-            className="comment"
             align="center"
+            fixed="left"
             render={(t, row) =>
               <Button
                 icon={<CommentOutlined />}
@@ -69,13 +72,12 @@ export function MonitoringSchedule({ data }) {
                 shape="circle" />
             } />
 
-          {months.map((month, index) => {
+          {fullMonths?.map((month, index) => {
             return (
               <Table.Column
-                className="months"
                 key={index}
-                dataIndex={month}
-                title={capitalize(month)}
+                dataIndex={month.value}
+                title={month.label}
                 align="center" />
             )
           })}
