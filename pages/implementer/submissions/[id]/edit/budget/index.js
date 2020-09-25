@@ -21,6 +21,7 @@ import {
   setSave,
   setUpdateBudget
 } from "../../../../../../helpers/submissionFunctions/budget"
+import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function Budget({ client, query }) {
   const [state, setState] = useState({
@@ -73,10 +74,8 @@ function Budget({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(Budget)

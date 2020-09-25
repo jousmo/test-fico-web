@@ -13,6 +13,7 @@ import { withApollo } from "../../../../../helpers/withApollo"
 import {
   selectOptions
 } from "../../../../../helpers"
+import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 
 function SubmissionsByStatus({ client, query }) {
   const status = query.status_name?.toUpperCase()
@@ -51,10 +52,8 @@ function SubmissionsByStatus({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(SubmissionsByStatus)

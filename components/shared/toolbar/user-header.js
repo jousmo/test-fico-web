@@ -1,26 +1,13 @@
-import { Button, Dropdown, Menu, message, Space } from "antd"
-import { useState, useEffect } from "react"
+import { Button, Dropdown, Menu, Space } from "antd"
 import { BellOutlined, UserOutlined } from "@ant-design/icons"
 import { Logout } from "../../../helpers/auth/logout"
-import { useRouter } from "next/router"
+import { useAuth } from "../../../contexts/auth"
 
 function UserHeader(){
-  const router = useRouter()
-  const [userState, setUserState] = useState(undefined)
-
-  useEffect(() => {
-    try {
-      const { claims } = JSON.parse(localStorage.getItem("user"))
-      setUserState(claims.name)
-    }
-    catch(e){
-      router.push("/")
-      message.warn("Favor de iniciar sesión")
-    }
-  }, [])
+  const { user } = useAuth()
 
   const menu = (
-    <Menu onClick={() => Logout()}>
+    <Menu onClick={Logout}>
       <Menu.Item key="0">
         Cerrar sesión
       </Menu.Item>
@@ -38,7 +25,7 @@ function UserHeader(){
       <span
         key="avatar-3"
         id="user_avatar">
-        {userState}
+        {user?.claims?.name}
       </span>
       <Dropdown overlay={menu} trigger={["click"]}>
         <Button

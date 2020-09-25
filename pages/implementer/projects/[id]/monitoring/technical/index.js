@@ -12,6 +12,7 @@ import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { success, warning } from "../../../../../../helpers/alert"
 import { cloneDeep } from "lodash"
+import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function TechnicalMonitoringPage({ client, query }) {
   const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
@@ -100,10 +101,8 @@ function TechnicalMonitoringPage({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(TechnicalMonitoringPage)

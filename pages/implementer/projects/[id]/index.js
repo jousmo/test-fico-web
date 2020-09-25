@@ -18,6 +18,7 @@ import { useMemo } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../../helpers/withApollo"
 import { PageContext } from "../../../../contexts/page"
+import { AuthCheck } from "../../../../helpers/auth/auth-check"
 
 function Project({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -48,10 +49,8 @@ function Project({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(Project)

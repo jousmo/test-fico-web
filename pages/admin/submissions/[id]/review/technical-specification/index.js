@@ -25,6 +25,7 @@ import {
   GeneralObjective,
   SpecificObjectives
 } from "../../../../../../components/implementer/submissions/new/technical-specification"
+import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
 function TechnicalSpecification({ client, query }) {
@@ -81,10 +82,8 @@ function TechnicalSpecification({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "ADMIN")
 }
 
 export default withApollo(TechnicalSpecification)

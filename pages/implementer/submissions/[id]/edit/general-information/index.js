@@ -25,6 +25,7 @@ import {
   setSave,
   setUpdateGeneralInformation
 } from "../../../../../../helpers/submissionFunctions/general-information"
+import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function GeneralInformation({ client, query }) {
   const [state, setState] = useState({
@@ -85,10 +86,8 @@ function GeneralInformation({ client, query }) {
   )
 }
 
-export async function getServerSideProps({ query }){
-  return {
-    props: { query }
-  }
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "IMPLEMENTER")
 }
 
 export default withApollo(GeneralInformation)

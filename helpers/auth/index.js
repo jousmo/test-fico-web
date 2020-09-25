@@ -12,10 +12,9 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FB_MEASUREMENT_ID
 }
 
-try {
+if (typeof window !== "undefined" && !firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
-} catch (e) {
-  console.error("Initializing")
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 }
 
-export const auth = firebase.auth()
+export { firebase }

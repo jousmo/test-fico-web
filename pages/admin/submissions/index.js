@@ -10,6 +10,7 @@ import { useMemo, useState } from "react"
 import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../helpers/withApollo"
 import { PageContext } from "../../../contexts/page"
+import { AuthCheck } from "../../../helpers/auth/auth-check"
 
 function AdminSubmissions({ client }) {
   const [ state ] = useState({
@@ -41,6 +42,10 @@ function AdminSubmissions({ client }) {
       </AdminSubmissionContext.Provider>
     </PageContext.Provider>
   )
+}
+
+export async function getServerSideProps(ctx){
+  return AuthCheck(ctx, "ADMIN")
 }
 
 export default withApollo(AdminSubmissions)
