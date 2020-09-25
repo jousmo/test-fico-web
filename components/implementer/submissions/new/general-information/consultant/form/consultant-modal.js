@@ -355,6 +355,7 @@ export function ConsultantModal({ edit, onCancel, onSave, hiddenComments, review
                                 name="date"
                                 defaultValue={item.date}
                                 onChange={updateItem(index)}
+                                format="DD/MM/YYYY"
                                 fullWidth />
                             </Form.Item>
                           </Col>
