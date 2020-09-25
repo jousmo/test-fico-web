@@ -6,6 +6,7 @@ import { MonitoringParticipants } from "./participants"
 import { MonitoringObstacles } from "./obstacles"
 import { MonitoringSchedule } from "./schedule"
 import "./style.sass"
+import {DateField} from "../../../../../shared/date-field"
 
 function TechnicalMonitoringTabs({ data }) {
   const [filterState, setFilterState] = useState([])
@@ -21,6 +22,7 @@ function TechnicalMonitoringTabs({ data }) {
       className="fico technical-monitoring"
       tabBarExtraContent={
         <DatePicker.RangePicker
+          format="DD/MM/YYYY"
           onChange={onFilterChange} />
       }>
       <Tabs.TabPane tab="Objetivos y actividades" key="1">

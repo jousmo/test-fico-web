@@ -123,6 +123,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
                   <DateField
                     bordered={false}
                     style={{ width: "15rem" }}
+                    format="DD/MM/YYYY"
                     placeholder="Selecciona fecha de realización"
                     size="small"/>
                 </Form.Item>

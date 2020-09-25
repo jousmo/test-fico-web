@@ -34,6 +34,7 @@ export function SchedulesField({ ...props }) {
                     onChange={updateItem(index)}
                     defaultValue={item.completedAt}
                     placeholder="Realizado"
+                    format="DD/MM/YYYY"
                     size="small" />
                 </Form.Item>
               </Col>
