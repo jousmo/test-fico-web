@@ -38,7 +38,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
 
   const cleanData = concept => _.omit(concept, ['index', 'budgeted'])
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = review || data?.Submission?.state === "PROJECT"
 
   return (
     <>
@@ -46,7 +46,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
         onClickAdd={onClickAdd}
         onChange={onChange}
         addLabel="Agregar concepto"
-        isAddDisabled={readOnly || review}
+        isAddDisabled={readOnly}
         defaultValue={Submission?.concepts}>
         {({ items, addNew, removeItem, replaceItemAtIndex }) =>
           <>
@@ -55,7 +55,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
               submission={Submission}
               onCancel={onCancel}
               onSave={onSave(addNew, replaceItemAtIndex)}
-              review={review}
+              review={readOnly}
               edit={state.edit} />
             <ScrollableView contentWidth="1600px">
               <Table
@@ -79,7 +79,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
                   title="Concepto"
                   key="name"
                   dataIndex="name"
-                  render={!readOnly && cellFormat.actions(onEdit, removeItem, review)} />
+                  render={cellFormat.actions(onEdit, removeItem, readOnly)} />
                 <Table.Column
                   title="Región"
                   key="region"
