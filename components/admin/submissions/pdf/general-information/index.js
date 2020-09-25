@@ -1,5 +1,6 @@
 import { Descriptions, Typography } from "antd"
 import { useContext } from "react"
+import moment from "moment"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
@@ -87,10 +88,10 @@ export function GeneralInformationPDF() {
           {submission?.implementationPlace}
         </Descriptions.Item>
         <Descriptions.Item label="Fecha de inicio">
-          {submission?.startDate}
+          {moment(submission?.startDate).format("DD/MM/YYYY")}
         </Descriptions.Item>
         <Descriptions.Item label="Fecha de conclusión">
-          {submission?.endDate}
+          {moment(submission?.endDate).format("DD/MM/YYYY")}
         </Descriptions.Item>
         <Descriptions.Item label="Responsable del proyecto">
           {submission?.responsible}

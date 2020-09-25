@@ -33,6 +33,7 @@ function StatusForm({ data, onSave }) {
           label="Fecha límite de revisión">
           <DateField
             id="deadline"
+            format="DD/MM/YYYY"
             defaultValue={data?.deadline}
             onChange={onSaveDate}/>
         </Form.Item>

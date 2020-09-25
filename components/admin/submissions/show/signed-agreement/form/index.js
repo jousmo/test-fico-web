@@ -72,6 +72,7 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract, refetch })
           <DateField
             id="signedContractAt"
             name="signedContractAt"
+            format="DD/MM/YYYY"
             defaultValue={data?.signedContractAt}
             onChange={onDateChange} />
           &nbsp;

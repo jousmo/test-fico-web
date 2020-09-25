@@ -26,6 +26,7 @@ export function ScheduleField({ ...props }){
                   <DateField
                     id="scheduledAt"
                     name="scheduledAt"
+                    format="DD/MM/YYYY"
                     defaultValue={item.scheduledAt}
                     onChange={updateItem(index)}
                     fullWidth />
