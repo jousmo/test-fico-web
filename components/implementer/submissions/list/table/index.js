@@ -3,7 +3,6 @@ import { useRouter } from "next/router"
 import { Table } from "antd"
 import Moment from "moment"
 Moment.locale("es")
-import { capitalize } from "lodash"
 import { MinusSquareTwoTone } from "@ant-design/icons"
 import {
   getReadableValue,
@@ -57,7 +56,7 @@ function SubmissionsListingTable({ data }) {
       <Table.Column
         dataIndex="createdAt"
         render={text => (
-          capitalize(Moment(text).format("MMMM D, YYYY h:mm a"))
+          Moment(text).format("DD/MM/YYYY h:mm a")
         )}
         title="Fecha de solicitud" />
       <Table.Column
