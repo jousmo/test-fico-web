@@ -123,7 +123,15 @@ export function ConsultantModal({ edit, onCancel, onSave, hiddenComments, review
             <Form.Item
               name="description"
               style={{display: "inline"}}
-              label="Describe el perfil del consultor">
+              label={
+                <FieldLabel comentable={{
+                  hidden: hiddenComments,
+                  index: edit?.index,
+                  name: "description",
+                  section: "CONSULTANT"}}>
+                  Describe el perfil del consultor
+                </FieldLabel>
+              }>
               <Input.TextArea
                 id="description"
                 name="description"
@@ -248,7 +256,15 @@ export function ConsultantModal({ edit, onCancel, onSave, hiddenComments, review
             <Form.Item
               name="fiscalPersonType"
               style={{display: "inline"}}
-              label="Tipo de persona"
+              label={
+                <FieldLabel comentable={{
+                  hidden: hiddenComments,
+                  index: edit?.index,
+                  name: "fiscalPersonType",
+                  section: "CONSULTANT"}}>
+                  Tipo de persona
+                </FieldLabel>
+              }
               getValueFromEvent={onTypeChange}>
               <RadioField
                 id="fiscalPersonType"
@@ -261,7 +277,15 @@ export function ConsultantModal({ edit, onCancel, onSave, hiddenComments, review
             <Form.Item
               name="documents"
               style={{display: "inline"}}
-              label="Documentos">
+              label={
+                <FieldLabel comentable={{
+                  hidden: hiddenComments,
+                  index: edit?.index,
+                  name: "documents",
+                  section: "CONSULTANT"}}>
+                  Documentos
+                </FieldLabel>
+              }>
               <UploadTooltip
                 body={getTooltipBody()}
                 fileList={toFileList(edit?.documents) || []}
@@ -275,7 +299,15 @@ export function ConsultantModal({ edit, onCancel, onSave, hiddenComments, review
             <Form.Item
               name="hadReceivedSupports"
               style={{display: "inline"}}
-              label="¿Ha recibido apoyos de FICOSEC"
+              label={
+                <FieldLabel comentable={{
+                  hidden: hiddenComments,
+                  index: edit?.index,
+                  name: "hadReceivedSupports",
+                  section: "CONSULTANT"}}>
+                  ¿Ha recibido apoyos de FICOSEC?
+                </FieldLabel>
+              }
               getValueFromEvent={getSelectValue}>
               <RadioField
                 id="hadReceivedSupports"

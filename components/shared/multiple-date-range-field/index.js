@@ -5,7 +5,9 @@ export function MultipleDateRangeField({
   onChange,
   addLabel="Agregar fecha",
   defaultValue=[],
-  value=[]
+  value=[],
+  review,
+  ...props
 }) {
   const onCompositeFieldChange = value => {
     onChange && onChange(value.map(i => i.value))
@@ -20,7 +22,8 @@ export function MultipleDateRangeField({
       addLabel={addLabel}
       defaultValue={defaultValue?.map(transformDefaultValue)}
       value={value?.map(transformDefaultValue)}
-      onClickAdd={addNew => addNew({ value: undefined })}>
+      onClickAdd={addNew => addNew({ value: undefined })}
+      {...props}>
       {({items, removeItem, updateItem}) =>
         <div>
           {items?.map((item, index) =>
@@ -37,7 +40,7 @@ export function MultipleDateRangeField({
                   picker="month"
                   range
                   style={{ width: "90%" }} />
-                <DeleteButton onClick={removeItem(index)} />
+                {!review && <DeleteButton onClick={removeItem(index)} />}
               </Col>
             </Row>
           )}

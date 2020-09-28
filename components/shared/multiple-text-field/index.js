@@ -5,7 +5,9 @@ export function MultipleTextField({
   onChange,
   addLabel="Agregar elemento",
   defaultValue=[],
-  value=[]
+  value=[],
+  review,
+  ...props
 }) {
   const onCompositeFieldChange = value => {
     onChange && onChange(value.map(i => i.value))
@@ -20,7 +22,8 @@ export function MultipleTextField({
       addLabel={addLabel}
       defaultValue={defaultValue?.map(transformDefaultValue)}
       value={value?.map(transformDefaultValue)}
-      onClickAdd={addNew => addNew({ value: "" })}>
+      onClickAdd={addNew => addNew({ value: "" })}
+      {...props}>
       {({items, removeItem, updateItem}) =>
         <div>
           {items?.map((item, index) =>
@@ -32,11 +35,13 @@ export function MultipleTextField({
                     defaultValue={item.value}
                     onBlur={updateItem(index)} />
                 </Col>
-                <Col>
-                  <DeleteButton
-                    style={{ marginLeft: "10px" }}
-                    onClick={removeItem(index)} />
-                </Col>
+                {!review &&
+                  <Col>
+                    <DeleteButton
+                      style={{ marginLeft: "10px" }}
+                      onClick={removeItem(index)} />
+                  </Col>
+                }
               </Row>
             </Form.Item>
           )}
