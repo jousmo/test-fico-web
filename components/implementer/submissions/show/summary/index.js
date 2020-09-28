@@ -28,6 +28,16 @@ export function SubmissionSummary() {
     if (status.includes("REVIEW")){
       message.warning("La solicitud ya se encuentra en revisión")
     } else {
+      let isFinished = true
+      Object.keys(data?.Submission).forEach(key => {
+        if (data?.Submission[key] === null || data?.Submission[key].length === 0){
+          isFinished = false
+        }
+      })
+      if (!isFinished) {
+        message.warning("La solicitud no ha sido completada")
+        return
+      }
       save({ status: submissionStatusOptions[statusIndex + 1].value, statusChangedAt: moment().format() })
     }
   }
