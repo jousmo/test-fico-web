@@ -10,6 +10,7 @@ import SummaryBody from "../../../../shared/submission-summary-body"
 import "./style.sass"
 import { submissionStatusOptions } from "../../../../../helpers/selectOptions/shared/submission-status"
 import moment from "moment"
+import { requiredFields } from "./helpers"
 
 export function SubmissionSummary() {
   const router = useRouter()
@@ -30,12 +31,13 @@ export function SubmissionSummary() {
     } else {
       let isFinished = true
       Object.keys(data?.Submission).forEach(key => {
-        if (data?.Submission[key] === null || data?.Submission[key].length === 0){
+        const value = data?.Submission[key]
+        if (requiredFields.includes(key) && (!value || value.length === 0)) {
           isFinished = false
         }
       })
       if (!isFinished) {
-        message.warning("La solicitud no ha sido completada")
+        message.warning("Faltan campos por llenar en la solicitud")
         return
       }
       save({ status: submissionStatusOptions[statusIndex + 1].value, statusChangedAt: moment().format() })
