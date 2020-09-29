@@ -9,11 +9,14 @@ import {
   ageRanges,
   educationLevelTypes,
   genderTypes,
+  issueTypes,
   preventionLevelTypes,
   scopeTypes,
+  strategicAxisTypes,
   submissionTypes
 } from "../../../../../helpers/selectOptions/implementer/submission"
 import PDFHeading from "../heading"
+import moment from "moment"
 import "../style.sass"
 
 export function GeneralInformationPDF() {
@@ -32,7 +35,7 @@ export function GeneralInformationPDF() {
         column={1}
         title={<PDFHeading title="Información General" />}>
         <Descriptions.Item label="Implementadora">
-          {implementer?.name}
+          {submission?.implementer?.name}
         </Descriptions.Item>
         <Descriptions.Item label="Domicilio">
           {implementer?.fiscalAddress}
@@ -103,16 +106,20 @@ export function GeneralInformationPDF() {
           {submission?.applyingCall}
         </Descriptions.Item>
         <Descriptions.Item label="Eje estratégico Ficosec">
-          {submission?.strategicAxis}
+          {getReadableValue(strategicAxisTypes, submission?.strategicAxis)}
         </Descriptions.Item>
         <Descriptions.Item label="Nivel de prevención que atiende">
-          {getReadableValue(preventionLevelTypes, submission?.preventionLevel)}
+          {submission?.preventionLevel?.map(el =>
+            getReadableValue(preventionLevelTypes, el)
+          ).join(", ")}
         </Descriptions.Item>
         <Descriptions.Item label="Ámbitos de intervención del proyecto">
-          {getReadableValue(scopeTypes, submission?.scope)}
+          {submission?.scope?.map(el =>
+            getReadableValue(scopeTypes, el)
+          ).join(", ")}
         </Descriptions.Item>
         <Descriptions.Item label="Problemática a tratar">
-          {submission?.issueDescription}
+          {getReadableValue(issueTypes, submission?.issueDescription)}
         </Descriptions.Item>
         <Descriptions.Item label="Justificación">
           {submission?.justification}
