@@ -7,7 +7,13 @@ import { useRouter } from "next/router"
 import "./styles.sass"
 
 function ProjectClosureForm({ data, save }) {
-  const { query } = useRouter()
+  const { query, route } = useRouter()
+
+  let role = "admin"
+  if (route.includes("implementer")) {
+    role = "implementer"
+  }
+
   const [form] = Form.useForm()
   const [state, setState] = useState(false)
 
@@ -71,7 +77,7 @@ function ProjectClosureForm({ data, save }) {
             </Typography.Text>
           </Col>
           <Col>
-            <a href={`/admin/projects/${query.id}/pdf`} target="_blank">
+            <a href={`/${role}/projects/${query.id}/pdf`} target="_blank">
               <Button icon={<DownloadOutlined />}>
                 Descargar ficha técnica
               </Button>
