@@ -6,7 +6,7 @@ export const money = value => {
 }
 
 export const getDate = value => {
-  return moment(value).format("DD/MM/YYYY").toUpperCase()
+  return moment(value).format("DD/MM/YYYY")
 }
 
 export const getGoalBeneficiaries = data => {
