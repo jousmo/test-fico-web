@@ -1,4 +1,4 @@
-import { withForm } from "../../../../../helpers/withForm"
+import { withForm, format } from "../../../../../helpers"
 import Link from "next/link"
 import { Table } from "antd"
 import { MinusSquareTwoTone } from "@ant-design/icons"
@@ -8,7 +8,6 @@ import {
   shared
 } from "../../../../../helpers/selectOptions"
 import { Tooltip } from "../../../../shared"
-import { getTotalApproved } from "../../../../admin/projects/list/table/helpers"
 import { StatusTag } from "../../../../admin/projects/list/table/status-tag"
 
 function ProjectListingTable({ data }) {
@@ -63,7 +62,8 @@ function ProjectListingTable({ data }) {
         }
         title="Eje" />
       <Table.Column
-        render={(text, row) => getTotalApproved(row)}
+        dataIndex="budgeted"
+        render={text => format.money(text)}
         title="Aprobado" />
     </Table>
   )
