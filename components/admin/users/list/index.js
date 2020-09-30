@@ -1,26 +1,25 @@
 import { List } from "antd"
-import { useContext } from "react"
-import { SearchField, Section } from "../../../shared"
-import { AdminUserContext } from "../../../../contexts/admin/users"
+import { CompositeField } from "../../../shared"
 import { UserItem } from "./item"
+import { withForm } from "../../../../helpers/withForm"
 
-export function UsersList() {
-  const {
-    loading,
-    error,
-    data
-  } = useContext(AdminUserContext)
-
-  console.log(data?.Accounts)
+function UsersList({ data: accounts }) {
   return (
-    <Section style={{padding: 0}}>
-      <SearchField onSearch={null} />
-      <List
-        renderItem={i => <UserItem user={i} />}
-        itemLayout="vertical"
-        dataSource={data?.Accounts}
-        pagination={{pageSize: 10}}
-        loading={loading}/>
-    </Section>
+    <CompositeField
+      onClickAdd={null}
+      onChange={null}
+      value={accounts}
+      addLabel="Invitar usuarios"
+      orientation="TOP">
+      {({ items, addNew, removeItem, replaceItemAtIndex }) =>
+        <List
+          renderItem={i => <UserItem user={i} />}
+          itemLayout="vertical"
+          dataSource={items}
+          pagination={{pageSize: 10}} />
+      }
+    </CompositeField>
   )
 }
+
+export default withForm(UsersList)
