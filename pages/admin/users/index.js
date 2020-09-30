@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../helpers/withApollo"
 import { PageContext } from "../../../contexts/page"
 import { AuthCheck } from "../../../helpers/auth/auth-check"
+import { UsersList } from "../../../components/admin/users/list"
 
 function AdminUsers({ client }) {
   const [ state ] = useState({
@@ -26,7 +27,7 @@ function AdminUsers({ client }) {
     <PageContext.Provider value={{ type: "admin", step: "users", submenu: "users" }}>
       <AdminUserContext.Provider value={injectActions}>
         <Layout subheader={false}>
-          <h1>Users</h1>
+          <UsersList />
         </Layout>
       </AdminUserContext.Provider>
     </PageContext.Provider>
