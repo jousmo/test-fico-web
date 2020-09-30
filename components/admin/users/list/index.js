@@ -3,9 +3,9 @@ import { CompositeField } from "../../../shared"
 import { UserItem } from "./item"
 import { withForm } from "../../../../helpers/withForm"
 import { ModalInvitation } from "../../users/list/invitation"
-import "./styles.sass"
 import { useContext, useState } from "react"
 import { AdminUserContext } from "../../../../contexts/admin/users"
+import "./styles.sass"
 
 function UsersList({ data: accounts }) {
   const { save } = useContext(AdminUserContext)
@@ -30,7 +30,7 @@ function UsersList({ data: accounts }) {
       value={accounts}
       addLabel="Invitar usuarios"
       orientation="TOP">
-      {({ items, addNew, removeItem, replaceItemAtIndex }) =>
+      {({ items }) =>
         <>
           <ModalInvitation
             visible={state?.openModal}

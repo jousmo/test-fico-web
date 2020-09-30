@@ -1,4 +1,3 @@
-import React from "react"
 import { Button, Menu, Dropdown } from "antd"
 import { EllipsisOutlined } from "@ant-design/icons"
 
