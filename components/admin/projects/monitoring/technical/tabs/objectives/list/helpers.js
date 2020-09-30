@@ -1,4 +1,6 @@
-import moment from "moment"
+import Moment from "moment"
+import { extendMoment } from "moment-range"
+const moment = extendMoment(Moment)
 
 export const getReport = (data, row) => {
   if (row.key.includes("OE")) {
@@ -51,4 +53,21 @@ export const onSearch = (data, value, setState) => {
     el.meansOfVerification?.toLowerCase().includes(loweredValue)
   )
   setState(filter)
+}
+
+export const quarterReadOnly = (range, reviewedAt) => {
+  const quarters = Array.from(moment.range(range).by("quarters"))
+
+  let reviewedQuarter = null
+  let currentQuarter = null
+  quarters.forEach((value, index) => {
+    if (reviewedAt && moment(reviewedAt) > value) {
+      reviewedQuarter = index
+    }
+    if (moment() > value) {
+      currentQuarter = index
+    }
+  }, null)
+
+  return reviewedQuarter === currentQuarter
 }
