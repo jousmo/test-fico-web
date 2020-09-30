@@ -1,27 +1,49 @@
 import { Layout } from "../../../components/shared"
 import { AdminUserContext } from "../../../contexts/admin/users"
 import { user } from "../../../graphql/user"
-import { useMemo, useState } from "react"
-import { useQuery } from "@apollo/react-hooks"
+import { useCallback, useMemo } from "react"
+import { useMutation, useQuery } from "@apollo/react-hooks"
 import { withApollo } from "../../../helpers/withApollo"
 import { PageContext } from "../../../contexts/page"
 import { AuthCheck } from "../../../helpers/auth/auth-check"
 import { Users } from "../../../components/admin/users"
+import { loadingAlert, success, warning } from "../../../helpers/alert"
 
 function AdminUsers({ client }) {
-  const [ state ] = useState({
-    submissionsList: {}
-  })
-
   const { loading, error, data } = useQuery(user.queries.getAll, {
     client: client
   })
 
+  const [createAccount] = useMutation(
+    user.mutations.createAccount, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: user.queries.getAll
+        }
+      ]
+    }
+  )
+
+  const save = useCallback(async account => {
+    const saving = loadingAlert()
+    try {
+      await createAccount({ variables: { data: account } })
+      success()
+    } catch (e) {
+      warning()
+      console.error(e)
+    }
+    saving()
+  }, [createAccount])
+
   const injectActions = useMemo(() => ({
     loading,
     error,
-    data
-  }), [state, loading])
+    data,
+    save
+  }), [loading, data])
 
   return (
     <PageContext.Provider value={{ type: "admin", step: "users", submenu: "users" }}>
