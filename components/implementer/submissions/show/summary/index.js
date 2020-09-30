@@ -10,6 +10,7 @@ import SummaryBody from "../../../../shared/submission-summary-body"
 import "./style.sass"
 import { submissionStatusOptions } from "../../../../../helpers/selectOptions/shared/submission-status"
 import moment from "moment"
+import { requiredFields } from "./helpers"
 
 export function SubmissionSummary() {
   const router = useRouter()
@@ -28,6 +29,17 @@ export function SubmissionSummary() {
     if (status.includes("REVIEW")){
       message.warning("La solicitud ya se encuentra en revisión")
     } else {
+      let isFinished = true
+      Object.keys(data?.Submission).forEach(key => {
+        const value = data?.Submission[key]
+        if (requiredFields.includes(key) && (!value || value.length === 0)) {
+          isFinished = false
+        }
+      })
+      if (!isFinished) {
+        message.warning("Faltan campos por llenar en la solicitud")
+        return
+      }
       save({ status: submissionStatusOptions[statusIndex + 1].value, statusChangedAt: moment().format() })
     }
   }
