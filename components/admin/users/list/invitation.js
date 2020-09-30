@@ -8,6 +8,7 @@ export function ModalInvitation ({ onSave, onCancel, ...props }) {
     { label: "Implementadora", value: "IMPLEMENTER" },
     { label: "Administrador", value: "ADMIN" }
   ]
+
   const [form] = Form.useForm()
 
   const onCancelModal = () => {

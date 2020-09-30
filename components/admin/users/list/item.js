@@ -4,6 +4,11 @@ import { Avatar, IconLabel } from "../../../shared"
 import { ActionButton } from "../../../shared/action-button"
 
 export function UserItem ({ user }) {
+  const ROLES = {
+    "IMPLEMENTER": "Implementadora",
+    "ADMIN": "Administrador"
+  }
+
   return (
     <List.Item>
       <List.Item.Meta
@@ -12,7 +17,7 @@ export function UserItem ({ user }) {
         description={
           <>
             <IconLabel icon={<UserOutlined />}>
-              {user?.role}
+              {ROLES[user?.role]}
             </IconLabel>
             <Space style={{marginLeft: "1rem"}}>
               <IconLabel icon={<MailOutlined />}>
@@ -21,7 +26,10 @@ export function UserItem ({ user }) {
             </Space>
           </>
         } />
-      <ActionButton onDelete={null} />
+      <ActionButton
+        onEdit={null}
+        onDelete={null}
+      />
     </List.Item>
   )
 }

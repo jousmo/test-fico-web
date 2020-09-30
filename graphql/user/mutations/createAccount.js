@@ -1,10 +1,10 @@
 import { gql } from "apollo-boost"
 
 export const createAccount = gql`
-  mutation CreateImplementerAccount(
-    $data: CreateImplementerAccount!
+  mutation CreateAccount(
+    $data: CreateAccount!
   ){
-    CreateImplementerAccount(
+    CreateAccount(
       data: $data
     ){
       id
