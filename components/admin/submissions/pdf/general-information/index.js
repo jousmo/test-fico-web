@@ -16,7 +16,6 @@ import {
   submissionTypes
 } from "../../../../../helpers/selectOptions/implementer/submission"
 import PDFHeading from "../heading"
-import moment from "moment"
 import "../style.sass"
 
 export function GeneralInformationPDF() {
