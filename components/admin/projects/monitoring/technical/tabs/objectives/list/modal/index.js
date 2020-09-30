@@ -73,6 +73,8 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
     return { uid, ...document }
   }) || []
 
+  const readOnly = edit?.reviewed
+
   return (
     <Modal
       destroyOnClose
@@ -81,6 +83,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
       width={650}
       onCancel={onClose}
       okText="Guardar"
+      okButtonProps={{ disabled: readOnly }}
       {...props}>
       <Form
         form={form}
@@ -106,7 +109,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
                   <Form.Item
                     name="schedules"
                     rules={[{ required: true, message: "Campo requerido" }]}>
-                    <SchedulesField />
+                    <SchedulesField readOnly={readOnly} />
                   </Form.Item>
                 </Col>
               </>
@@ -121,6 +124,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
                   id="appliedAt"
                   name="appliedAt">
                   <DateField
+                    disabled={readOnly}
                     bordered={false}
                     style={{ width: "15rem" }}
                     format="DD/MM/YYYY"
@@ -176,6 +180,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <InputNumber
+                readOnly={true}
                 max={edit?.goal}
                 min={0}
                 onChange={v => setCompleted(v)} />
@@ -199,6 +204,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <ParticipantsField
+                readOnly={readOnly}
                 defaultValue={edit?.participants}
                 onChange={(p) => form.setFieldsValue({ participants: p })}
                 type={type} />
@@ -218,6 +224,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <UploadButtonForm
+                disabled={readOnly}
                 fileList={files}
                 onRemoveFile={onRemoveFile}
                 onChange={onUploadFile}
