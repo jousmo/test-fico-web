@@ -46,7 +46,7 @@ function ProjectDetailsForm({
               name="type"
               disabled={readOnly}
               onChange={onChange}
-              defaultValue={data?.Submission?.type || "DIRECT"}
+              defaultValue={data?.Submission?.type}
               options={implementer.submission.submissionTypes} />
           </Form.Item>
         </Col>
