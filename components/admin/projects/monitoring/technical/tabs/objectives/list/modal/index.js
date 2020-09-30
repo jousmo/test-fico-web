@@ -1,14 +1,20 @@
 import {
   Col, Divider, Form, InputNumber,
-  Modal, Row, Tag, Typography
+  Modal, Row, Tag, Typography, Switch
 } from "antd"
 import { useEffect, useState } from "react"
 import { DateField, UploadButtonForm } from "../../../../../../../../shared"
 import { getSelectValue } from "../../../../../../../../../helpers"
 import { ParticipantsField } from "./participants-field"
 import { SchedulesField } from "./schedules-field"
+import { useAuth } from "../../../../../../../../../contexts/auth"
+import { quarterReadOnly } from "../helpers"
+import moment from "moment"
 
-export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
+export function ObjectivesModal({ edit, onCancel, onSave, range, ...props }) {
+  const { user } = useAuth()
+  const isAdmin = user?.claims?.role === "ADMIN"
+
   const [form] = Form.useForm()
   const [completed, setCompleted] = useState("0")
 
@@ -73,6 +79,8 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
     return { uid, ...document }
   }) || []
 
+  const readOnly = quarterReadOnly(range, edit?.reviewedAt)
+
   return (
     <Modal
       destroyOnClose
@@ -81,15 +89,28 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
       width={650}
       onCancel={onClose}
       okText="Guardar"
+      okButtonProps={{ disabled: !isAdmin && readOnly }}
       {...props}>
       <Form
         form={form}
         className="fico technical-monitoring objectives-form"
         name="indicator-form">
         <Row gutter={[10, 8]} justify="start">
-          <Col span={24}>
+          <Col span={isAdmin ? 16 : 24}>
             <Tag color="gold">{indicatorType}</Tag>
           </Col>
+          {isAdmin &&
+            <Col span={8}>
+              <Form.Item
+                label="Bloquear revisión"
+                id="reviewedAt"
+                name="reviewedAt"
+                getValueFromEvent={value => value && moment().format()}
+                style={{ marginBottom: "0" }}>
+                <Switch size="small" defaultChecked={readOnly} />
+              </Form.Item>
+            </Col>
+          }
           <Col span={24}>
             <Typography.Text>{edit?.description}</Typography.Text>
           </Col>
@@ -106,7 +127,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
                   <Form.Item
                     name="schedules"
                     rules={[{ required: true, message: "Campo requerido" }]}>
-                    <SchedulesField />
+                    <SchedulesField readOnly={readOnly} />
                   </Form.Item>
                 </Col>
               </>
@@ -121,8 +142,10 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
                   id="appliedAt"
                   name="appliedAt">
                   <DateField
+                    disabled={readOnly}
                     bordered={false}
                     style={{ width: "15rem" }}
+                    format="DD/MM/YYYY"
                     placeholder="Selecciona fecha de realización"
                     size="small"/>
                 </Form.Item>
@@ -175,6 +198,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <InputNumber
+                readOnly={readOnly}
                 max={edit?.goal}
                 min={0}
                 onChange={v => setCompleted(v)} />
@@ -198,6 +222,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <ParticipantsField
+                readOnly={readOnly}
                 defaultValue={edit?.participants}
                 onChange={(p) => form.setFieldsValue({ participants: p })}
                 type={type} />
@@ -217,6 +242,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, ...props }) {
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <UploadButtonForm
+                disabled={readOnly}
                 fileList={files}
                 onRemoveFile={onRemoveFile}
                 onChange={onUploadFile}

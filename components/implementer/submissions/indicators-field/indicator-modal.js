@@ -208,7 +208,8 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="startDate"
-                fullWidth />
+                fullWidth
+                format="DD/MM/YYYY" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -219,7 +220,8 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="endDate"
-                fullWidth />
+                fullWidth
+                format="DD/MM/YYYY" />
             </Form.Item>
           </Col>
           <Col span={12}>

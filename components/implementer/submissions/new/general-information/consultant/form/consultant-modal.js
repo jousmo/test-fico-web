@@ -351,10 +351,11 @@ export function ConsultantModal({ edit, onCancel, onSave, hiddenComments, review
                               style={{display: "inline"}}
                               label="Fecha">
                               <DateField
-                                id="date"
-                                name="date"
-                                defaultValue={item.date}
+                                id="receivedAt"
+                                name="receivedAt"
+                                defaultValue={item.receivedAt}
                                 onChange={updateItem(index)}
+                                format="DD/MM/YYYY"
                                 fullWidth />
                             </Form.Item>
                           </Col>

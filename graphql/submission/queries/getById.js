@@ -113,7 +113,7 @@ export const getById = gql`
         supports {
           id
           name
-          date
+          receivedAt
           amount
         }
         documents {
@@ -270,6 +270,7 @@ export const getById = gql`
         appliedAt
         completed
         compliance
+        reviewedAt
         verificationDocuments{
           id
           name

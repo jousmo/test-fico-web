@@ -17,7 +17,7 @@ export default function PDFList({ data }){
     <List bordered itemLayout="horizontal">
       <ListItem label="Número de acuerdo" value={data?.agreementNumber} />
       <ListItem label="Fecha" value={getDate(data?.createdAt)} />
-      <ListItem label="Implementadora" value={data?.implementer.name} />
+      <ListItem label="Implementadora" value={data?.implementer?.name} />
       <ListItem label="Nombre del proyecto" value={data?.name} />
       <ListItem label="Objetivo general" value={data?.generalObjective} />
       <ListItem

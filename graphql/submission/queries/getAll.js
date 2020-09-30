@@ -25,20 +25,7 @@ export const getAll = gql`
       agreementNumber
       technicalOpinion
       createdAt
-      concepts {
-        name
-        region
-        type
-        measurementUnit
-        unitCost
-        totalUnits
-        monthlyDistribution
-        investmentDistribution {
-          name
-          type
-          percentage
-        }
-      }
+      budgeted
     }
   }
 `

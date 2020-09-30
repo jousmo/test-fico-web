@@ -1,16 +1,14 @@
-import { withForm } from "../../../../../helpers/withForm"
+import { withForm, format } from "../../../../../helpers"
 import { useRouter } from "next/router"
 import { Table } from "antd"
 import Moment from "moment"
 Moment.locale("es")
-import { capitalize } from "lodash"
 import { MinusSquareTwoTone } from "@ant-design/icons"
 import {
   getReadableValue,
   implementer,
   shared
 } from "../../../../../helpers/selectOptions"
-import { getTotalApproved } from "../../../../admin/projects/list/table/helpers"
 import { Tooltip } from "../../../../shared"
 import "./styles.sass"
 
@@ -57,7 +55,7 @@ function SubmissionsListingTable({ data }) {
       <Table.Column
         dataIndex="createdAt"
         render={text => (
-          capitalize(Moment(text).format("MMMM D, YYYY h:mm a"))
+          Moment(text).format("DD/MM/YYYY")
         )}
         title="Fecha de solicitud" />
       <Table.Column
@@ -85,7 +83,8 @@ function SubmissionsListingTable({ data }) {
         }
         title="Eje" />
       <Table.Column
-        render={(text, row) => getTotalApproved(row)}
+        dataIndex="budgeted"
+        render={text => format.money(text)}
         title="Aprobado" />
     </Table>
   )

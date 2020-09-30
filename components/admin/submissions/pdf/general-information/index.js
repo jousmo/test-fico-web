@@ -1,5 +1,6 @@
 import { Descriptions, Typography } from "antd"
 import { useContext } from "react"
+import moment from "moment"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
@@ -8,8 +9,10 @@ import {
   ageRanges,
   educationLevelTypes,
   genderTypes,
+  issueTypes,
   preventionLevelTypes,
   scopeTypes,
+  strategicAxisTypes,
   submissionTypes
 } from "../../../../../helpers/selectOptions/implementer/submission"
 import PDFHeading from "../heading"
@@ -31,7 +34,7 @@ export function GeneralInformationPDF() {
         column={1}
         title={<PDFHeading title="Información General" />}>
         <Descriptions.Item label="Implementadora">
-          {implementer?.name}
+          {submission?.implementer?.name}
         </Descriptions.Item>
         <Descriptions.Item label="Domicilio">
           {implementer?.fiscalAddress}
@@ -87,10 +90,10 @@ export function GeneralInformationPDF() {
           {submission?.implementationPlace}
         </Descriptions.Item>
         <Descriptions.Item label="Fecha de inicio">
-          {submission?.startDate}
+          {moment(submission?.startDate).format("DD/MM/YYYY")}
         </Descriptions.Item>
         <Descriptions.Item label="Fecha de conclusión">
-          {submission?.endDate}
+          {moment(submission?.endDate).format("DD/MM/YYYY")}
         </Descriptions.Item>
         <Descriptions.Item label="Responsable del proyecto">
           {submission?.responsible}
@@ -102,16 +105,20 @@ export function GeneralInformationPDF() {
           {submission?.applyingCall}
         </Descriptions.Item>
         <Descriptions.Item label="Eje estratégico Ficosec">
-          {submission?.strategicAxis}
+          {getReadableValue(strategicAxisTypes, submission?.strategicAxis)}
         </Descriptions.Item>
         <Descriptions.Item label="Nivel de prevención que atiende">
-          {getReadableValue(preventionLevelTypes, submission?.preventionLevel)}
+          {submission?.preventionLevel?.map(el =>
+            getReadableValue(preventionLevelTypes, el)
+          ).join(", ")}
         </Descriptions.Item>
         <Descriptions.Item label="Ámbitos de intervención del proyecto">
-          {getReadableValue(scopeTypes, submission?.scope)}
+          {submission?.scope?.map(el =>
+            getReadableValue(scopeTypes, el)
+          ).join(", ")}
         </Descriptions.Item>
         <Descriptions.Item label="Problemática a tratar">
-          {submission?.issueDescription}
+          {getReadableValue(issueTypes, submission?.issueDescription)}
         </Descriptions.Item>
         <Descriptions.Item label="Justificación">
           {submission?.justification}

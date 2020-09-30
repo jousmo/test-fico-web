@@ -1,4 +1,4 @@
-import { withForm } from "../../../../../helpers/withForm"
+import { withForm, format } from "../../../../../helpers"
 import { Table } from "antd"
 import { useRouter } from "next/router"
 import Moment from "moment"
@@ -10,7 +10,6 @@ import {
   implementer,
   shared
 } from "../../../../../helpers/selectOptions"
-import { getTotalApproved } from "../../../projects/list/table/helpers"
 import { Tooltip } from "../../../../shared/tooltip"
 import "./styles.sass"
 
@@ -49,7 +48,7 @@ function SubmissionsListingTable({ data }) {
       <Table.Column
         dataIndex="createdAt"
         render={text => (
-          capitalize(Moment(text).format("MMMM D, YYYY h:mm a"))
+          Moment(text).format("DD/MM/YYYY")
         )}
         title="Fecha de solicitud" />
       <Table.Column
@@ -82,7 +81,8 @@ function SubmissionsListingTable({ data }) {
         }
         title="Eje" />
       <Table.Column
-        render={(text, row) => getTotalApproved(row)}
+        dataIndex="budgeted"
+        render={text => format.money(text)}
         title="Aprobado" />
     </Table>
   )

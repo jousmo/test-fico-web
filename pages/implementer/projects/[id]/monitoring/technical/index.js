@@ -63,7 +63,6 @@ function TechnicalMonitoringPage({ client, query }) {
     const newMonitoring = cloneDeep(monitoring)
     const { id, ...updatedMonitoring } = newMonitoring
 
-    delete updatedMonitoring.verificationDocument.id
     updatedMonitoring.participants = [...updatedMonitoring.participants]
       .map(({uuid, ...p}) => p)
 

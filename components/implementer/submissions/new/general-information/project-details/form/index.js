@@ -193,6 +193,7 @@ function ProjectDetailsForm({
               defaultValue={data?.Submission?.startDate}
               onChange={onChange}
               disabled={readOnly}
+              format="DD/MM/YYYY"
               fullWidth />
           </Form.Item>
         </Col>
@@ -213,6 +214,7 @@ function ProjectDetailsForm({
               defaultValue={data?.Submission?.endDate}
               onChange={onChange}
               disabled={readOnly}
+              format="DD/MM/YYYY"
               fullWidth />
           </Form.Item>
         </Col>

@@ -107,7 +107,7 @@ export function Expense () {
       <StatisticHeader statistics={dataStatistics} styles={{padding: 0}} />
       <Section style={{padding: 0, margin: "1rem 0"}} title="Gastos">
         <Space>
-          <DatePicker.RangePicker onChange={onChangeRageDate} />
+          <DatePicker.RangePicker format="DD/MM/YYYY" onChange={onChangeRageDate} />
         </Space>
         <CompositeField
           onClickAdd={onClickAdd}
