@@ -42,7 +42,7 @@ export function ModalInvitation ({ onSave, onCancel, ...props }) {
         form={form}
         layout="vertical">
         <Form.Item
-          label="Correo electronico"
+          label="Correo electrónico"
           name="email"
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <Input name="email" />
