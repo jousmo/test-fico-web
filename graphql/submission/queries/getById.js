@@ -113,7 +113,7 @@ export const getById = gql`
         supports {
           id
           name
-          date
+          receivedAt
           amount
         }
         documents {
