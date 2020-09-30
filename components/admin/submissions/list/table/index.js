@@ -49,7 +49,7 @@ function SubmissionsListingTable({ data }) {
       <Table.Column
         dataIndex="createdAt"
         render={text => (
-          capitalize(Moment(text).format("MMMM D, YYYY h:mm a"))
+          Moment(text).format("DD/MM/YYYY")
         )}
         title="Fecha de solicitud" />
       <Table.Column

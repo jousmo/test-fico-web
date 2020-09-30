@@ -37,7 +37,7 @@ export function ReportsPDF(){
           title="Periodo" />
         <Table.Column
           render={(text, row) => (
-            moment(row.submittedAt).format("DD/MM/YYYY h:mm a")
+            moment(row.submittedAt).format("DD/MM/YYYY")
           )}
           title="Fecha de entrega" />
       </Table>

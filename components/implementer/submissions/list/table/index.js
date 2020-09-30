@@ -56,7 +56,7 @@ function SubmissionsListingTable({ data }) {
       <Table.Column
         dataIndex="createdAt"
         render={text => (
-          Moment(text).format("DD/MM/YYYY h:mm a")
+          Moment(text).format("DD/MM/YYYY")
         )}
         title="Fecha de solicitud" />
       <Table.Column

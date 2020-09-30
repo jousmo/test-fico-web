@@ -26,7 +26,7 @@ function StatusForm({ data, onSave }) {
       <Form.Item
         label="Fecha de estatus"
         style={{marginBottom: "5px"}}>
-        {moment(data?.statusChangedAt).format("MM/DD/YYYY HH:MM")}
+        {moment(data?.statusChangedAt).format("DD/MM/YYYY")}
       </Form.Item>
       <Visibility visible={data?.deadline !== undefined}>
         <Form.Item
