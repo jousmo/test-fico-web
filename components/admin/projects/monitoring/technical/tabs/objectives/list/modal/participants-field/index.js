@@ -3,7 +3,7 @@ import { useState } from "react"
 import { ParticipantsModal } from "./participants-modal"
 import { ParticipantsItem } from "./participants-item"
 
-export function ParticipantsField({ defaultValue, onChange, type }) {
+export function ParticipantsField({ defaultValue, onChange, type, readOnly }) {
   const [state, setState] = useState({
     isModalOpen: false
   })
@@ -33,6 +33,7 @@ export function ParticipantsField({ defaultValue, onChange, type }) {
     <CompositeField
       onChange={onChange}
       defaultValue={defaultValue}
+      isAddDisabled={readOnly}
       onClickAdd={onClickAdd}
       addLabel="Agregar participantes">
       {({ items, addNew, removeItem, replaceItemAtIndex }) =>
@@ -45,6 +46,7 @@ export function ParticipantsField({ defaultValue, onChange, type }) {
           { items.map((item, index) =>
             <ParticipantsItem
               data={item}
+              readOnly={readOnly}
               key={`participant_${index}`}
               onDelete={removeItem(index)} />
           ) }

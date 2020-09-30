@@ -5,7 +5,7 @@ import {
 } from "../../../../../../../../../../helpers/selectOptions"
 import { DeleteButton } from "../../../../../../../../../shared"
 
-export function ParticipantsItem({ data, onDelete }) {
+export function ParticipantsItem({ data, onDelete, readOnly }) {
   const gender = getReadableValue(
     implementer.submission.genderTypes,
     data?.gender
@@ -33,9 +33,11 @@ export function ParticipantsItem({ data, onDelete }) {
       <Col span={5}>Intervención {preventionLevel}</Col>
       <Col span={4}>{gender}</Col>
       <Col span={4}>{age}</Col>
-      <Col span={2}>
-        <DeleteButton size="small" onClick={onDelete} />
-      </Col>
+      {!readOnly &&
+        <Col span={2}>
+          <DeleteButton size="small" onClick={onDelete} />
+        </Col>
+      }
     </Row>
   )
 }

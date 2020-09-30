@@ -1,4 +1,4 @@
-import { withForm } from "../../../../../helpers/withForm"
+import { withForm, format } from "../../../../../helpers"
 import { useRouter } from "next/router"
 import { Table } from "antd"
 import Moment from "moment"
@@ -9,7 +9,6 @@ import {
   implementer,
   shared
 } from "../../../../../helpers/selectOptions"
-import { getTotalApproved } from "../../../../admin/projects/list/table/helpers"
 import { Tooltip } from "../../../../shared"
 import "./styles.sass"
 
@@ -84,7 +83,8 @@ function SubmissionsListingTable({ data }) {
         }
         title="Eje" />
       <Table.Column
-        render={(text, row) => getTotalApproved(row)}
+        dataIndex="budgeted"
+        render={text => format.money(text)}
         title="Aprobado" />
     </Table>
   )

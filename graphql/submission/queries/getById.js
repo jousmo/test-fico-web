@@ -270,6 +270,7 @@ export const getById = gql`
         appliedAt
         completed
         compliance
+        reviewedAt
         verificationDocuments{
           id
           name
