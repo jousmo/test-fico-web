@@ -1,25 +1,11 @@
 import { CompositeField } from "../../../../shared";
-import { Form, Skeleton, Alert, Table, Empty } from "antd";
-import { ProjectModal } from "./projectModal";
+import { withForm } from "../../../../../helpers"
+import { Form, Table, Empty } from "antd";
+import { ProjectModal } from "./modal";
 import { useState } from "react"
 import * as cellFormat from "../../../../../helpers/cellFormat";
 
-export function ProjectsForm({data, isLoading, onChange, error}) {
-  if(isLoading) {
-    return <Skeleton active />
-  }
-
-  if(!data || error) {
-    return (
-      <Alert
-        message="Error"
-        description="Ha ocurrido un error al cargar los datos de esta sección,
-        por favor actualiza la página."
-        type="error"
-        showIcon />
-    )
-  }
-
+function ProjectsForm({ data, onChange }) {
   const [state, setState] = useState({ isModalOpen: false })
 
   const onClickAdd = () => {
@@ -44,7 +30,7 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
           defaultValue={data?.Implementer?.projects}
           onClickAdd={onClickAdd}
           addLabel="Agregar proyecto">
-          {({ items, addNew, removeItem }) => 
+          {({ items, addNew, removeItem }) =>
             <div>
               <ProjectModal
                 onSave={onSave(addNew)}
@@ -56,34 +42,20 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
                 locale={{emptyText: <Empty description="Agrega proyectos haciendo click en el botón de abajo" />}}
                 >
                 <Table.Column
-                  title="Institución financiadora"
-                  key="financialInstitution"
-                  dataIndex="financingInstitution" />
-                <Table.Column
-                  title="Monto"
-                  key="amount"
-                  dataIndex="amount"
-                  render={cellFormat.money} />
-                <Table.Column
-                  title="Financiamiento"
-                  key="financingPercentage"
-                  dataIndex="financingPercentage"
-                  render={cellFormat.percentage} />
-                <Table.Column
                   title="Nombre del proyecto"
-                  key="name"
                   dataIndex="name" />
                 <Table.Column
-                  title="Año"
-                  key="year"
-                  dataIndex="year" />
+                  title="Monto"
+                  dataIndex="amount" />
                 <Table.Column
-                  title="Presupuesto"
-                  key="budgetType"
-                  dataIndex="budgetType" />
+                  title="Propio" />
+                <Table.Column
+                  title="Publico" />
+                <Table.Column
+                  title="Privado"
+                  dataIndex="amount" />
                 <Table.Column
                   title="Objetivo general"
-                  key="objective"
                   dataIndex="objective" />
                 <Table.Column
                   title=""
@@ -97,3 +69,5 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
     </Form>
   )
 }
+
+export default withForm(ProjectsForm)
