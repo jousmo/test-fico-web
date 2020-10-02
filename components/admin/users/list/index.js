@@ -8,7 +8,7 @@ import { AdminUserContext } from "../../../../contexts/admin/users"
 import "./styles.sass"
 
 function UsersList({ data: accounts }) {
-  const { save } = useContext(AdminUserContext)
+  const { save, recovery } = useContext(AdminUserContext)
 
   const [state, setState] = useState({
     openModal: false
@@ -18,9 +18,13 @@ function UsersList({ data: accounts }) {
     setState({ openModal: !state.openModal })
   }
 
-  const onSave = (account) => {
-    save && save(account)
+  const onSave = account => {
+    save(account)
     onToggleModal()
+  }
+
+  const onRecovery = email => {
+    recovery(email)
   }
 
   return (
@@ -38,7 +42,7 @@ function UsersList({ data: accounts }) {
             onCancel={onToggleModal}/>
           <List
             className="fico users-list"
-            renderItem={i => <UserItem user={i} />}
+            renderItem={i => <UserItem user={i} onRecovery={onRecovery}/>}
             itemLayout="vertical"
             dataSource={items}
             pagination={{pageSize: 10}} />

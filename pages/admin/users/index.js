@@ -26,8 +26,14 @@ function AdminUsers({ client }) {
     }
   )
 
+  const [recoveryAccountPassword] = useMutation(
+    user.mutations.recoveryAccountPassword, {
+      client: client
+    }
+  )
+
   const save = useCallback(async account => {
-    const saving = loadingAlert()
+    const saving = loadingAlert("Enviando correo de recuperación")
     try {
       await createAccount({ variables: { data: account } })
       success()
@@ -38,11 +44,24 @@ function AdminUsers({ client }) {
     saving()
   }, [createAccount])
 
+  const recovery = useCallback(async email => {
+    const saving = loadingAlert()
+    try {
+      await recoveryAccountPassword({ variables: { email } })
+      success("Correo de recuperación enviado")
+    } catch (e) {
+      warning()
+      console.error(e)
+    }
+    saving()
+  }, [recoveryAccountPassword])
+
   const injectActions = useMemo(() => ({
     loading,
     error,
     data,
-    save
+    save,
+    recovery
   }), [loading, data])
 
   return (

@@ -3,7 +3,7 @@ import { MailOutlined, UserOutlined } from "@ant-design/icons"
 import { Avatar, IconLabel } from "../../../shared"
 import { ActionButton } from "../../../shared/action-button"
 
-export function UserItem ({ user }) {
+export function UserItem ({ user, onRecovery }) {
   const ROLES = {
     "IMPLEMENTER": "Implementadora",
     "ADMIN": "Administrador"
@@ -27,6 +27,7 @@ export function UserItem ({ user }) {
           </>
         } />
       <ActionButton
+        onRecovery={() => onRecovery(user?.email)}
         onEdit={null}
         onDelete={null}
       />
