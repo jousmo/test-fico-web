@@ -1,11 +1,11 @@
-import { SelectField } from "../selectField";
+import { SelectField } from "../selectField"
 
-export function YearSelect({displayNumber, ...props}) {
+export function YearSelect({ displayNumber, ...props }) {
   let currentYear = new Date().getFullYear() + 1
-  
-  const years = new Array(displayNumber+1).fill(null).map(() => {
+
+  const years = new Array(displayNumber + 1).fill(null).map(() => {
     currentYear--
-    return { label: currentYear, value: currentYear }
+    return { label: currentYear, value: currentYear.toString() }
   })
 
   return (
