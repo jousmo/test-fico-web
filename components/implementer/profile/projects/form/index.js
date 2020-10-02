@@ -1,9 +1,10 @@
-import { CompositeField } from "../../../../shared";
+import { CompositeField, Tooltip } from "../../../../shared";
 import { withForm } from "../../../../../helpers"
 import { Form, Table, Empty } from "antd";
 import { ProjectModal } from "./modal";
 import { useState } from "react"
 import * as cellFormat from "../../../../../helpers/cellFormat";
+import { money } from "../../../../../helpers/valueFormat"
 
 function ProjectsForm({ data, onChange }) {
   const [state, setState] = useState({ isModalOpen: false })
@@ -19,6 +20,20 @@ function ProjectsForm({ data, onChange }) {
   const onSave = (addNew) => (values) => {
     addNew(values)
     onCancel()
+  }
+
+  const getFinancing = row => {
+    const result = { own: 0, public: 0, private: 0 }
+    row.financing.forEach(el => {
+      if (el.type === "Propio") {
+        result.own = result.own + el.amount
+      } else if (el.type === "Privado") {
+        result.private = result.private + el.amount
+      } else {
+        result.public = result.public + el.amount
+      }
+    })
+    return result
   }
 
   return (
@@ -43,19 +58,24 @@ function ProjectsForm({ data, onChange }) {
                 >
                 <Table.Column
                   title="Nombre del proyecto"
+                  render={value => <Tooltip length={20} value={value}/>}
                   dataIndex="name" />
                 <Table.Column
                   title="Monto"
+                  render={(t, row) => money(row.financing.reduce((prev, current) => prev + current.amount, 0))}
                   dataIndex="amount" />
                 <Table.Column
+                  render={(t, row) => money(getFinancing(row).own)}
                   title="Propio" />
                 <Table.Column
+                  render={(t, row) => money(getFinancing(row).public)}
                   title="Publico" />
                 <Table.Column
-                  title="Privado"
-                  dataIndex="amount" />
+                  render={(t, row) => money(getFinancing(row).private)}
+                  title="Privado" />
                 <Table.Column
                   title="Objetivo general"
+                  render={value => <Tooltip length={15} value={value}/>}
                   dataIndex="objective" />
                 <Table.Column
                   title=""
