@@ -1,22 +1,8 @@
-import { Alert, Empty, Table, Skeleton } from "antd"
+import { Empty, Table } from "antd"
+import { withForm } from "../../../../helpers/withForm"
 import * as cellFormat from "../../../../helpers/cellFormat"
 
-export function BudgetSummaryTable({data, error, isLoading}) {
-  if(isLoading) {
-    return <Skeleton active />
-  }
-
-  if(!data || error) {
-    return (
-      <Alert
-        message="Error"
-        description="Ha ocurrido un error al cargar los datos de esta sección,
-        por favor actualiza la página."
-        type="error"
-        showIcon />
-    )
-  }
-
+function BudgetSummaryTable({ data }) {
   return (
     <>
       <Table
@@ -48,3 +34,5 @@ export function BudgetSummaryTable({data, error, isLoading}) {
     </>
   )
 }
+
+export default withForm(BudgetSummaryTable)
