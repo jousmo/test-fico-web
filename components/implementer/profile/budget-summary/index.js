@@ -1,7 +1,7 @@
-import { Section, SelectField } from "../../../shared";
-import { useContext } from "react";
-import { ImplementerProfileContext } from "../../../../contexts/implementer/profile";
-import { BudgetSummaryTable } from "./budgetSummaryTable";
+import { Section } from "../../../shared"
+import { useContext } from "react"
+import { ImplementerProfileContext } from "../../../../contexts/implementer/profile"
+import BudgetSummaryTable from "./budgetSummaryTable"
 
 export function BudgetSummary() {
   const {
