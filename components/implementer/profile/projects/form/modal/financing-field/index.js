@@ -41,7 +41,7 @@ export function FinancingField({ total, ...props }) {
                   <Input
                     id="institution"
                     name="institution"
-                    disabled={item.type === "Propio"}
+                    disabled={item.type === "OWN"}
                     onChange={updateItem(index)}
                     type="text" />
                 </Form.Item>
