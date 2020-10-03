@@ -22,7 +22,9 @@ import { AuthCheck } from "../../../helpers/auth/auth-check"
 function Profile({ client }) {
   const [state, setState] = useState({ generalInformation: {} })
   const [updateProfile] = useMutation(implementer.mutations.updateById, {
-    client: client
+    client: client,
+    awaitRefetchQueries: true,
+    refetchQueries: [{ query: implementer.queries.getById }]
   })
 
   const { loading, error, data } = useQuery(implementer.queries.getById, {
@@ -101,7 +103,7 @@ function Profile({ client }) {
     error,
     save,
     data
-  }), [state, loading])
+  }), [data, state, loading])
 
   return (
     <ImplementerProfileContext.Provider value={injectActions}>
