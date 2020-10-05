@@ -15,9 +15,10 @@ export function IndicatorItem({ data, onDelete, onEdit, readOnly, review }) {
 
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
-      <Typography.Title level={4}>
+      <Typography.Text strong>
         {title || "Indicador sin título"}
-      </Typography.Title>
+      </Typography.Text>
+      <br />
       <Typography.Text type="secondary">
         {description || "N/A"}
       </Typography.Text>
