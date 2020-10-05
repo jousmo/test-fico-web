@@ -51,7 +51,7 @@ export function ActivityModal({
 
   return (
     <Modal
-      title={`${edit ? "Editar" : "Agregar"} indicador`}
+      title={`${edit ? "Editar" : "Agregar"} actividad`}
       onOk={onOk}
       onCancel={onCancelModal}
       okButtonProps={{ disabled: review }}
@@ -92,7 +92,7 @@ export function ActivityModal({
                   name: "description",
                   section: activityType,
                   index: commentIndex}}>
-                  Descripción de la actividad
+                  Descripción de indicador
                 </FieldLabel>
               }>
               <Input
