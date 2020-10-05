@@ -8,7 +8,7 @@ export function Heading() {
       <br />
       <Typography.Text type="secondary">
         Registra a cada miembro que será parte de la implementación de este
-        proyecto, ten en cuanta que ya debiste registrar.
+        proyecto, ten en cuenta que ya los debiste registrar en el presupuesto.
       </Typography.Text>
     </Section>
   )
