@@ -57,7 +57,7 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index, readOnly, hidde
       <Typography.Text strong>Edad: </Typography.Text>
       <Typography.Text>{ages}</Typography.Text>
       &nbsp;
-      <Typography.Text strong>Nivel de intervención: </Typography.Text>
+      <Typography.Text strong>Nivel de Prevención / Intervención: </Typography.Text>
       <Typography.Text>{preventionLevel}</Typography.Text>
       {!readOnly && (
         <>
