@@ -89,13 +89,13 @@ export function ConceptModal({
   const onTypeChange = value => {
     if (getSelectValue(value) === "HUMAN_RESOURCE"){
       form.setFieldsValue({ measurementUnit: "Mes" })
-      setState({ isUnitDisabled: true })
+      setState(state => ({ isUnitDisabled: true, ...state }))
     } else if (getSelectValue(value) === "EQUIPMENT"){
       form.setFieldsValue({ measurementUnit: "Pieza" })
-      setState({ isUnitDisabled: true })
+      setState(state => ({ isUnitDisabled: true, ...state }))
     } else {
       form.setFieldsValue({ measurementUnit: undefined })
-      setState({ isUnitDisabled: false })
+      setState(state => ({ isUnitDisabled: false, ...state }))
     }
   }
 
