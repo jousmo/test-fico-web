@@ -86,13 +86,16 @@ export function ConceptModal({
     setState(state => ({ ...state, ...values }))
   }
 
-  const onTypeChange = (value) => {
+  const onTypeChange = value => {
     if (getSelectValue(value) === "HUMAN_RESOURCE"){
       form.setFieldsValue({ measurementUnit: "Mes" })
-      setState({ isHumanResource: true })
+      setState({ isUnitDisabled: true })
+    } else if (getSelectValue(value) === "EQUIPMENT"){
+      form.setFieldsValue({ measurementUnit: "Pieza" })
+      setState({ isUnitDisabled: true })
     } else {
       form.setFieldsValue({ measurementUnit: undefined })
-      setState({ isHumanResource: false })
+      setState({ isUnitDisabled: false })
     }
   }
 
@@ -157,7 +160,7 @@ export function ConceptModal({
               label="Unidad de medida">
               <Input
                 id="measurementUnit"
-                disabled={state.isHumanResource}
+                disabled={state.isUnitDisabled}
                 defaultValue={edit?.measurementUnit}
                 type="text" />
             </Form.Item>
