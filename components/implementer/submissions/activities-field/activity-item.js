@@ -34,9 +34,10 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
 
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
-      <Typography.Title level={4}>
+      <Typography.Text strong>
         {title || "Actividad sin titulo"}
-      </Typography.Title>
+      </Typography.Text>
+      <br />
       <Typography.Text>{description || "N/A"}</Typography.Text>
       <br />
       <Typography.Text type="secondary">
