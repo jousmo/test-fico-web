@@ -83,7 +83,7 @@ export function ConceptModal({
     if (values.totalUnits !== unitsState.total){
       setUnitsState({ overLimit: false, total: values.totalUnits })
     }
-    setState(values)
+    setState(state => ({ ...state, ...values }))
   }
 
   const onTypeChange = (value) => {
