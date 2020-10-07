@@ -11,4 +11,4 @@ import * as cellFormat from "./cellFormat"
 import * as format from "./valueFormat"
 import * as selectOptions from "./selectOptions"
 
-export { cellFormat, selectOptions, format }
+export { cellFormat, format, selectOptions }

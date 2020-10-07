@@ -27,11 +27,21 @@ export const getById = gql`
         charge
         remuneration
       }
-      documents{
+      documents {
         id
         name
         type
         url
+      }
+      projects {
+        name
+        objective
+        year
+        financing {
+          type
+          institution
+          amount
+        }
       }
     }
   }

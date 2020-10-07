@@ -1,7 +1,7 @@
-import { Section } from "../../../shared";
-import { ProjectsForm } from "./form";
-import { ImplementerProfileContext } from "../../../../contexts/implementer/profile";
-import { useContext } from "react";
+import { Section } from "../../../shared"
+import ProjectsForm from "./form"
+import { ImplementerProfileContext } from "../../../../contexts/implementer/profile"
+import { useContext } from "react"
 
 export function Projects() {
   const {
@@ -11,7 +11,7 @@ export function Projects() {
     data
   } = useContext(ImplementerProfileContext)
 
-  const onChange = (data) => {
+  const onChange = data => {
     updateGeneralInformation({ projects: data })
   }
 

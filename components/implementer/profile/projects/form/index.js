@@ -1,25 +1,12 @@
-import { CompositeField } from "../../../../shared";
-import { Form, Skeleton, Alert, Table, Empty } from "antd";
-import { ProjectModal } from "./projectModal";
+import { CompositeField, Tooltip } from "../../../../shared";
+import { withForm } from "../../../../../helpers"
+import { Form, Table, Empty } from "antd";
+import { ProjectModal } from "./modal";
 import { useState } from "react"
 import * as cellFormat from "../../../../../helpers/cellFormat";
+import { money } from "../../../../../helpers/valueFormat"
 
-export function ProjectsForm({data, isLoading, onChange, error}) {
-  if(isLoading) {
-    return <Skeleton active />
-  }
-
-  if(!data || error) {
-    return (
-      <Alert
-        message="Error"
-        description="Ha ocurrido un error al cargar los datos de esta sección,
-        por favor actualiza la página."
-        type="error"
-        showIcon />
-    )
-  }
-
+function ProjectsForm({ data, onChange }) {
   const [state, setState] = useState({ isModalOpen: false })
 
   const onClickAdd = () => {
@@ -35,6 +22,20 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
     onCancel()
   }
 
+  const getFinancing = row => {
+    const result = { own: 0, public: 0, private: 0 }
+    row.financing.forEach(el => {
+      if (el.type === "Propio") {
+        result.own = result.own + el.amount
+      } else if (el.type === "Privado") {
+        result.private = result.private + el.amount
+      } else {
+        result.public = result.public + el.amount
+      }
+    })
+    return result
+  }
+
   return (
     <Form layout="vertical">
       <Form.Item
@@ -44,7 +45,7 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
           defaultValue={data?.Implementer?.projects}
           onClickAdd={onClickAdd}
           addLabel="Agregar proyecto">
-          {({ items, addNew, removeItem }) => 
+          {({ items, addNew, removeItem }) =>
             <div>
               <ProjectModal
                 onSave={onSave(addNew)}
@@ -56,34 +57,25 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
                 locale={{emptyText: <Empty description="Agrega proyectos haciendo click en el botón de abajo" />}}
                 >
                 <Table.Column
-                  title="Institución financiadora"
-                  key="financialInstitution"
-                  dataIndex="financingInstitution" />
-                <Table.Column
-                  title="Monto"
-                  key="amount"
-                  dataIndex="amount"
-                  render={cellFormat.money} />
-                <Table.Column
-                  title="Financiamiento"
-                  key="financingPercentage"
-                  dataIndex="financingPercentage"
-                  render={cellFormat.percentage} />
-                <Table.Column
                   title="Nombre del proyecto"
-                  key="name"
+                  render={value => <Tooltip length={20} value={value}/>}
                   dataIndex="name" />
                 <Table.Column
-                  title="Año"
-                  key="year"
-                  dataIndex="year" />
+                  title="Monto"
+                  render={(t, row) => money(row.financing.reduce((prev, current) => prev + current.amount, 0))}
+                  dataIndex="amount" />
                 <Table.Column
-                  title="Presupuesto"
-                  key="budgetType"
-                  dataIndex="budgetType" />
+                  render={(t, row) => money(getFinancing(row).own)}
+                  title="Propio" />
+                <Table.Column
+                  render={(t, row) => money(getFinancing(row).public)}
+                  title="Publico" />
+                <Table.Column
+                  render={(t, row) => money(getFinancing(row).private)}
+                  title="Privado" />
                 <Table.Column
                   title="Objetivo general"
-                  key="objective"
+                  render={value => <Tooltip length={15} value={value}/>}
                   dataIndex="objective" />
                 <Table.Column
                   title=""
@@ -97,3 +89,5 @@ export function ProjectsForm({data, isLoading, onChange, error}) {
     </Form>
   )
 }
+
+export default withForm(ProjectsForm)
