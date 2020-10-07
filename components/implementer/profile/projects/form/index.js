@@ -25,9 +25,9 @@ function ProjectsForm({ data, onChange }) {
   const getFinancing = row => {
     const result = { own: 0, public: 0, private: 0 }
     row.financing.forEach(el => {
-      if (el.type === "Propio") {
+      if (el.type === "OWN") {
         result.own = result.own + el.amount
-      } else if (el.type === "Privado") {
+      } else if (el.type === "PRIVATE") {
         result.private = result.private + el.amount
       } else {
         result.public = result.public + el.amount
