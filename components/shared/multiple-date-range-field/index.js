@@ -1,10 +1,12 @@
 import { Row, Col } from "antd"
 import { CompositeField, DeleteButton, DateField } from ".."
+import moment from "moment"
 
 export function MultipleDateRangeField({
   onChange,
   addLabel="Agregar fecha",
   defaultValue=[],
+  limitDates,
   value=[],
   review,
   ...props
@@ -36,6 +38,7 @@ export function MultipleDateRangeField({
                   defaultValue={item.value}
                   id="value"
                   name="months"
+                  disabledDate={date => date && (date < moment(limitDates[0]) || date > moment(limitDates[1]))}
                   onChange={updateItem(index)}
                   picker="month"
                   range
