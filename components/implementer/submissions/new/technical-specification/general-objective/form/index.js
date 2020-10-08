@@ -26,6 +26,7 @@ function GeneralObjectiveForm({ data, onChange, hiddenComments, review }) {
           review={review}
           defaultValue={data?.Submission?.generalObjectiveIndicators}
           indicatorType="GENERAL_INDICATOR"
+          limitDates={[data?.Submission?.startDate, data?.Submission?.endDate]}
           readOnly={readOnly}
           onChange={onIndicatorsChange}
           hiddenComments={hiddenComments}/>
