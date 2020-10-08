@@ -1,4 +1,5 @@
 import { Row, Form, Col, Input } from "antd"
+import { useState } from "react"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
 import { withForm } from "../../../../../../../helpers/withForm"
@@ -6,6 +7,7 @@ import { PreventionLevelsText } from "./prevention-levels-text"
 import { ScopeText } from "./scope-text"
 import { JustificationText } from "./justification-text"
 import { TownshipSelect } from "./township-select"
+import moment from "moment"
 
 function ProjectDetailsForm({
   data,
@@ -13,6 +15,10 @@ function ProjectDetailsForm({
   isCall,
   hiddenComments
 }) {
+  const [state, setState] = useState({
+    startDate: data?.Submission?.startDate,
+    endDate: data?.Submission?.endDate
+  })
   const [form] = Form.useForm()
 
   const onAddAlly = (value) => {
@@ -20,6 +26,13 @@ function ProjectDetailsForm({
       value.currentTarget.value.length = 2
     }
     onChange(value)
+  }
+
+  const onSetDate = (date, type) => {
+    const { currentTarget: { value }} = date
+
+    setState({ ...state, [type]: value })
+    onChange(date)
   }
 
   const readOnly = data?.Submission?.state === "PROJECT"
@@ -190,8 +203,9 @@ function ProjectDetailsForm({
             <DateField
               id="startDate"
               name="startDate"
+              disabledDate={date => date && date > moment(state.endDate)}
               defaultValue={data?.Submission?.startDate}
-              onChange={onChange}
+              onChange={date => onSetDate(date, "startDate")}
               disabled={readOnly}
               format="DD/MM/YYYY"
               fullWidth />
@@ -211,8 +225,9 @@ function ProjectDetailsForm({
             <DateField
               id="endDate"
               name="endDate"
+              disabledDate={date => date && date < moment(state.startDate)}
               defaultValue={data?.Submission?.endDate}
-              onChange={onChange}
+              onChange={date => onSetDate(date, "endDate")}
               disabled={readOnly}
               format="DD/MM/YYYY"
               fullWidth />
