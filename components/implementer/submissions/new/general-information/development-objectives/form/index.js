@@ -24,7 +24,7 @@ function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
 
   return (
     <Form
-      name="project-details"
+      name="objectives-form"
       layout="vertical">
       <Row gutter={[10, 8]} justify="start">
         <Col span={24}>
