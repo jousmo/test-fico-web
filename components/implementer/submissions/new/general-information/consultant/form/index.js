@@ -56,6 +56,7 @@ function ConsultantForm({ data, onChange, hiddenComments, review }) {
               <ConsultantModal
                 edit={state.edit}
                 review={review}
+                limitDates={[data?.Submission?.startDate, data?.Submission?.endDate]}
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 visible={state.isModalOpen}
                 onCancel={onCancel}

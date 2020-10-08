@@ -81,6 +81,7 @@ export default function SpecificObjectiveForm({
                 onChange={onSpecificObjectiveItemsChange(index, "indicators")}
                 indicatorType="SPECIFIC_INDICATOR"
                 objectiveIndex={index}
+                limitDates={[data?.Submission?.startDate, data?.Submission?.endDate]}
                 readOnly={readOnly}
                 defaultValue={objective.indicators.sort((a, b) => a.orderIndex - b.orderIndex)}
                 hiddenComments={hiddenComments}/>
@@ -90,6 +91,7 @@ export default function SpecificObjectiveForm({
                 review={review}
                 activityType="SPECIFIC_ACTIVITY"
                 objectiveIndex={index}
+                limitDates={[data?.Submission?.startDate, data?.Submission?.endDate]}
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}
                 readOnly={readOnly}
                 defaultValue={objective.activities.sort((a, b) => a.orderIndex - b.orderIndex)}

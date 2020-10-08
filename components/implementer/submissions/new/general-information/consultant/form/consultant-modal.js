@@ -15,8 +15,9 @@ import {
   toFileList
 } from "../../../../../../../helpers"
 import { merge } from "lodash"
+import moment from "moment"
 
-export function ConsultantModal({ edit, onCancel, onSave, hiddenComments, review, ...props }) {
+export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComments, review, ...props }) {
   const [form] = Form.useForm()
   const [state, setState] = useState({
     hasSupport: false,
@@ -353,6 +354,7 @@ export function ConsultantModal({ edit, onCancel, onSave, hiddenComments, review
                               <DateField
                                 id="receivedAt"
                                 name="receivedAt"
+                                disabledDate={date => date && (date < moment(limitDates[0]) || date > moment(limitDates[1]))}
                                 defaultValue={item.receivedAt}
                                 onChange={updateItem(index)}
                                 format="DD/MM/YYYY"

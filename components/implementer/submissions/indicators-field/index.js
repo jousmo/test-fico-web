@@ -7,6 +7,7 @@ export function IndicatorsField({
   defaultValue,
   indicatorType,
   objectiveIndex,
+  limitDates,
   onChange, readOnly,
   hiddenComments,
   review
@@ -54,6 +55,7 @@ export function IndicatorsField({
             review={review}
             onCancel={onCancel}
             onSave={onSave(addNew, replaceItemAtIndex)}
+            limitDates={limitDates}
             visible={state.isModalOpen}
             edit={state.edit}
             hiddenComments={hiddenComments} />

@@ -26,6 +26,7 @@ function DevelopmentObjectiveForm({ data, onChange, hiddenComments, review }) {
           review={review}
           defaultValue={data?.Submission?.developmentObjectiveIndicators}
           indicatorType="DEVELOPMENT_INDICATOR"
+          limitDates={[data?.Submission?.startDate, data?.Submission?.endDate]}
           readOnly={readOnly}
           onChange={onIndicatorsChange}
           hiddenComments={hiddenComments}/>

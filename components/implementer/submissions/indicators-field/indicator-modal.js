@@ -11,12 +11,14 @@ import {
 } from "../../../../helpers/selectOptions/implementer/submission"
 import { merge } from "lodash"
 import { useEffect } from "react"
+import moment from "moment"
 
 export function IndicatorModal({
   indicatorType,
   objectiveIndex,
   onSave,
   onCancel,
+  limitDates,
   edit,
   hiddenComments,
   review,
@@ -208,6 +210,7 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="startDate"
+                disabledDate={date => date && (date < moment(limitDates[0]) || date > moment(limitDates[1]))}
                 fullWidth
                 format="DD/MM/YYYY" />
             </Form.Item>
@@ -220,6 +223,7 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="endDate"
+                disabledDate={date => date && (date < moment(limitDates[0]) || date > moment(limitDates[1]))}
                 fullWidth
                 format="DD/MM/YYYY" />
             </Form.Item>
