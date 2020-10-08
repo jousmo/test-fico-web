@@ -12,6 +12,7 @@ export function ActivityModal({
   objectiveIndex,
   onSave,
   onCancel,
+  limitDates,
   edit,
   hiddenComments,
   review,
@@ -241,6 +242,7 @@ export function ActivityModal({
               }>
               <MultipleDateRangeField
                 isAddDisabled={review}
+                limitDates={limitDates}
                 review={review} />
             </Form.Item>
           </Col>
