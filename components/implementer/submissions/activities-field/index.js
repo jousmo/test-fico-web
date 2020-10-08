@@ -7,6 +7,7 @@ export function ActivitiesField({
   activityType,
   defaultValue,
   objectiveIndex,
+  limitDates,
   onChange,
   readOnly,
   hiddenComments,
@@ -54,6 +55,7 @@ export function ActivitiesField({
             objectiveIndex={objectiveIndex}
             onCancel={onCancel}
             onSave={onSave(addNew, replaceItemAtIndex)}
+            limitDates={limitDates}
             visible={state.isModalOpen}
             edit={state.edit}
             review={review}
