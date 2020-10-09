@@ -50,13 +50,15 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
         defaultValue={Submission?.concepts}>
         {({ items, addNew, removeItem, replaceItemAtIndex }) =>
           <>
-            <ConceptModal
-              visible={state.isModalOpen}
-              submission={Submission}
-              onCancel={onCancel}
-              onSave={onSave(addNew, replaceItemAtIndex)}
-              review={readOnly}
-              edit={state.edit} />
+            {state.isModalOpen &&
+              <ConceptModal
+                visible={state.isModalOpen}
+                submission={Submission}
+                onCancel={onCancel}
+                onSave={onSave(addNew, replaceItemAtIndex)}
+                review={readOnly}
+                edit={state.edit} />
+            }
             <ScrollableView contentWidth="1600px">
               <Table
                 dataSource={items}
