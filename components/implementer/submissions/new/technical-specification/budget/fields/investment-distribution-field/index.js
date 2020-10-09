@@ -45,7 +45,7 @@ export function InvestmentDistributionField({
     ), 0)
 
     onChange && onChange(newItems.map(el => ({ ...el, percentage: Number(el.percentage) || 0})))
-    setState(percentage > 100)
+    setState(percentage !== 100)
   }
 
   return (
