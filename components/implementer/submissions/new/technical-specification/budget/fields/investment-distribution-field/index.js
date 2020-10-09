@@ -87,10 +87,9 @@ export function InvestmentDistributionField({
             <Row>
               <Col span={24}>
                 <Alert
-                  message="Atención: La suma de los porcentajes no debe superar
-                  100%."
+                  message="Atención: La suma de los porcentajes debe de ser igual a 100%."
                   showIcon
-                  type="error" />
+                  type="warning" />
               </Col>
             </Row>
           </Visibility>
