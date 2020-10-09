@@ -24,7 +24,7 @@ export function ConceptModal({
 }) {
   const [form] = Form.useForm()
   const [state, setState] = useState({})
-  const [investmentState, setInvestmentState] = useState(false)
+  const [investmentState, setInvestmentState] = useState(!edit?.investmentDistribution)
   const [unitsState, setUnitsState] = useState({
     overLimit: false,
     total: 0
