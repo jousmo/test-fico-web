@@ -50,13 +50,15 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
         defaultValue={Submission?.concepts}>
         {({ items, addNew, removeItem, replaceItemAtIndex }) =>
           <>
-            <ConceptModal
-              visible={state.isModalOpen}
-              submission={Submission}
-              onCancel={onCancel}
-              onSave={onSave(addNew, replaceItemAtIndex)}
-              review={readOnly}
-              edit={state.edit} />
+            {state.isModalOpen &&
+              <ConceptModal
+                visible={state.isModalOpen}
+                submission={Submission}
+                onCancel={onCancel}
+                onSave={onSave(addNew, replaceItemAtIndex)}
+                review={readOnly}
+                edit={state.edit} />
+            }
             <ScrollableView contentWidth="1600px">
               <Table
                 dataSource={items}
@@ -113,14 +115,14 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
                   key="ficosec"
                   dataIndex="name"
                   render={renderInvestment("FICOSEC")} />
-                {Submission?.allies && (
+                {Submission?.allies?.length > 0 && (
                   <Table.Column
                     title={Submission?.allies[0]}
                     key="firstAlly"
                     dataIndex="name"
                     render={renderInvestment(Submission?.allies[0])} />
                 )}
-                {(Submission?.allies && Submission?.allies[1]) && (
+                {Submission?.allies?.length > 1 && (
                   <Table.Column
                     title={Submission?.allies[1]}
                     key="secondAlly"

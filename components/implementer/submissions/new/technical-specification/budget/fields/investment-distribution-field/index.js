@@ -33,7 +33,9 @@ export function InvestmentDistributionField({
     return numeral(percentage * total / 100).format("$0,0.00")
   }
 
-  if (value?.length === 4 && allies?.[1] ===  undefined){
+  if (allies?.length === 0) {
+    value.length = 2
+  } else if(value?.length === 4 && allies?.[1] ===  undefined) {
     value.pop()
   }
 
@@ -43,7 +45,7 @@ export function InvestmentDistributionField({
     ), 0)
 
     onChange && onChange(newItems.map(el => ({ ...el, percentage: Number(el.percentage) || 0})))
-    setState(percentage > 100)
+    setState(percentage !== 100)
   }
 
   return (
@@ -85,10 +87,9 @@ export function InvestmentDistributionField({
             <Row>
               <Col span={24}>
                 <Alert
-                  message="Atención: La suma de los porcentajes no debe superar
-                  100%."
+                  message="Atención: La suma de los porcentajes debe de ser igual a 100%."
                   showIcon
-                  type="error" />
+                  type="warning" />
               </Col>
             </Row>
           </Visibility>
