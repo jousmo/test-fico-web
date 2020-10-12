@@ -32,8 +32,20 @@ function AdminUsers({ client }) {
     }
   )
 
+  const [updateAccount] = useMutation(
+    user.mutations.updateAccount, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: user.queries.getAll
+        }
+      ]
+    }
+  )
+
   const save = useCallback(async account => {
-    const saving = loadingAlert("Enviando correo de recuperación")
+    const saving = loadingAlert()
     try {
       await createAccount({ variables: { data: account } })
       success()
@@ -45,7 +57,7 @@ function AdminUsers({ client }) {
   }, [createAccount])
 
   const recovery = useCallback(async email => {
-    const saving = loadingAlert()
+    const saving = loadingAlert("Enviando correo de recuperación")
     try {
       await recoveryAccountPassword({ variables: { email } })
       success("Correo de recuperación enviado")
@@ -56,12 +68,25 @@ function AdminUsers({ client }) {
     saving()
   }, [recoveryAccountPassword])
 
+  const update = useCallback(async id => {
+    const saving = loadingAlert("Cambiando tu cuenta a implementadora")
+    try {
+      await updateAccount({ variables: { id, role: "IMPLEMENTER" } })
+      success("Cuenta actualizada")
+    } catch (e) {
+      warning()
+      console.error(e)
+    }
+    saving()
+  }, [updateAccount])
+
   const injectActions = useMemo(() => ({
     loading,
     error,
     data,
     save,
-    recovery
+    recovery,
+    update
   }), [loading, data])
 
   return (

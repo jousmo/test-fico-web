@@ -1,17 +1,19 @@
 import { Button, Menu, Dropdown } from "antd"
 import { EllipsisOutlined } from "@ant-design/icons"
 
-export function ActionButton({onRecovery, onEdit, onDelete, ...props}) {
+export function ActionButton({onRecovery, onEdit, onDelete, role, ...props}) {
   const menu = (
     <Menu>
       <Menu.Item onClick={onRecovery}>
         Recuperar contraseña
       </Menu.Item>
-      <Menu.Item onClick={onEdit}>
-        Editar
-      </Menu.Item>
+      {role === "ADMIN" && (
+        <Menu.Item onClick={onEdit}>
+          Cambiar a implementadora
+        </Menu.Item>
+      )}
       <Menu.Item onClick={onDelete}>
-        Eliminar
+        Desactivar cuenta
       </Menu.Item>
     </Menu>
   )
