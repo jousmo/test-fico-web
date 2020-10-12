@@ -1,42 +1,65 @@
 import { withForm } from "../../../helpers/withForm"
 import { Descriptions, Typography } from "antd"
 import {
-  preventionLevelTypes,
-  scopeTypes
+  regions,
+  strategicAxisTypes,
+  preventionLevelTypes
 } from "../../../helpers/selectOptions/implementer/submission"
+import {
+  projectStatusOptions
+} from "../../../helpers/selectOptions/shared/project-status"
 import {
   getReadableValue
 } from "../../../helpers/selectOptions/getReadableValue"
 import numeral from "numeral"
+import { StatusTag } from "../../admin/projects/list/table/status-tag"
 
-function SummaryBody({ data, extra }) {
+function SummaryBody({ data, admin, extra }) {
   const {
     name,
-    scope,
+    region,
+    status,
     budgeted,
+    implementer,
     description,
-    preventionLevel
+    strategicAxis,
+    preventionLevel,
   } = data
 
   return (
     <Descriptions
+      column={6}
       size="small"
       title={<Typography.Title level={3}>{name}</Typography.Title>}>
-      <Descriptions.Item span={3}>
-        {description}
+      {admin &&
+        <Descriptions.Item label="Implementadora" span={6}>
+          {implementer?.name}
+        </Descriptions.Item>
+      }
+      <Descriptions.Item span={6}>
+        <StatusTag options={projectStatusOptions} value={status} />
       </Descriptions.Item>
-      <Descriptions.Item label="Ámbito">
-        {scope?.map(el =>
-          getReadableValue(scopeTypes, el)
-        )}
+      <Descriptions.Item label="Nivel de prevención">
+        {
+          preventionLevel?.map(level => (
+            getReadableValue(preventionLevelTypes, level)
+          )).join(", ")
+        }
       </Descriptions.Item>
-      <Descriptions.Item  span={2} label="Nivel de prevención">
-        {preventionLevel?.map(el =>
-          getReadableValue(preventionLevelTypes, el)
-        )}
+      <Descriptions.Item label="Región">
+        {getReadableValue(regions, region)}
       </Descriptions.Item>
-      <Descriptions.Item  span={3} label="Presupuesto total">
+      <Descriptions.Item label="Eje">
+        {getReadableValue(strategicAxisTypes, strategicAxis)}
+      </Descriptions.Item>
+      <Descriptions.Item
+        label="Monto autorizado"
+        span={2}
+        style={{ paddingLeft: "50px" }}>
         {numeral(budgeted).format("$0,0.00")}
+      </Descriptions.Item>
+      <Descriptions.Item span={6}>
+        {description}
       </Descriptions.Item>
       {extra}
     </Descriptions>
