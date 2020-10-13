@@ -127,6 +127,7 @@ export function SubmissionSummary() {
         ]}
         extra={headingButtons} />
       <SummaryBody
+        admin
         data={data?.Submission}
         error={error}
         extra={goToSubmission}
