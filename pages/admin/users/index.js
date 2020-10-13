@@ -32,11 +32,35 @@ function AdminUsers({ client }) {
     }
   )
 
+  const [updateAccount] = useMutation(
+    user.mutations.updateAccount, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: user.queries.getAll
+        }
+      ]
+    }
+  )
+
+  const [disabledAccount] = useMutation(
+    user.mutations.disabledAccount, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: user.queries.getAll
+        }
+      ]
+    }
+  )
+
   const save = useCallback(async account => {
-    const saving = loadingAlert("Enviando correo de recuperación")
+    const saving = loadingAlert("Creando cuenta", 0)
     try {
       await createAccount({ variables: { data: account } })
-      success()
+      success("Cuenta creada", 0)
     } catch (e) {
       warning()
       console.error(e)
@@ -45,7 +69,7 @@ function AdminUsers({ client }) {
   }, [createAccount])
 
   const recovery = useCallback(async email => {
-    const saving = loadingAlert()
+    const saving = loadingAlert("Enviando correo de recuperación", 0)
     try {
       await recoveryAccountPassword({ variables: { email } })
       success("Correo de recuperación enviado")
@@ -56,12 +80,38 @@ function AdminUsers({ client }) {
     saving()
   }, [recoveryAccountPassword])
 
+  const update = useCallback(async id => {
+    const saving = loadingAlert("Cambiando tu cuenta a implementadora", 0)
+    try {
+      await updateAccount({ variables: { id, role: "IMPLEMENTER" } })
+      success("Cuenta actualizada")
+    } catch (e) {
+      warning()
+      console.error(e)
+    }
+    saving()
+  }, [updateAccount])
+
+  const disabled = useCallback(async (id, status) => {
+    const saving = loadingAlert(status ? "Desactivando cuenta" : "Activando cuenta", 0)
+    try {
+      await disabledAccount({ variables: { id, disabled: status } })
+      success(status ? "Cuenta desactivada" : "Cuenta activada")
+    } catch (e) {
+      warning()
+      console.error(e)
+    }
+    saving()
+  }, [disabledAccount])
+
   const injectActions = useMemo(() => ({
     loading,
     error,
     data,
     save,
-    recovery
+    recovery,
+    update,
+    disabled
   }), [loading, data])
 
   return (
