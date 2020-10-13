@@ -6,8 +6,8 @@ import {
   preventionLevelTypes
 } from "../../../helpers/selectOptions/implementer/submission"
 import {
-  projectStatusOptions
-} from "../../../helpers/selectOptions/shared/project-status"
+  submissionStatusOptions
+} from "../../../helpers/selectOptions/shared/submission-status"
 import {
   getReadableValue
 } from "../../../helpers/selectOptions/getReadableValue"
@@ -36,8 +36,8 @@ function SummaryBody({ data, admin, extra }) {
           {implementer?.name}
         </Descriptions.Item>
       }
-      <Descriptions.Item span={6}>
-        <StatusTag options={projectStatusOptions} value={status} />
+      <Descriptions.Item span={5}>
+        <StatusTag options={submissionStatusOptions} value={status} />
       </Descriptions.Item>
       <Descriptions.Item label="Nivel de prevención">
         {
