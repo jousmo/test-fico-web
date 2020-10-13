@@ -1,7 +1,7 @@
 import { Button, Menu, Dropdown } from "antd"
 import { EllipsisOutlined } from "@ant-design/icons"
 
-export function ActionButton({onRecovery, onEdit, onDelete, role, ...props}) {
+export function ActionButton({onRecovery, onEdit, onDisabled, role, disabled, ...props}) {
   const menu = (
     <Menu>
       <Menu.Item onClick={onRecovery}>
@@ -12,8 +12,8 @@ export function ActionButton({onRecovery, onEdit, onDelete, role, ...props}) {
           Cambiar a implementadora
         </Menu.Item>
       )}
-      <Menu.Item onClick={onDelete}>
-        Desactivar cuenta
+      <Menu.Item onClick={onDisabled}>
+        {!disabled ? "Desactivar cuenta" : "Activar cuenta"}
       </Menu.Item>
     </Menu>
   )

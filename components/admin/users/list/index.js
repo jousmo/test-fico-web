@@ -8,7 +8,7 @@ import { AdminUserContext } from "../../../../contexts/admin/users"
 import "./styles.sass"
 
 function UsersList({ data: accounts }) {
-  const { save, recovery, update } = useContext(AdminUserContext)
+  const { save, recovery, update, disabled } = useContext(AdminUserContext)
 
   const [state, setState] = useState({
     id: null,
@@ -37,6 +37,10 @@ function UsersList({ data: accounts }) {
     setState({ ...state, openConfirm: !state.openConfirm, id })
   }
 
+  const onDisabled = (id, status) => {
+    disabled && disabled(id, status)
+  }
+
   const onOk = () => {
     setState({ ...state, openConfirm: !state.openConfirm })
     update && update(state?.id)
@@ -58,7 +62,7 @@ function UsersList({ data: accounts }) {
               onCancel={onToggleModal}/>
             <List
               className="fico users-list"
-              renderItem={i => <UserItem user={i} onRecovery={onRecovery} onEdit={onEdit}/>}
+              renderItem={i => <UserItem user={i} onRecovery={onRecovery} onEdit={onEdit} onDisabled={onDisabled}/>}
               itemLayout="vertical"
               dataSource={items}
               pagination={{pageSize: 10}} />

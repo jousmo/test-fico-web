@@ -8,6 +8,6 @@ export function warning(alert = "Hubo un error"){
   message.error(alert)
 }
 
-export function loadingAlert(alert = "Guardando..."){
-  return message.loading(alert)
+export function loadingAlert(alert = "Guardando...", duration = 3){
+  return message.loading({ content: alert, duration })
 }

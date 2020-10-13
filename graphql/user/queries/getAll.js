@@ -8,6 +8,7 @@ export const getAll = gql`
       email
       role
       displayName
+      disabled
     }
   }
 `
