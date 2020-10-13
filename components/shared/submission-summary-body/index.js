@@ -28,11 +28,11 @@ function SummaryBody({ data, admin, extra }) {
 
   return (
     <Descriptions
-      column={6}
+      column={5}
       size="small"
       title={<Typography.Title level={3}>{name}</Typography.Title>}>
       {admin &&
-        <Descriptions.Item label="Implementadora" span={6}>
+        <Descriptions.Item label="Implementadora" span={5}>
           {implementer?.name}
         </Descriptions.Item>
       }
@@ -58,7 +58,7 @@ function SummaryBody({ data, admin, extra }) {
         style={{ paddingLeft: "50px" }}>
         {numeral(budgeted).format("$0,0.00")}
       </Descriptions.Item>
-      <Descriptions.Item span={6}>
+      <Descriptions.Item span={5}>
         {description}
       </Descriptions.Item>
       {extra}
