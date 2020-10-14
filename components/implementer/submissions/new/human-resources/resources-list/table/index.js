@@ -20,7 +20,8 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
     hrState[index] = {
       salary: concept.humanResource[0]?.salary || 0,
       hasTax: concept.humanResource[0]?.contractType !== "EMPLOYEE",
-      tax: concept.humanResource[0]?.taxes
+      tax: concept.humanResource[0]?.taxes,
+      budgeted: concept.totalUnits * concept.unitCost,
     }
     return (
       concept.type === "HUMAN_RESOURCE" &&
@@ -33,6 +34,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
   }).filter(e => e !== false) || []
 
   const [state, setState] = useState(hrState)
+  const [totalState, setTotalState] = useState(false)
 
   const hasDuplicates = humanResources
     .map(r => r.position)
@@ -40,9 +42,19 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
 
   const onConceptsChange = (newHumanResources) => {
     const newConcepts = [...concepts]
+    let correctlyBudgeted = true
+
     newHumanResources?.forEach(humanResource => {
-      newConcepts[humanResource.key].humanResource[0] = formatValues(humanResource)
+      const formattedValues = formatValues(humanResource)
+      newConcepts[humanResource.key].humanResource[0] = formattedValues
+
+      const { taxes, salary } = formattedValues
+      const total = !isNaN(taxes) ? salary + ((taxes * salary) / 100) : salary
+      if (total !== state[humanResource.key].budgeted) {
+        correctlyBudgeted = false
+      }
     })
+    setTotalState(!correctlyBudgeted)
 
     onChange && onChange(newConcepts)
   }
@@ -98,6 +110,12 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
         <Alert
           banner
           message='El campo "Puesto" no debe repetirse.'
+          type="error" />
+      )}
+      {totalState && (
+        <Alert
+          banner
+          message='Los totales deben concordar con lo presupuestado.'
           type="error" />
       )}
       <Col>
