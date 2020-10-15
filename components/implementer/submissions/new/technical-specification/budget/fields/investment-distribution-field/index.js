@@ -34,7 +34,7 @@ export function InvestmentDistributionField({
     return numeral(percentage * total / 100).format("$0,0.00")
   }
 
-  if (allies?.length === 0) {
+  if (!allies || allies?.length === 0) {
     value.length = 2
   } else if(value?.length === 4 && allies?.[1] ===  undefined) {
     value.pop()
@@ -48,6 +48,7 @@ export function InvestmentDistributionField({
     onChange && onChange(newItems.map(el => ({ ...el, percentage: Number(el.percentage) || 0})))
     setState(percentage !== 100)
   }
+  console.log(value)
 
   return (
     <CompositeField
