@@ -48,7 +48,6 @@ export function InvestmentDistributionField({
     onChange && onChange(newItems.map(el => ({ ...el, percentage: Number(el.percentage) || 0})))
     setState(percentage !== 100)
   }
-  console.log(value)
 
   return (
     <CompositeField
