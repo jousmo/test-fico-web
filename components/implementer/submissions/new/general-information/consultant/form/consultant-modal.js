@@ -17,7 +17,7 @@ import {
 import { merge } from "lodash"
 import moment from "moment"
 
-export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComments, review, ...props }) {
+export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComments, review, readOnly, ...props }) {
   const [form] = Form.useForm()
   const [state, setState] = useState({
     hasSupport: false,
@@ -111,7 +111,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
       onOk={onOk}
       onCancel={onCancelModal}
       okText={`${edit ? "Guardar" : "Agregar"}`}
-      okButtonProps={{ disabled: review }}
+      okButtonProps={{ disabled: review || readOnly }}
       cancelText={review ? "Cerrar" : "Cancelar"}
       width={800}
       {...props}>
