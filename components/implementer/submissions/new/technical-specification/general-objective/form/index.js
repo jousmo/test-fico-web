@@ -1,8 +1,10 @@
 import { withForm } from "../../../../../../../helpers/withForm"
 import { Form } from "antd"
 import { IndicatorsField } from "../../../../indicators-field"
+import { useAuth } from "../../../../../../../contexts/auth"
 
 function GeneralObjectiveForm({ data, onChange, hiddenComments, review }) {
+  const { user } = useAuth()
   const onIndicatorsChange = newIndicators => {
     onChange && onChange({
       currentTarget: {
@@ -12,7 +14,8 @@ function GeneralObjectiveForm({ data, onChange, hiddenComments, review }) {
     })
   }
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = data?.Submission?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
 
   return (
     <Form

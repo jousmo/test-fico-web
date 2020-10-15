@@ -6,8 +6,10 @@ import { ConceptModal } from "./concept-modal"
 import { conceptTypes } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { renderInvestment, renderTotal } from "./helpers"
 import { CommentButton } from "../../../../../../admin/submissions/review"
+import { useAuth } from "../../../../../../../contexts/auth"
 
 function BudgetForm({ data, onChange, hiddenComments, review }) {
+  const { user } = useAuth()
   const [state, setState] = useState({ isModalOpen: false, edit: false })
   const { Submission } = data || {}
 
@@ -38,7 +40,8 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
 
   const cleanData = concept => _.omit(concept, ['index', 'budgeted'])
 
-  const readOnly = review || data?.Submission?.state === "PROJECT"
+  const readOnly = data?.Submission?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
 
   return (
     <>
@@ -56,6 +59,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
                 submission={Submission}
                 onCancel={onCancel}
                 onSave={onSave(addNew, replaceItemAtIndex)}
+                readOnly={readOnly}
                 review={readOnly}
                 edit={state.edit} />
             }

@@ -9,6 +9,7 @@ export function MonthlyDistributionField({
   value = [],
   months = [],
   unitCost = 0.0,
+  readOnly,
   setState,
   state
 }) {
@@ -78,6 +79,7 @@ export function MonthlyDistributionField({
                 <Input
                   type="number"
                   name="value"
+                  disabled={readOnly}
                   defaultValue={0}
                   value={item.value}
                   onChange={updateItem(index)}

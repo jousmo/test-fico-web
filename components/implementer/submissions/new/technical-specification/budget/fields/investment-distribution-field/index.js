@@ -8,6 +8,7 @@ export function InvestmentDistributionField({
   value = [],
   unitCost = 0.0,
   totalUnits = 0.0,
+  readOnly,
   state,
   setState
 }) {
@@ -70,6 +71,7 @@ export function InvestmentDistributionField({
                 <Input
                   type="number"
                   name="percentage"
+                  disabled={readOnly}
                   defaultValue={0}
                   value={item.percentage}
                   onChange={updateItem(index)}

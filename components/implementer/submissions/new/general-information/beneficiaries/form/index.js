@@ -4,8 +4,11 @@ import { CompositeField } from "../../../../../../shared"
 import { BeneficiaryModal } from "./beneficiaryModal"
 import { BeneficiaryItem } from "./beneficiaryItem"
 import { useState } from "react"
+import { useAuth } from "../../../../../../../contexts/auth"
 
 function BeneficiariesForm({ data, onChange, hiddenComments, review }) {
+  const { user } = useAuth()
+
   const [state, setState] = useState({
     isModalOpen: false,
     edit: undefined
@@ -37,7 +40,8 @@ function BeneficiariesForm({ data, onChange, hiddenComments, review }) {
     setState({ isModalOpen: true, edit: data })
   }
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = data?.Submission?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
 
   return (
     <Form layout="vertical">

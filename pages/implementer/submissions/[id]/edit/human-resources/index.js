@@ -23,9 +23,11 @@ import {
   setUpdateHumanResources
 } from "../../../../../../helpers/submissionFunctions/human-resources"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
+import { useAuth } from "../../../../../../contexts/auth"
 
 
 function HumanResources({ client, query }) {
+  const { user } = useAuth()
   const submissionId = query.id
 
   const [state, setState] = useState({
@@ -52,7 +54,8 @@ function HumanResources({ client, query }) {
   }, [state])
 
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = data?.Submission?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
   const hiddenComments = data?.Submission?.status === "CREATED"
 
   const injectActions = useMemo(() => ({

@@ -19,6 +19,7 @@ export function ConceptModal({
   onCancel,
   edit,
   submission,
+  readOnly,
   review,
   ...props
 }) {
@@ -122,6 +123,7 @@ export function ConceptModal({
               label="Descripción">
               <Input
                 id="name"
+                disabled={readOnly}
                 type="text" />
             </Form.Item>
           </Col>
@@ -134,7 +136,7 @@ export function ConceptModal({
               <SelectField
                 id="region"
                 name="region"
-                disabled={submission?.township !== "Zona centro sur"}
+                disabled={submission?.township !== "Zona centro sur" || readOnly}
                 defaultValue={edit?.region}
                 options={implementer.submission.regions} />
             </Form.Item>
@@ -148,6 +150,7 @@ export function ConceptModal({
               <SelectField
                 id="type"
                 name="type"
+                disabled={readOnly}
                 defaultValue={edit?.type}
                 onChange={(value) => onTypeChange(value)}
                 options={implementer.submission.conceptTypes} />
@@ -160,7 +163,7 @@ export function ConceptModal({
               label="Unidad de medida">
               <Input
                 id="measurementUnit"
-                disabled={state.isUnitDisabled}
+                disabled={state.isUnitDisabled || readOnly}
                 defaultValue={edit?.measurementUnit}
                 type="text" />
             </Form.Item>
@@ -172,6 +175,7 @@ export function ConceptModal({
               label="Costo unitario">
               <Input
                 id="unitCost"
+                disabled={readOnly}
                 defaultValue={edit?.unitCost}
                 type="number"
                 prefix="$" />
@@ -184,6 +188,7 @@ export function ConceptModal({
               label="Total de unidades">
               <Input
                 id="totalUnits"
+                disabled={readOnly}
                 defaultValue={edit?.totalUnits}
                 type="number" />
             </Form.Item>
@@ -222,6 +227,7 @@ export function ConceptModal({
                 value={edit?.monthlyDistribution}
                 unitCost={state.unitCost}
                 months={projectMonths}
+                readOnly={readOnly}
                 state={unitsState}
                 setState={setUnitsState}/>
             </Form.Item>
@@ -242,6 +248,7 @@ export function ConceptModal({
                 value={edit?.investmentDistribution}
                 unitCost={state.unitCost}
                 totalUnits={state.totalUnits}
+                readOnly={readOnly}
                 state={investmentState}
                 setState={setInvestmentState}/>
             </Form.Item>
