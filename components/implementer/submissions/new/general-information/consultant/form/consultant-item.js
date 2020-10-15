@@ -58,11 +58,9 @@ export function ConsultantItem({ data, onEdit, onDelete, index, readOnly, review
         </Descriptions.Item>
       </Descriptions>
       {!readOnly && (
-        <>
-          {!review && <DeleteButton onClick={onDelete} style={{marginLeft: "8px"}} />}
-          <EditButton onClick={onEdit} />
-        </>
+        !review && <DeleteButton onClick={onDelete} style={{marginLeft: "8px"}} />
       )}
+      <EditButton onClick={onEdit} />
     </Card>
   )
 }
