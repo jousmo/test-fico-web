@@ -10,6 +10,7 @@ import { FieldLabel } from "../../../../../../shared"
 import {
   SpecificObjectiveText
 } from "../../../general-information/development-objectives/form/specific-objective-text"
+import { useAuth } from "../../../../../../../contexts/auth"
 
 export default function SpecificObjectiveForm({
   data,
@@ -19,6 +20,7 @@ export default function SpecificObjectiveForm({
   hiddenComments,
   review
 }) {
+  const { user } = useAuth()
   if(isLoading) {
     return <Section><Skeleton active /></Section>
   }
@@ -48,7 +50,8 @@ export default function SpecificObjectiveForm({
     onChange && onChange(newSpecificObjectives)
   }
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = data?.Submission?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
 
   return (
     <>
