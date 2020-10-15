@@ -136,6 +136,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               <Input.TextArea
                 id="description"
                 name="description"
+                disabled={readOnly}
                 autoSize={{minRows: 3}} />
             </Form.Item>
           </Col>
@@ -155,6 +156,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               <Input
                 id="commercialName"
                 name="commercialName"
+                disabled={readOnly}
                 type="text" />
             </Form.Item>
           </Col>
@@ -174,6 +176,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               <Input
                 id="commercialAddress"
                 name="commercialAddress"
+                disabled={readOnly}
                 type="text" />
             </Form.Item>
           </Col>
@@ -193,6 +196,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               <Input
                 id="contactName"
                 name="contactName"
+                disabled={readOnly}
                 type="text" />
             </Form.Item>
           </Col>
@@ -212,6 +216,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               <Input
                 id="phone"
                 name="phone"
+                disabled={readOnly}
                 type="text" />
             </Form.Item>
           </Col>
@@ -231,6 +236,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               <Input
                 id="rfc"
                 name="rfc"
+                disabled={readOnly}
                 type="text" />
             </Form.Item>
           </Col>
@@ -250,6 +256,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               <Input
                 id="fiscalAddress"
                 name="fiscalAddress"
+                disabled={readOnly}
                 type="text" />
             </Form.Item>
           </Col>
@@ -270,6 +277,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               <RadioField
                 id="fiscalPersonType"
                 name="fiscalPersonType"
+                disabled={readOnly}
                 options={selectOptions.implementer.submission
                   .fiscalPersonTypes} />
             </Form.Item>
@@ -289,6 +297,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               }>
               <UploadTooltip
                 body={getTooltipBody()}
+                disabled={readOnly}
                 fileList={toFileList(edit?.documents) || []}
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
@@ -313,6 +322,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
               <RadioField
                 id="hadReceivedSupports"
                 name="hadReceivedSupports"
+                disabled={readOnly}
                 onChange={(v) =>
                   setState({ ...state, hasSupport: getSelectValue(v) })
                 }
@@ -327,6 +337,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
                 label="Agrega los apoyos que has recibido por parte de FICOSEC">
                 <CompositeField
                   onClickAdd={onAddSupport}
+                  isAddDisabled={readOnly}
                   addLabel="Agregar apoyo">
                   {({ items, updateItem, removeItem }) =>
                     <div>
@@ -342,6 +353,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
                               <Input
                                 id="name"
                                 name="name"
+                                disabled={readOnly}
                                 defaultValue={item.name}
                                 onBlur={updateItem(index)}
                                 type="text" />
@@ -354,6 +366,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
                               <DateField
                                 id="receivedAt"
                                 name="receivedAt"
+                                disabled={readOnly}
                                 disabledDate={date => date && (date < moment(limitDates[0]) || date > moment(limitDates[1]))}
                                 defaultValue={item.receivedAt}
                                 onChange={updateItem(index)}
@@ -371,9 +384,12 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
                                 addonBefore="$"
                                 id="amount"
                                 name="amount"
+                                disabled={readOnly}
                                 onBlur={updateItem(index)}
                                 defaultValue={item.amount} />
-                              <DeleteButton onClick={removeItem(index)} />
+                              {!readOnly &&
+                                <DeleteButton onClick={removeItem(index)} />
+                              }
                             </Form.Item>
                           </Col>
                         </Row>
