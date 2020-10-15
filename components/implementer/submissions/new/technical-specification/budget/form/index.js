@@ -59,6 +59,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
                 submission={Submission}
                 onCancel={onCancel}
                 onSave={onSave(addNew, replaceItemAtIndex)}
+                readOnly={readOnly}
                 review={readOnly}
                 edit={state.edit} />
             }
