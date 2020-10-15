@@ -12,8 +12,11 @@ import {
   contractTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { HumanResourcesColumns } from "./form-columns"
+import { useAuth } from "../../../../../../../contexts/auth"
 
 function HumanResourcesTable({ data, onChange, hiddenComments }) {
+  const { user } = useAuth()
+
   const hrState = {}
   const concepts = data?.Submission?.concepts?.map(({ budgeted, ...concept }) => concept) || []
   const humanResources = concepts?.map((concept, index) => {
@@ -58,7 +61,8 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
     return humanResource
   }
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = data?.Submission?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
 
   const onDoneFile = (index, files, onFilesChange) => {
     const documents = files?.map(el => {
