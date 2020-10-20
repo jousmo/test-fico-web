@@ -89,7 +89,8 @@ export function IndicatorModal({
                   Título del indicador
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="title"
                 type="text" />
             </Form.Item>
@@ -107,7 +108,8 @@ export function IndicatorModal({
                   Descripción
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="description"
                 type="text" />
             </Form.Item>
@@ -125,7 +127,8 @@ export function IndicatorModal({
                   Metodología
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="methodology"
                 type="text" />
             </Form.Item>
@@ -143,7 +146,8 @@ export function IndicatorModal({
                   Fórmula
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="formula"
                 type="text" />
             </Form.Item>
