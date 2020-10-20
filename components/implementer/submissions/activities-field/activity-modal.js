@@ -78,7 +78,8 @@ export function ActivityModal({
                   Título de la actividad
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="title"
                 type="text" />
             </Form.Item>
@@ -96,7 +97,8 @@ export function ActivityModal({
                   Descripción de indicador
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="description"
                 type="text" />
             </Form.Item>
@@ -114,7 +116,8 @@ export function ActivityModal({
                   Responsable
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="responsible"
                 type="text" />
             </Form.Item>
@@ -132,7 +135,8 @@ export function ActivityModal({
                   Metodología
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="methodology"
                 type="text" />
             </Form.Item>
@@ -150,7 +154,8 @@ export function ActivityModal({
                   Fórmula
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="formula"
                 type="text" />
             </Form.Item>
@@ -222,7 +227,8 @@ export function ActivityModal({
                   Lugar de intervención
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="place"
                 type="text" />
             </Form.Item>
