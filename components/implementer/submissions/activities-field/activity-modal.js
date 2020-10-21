@@ -1,11 +1,14 @@
 import { Modal, Form, Row, Col, Input } from "antd"
 import {
   FieldLabel,
+  SelectField,
   MultipleTextField,
   MultipleDateRangeField
 } from "../../../shared"
 import { merge } from "lodash"
 import { useEffect } from "react"
+import { getSelectValue } from "../../../../helpers"
+import { verificationTypes } from "../../../../helpers/selectOptions/implementer/submission"
 
 export function ActivityModal({
   activityType,
@@ -172,10 +175,13 @@ export function ActivityModal({
                   index: commentIndex}}>
                   Medio de verificación
                 </FieldLabel>
-              }>
-              <Input
+              }
+              getValueFromEvent={getSelectValue}>
+              <SelectField
                 id="meansOfVerification"
-                type="text" />
+                filterOption={(value, option) => option.children.toLowerCase().includes(value.toLowerCase())}
+                showSearch
+                options={verificationTypes} />
             </Form.Item>
           </Col>
           <Col span={12}>
