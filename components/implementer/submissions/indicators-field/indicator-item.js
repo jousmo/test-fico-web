@@ -1,5 +1,9 @@
 import { Card, Typography } from "antd"
 import { EditButton, DeleteButton } from "../../../shared"
+import {
+  implementer,
+  getReadableValue
+} from "../../../../helpers/selectOptions"
 
 export function IndicatorItem({ data, onDelete, onEdit, readOnly, review }) {
   const {
@@ -12,6 +16,8 @@ export function IndicatorItem({ data, onDelete, onEdit, readOnly, review }) {
     meansOfVerification = "N/A",
     key
   } = data
+
+  const { submission: { verificationTypes }} = implementer
 
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
@@ -38,7 +44,7 @@ export function IndicatorItem({ data, onDelete, onEdit, readOnly, review }) {
       <Typography.Text>{formula || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
-      <Typography.Text>{meansOfVerification || "N/A"}</Typography.Text>
+      <Typography.Text>{getReadableValue(verificationTypes, meansOfVerification) || "N/A"}</Typography.Text>
       {!readOnly && (
         <>
           {!review &&
