@@ -9,5 +9,6 @@ export const conceptTypes = [
   { label: "Materiales y suministros", value: "SUPPLIES" },
   { label: "Promoción y publicidad", value: "MARKETING" },
   { label: "Recurso humano", value: "HUMAN_RESOURCE" },
+  { label: "RH gasto administrativo", value: "ADMINISTRATIVE_HUMAN_RESOURCE" },
   { label: "Seguimiento y evaluación", value: "MONITORING" }
 ]
