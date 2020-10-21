@@ -7,7 +7,8 @@ import {
 } from "../../../shared"
 import { getSelectValue } from "../../../../helpers/getSelectValue"
 import {
-  measurementPeriodicityTypes
+  measurementPeriodicityTypes,
+  verificationTypes
 } from "../../../../helpers/selectOptions/implementer/submission"
 import { merge } from "lodash"
 import { useEffect } from "react"
@@ -164,10 +165,13 @@ export function IndicatorModal({
                   index: commentIndex}}>
                   Medio de verificación
                 </FieldLabel>
-              }>
-              <Input
+              }
+              getValueFromEvent={getSelectValue}>
+              <SelectField
                 id="meansOfVerification"
-                type="text" />
+                filterOption={(value, option) => option.children.toLowerCase().includes(value.toLowerCase())}
+                showSearch
+                options={verificationTypes} />
             </Form.Item>
           </Col>
           <Col span={12}>
