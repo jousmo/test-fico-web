@@ -27,7 +27,10 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
       budgeted: concept.totalUnits * concept.unitCost,
     }
     return (
-      concept.type === "HUMAN_RESOURCE" &&
+      [
+        "HUMAN_RESOURCE",
+        "ADMINISTRATIVE_HUMAN_RESOURCE"
+      ].includes(concept.type) &&
       {
         key: index,
         position: concept.name,
