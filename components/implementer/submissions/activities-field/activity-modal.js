@@ -191,7 +191,8 @@ export function ActivityModal({
                   Línea base
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="baseline"
                 type="text" />
             </Form.Item>
@@ -209,7 +210,8 @@ export function ActivityModal({
                   Meta
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="goal"
                 type="text" />
             </Form.Item>

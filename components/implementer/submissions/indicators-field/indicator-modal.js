@@ -183,7 +183,8 @@ export function IndicatorModal({
                   Línea base
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="baseline"
                 type="text" />
             </Form.Item>
@@ -201,7 +202,8 @@ export function IndicatorModal({
                   Meta
                 </FieldLabel>
               }>
-              <Input
+              <Input.TextArea
+                autoSize
                 id="goal"
                 type="text" />
             </Form.Item>
