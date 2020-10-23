@@ -4,6 +4,10 @@ import * as Moment from "moment"
 import { extendMoment } from "moment-range"
 const moment = extendMoment(Moment)
 moment.locale("es")
+import {
+  implementer,
+  getReadableValue
+} from "../../../../helpers/selectOptions"
 
 export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
   const {
@@ -32,6 +36,8 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
     formattedMonths = `| ${ranges.join(" | ")} |`
   }
 
+  const { submission: { verificationTypes }} = implementer
+
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
       <Typography.Text strong>
@@ -51,7 +57,7 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
       <Typography.Text>{goal || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
-      <Typography.Text>{meansOfVerification || "N/A"}</Typography.Text>
+      <Typography.Text>{getReadableValue(verificationTypes, meansOfVerification) || "N/A"}</Typography.Text>
       <br />
       <Typography.Text strong>Lugar de intervención: </Typography.Text>
       <Typography.Text>{place || "N/A"}</Typography.Text>
