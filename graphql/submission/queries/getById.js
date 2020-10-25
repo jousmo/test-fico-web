@@ -293,7 +293,7 @@ export const getById = gql`
         createdAt
       }
       closureDescription
-      closureDocument{
+      closureDocuments{
         id
         url
         name
