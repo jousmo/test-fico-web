@@ -55,6 +55,14 @@ function ProjectClosureForm({ data, save }) {
     form.setFieldsValue({ closureDocument: null })
   }
 
+  const handleClick = async () => {
+    if (role === "admin") {
+      setState(true)
+    } else {
+      await onCloseProject()
+    }
+  }
+
   return (
     <>
       <ConfirmModal
@@ -114,8 +122,8 @@ function ProjectClosureForm({ data, save }) {
               <Button
                 danger
                 disabled={readOnly}
-                onClick={() => setState(true)}>
-                Concluir proyecto
+                onClick={handleClick}>
+                {role === "admin" ? "Concluir proyecto" : "Guardar"}
               </Button>
             </Form.Item>
           </Col>
