@@ -84,7 +84,9 @@ function ProjectClosureForm({ data, save }) {
           <Col span={24}>
             <Typography.Text>
               Descarga la ficha técnica y envíalo al área juridica, recaba las firmas
-              y adjunta los documentos de cierre.
+              y adjunta los documentos de cierre (Informe final, resultados de la evaluación
+              externa, resultados del proyecto, conclusiones generales y lecciones aprendidas,
+              y encuesta de satisfacción).
             </Typography.Text>
           </Col>
           <Col>
