@@ -41,14 +41,14 @@ export const generalInformationExport = async data => {
         data?.applyingCall,
         data?.township,
         data?.region,
-        data?.allies.join(','),
+        data?.allies?.join(','),
         data?.implementationPlace,
         data?.responsible,
         data?.startDate,
         data?.endDate,
         data?.strategicAxis,
-        data?.preventionLevel.join(','),
-        data?.scope.join(','),
+        data?.preventionLevel?.join(','),
+        data?.scope?.join(','),
         data?.issueDescription,
         data?.description,
         data?.justification
@@ -123,7 +123,7 @@ export const generalInformationExport = async data => {
     comments,
     ...el
   }) => {
-    el.age = el.age.join(' | ')
+    el?.age = el?.age?.join(' | ')
     return Object.values(el)
   })
 
