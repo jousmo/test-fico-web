@@ -145,6 +145,6 @@ export const generalInformationExport = async data => {
     rows: beneficiaries
   })
 
-  worksheet.getCell('A3')
-
+  const buf = await workbook.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), "export.xlsx")
 }

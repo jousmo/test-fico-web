@@ -34,25 +34,25 @@ function ProjectClosureForm({ data, save }) {
 
   const readOnly = data?.status === "ON_CLOSURE"
 
-  const closureDocuments = []
-  if (data?.closureDocuments){
-    const { id: uid, ...document } = data?.closureDocuments
-    closureDocuments.push({ uid, ...document })
+  const closureDocument = []
+  if (data?.closureDocument){
+    const { id: uid, ...document } = data?.closureDocument
+    closureDocument.push({ uid, ...document })
   }
 
   const onDoneFile = async file => {
     const { name, url } = file[0]
-    const closureDocuments = { name, url }
+    const closureDocument = { name, url }
 
     try {
-      await form.setFieldsValue({ closureDocuments })
+      await form.setFieldsValue({ closureDocument })
     } catch (err) {
       console.error(err)
     }
   }
 
   const onRemoveFile = () => {
-    form.setFieldsValue({ closureDocuments: null })
+    form.setFieldsValue({ closureDocument: null })
   }
 
   return (
@@ -85,10 +85,10 @@ function ProjectClosureForm({ data, save }) {
           </Col>
           <Col>
             <Form.Item
-              name="closureDocuments">
+              name="closureDocument">
               <UploadButtonForm
                 disabled={readOnly}
-                fileList={closureDocuments}
+                fileList={closureDocument}
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
                 maxFile={1}
