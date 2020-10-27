@@ -3,15 +3,19 @@ import { saveAs } from "file-saver"
 
 export const generalInformationExport = async data => {
   const workbook = new ExcelJS.Workbook()
-  const worksheet = workbook.addWorksheet("My Sheet")
+  let worksheet = workbook.addWorksheet("Información General")
 
-  const title = worksheet.getCell("A1")
-  title.value = "Información General"
-  title.font = { size: 20, bold: true }
+  let titleInfo = worksheet.getCell("A1")
+  titleInfo.value = "Detalles del proyecto"
+  titleInfo.font = { size: 20, bold: true }
 
   worksheet.addTable({
     name: "MyTable",
     ref: "A3",
+    headerRow: true,
+    style: {
+      showRowStripes: true,
+    },
     columns: [
       { name: "Tipo de solicitud" },
       { name: "Convocatoria a la que aplica" },
@@ -52,6 +56,95 @@ export const generalInformationExport = async data => {
     ]
   })
 
-  const buf = await workbook.xlsx.writeBuffer()
-  saveAs(new Blob([buf]), "export.xlsx")
+  // titleInfo = worksheet.getCell("A6")
+  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+  titleInfo.value = "Consultores"
+  titleInfo.font = { size: 20, bold: true }
+
+  const consultants = data?.consultants.map(({
+    id,
+    supports,
+    documents,
+    comments,
+    ...item
+  }) => Object.values(item))
+
+  worksheet.addTable({
+    name: "MyTable2",
+    ref: `A${worksheet?.lastRow?._number + 2}`,
+    headerRow: true,
+    style: {
+      showRowStripes: true
+    },
+    columns: [
+      { name: "Descripción" },
+      { name: "Nombre comercial" },
+      { name: "Dirección comercial"},
+      { name: "Contacto responsable" },
+      { name: "Número de teléfono" },
+      { name: "Rfc"},
+      { name: "Dirección fiscal" },
+      { name: "Tipo de persona" },
+      { name: "Apoyos"}
+    ],
+    rows: consultants
+  })
+
+  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+  titleInfo.value = "Objetivos"
+  titleInfo.font = { size: 20, bold: true }
+
+  const objectives = []
+  data?.specificObjectives?.forEach(el => {
+    objectives.push([data?.developmentObjective, data?.generalObjective, el?.description])
+  })
+
+  worksheet.addTable({
+    name: "MyTable3",
+    ref: `A${worksheet?.lastRow?._number + 2}`,
+    headerRow: true,
+    style: {
+      showRowStripes: true
+    },
+    columns: [
+      { name: "Objetivo de desarrollo" },
+      { name: "Objetivo general" },
+      { name: "Objetivos específicos" }
+    ],
+    rows: objectives
+  })
+
+  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+  titleInfo.value = "Beneficiarios"
+  titleInfo.font = { size: 20, bold: true }
+
+  const beneficiaries = data?.beneficiaries?.map(({
+    id,
+    comments,
+    ...el
+  }) => {
+    el.age = el.age.join(' | ')
+    return Object.values(el)
+  })
+
+  worksheet.addTable({
+    name: "MyTable4",
+    ref: `A${worksheet?.lastRow?._number + 2}`,
+    headerRow: true,
+    style: {
+      showRowStripes: true
+    },
+    columns: [
+      { name: "Descripción" },
+      { name: "Cantidad" },
+      { name: "Sexo" },
+      { name: "Nivel de educación" },
+      { name: "Edad" },
+      { name: "Prevención" }
+    ],
+    rows: beneficiaries
+  })
+
+  worksheet.getCell('A3')
+
 }
