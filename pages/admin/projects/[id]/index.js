@@ -5,7 +5,8 @@ import {
   ProjectSummary,
   SignedAgreement,
   Calendarization,
-  Government
+  Government,
+  Attachments
 } from "../../../../components/admin/projects/show"
 import {
   GeneralInformation
@@ -70,6 +71,7 @@ function Project({ client, query }) {
         <Layout subheader={<ProjectSummary type="admin" />}>
           <Government />
           <GeneralInformation />
+          <Attachments />
           <SignedAgreement />
           <Calendarization />
           <ProjectMonitoring />
