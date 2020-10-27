@@ -123,7 +123,7 @@ export const generalInformationExport = async data => {
     comments,
     ...el
   }) => {
-    el?.age = el?.age?.join(' | ')
+    el.age = el?.age?.join(' | ')
     return Object.values(el)
   })
 
