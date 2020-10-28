@@ -56,18 +56,19 @@ export const generalInformationExport = async data => {
     ]
   })
 
-  // titleInfo = worksheet.getCell("A6")
   titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
   titleInfo.value = "Consultores"
   titleInfo.font = { size: 20, bold: true }
 
-  const consultants = data?.consultants.map(({
+  let consultants = data?.consultants.map(({
     id,
     supports,
     documents,
     comments,
     ...item
   }) => Object.values(item))
+
+  consultants = consultants?.length ? consultants : [[]]
 
   worksheet.addTable({
     name: "MyTable2",
@@ -94,10 +95,12 @@ export const generalInformationExport = async data => {
   titleInfo.value = "Objetivos"
   titleInfo.font = { size: 20, bold: true }
 
-  const objectives = []
+  let objectives = []
   data?.specificObjectives?.forEach(el => {
     objectives.push([data?.developmentObjective, data?.generalObjective, el?.description])
   })
+
+  objectives = objectives.length ? objectives : [[data?.developmentObjective, data?.generalObjective, ""]]
 
   worksheet.addTable({
     name: "MyTable3",
@@ -118,7 +121,7 @@ export const generalInformationExport = async data => {
   titleInfo.value = "Beneficiarios"
   titleInfo.font = { size: 20, bold: true }
 
-  const beneficiaries = data?.beneficiaries?.map(({
+  let beneficiaries = data?.beneficiaries?.map(({
     id,
     comments,
     ...el
@@ -126,6 +129,8 @@ export const generalInformationExport = async data => {
     el.age = el?.age?.join(' | ')
     return Object.values(el)
   })
+
+  beneficiaries = beneficiaries?.length ? beneficiaries : [[]]
 
   worksheet.addTable({
     name: "MyTable4",
