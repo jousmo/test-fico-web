@@ -153,3 +153,15 @@ export const generalInformationExport = async data => {
   const buf = await workbook.xlsx.writeBuffer()
   saveAs(new Blob([buf]), "export.xlsx")
 }
+
+export const technicalSpecificationExport = async data => {
+  const workbook = new ExcelJS.Workbook()
+  let worksheet = workbook.addWorksheet("Ficha Tecnica")
+
+  let titleInfo = worksheet.getCell("A1")
+  titleInfo.value = "Objetivo de desarrollo"
+  titleInfo.font = { size: 20, bold: true }
+
+  const buf = await workbook.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), "export.xlsx")
+}

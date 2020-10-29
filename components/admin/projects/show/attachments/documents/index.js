@@ -1,12 +1,13 @@
 import { Popover, Space } from "antd"
 import { DownloadButton } from "../../../../../shared"
 import { withForm } from "../../../../../../helpers/withForm"
-import { generalInformationExport } from "./helpers"
+import { generalInformationExport, technicalSpecificationExport } from "./helpers"
 
 function ProjectAttachments({ data }) {
   const attachments = (
     <Space direction="vertical">
       <a onClick={() => generalInformationExport(data)}>Información general</a>
+      <a onClick={() => technicalSpecificationExport(data)}>Ficha Tecnica</a>
     </Space>
   )
 
