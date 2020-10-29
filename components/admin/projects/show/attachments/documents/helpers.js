@@ -10,7 +10,7 @@ export const generalInformationExport = async data => {
   titleInfo.font = { size: 20, bold: true }
 
   worksheet.addTable({
-    name: "MyTable",
+    name: "General",
     ref: "A3",
     headerRow: true,
     style: {
@@ -71,7 +71,7 @@ export const generalInformationExport = async data => {
   consultants = consultants?.length ? consultants : [[]]
 
   worksheet.addTable({
-    name: "MyTable2",
+    name: "General2",
     ref: `A${worksheet?.lastRow?._number + 2}`,
     headerRow: true,
     style: {
@@ -103,7 +103,7 @@ export const generalInformationExport = async data => {
   objectives = objectives.length ? objectives : [[data?.developmentObjective, data?.generalObjective, ""]]
 
   worksheet.addTable({
-    name: "MyTable3",
+    name: "General3",
     ref: `A${worksheet?.lastRow?._number + 2}`,
     headerRow: true,
     style: {
@@ -133,7 +133,7 @@ export const generalInformationExport = async data => {
   beneficiaries = beneficiaries?.length ? beneficiaries : [[]]
 
   worksheet.addTable({
-    name: "MyTable4",
+    name: "General4",
     ref: `A${worksheet?.lastRow?._number + 2}`,
     headerRow: true,
     style: {
@@ -151,7 +151,7 @@ export const generalInformationExport = async data => {
   })
 
   const buf = await workbook.xlsx.writeBuffer()
-  saveAs(new Blob([buf]), "export.xlsx")
+  saveAs(new Blob([buf]), "General.xlsx")
 }
 
 export const technicalSpecificationExport = async data => {
@@ -162,6 +162,88 @@ export const technicalSpecificationExport = async data => {
   titleInfo.value = "Objetivo de desarrollo"
   titleInfo.font = { size: 20, bold: true }
 
+  titleInfo = worksheet.getCell("A3")
+  titleInfo.value = data?.developmentObjective
+  titleInfo.font = { size: 16, bold: true }
+
+  let developmentObjectiveIndicators = data?.developmentObjectiveIndicators?.map(({
+    id,
+    comments,
+    ...el
+  }) => {
+    el.products = el?.products?.join(' | ')
+    return Object.values(el)
+  })
+
+  developmentObjectiveIndicators = developmentObjectiveIndicators?.length ? developmentObjectiveIndicators : [[]]
+
+  worksheet.addTable({
+    name: "FichaTecnica",
+    ref: `A${worksheet?.lastRow?._number + 2}`,
+    headerRow: true,
+    style: {
+      showRowStripes: true,
+    },
+    columns: [
+      { name: "Tipo" },
+      { name: "Tipo del indicador" },
+      { name: "Descripción" },
+      { name: "Metodología" },
+      { name: "Fórmula" },
+      { name: "Medio de verificación" },
+      { name: "Línea base" },
+      { name: "Meta" },
+      { name: "Fecha de inicio" },
+      { name: "Fecha de fin" },
+      { name: "Periodicidad de medición" },
+      { name: "Productos" }
+    ],
+    rows: developmentObjectiveIndicators
+  })
+
+  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+  titleInfo.value = "Objetivo Generales"
+  titleInfo.font = { size: 20, bold: true }
+
+  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+  titleInfo.value = data?.generalObjective
+  titleInfo.font = { size: 16, bold: true }
+
+  let generalObjectiveIndicators = data?.generalObjectiveIndicators?.map(({
+    id,
+    comments,
+    ...el
+  }) => {
+    el.products = el?.products?.join(' | ')
+    return Object.values(el)
+  })
+
+  generalObjectiveIndicators = generalObjectiveIndicators?.length ? generalObjectiveIndicators : [[]]
+
+  worksheet.addTable({
+    name: "FichaTecnica2",
+    ref: `A${worksheet?.lastRow?._number + 2}`,
+    headerRow: true,
+    style: {
+      showRowStripes: true,
+    },
+    columns: [
+      { name: "Tipo" },
+      { name: "Tipo del indicador" },
+      { name: "Descripción" },
+      { name: "Metodología" },
+      { name: "Fórmula" },
+      { name: "Medio de verificación" },
+      { name: "Línea base" },
+      { name: "Meta" },
+      { name: "Fecha de inicio" },
+      { name: "Fecha de fin" },
+      { name: "Periodicidad de medición" },
+      { name: "Productos" }
+    ],
+    rows: generalObjectiveIndicators
+  })
+
   const buf = await workbook.xlsx.writeBuffer()
-  saveAs(new Blob([buf]), "export.xlsx")
+  saveAs(new Blob([buf]), "Tecnica.xlsx")
 }
