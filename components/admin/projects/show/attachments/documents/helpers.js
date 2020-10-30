@@ -349,3 +349,47 @@ export const technicalSpecificationExport = async data => {
   const buf = await workbook.xlsx.writeBuffer()
   saveAs(new Blob([buf]), "Tecnica.xlsx")
 }
+
+export const budgetExport = async data => {
+  const workbook = new ExcelJS.Workbook()
+  let worksheet = workbook.addWorksheet("Presupuesto")
+
+  let titleInfo = worksheet.getCell("A1")
+  titleInfo.value = "Presupuesto"
+  titleInfo.font = { size: 20, bold: true }
+
+  let concepts = data?.concepts?.map(({
+    id,
+    monthlyDistribution,
+    investmentDistribution,
+    humanResource,
+    comments,
+    ...el
+  }) => {
+    return Object.values(el)
+  })
+
+  concepts = concepts?.length ? concepts : [[]]
+
+  worksheet.addTable({
+    name: "Presupuesto",
+    ref: `A${worksheet?.lastRow?._number + 2}`,
+    headerRow: true,
+    style: {
+      showRowStripes: true,
+    },
+    columns: [
+      { name: "Concepto" },
+      { name: "Región" },
+      { name: "Tipo de gasto" },
+      { name: "Unidad de medida" },
+      { name: "Costo unitario" },
+      { name: "Total de unidades" },
+      { name: "Costo total" },
+    ],
+    rows: concepts
+  })
+
+  const buf = await workbook.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), "Presupuesto.xlsx")
+}
