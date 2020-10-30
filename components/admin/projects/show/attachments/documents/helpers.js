@@ -315,7 +315,7 @@ export const technicalSpecificationExport = async data => {
     }) => {
       el.inputs = el?.inputs?.join(' | ')
       el.products = el?.products?.join(' | ')
-      el.months = el?.months.reduce((prev, next) => prev.concat(next.join(',')), []).join(' | ')
+      el.months = el?.months?.reduce((prev, next) => prev.concat(next.join(',')), []).join(' | ')
       return Object.values(el)
     })
 
