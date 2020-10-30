@@ -22,7 +22,11 @@ function ProjectClosureForm({ data, save }) {
       await form.validateFields()
 
       const values = await form.getFieldsValue()
-      values.status = "ON_CLOSURE"
+
+      if (role === "admin") {
+        values.status = "ON_CLOSURE"
+      }
+
       save(values)
       setState(false)
     }
@@ -34,25 +38,32 @@ function ProjectClosureForm({ data, save }) {
 
   const readOnly = data?.status === "ON_CLOSURE"
 
-  const closureDocument = []
-  if (data?.closureDocument){
-    const { id: uid, ...document } = data?.closureDocument
-    closureDocument.push({ uid, ...document })
-  }
+  const closureDocuments = data?.closureDocuments?.map(doc => ({ ...doc, uid: doc.id }))
 
-  const onDoneFile = async file => {
-    const { name, url } = file[0]
-    const closureDocument = { name, url }
+  const onDoneFile = async files => {
+    const closureDocuments = files?.map(el => {
+      return { id: el.id, name: el.name, url: el.url, type: "CLOSURE" }
+    })
 
     try {
-      await form.setFieldsValue({ closureDocument })
+      await form.setFieldsValue({ closureDocuments })
     } catch (err) {
       console.error(err)
     }
   }
 
-  const onRemoveFile = () => {
-    form.setFieldsValue({ closureDocument: null })
+  const onRemoveFile = async ({ url }) => {
+    const oldDocuments = [...data?.closureDocuments]
+    const closureDocuments = oldDocuments.filter(document => document.url !== url)
+    await form.setFieldsValue({ closureDocuments })
+  }
+
+  const handleClick = async () => {
+    if (role === "admin") {
+      setState(true)
+    } else {
+      await onCloseProject()
+    }
   }
 
   return (
@@ -73,7 +84,9 @@ function ProjectClosureForm({ data, save }) {
           <Col span={24}>
             <Typography.Text>
               Descarga la ficha técnica y envíalo al área juridica, recaba las firmas
-              y adjunta el documento firmado aquí.
+              y adjunta los documentos de cierre (Informe final, resultados de la evaluación
+              externa, resultados del proyecto, conclusiones generales y lecciones aprendidas,
+              y encuesta de satisfacción).
             </Typography.Text>
           </Col>
           <Col>
@@ -85,15 +98,15 @@ function ProjectClosureForm({ data, save }) {
           </Col>
           <Col>
             <Form.Item
-              name="closureDocument">
+              name="closureDocuments">
               <UploadButtonForm
                 disabled={readOnly}
-                fileList={closureDocument}
+                fileList={closureDocuments}
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
-                maxFile={1}
+                maxFile={5}
                 accept={"application/pdf,text/plain"}>
-                Subir documento de cierre
+                Subir documentos de cierre
               </UploadButtonForm>
             </Form.Item>
           </Col>
@@ -114,8 +127,8 @@ function ProjectClosureForm({ data, save }) {
               <Button
                 danger
                 disabled={readOnly}
-                onClick={() => setState(true)}>
-                Concluir proyecto
+                onClick={handleClick}>
+                {role === "admin" ? "Concluir proyecto" : "Guardar"}
               </Button>
             </Form.Item>
           </Col>
