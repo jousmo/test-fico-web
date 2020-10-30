@@ -166,6 +166,10 @@ export const technicalSpecificationExport = async data => {
   titleInfo.value = data?.developmentObjective
   titleInfo.font = { size: 16, bold: true }
 
+  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+  titleInfo.value = "Indicadores"
+  titleInfo.font = { size: 14, bold: true }
+
   let developmentObjectiveIndicators = data?.developmentObjectiveIndicators?.map(({
     id,
     comments,
@@ -209,6 +213,10 @@ export const technicalSpecificationExport = async data => {
   titleInfo.value = data?.generalObjective
   titleInfo.font = { size: 16, bold: true }
 
+  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+  titleInfo.value = "Indicadores"
+  titleInfo.font = { size: 14, bold: true }
+
   let generalObjectiveIndicators = data?.generalObjectiveIndicators?.map(({
     id,
     comments,
@@ -242,6 +250,100 @@ export const technicalSpecificationExport = async data => {
       { name: "Productos" }
     ],
     rows: generalObjectiveIndicators
+  })
+
+  data?.specificObjectives?.forEach((specificObjectives, index) => {
+
+    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+    titleInfo.value = `Objetivo epecifico ${index + 1}`
+    titleInfo.font = { size: 20, bold: true }
+
+    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+    titleInfo.value = specificObjectives?.description
+    titleInfo.font = { size: 16, bold: true }
+
+    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+    titleInfo.value = "Indicadores"
+    titleInfo.font = { size: 14, bold: true }
+
+    let indicators = specificObjectives?.indicators.map(({
+      id,
+      comments,
+      orderIndex,
+      ...el
+    }) => {
+      el.products = el?.products?.join(' | ')
+      return Object.values(el)
+    })
+
+    indicators = indicators?.length ? indicators : [[]]
+
+    worksheet.addTable({
+      name: `Indicadores${index}`,
+      ref: `A${worksheet?.lastRow?._number + 2}`,
+      headerRow: true,
+      style: {
+        showRowStripes: true,
+      },
+      columns: [
+        { name: "Tipo" },
+        { name: "Tipo del indicador" },
+        { name: "Descripción" },
+        { name: "Metodología" },
+        { name: "Fórmula" },
+        { name: "Medio de verificación" },
+        { name: "Línea base" },
+        { name: "Meta" },
+        { name: "Fecha de inicio" },
+        { name: "Fecha de fin" },
+        { name: "Periodicidad de medición" },
+        { name: "Productos" }
+      ],
+      rows: indicators
+    })
+
+    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+    titleInfo.value = "Actividades"
+    titleInfo.font = { size: 14, bold: true }
+
+    let activities = specificObjectives?.activities.map(({
+      id,
+      comments,
+      orderIndex,
+      schedules,
+      ...el
+    }) => {
+      el.inputs = el?.inputs?.join(' | ')
+      el.products = el?.products?.join(' | ')
+      el.months = el?.months.reduce((prev, next) => prev.concat(next.join(',')), []).join(' | ')
+      return Object.values(el)
+    })
+
+    activities = activities?.length ? activities : [[]]
+
+    worksheet.addTable({
+      name: `Actividades${index}`,
+      ref: `A${worksheet?.lastRow?._number + 2}`,
+      headerRow: true,
+      style: {
+        showRowStripes: true,
+      },
+      columns: [
+        { name: "Tipo del indicador" },
+        { name: "Descripción" },
+        { name: "Responsable" },
+        { name: "Metodología" },
+        { name: "Fórmula" },
+        { name: "Medio de verificación" },
+        { name: "Línea base" },
+        { name: "Meta" },
+        { name: "Lugar de intervención" },
+        { name: "Meses de implementación" },
+        { name: "Insumos" },
+        { name: "Productos" }
+      ],
+      rows: activities
+    })
   })
 
   const buf = await workbook.xlsx.writeBuffer()
