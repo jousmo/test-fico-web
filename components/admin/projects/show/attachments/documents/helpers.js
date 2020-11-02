@@ -1,5 +1,21 @@
 import * as ExcelJS from "exceljs"
 import { saveAs } from "file-saver"
+import { extendMoment } from "moment-range"
+import Moment from "moment"
+import numeral from "numeral"
+const moment = extendMoment(Moment)
+moment.locale("es")
+
+const projectMonths = ({ startDate,  endDate }) => Array
+  .from(
+    moment
+      .range(moment(startDate), moment(endDate))
+      .by("month")
+  )
+  .map(r => r.format("MMMM YYYY"))
+
+const displayMonthTotal = (unitCost, value) =>
+  numeral(unitCost * Number(value || 0)).format("$0,0.00")
 
 export const generalInformationExport = async data => {
   const workbook = new ExcelJS.Workbook()
@@ -389,6 +405,61 @@ export const budgetExport = async data => {
     ],
     rows: concepts
   })
+
+  data?.concepts?.forEach((concept, index)=> {
+    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+    titleInfo.value = `Distribución mensual - ${concept?.name}`
+    titleInfo.font = { size: 20, bold: true }
+
+    const months = projectMonths(data)
+    const rowsMonths = months?.map((label, index) => {
+      const data = {
+        label,
+        value: concept?.monthlyDistribution?.[index],
+        total: displayMonthTotal(concept?.unitCost, concept?.monthlyDistribution?.[index])
+      }
+      return Object.values(data)
+    })
+
+    worksheet.addTable({
+      name: `Mensual${index}`,
+      ref: `A${worksheet?.lastRow?._number + 2}`,
+      headerRow: true,
+      style: {
+        showRowStripes: true,
+      },
+      columns: [
+        { name: "Mes" },
+        { name: "Unidades" },
+        { name: "Costo" }
+      ],
+      rows: rowsMonths
+    })
+
+    const columnsInvestment = []
+    const rowsInvestment = []
+    concept?.investmentDistribution?.forEach(el => {
+      columnsInvestment?.push({ name: el?.name })
+      rowsInvestment?.push(`${el?.percentage}%`)
+    })
+
+    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+    titleInfo.value = `Distribución de la inversión - ${concept?.name}`
+    titleInfo.font = { size: 20, bold: true }
+
+    worksheet.addTable({
+      name: `Inversion${index}`,
+      ref: `A${worksheet?.lastRow?._number + 2}`,
+      headerRow: true,
+      style: {
+        showRowStripes: true,
+      },
+      columns: columnsInvestment,
+      rows: [rowsInvestment]
+    })
+  })
+
+
 
   const buf = await workbook.xlsx.writeBuffer()
   saveAs(new Blob([buf]), "Presupuesto.xlsx")
