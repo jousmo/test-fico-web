@@ -12,8 +12,10 @@ import {
   scopeTypes,
   issueTypes,
   fiscalPersonTypes,
-  educationLevelTypes
+  educationLevelTypes,
+  measurementPeriodicityTypes
 } from "../../../../../../helpers/selectOptions/implementer/submission"
+import { capitalize } from "lodash"
 
 const projectMonths = ({ startDate,  endDate }) => Array
   .from(
@@ -40,11 +42,13 @@ const personTypesFiscal = type => fiscalPersonTypes.find(el => el.value === type
 
 const levelTypesEducation = type => educationLevelTypes.find(el => el.value === type)
 
+const periodicityTypesMeasurement = type => measurementPeriodicityTypes.find(el => el.value === type)
+
 const typeBooleans = type => [true].includes(type) ? "Si" : "No"
 
-const translateDate = date => {
+const translateDate = (date, format) => {
   if (!date) return ""
-  return moment(date).format("DD/MM/YYYY")
+  return moment(date).format(format)
 }
 
 export const generalInformationExport = async data => {
@@ -90,8 +94,8 @@ export const generalInformationExport = async data => {
         data?.allies?.join(','),
         data?.implementationPlace,
         data?.responsible,
-        translateDate(data?.startDate),
-        translateDate(data?.endDate),
+        translateDate(data?.startDate, "DD/MM/YYYY"),
+        translateDate(data?.endDate, "DD/MM/YYYY"),
         axisTypesStrategic(data?.strategicAxis)?.label,
         levelTypesPrevention(data?.preventionLevel?.join(','))?.label,
         typesScope(data?.scope?.join(','))?.label,
@@ -224,12 +228,14 @@ export const technicalSpecificationExport = async data => {
 
   let developmentObjectiveIndicators = data?.developmentObjectiveIndicators?.map(({
     id,
+    type,
     comments,
     ...el
   }) => {
-    el.startDate = translateDate(el?.startDate)
-    el.endDate = translateDate(el?.endDate)
+    el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
+    el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
     el.products = el?.products?.join(' | ')
+    el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
     return Object.values(el)
   })
 
@@ -243,7 +249,6 @@ export const technicalSpecificationExport = async data => {
       showRowStripes: true,
     },
     columns: [
-      { name: "Tipo" },
       { name: "Tipo del indicador" },
       { name: "Descripción" },
       { name: "Metodología" },
@@ -273,12 +278,14 @@ export const technicalSpecificationExport = async data => {
 
   let generalObjectiveIndicators = data?.generalObjectiveIndicators?.map(({
     id,
+    type,
     comments,
     ...el
   }) => {
-    el.startDate = translateDate(el?.startDate)
-    el.endDate = translateDate(el?.endDate)
+    el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
+    el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
     el.products = el?.products?.join(' | ')
+    el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
     return Object.values(el)
   })
 
@@ -292,7 +299,6 @@ export const technicalSpecificationExport = async data => {
       showRowStripes: true,
     },
     columns: [
-      { name: "Tipo" },
       { name: "Tipo del indicador" },
       { name: "Descripción" },
       { name: "Metodología" },
@@ -324,13 +330,15 @@ export const technicalSpecificationExport = async data => {
 
     let indicators = specificObjectives?.indicators.map(({
       id,
+      type,
       comments,
       orderIndex,
       ...el
     }) => {
-      el.startDate = translateDate(el?.startDate)
-      el.endDate = translateDate(el?.endDate)
+      el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
+      el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
       el.products = el?.products?.join(' | ')
+      el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
       return Object.values(el)
     })
 
@@ -344,7 +352,6 @@ export const technicalSpecificationExport = async data => {
         showRowStripes: true,
       },
       columns: [
-        { name: "Tipo" },
         { name: "Tipo del indicador" },
         { name: "Descripción" },
         { name: "Metodología" },
@@ -373,7 +380,11 @@ export const technicalSpecificationExport = async data => {
     }) => {
       el.inputs = el?.inputs?.join(' | ')
       el.products = el?.products?.join(' | ')
-      el.months = el?.months?.reduce((prev, next) => prev.concat(next.join(',')), []).join(' | ')
+      el.months = el?.months?.reduce((prev, next) => {
+        const format = next?.map(el => capitalize(translateDate(el, "MMMM YYYY")))
+        return prev?.concat(format?.join(' - '))
+      }, [])?.join(' | ')
+
       return Object.values(el)
     })
 
