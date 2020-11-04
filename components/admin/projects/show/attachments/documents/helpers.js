@@ -20,6 +20,11 @@ const displayMonthTotal = (unitCost, value) =>
 
 const typeSubmission = type => submissionTypes.find(el => el.value === type)
 
+const translateDate = date => {
+  if (!date) return ""
+  return moment(date).format("DD/MM/YYYY")
+}
+
 export const generalInformationExport = async data => {
   const workbook = new ExcelJS.Workbook()
   let worksheet = workbook.addWorksheet("Información General")
@@ -63,8 +68,8 @@ export const generalInformationExport = async data => {
         data?.allies?.join(','),
         data?.implementationPlace,
         data?.responsible,
-        data?.startDate,
-        data?.endDate,
+        translateDate(data?.startDate),
+        translateDate(data?.endDate),
         data?.strategicAxis,
         data?.preventionLevel?.join(','),
         data?.scope?.join(','),
@@ -194,6 +199,8 @@ export const technicalSpecificationExport = async data => {
     comments,
     ...el
   }) => {
+    el.startDate = translateDate(el?.startDate)
+    el.endDate = translateDate(el?.endDate)
     el.products = el?.products?.join(' | ')
     return Object.values(el)
   })
@@ -241,6 +248,8 @@ export const technicalSpecificationExport = async data => {
     comments,
     ...el
   }) => {
+    el.startDate = translateDate(el?.startDate)
+    el.endDate = translateDate(el?.endDate)
     el.products = el?.products?.join(' | ')
     return Object.values(el)
   })
@@ -291,6 +300,8 @@ export const technicalSpecificationExport = async data => {
       orderIndex,
       ...el
     }) => {
+      el.startDate = translateDate(el?.startDate)
+      el.endDate = translateDate(el?.endDate)
       el.products = el?.products?.join(' | ')
       return Object.values(el)
     })
