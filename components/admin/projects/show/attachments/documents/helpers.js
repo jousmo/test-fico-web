@@ -13,7 +13,8 @@ import {
   issueTypes,
   fiscalPersonTypes,
   educationLevelTypes,
-  measurementPeriodicityTypes
+  measurementPeriodicityTypes,
+  conceptTypes
 } from "../../../../../../helpers/selectOptions/implementer/submission"
 import { capitalize } from "lodash"
 
@@ -43,6 +44,8 @@ const personTypesFiscal = type => fiscalPersonTypes.find(el => el.value === type
 const levelTypesEducation = type => educationLevelTypes.find(el => el.value === type)
 
 const periodicityTypesMeasurement = type => measurementPeriodicityTypes.find(el => el.value === type)
+
+const typeConcept = type => conceptTypes.find(el => el.value === type)
 
 const typeBooleans = type => [true].includes(type) ? "Si" : "No"
 
@@ -435,6 +438,9 @@ export const budgetExport = async data => {
     comments,
     ...el
   }) => {
+    el.unitCost = displayMonthTotal(1, el?.unitCost)
+    el.budgeted = displayMonthTotal(1, el?.budgeted)
+    el.type = typeConcept(el?.type)?.label
     return Object.values(el)
   })
 
