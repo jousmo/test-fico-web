@@ -5,6 +5,7 @@ import Moment from "moment"
 import numeral from "numeral"
 const moment = extendMoment(Moment)
 moment.locale("es")
+import { submissionTypes } from "../../../../../../helpers/selectOptions/implementer/submission"
 
 const projectMonths = ({ startDate,  endDate }) => Array
   .from(
@@ -16,6 +17,8 @@ const projectMonths = ({ startDate,  endDate }) => Array
 
 const displayMonthTotal = (unitCost, value) =>
   numeral(unitCost * Number(value || 0)).format("$0,0.00")
+
+const typeSubmission = type => submissionTypes.find(el => el.value === type)
 
 export const generalInformationExport = async data => {
   const workbook = new ExcelJS.Workbook()
@@ -52,7 +55,7 @@ export const generalInformationExport = async data => {
     ],
     rows: [
       [
-        data?.type,
+        typeSubmission(data?.type)?.label,
         data?.name,
         data?.applyingCall,
         data?.township,
