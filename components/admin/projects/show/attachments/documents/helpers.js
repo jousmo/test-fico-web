@@ -512,3 +512,7 @@ export const humanResourcesExport = async data => {
   const buf = await workbook.xlsx.writeBuffer()
   saveAs(new Blob([buf]), "RH.xlsx")
 }
+
+export const scheduleExport = async data => {
+
+}
