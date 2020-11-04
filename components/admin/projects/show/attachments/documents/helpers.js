@@ -521,6 +521,50 @@ export const scheduleExport = async data => {
   titleInfo.value = `Cronograma`
   titleInfo.font = { size: 20, bold: true }
 
+  data?.specificObjectives?.forEach((objective, index) => {
+
+    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+    titleInfo.value = `Objetivo especifico - ${objective?.description}`
+    titleInfo.font = { size: 18, bold: true }
+
+    let activities = objective?.activities?.map(({
+      id,
+      orderIndex,
+      inputs,
+      products,
+      comments,
+      schedules,
+      ...el
+    }) => {
+      el.months = el?.months?.reduce((prev, next) => prev.concat(next.join('-')), []).join(' | ')
+      return Object.values(el)
+    })
+
+    activities = activities?.length ? activities : [[]]
+
+    worksheet.addTable({
+      name: `Cronograma${index}`,
+      ref: `A${worksheet?.lastRow?._number + 2}`,
+      headerRow: true,
+      style: {
+        showRowStripes: true,
+      },
+      columns: [
+        { name: "Actividad" },
+        { name: "Descripción" },
+        { name: "Responsable" },
+        { name: "Metodología" },
+        { name: "Formula" },
+        { name: "Verificación" },
+        { name: "Base" },
+        { name: "Meta" },
+        { name: "Lugar" },
+        { name: "Meses" }
+      ],
+      rows: activities
+    })
+  })
+
   const buf = await workbook.xlsx.writeBuffer()
   saveAs(new Blob([buf]), "Cronograma.xlsx")
 }
