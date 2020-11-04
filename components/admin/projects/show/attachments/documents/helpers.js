@@ -5,7 +5,15 @@ import Moment from "moment"
 import numeral from "numeral"
 const moment = extendMoment(Moment)
 moment.locale("es")
-import { submissionTypes } from "../../../../../../helpers/selectOptions/implementer/submission"
+import {
+  submissionTypes,
+  strategicAxisTypes,
+  preventionLevelTypes,
+  scopeTypes,
+  issueTypes,
+  fiscalPersonTypes,
+  educationLevelTypes
+} from "../../../../../../helpers/selectOptions/implementer/submission"
 
 const projectMonths = ({ startDate,  endDate }) => Array
   .from(
@@ -19,6 +27,20 @@ const displayMonthTotal = (unitCost, value) =>
   numeral(unitCost * Number(value || 0)).format("$0,0.00")
 
 const typeSubmission = type => submissionTypes.find(el => el.value === type)
+
+const axisTypesStrategic = type => strategicAxisTypes.find(el => el.value === type)
+
+const levelTypesPrevention = type => preventionLevelTypes.find(el => el.value === type)
+
+const typesScope = type => scopeTypes.find(el => el.value === type)
+
+const typesIssue = type => issueTypes.find(el => el.value === type)
+
+const personTypesFiscal = type => fiscalPersonTypes.find(el => el.value === type)
+
+const levelTypesEducation = type => educationLevelTypes.find(el => el.value === type)
+
+const typeBooleans = type => [true].includes(type) ? "Si" : "No"
 
 const translateDate = date => {
   if (!date) return ""
@@ -70,10 +92,10 @@ export const generalInformationExport = async data => {
         data?.responsible,
         translateDate(data?.startDate),
         translateDate(data?.endDate),
-        data?.strategicAxis,
-        data?.preventionLevel?.join(','),
-        data?.scope?.join(','),
-        data?.issueDescription,
+        axisTypesStrategic(data?.strategicAxis)?.label,
+        levelTypesPrevention(data?.preventionLevel?.join(','))?.label,
+        typesScope(data?.scope?.join(','))?.label,
+        typesIssue(data?.issueDescription)?.label,
         data?.description,
         data?.justification
       ]
@@ -84,13 +106,17 @@ export const generalInformationExport = async data => {
   titleInfo.value = "Consultores"
   titleInfo.font = { size: 20, bold: true }
 
-  let consultants = data?.consultants.map(({
+  let consultants = data?.consultants?.map(({
     id,
     supports,
     documents,
     comments,
-    ...item
-  }) => Object.values(item))
+    ...el
+  }) => {
+    el.fiscalPersonType = personTypesFiscal(el?.fiscalPersonType)?.label
+    el.hadReceivedSupports = typeBooleans(el?.hadReceivedSupports)
+    return Object.values(el)
+  })
 
   consultants = consultants?.length ? consultants : [[]]
 
@@ -151,6 +177,8 @@ export const generalInformationExport = async data => {
     ...el
   }) => {
     el.age = el?.age?.join(' | ')
+    el.educationLevel = levelTypesEducation(el?.educationLevel).label
+    el.preventionLevel = levelTypesPrevention(el?.preventionLevel).label
     return Object.values(el)
   })
 
