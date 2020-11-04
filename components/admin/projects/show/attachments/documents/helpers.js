@@ -514,5 +514,13 @@ export const humanResourcesExport = async data => {
 }
 
 export const scheduleExport = async data => {
+  const workbook = new ExcelJS.Workbook()
+  let worksheet = workbook.addWorksheet("Cronograma")
 
+  let titleInfo = worksheet.getCell("A1")
+  titleInfo.value = `Cronograma`
+  titleInfo.font = { size: 20, bold: true }
+
+  const buf = await workbook.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), "Cronograma.xlsx")
 }
