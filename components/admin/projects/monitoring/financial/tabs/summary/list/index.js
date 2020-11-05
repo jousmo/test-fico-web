@@ -12,6 +12,7 @@ import {
   getConceptsSummaryPerMonth,
   getConceptsSummaryPerTrimestre
 } from "../../../helpers"
+import * as _ from "lodash"
 
 export function ListSummary({ view, year, search }) {
   const { data: { Submission } } = useContext(AdminSubmissionContext)
