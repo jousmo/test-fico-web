@@ -540,6 +540,9 @@ export const humanResourcesExport = async data => {
       comments,
       ...el
     }) => {
+      el.benefits = typeBooleans(el?.benefits)
+      el.taxes = el?.taxes && `${el?.taxes} %`
+      el.taxes = el?.total && displayMonthTotal(1, el?.total)
       return Object.values(el)
     })
 
@@ -595,7 +598,10 @@ export const scheduleExport = async data => {
       schedules,
       ...el
     }) => {
-      el.months = el?.months?.reduce((prev, next) => prev.concat(next.join('-')), []).join(' | ')
+      el.months = el.months = el?.months?.reduce((prev, next) => {
+        const format = next?.map(el => capitalize(translateDate(el, "MMMM YYYY")))
+        return prev?.concat(format?.join(' - '))
+      }, [])?.join(' | ')
       return Object.values(el)
     })
 
