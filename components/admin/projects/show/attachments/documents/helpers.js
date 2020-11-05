@@ -530,6 +530,8 @@ export const humanResourcesExport = async data => {
 
   data?.concepts?.forEach((concept, index) => {
 
+    if (!concept?.humanResource.length) return;
+
     let titleInfo = worksheet.getCell("A1")
     titleInfo.value = `Recursos Humanos - ${concept.name}`
     titleInfo.font = { size: 20, bold: true }
@@ -541,12 +543,10 @@ export const humanResourcesExport = async data => {
       ...el
     }) => {
       el.benefits = typeBooleans(el?.benefits)
-      el.taxes = el?.taxes && `${el?.taxes} %`
-      el.taxes = el?.total && displayMonthTotal(1, el?.total)
+      el.total = numeral(((el?.taxes / 100) * el?.salary) + el?.salary).format("$0,0.00")
+      el.taxes = `${el?.taxes} %`
       return Object.values(el)
     })
-
-    rh = rh?.length ? rh : [[]]
 
     worksheet.addTable({
       name: `RH${index}`,
