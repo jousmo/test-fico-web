@@ -3,6 +3,7 @@ import Moment from "moment"
 import { extendMoment } from "moment-range"
 const moment = extendMoment(Moment)
 moment.locale("es")
+import * as _ from "lodash"
 
 export const INIT_STATE = {
   amount: 0,

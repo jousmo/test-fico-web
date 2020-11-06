@@ -7,6 +7,7 @@ import { conceptTypes } from "../../../../../../../helpers/selectOptions/impleme
 import { renderInvestment, renderTotal } from "./helpers"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 import { useAuth } from "../../../../../../../contexts/auth"
+import * as _ from "lodash"
 
 function BudgetForm({ data, onChange, hiddenComments, review }) {
   const { user } = useAuth()

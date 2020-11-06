@@ -1,4 +1,5 @@
 import moment from "moment"
+import * as _ from "lodash"
 
 export const getColor = filterSchedule => {
   let color = null
