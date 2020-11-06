@@ -464,3 +464,51 @@ export const budgetExport = async data => {
   const buf = await workbook.xlsx.writeBuffer()
   saveAs(new Blob([buf]), "Presupuesto.xlsx")
 }
+
+export const humanResourcesExport = async data => {
+  const workbook = new ExcelJS.Workbook()
+  let worksheet = workbook.addWorksheet("Recursos Humanos")
+
+  data?.concepts?.forEach((concept, index) => {
+
+    let titleInfo = worksheet.getCell("A1")
+    titleInfo.value = `Recursos Humanos - ${concept.name}`
+    titleInfo.font = { size: 20, bold: true }
+
+    let rh = concept?.humanResource?.map(({
+      id,
+      documents,
+      comments,
+      ...el
+    }) => {
+      return Object.values(el)
+    })
+
+    rh = rh?.length ? rh : [[]]
+
+    worksheet.addTable({
+      name: `RH${index}`,
+      ref: `A${worksheet?.lastRow?._number + 2}`,
+      headerRow: true,
+      style: {
+        showRowStripes: true,
+      },
+      columns: [
+        { name: "Puesto" },
+        { name: "Nombre completo" },
+        { name: "Funciones" },
+        { name: "Supervisa a" },
+        { name: "Horas" },
+        { name: "Contratación" },
+        { name: "Salario" },
+        { name: "Prestaciones" },
+        { name: "Iva" },
+        { name: "Total" }
+      ],
+      rows: rh
+    })
+  })
+
+  const buf = await workbook.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), "RH.xlsx")
+}
