@@ -5,6 +5,7 @@ import {
   generalInformationExport,
   technicalSpecificationExport,
   budgetExport,
+  scheduleExport,
   humanResourcesExport
 } from "./helpers"
 
@@ -14,6 +15,7 @@ function ProjectAttachments({ data }) {
       <a onClick={() => generalInformationExport(data)}>Información general</a>
       <a onClick={() => technicalSpecificationExport(data)}>Ficha Tecnica</a>
       <a onClick={() => budgetExport(data)}>Presupuesto</a>
+      <a onClick={() => scheduleExport(data)}>Cronograma</a>
       <a onClick={() => humanResourcesExport(data)}>Recursos humanos</a>
     </Space>
   )

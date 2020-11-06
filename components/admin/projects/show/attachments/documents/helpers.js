@@ -5,6 +5,18 @@ import Moment from "moment"
 import numeral from "numeral"
 const moment = extendMoment(Moment)
 moment.locale("es")
+import {
+  submissionTypes,
+  strategicAxisTypes,
+  preventionLevelTypes,
+  scopeTypes,
+  issueTypes,
+  fiscalPersonTypes,
+  educationLevelTypes,
+  measurementPeriodicityTypes,
+  conceptTypes
+} from "../../../../../../helpers/selectOptions/implementer/submission"
+import { capitalize } from "lodash"
 
 const projectMonths = ({ startDate,  endDate }) => Array
   .from(
@@ -16,6 +28,31 @@ const projectMonths = ({ startDate,  endDate }) => Array
 
 const displayMonthTotal = (unitCost, value) =>
   numeral(unitCost * Number(value || 0)).format("$0,0.00")
+
+const typeSubmission = type => submissionTypes.find(el => el.value === type)
+
+const axisTypesStrategic = type => strategicAxisTypes.find(el => el.value === type)
+
+const levelTypesPrevention = type => preventionLevelTypes.find(el => el.value === type)
+
+const typesScope = type => scopeTypes.find(el => el.value === type)
+
+const typesIssue = type => issueTypes.find(el => el.value === type)
+
+const personTypesFiscal = type => fiscalPersonTypes.find(el => el.value === type)
+
+const levelTypesEducation = type => educationLevelTypes.find(el => el.value === type)
+
+const periodicityTypesMeasurement = type => measurementPeriodicityTypes.find(el => el.value === type)
+
+const typeConcept = type => conceptTypes.find(el => el.value === type)
+
+const typeBooleans = type => [true].includes(type) ? "Si" : "No"
+
+const translateDate = (date, format) => {
+  if (!date) return ""
+  return moment(date).format(format)
+}
 
 export const generalInformationExport = async data => {
   const workbook = new ExcelJS.Workbook()
@@ -52,7 +89,7 @@ export const generalInformationExport = async data => {
     ],
     rows: [
       [
-        data?.type,
+        typeSubmission(data?.type)?.label,
         data?.name,
         data?.applyingCall,
         data?.township,
@@ -60,12 +97,12 @@ export const generalInformationExport = async data => {
         data?.allies?.join(','),
         data?.implementationPlace,
         data?.responsible,
-        data?.startDate,
-        data?.endDate,
-        data?.strategicAxis,
-        data?.preventionLevel?.join(','),
-        data?.scope?.join(','),
-        data?.issueDescription,
+        translateDate(data?.startDate, "DD/MM/YYYY"),
+        translateDate(data?.endDate, "DD/MM/YYYY"),
+        axisTypesStrategic(data?.strategicAxis)?.label,
+        levelTypesPrevention(data?.preventionLevel?.join(','))?.label,
+        typesScope(data?.scope?.join(','))?.label,
+        typesIssue(data?.issueDescription)?.label,
         data?.description,
         data?.justification
       ]
@@ -76,13 +113,17 @@ export const generalInformationExport = async data => {
   titleInfo.value = "Consultores"
   titleInfo.font = { size: 20, bold: true }
 
-  let consultants = data?.consultants.map(({
+  let consultants = data?.consultants?.map(({
     id,
     supports,
     documents,
     comments,
-    ...item
-  }) => Object.values(item))
+    ...el
+  }) => {
+    el.fiscalPersonType = personTypesFiscal(el?.fiscalPersonType)?.label
+    el.hadReceivedSupports = typeBooleans(el?.hadReceivedSupports)
+    return Object.values(el)
+  })
 
   consultants = consultants?.length ? consultants : [[]]
 
@@ -143,6 +184,8 @@ export const generalInformationExport = async data => {
     ...el
   }) => {
     el.age = el?.age?.join(' | ')
+    el.educationLevel = levelTypesEducation(el?.educationLevel).label
+    el.preventionLevel = levelTypesPrevention(el?.preventionLevel).label
     return Object.values(el)
   })
 
@@ -188,10 +231,14 @@ export const technicalSpecificationExport = async data => {
 
   let developmentObjectiveIndicators = data?.developmentObjectiveIndicators?.map(({
     id,
+    type,
     comments,
     ...el
   }) => {
+    el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
+    el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
     el.products = el?.products?.join(' | ')
+    el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
     return Object.values(el)
   })
 
@@ -205,7 +252,6 @@ export const technicalSpecificationExport = async data => {
       showRowStripes: true,
     },
     columns: [
-      { name: "Tipo" },
       { name: "Tipo del indicador" },
       { name: "Descripción" },
       { name: "Metodología" },
@@ -235,10 +281,14 @@ export const technicalSpecificationExport = async data => {
 
   let generalObjectiveIndicators = data?.generalObjectiveIndicators?.map(({
     id,
+    type,
     comments,
     ...el
   }) => {
+    el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
+    el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
     el.products = el?.products?.join(' | ')
+    el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
     return Object.values(el)
   })
 
@@ -252,7 +302,6 @@ export const technicalSpecificationExport = async data => {
       showRowStripes: true,
     },
     columns: [
-      { name: "Tipo" },
       { name: "Tipo del indicador" },
       { name: "Descripción" },
       { name: "Metodología" },
@@ -284,11 +333,15 @@ export const technicalSpecificationExport = async data => {
 
     let indicators = specificObjectives?.indicators.map(({
       id,
+      type,
       comments,
       orderIndex,
       ...el
     }) => {
+      el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
+      el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
       el.products = el?.products?.join(' | ')
+      el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
       return Object.values(el)
     })
 
@@ -302,7 +355,6 @@ export const technicalSpecificationExport = async data => {
         showRowStripes: true,
       },
       columns: [
-        { name: "Tipo" },
         { name: "Tipo del indicador" },
         { name: "Descripción" },
         { name: "Metodología" },
@@ -331,7 +383,11 @@ export const technicalSpecificationExport = async data => {
     }) => {
       el.inputs = el?.inputs?.join(' | ')
       el.products = el?.products?.join(' | ')
-      el.months = el?.months?.reduce((prev, next) => prev.concat(next.join(',')), []).join(' | ')
+      el.months = el?.months?.reduce((prev, next) => {
+        const format = next?.map(el => capitalize(translateDate(el, "MMMM YYYY")))
+        return prev?.concat(format?.join(' - '))
+      }, [])?.join(' | ')
+
       return Object.values(el)
     })
 
@@ -382,6 +438,9 @@ export const budgetExport = async data => {
     comments,
     ...el
   }) => {
+    el.unitCost = displayMonthTotal(1, el?.unitCost)
+    el.budgeted = displayMonthTotal(1, el?.budgeted)
+    el.type = typeConcept(el?.type)?.label
     return Object.values(el)
   })
 
@@ -471,6 +530,8 @@ export const humanResourcesExport = async data => {
 
   data?.concepts?.forEach((concept, index) => {
 
+    if (!concept?.humanResource.length) return;
+
     let titleInfo = worksheet.getCell("A1")
     titleInfo.value = `Recursos Humanos - ${concept.name}`
     titleInfo.font = { size: 20, bold: true }
@@ -481,10 +542,11 @@ export const humanResourcesExport = async data => {
       comments,
       ...el
     }) => {
+      el.benefits = typeBooleans(el?.benefits)
+      el.total = numeral(((el?.taxes / 100) * el?.salary) + el?.salary).format("$0,0.00")
+      el.taxes = `${el?.taxes} %`
       return Object.values(el)
     })
-
-    rh = rh?.length ? rh : [[]]
 
     worksheet.addTable({
       name: `RH${index}`,
@@ -511,4 +573,63 @@ export const humanResourcesExport = async data => {
 
   const buf = await workbook.xlsx.writeBuffer()
   saveAs(new Blob([buf]), "RH.xlsx")
+}
+
+export const scheduleExport = async data => {
+  const workbook = new ExcelJS.Workbook()
+  let worksheet = workbook.addWorksheet("Cronograma")
+
+  let titleInfo = worksheet.getCell("A1")
+  titleInfo.value = `Cronograma`
+  titleInfo.font = { size: 20, bold: true }
+
+  data?.specificObjectives?.forEach((objective, index) => {
+
+    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
+    titleInfo.value = `Objetivo especifico - ${objective?.description}`
+    titleInfo.font = { size: 18, bold: true }
+
+    let activities = objective?.activities?.map(({
+      id,
+      orderIndex,
+      inputs,
+      products,
+      comments,
+      schedules,
+      ...el
+    }) => {
+      el.months = el.months = el?.months?.reduce((prev, next) => {
+        const format = next?.map(el => capitalize(translateDate(el, "MMMM YYYY")))
+        return prev?.concat(format?.join(' - '))
+      }, [])?.join(' | ')
+      return Object.values(el)
+    })
+
+    activities = activities?.length ? activities : [[]]
+
+    worksheet.addTable({
+      name: `Cronograma${index}`,
+      ref: `A${worksheet?.lastRow?._number + 2}`,
+      headerRow: true,
+      style: {
+        showRowStripes: true,
+      },
+      columns: [
+        { name: "Actividad" },
+        { name: "Descripción" },
+        { name: "Responsable" },
+        { name: "Metodología" },
+        { name: "Formula" },
+        { name: "Verificación" },
+        { name: "Base" },
+        { name: "Meta" },
+        { name: "Lugar" },
+        { name: "Meses" }
+      ],
+      rows: activities
+    })
+  })
+
+  const buf = await workbook.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), "Cronograma.xlsx")
 }
