@@ -12,17 +12,21 @@ import { CommentButton } from "../../../../../../admin/submissions/review"
 export function BeneficiaryItem({ data, onEdit, onDelete, index, readOnly, hiddenComments, review }) {
   const { description, number } = data
 
-  const educationLevel = getReadableValue(
-    educationLevelTypes,
-    data.educationLevel
-  )
+  const educationLevels = data?.educationLevel?.map(educationLevel => (
+    getReadableValue(
+      educationLevelTypes,
+      educationLevel
+    )
+  ))?.join(", ")
 
-  const gender = getReadableValue(
-    genderTypes,
-    data.gender
-  )
+  const genders = data?.gender?.map(gender => (
+    getReadableValue(
+      genderTypes,
+      gender
+    )
+  ))?.join(", ")
 
-  const ages = data.age?.map(age => (
+  const ages = data?.age?.map(age => (
     getReadableValue(
       ageRanges,
       age
@@ -31,7 +35,7 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index, readOnly, hidde
 
   const preventionLevel = getReadableValue(
     preventionLevelTypes,
-    data.preventionLevel
+    data?.preventionLevel
   )
 
   return (
@@ -51,7 +55,7 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index, readOnly, hidde
       <br />
       <Typography.Text strong>Nivel Educativo: </Typography.Text>
       <Typography.Text>
-        {`${educationLevel} - ${gender}`}
+        {`${educationLevels} - ${genders}`}
       </Typography.Text>
       <br />
       <Typography.Text strong>Edad: </Typography.Text>

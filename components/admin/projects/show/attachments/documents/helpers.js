@@ -184,7 +184,8 @@ export const generalInformationExport = async data => {
     ...el
   }) => {
     el.age = el?.age?.join(' | ')
-    el.educationLevel = levelTypesEducation(el?.educationLevel).label
+    el.gender = el?.gender?.join(' | ')
+    el.educationLevel = el.educationLevel?.map(el => levelTypesEducation(el)?.label).join(' | ')
     el.preventionLevel = levelTypesPrevention(el?.preventionLevel).label
     return Object.values(el)
   })

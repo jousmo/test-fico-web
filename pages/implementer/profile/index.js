@@ -45,18 +45,18 @@ function Profile({ client }) {
   }, [state])
 
   const save = useCallback(async () => {
-    const saving = loadingAlert()
+    const saving = loadingAlert("Guardando", 0)
     try {
       await updateProfile({
         variables: { data: { ...state.generalInformation } }
       })
+      saving()
       success()
     }
     catch(e) {
       warning()
       console.error(e)
     }
-    saving()
   }, [state, updateProfile])
 
   const isGovernment = useCallback(() => {

@@ -20,20 +20,26 @@ function Beneficiary({ data }){
     preventionLevel
   } = data
 
-  const readableEdLevel = getReadableValue(
-    educationLevelTypes,
-    educationLevel
-  )
+  const readableEdLevel = educationLevel?.map(educationLevel => (
+    getReadableValue(
+      educationLevelTypes,
+      educationLevel
+    )
+  ))?.join(", ")
 
-  const readableGender = getReadableValue(
-    genderTypes,
-    gender
-  )
+  const readableGender = gender?.map(gender => (
+    getReadableValue(
+      genderTypes,
+      gender
+    )
+  ))?.join(", ")
 
-  const readableAge = getReadableValue(
-    ageRanges,
-    age
-  )
+  const readableAge = age?.map(age => (
+    getReadableValue(
+      ageRanges,
+      age
+    )
+  ))?.join(", ")
 
   const readablePrLevel = getReadableValue(
     preventionLevelTypes,

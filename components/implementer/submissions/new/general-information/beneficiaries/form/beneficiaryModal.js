@@ -85,6 +85,7 @@ export function BeneficiaryModal({ edit, onCancel, onSave, review, ...props }) {
               getValueFromEvent={getSelectValue}>
               <SelectField
                 id="gender"
+                mode="tags"
                 options={genderTypes} />
             </Form.Item>
           </Col>
@@ -96,6 +97,7 @@ export function BeneficiaryModal({ edit, onCancel, onSave, review, ...props }) {
               getValueFromEvent={getSelectValue}>
               <SelectField
                 id="educationLevel"
+                mode="tags"
                 options={educationLevelTypes} />
             </Form.Item>
           </Col>
