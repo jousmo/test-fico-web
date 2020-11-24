@@ -122,6 +122,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
 
   const readOnly = edit?.reviewedAt ? true : false
 
+  console.log(readOnly)
+
   return (
     <Modal
       destroyOnClose
@@ -259,7 +261,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               onChange={(value) => onChange("ficosecPaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
-              readOnly/>
+              disabled={readOnly}/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.ficosecPaymentPercentage}%`}</Typography.Title>
         </Space>
@@ -273,7 +275,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               onChange={(value) => onChange("investmentOnePaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
-              readOnly/>
+              disabled={readOnly}/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.investmentOnePaymentPercentage}%`}</Typography.Title>
         </Space>
@@ -287,7 +289,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               onChange={(value) => onChange("investmentTwoPaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
-              readOnly/>
+              disabled={readOnly}/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.investmentTwoPaymentPercentage}%`}</Typography.Title>
         </Space>
@@ -301,7 +303,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               onChange={(value) => onChange("implementerPaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
-              readOnly/>
+              disabled={readOnly}/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.implementerPaymentPercentage}%`}</Typography.Title>
         </Space>
