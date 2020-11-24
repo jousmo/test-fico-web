@@ -122,8 +122,6 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
 
   const readOnly = edit?.reviewedAt ? true : false
 
-  console.log(readOnly)
-
   return (
     <Modal
       destroyOnClose
