@@ -9,9 +9,7 @@ import {
   Space,
   Typography,
   Switch,
-  Col,
-  Tag,
-  Row
+  Col
 } from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
 import { cellFormat, getSelectValue, warning } from "../../../../../../../../helpers"

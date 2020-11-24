@@ -6,7 +6,8 @@ import {
   technicalSpecificationExport,
   budgetExport,
   scheduleExport,
-  humanResourcesExport
+  humanResourcesExport,
+  financialMonitoringExport
 } from "./helpers"
 
 function ProjectAttachments({ data }) {
@@ -17,6 +18,7 @@ function ProjectAttachments({ data }) {
       <a onClick={() => budgetExport(data)}>Presupuesto</a>
       <a onClick={() => scheduleExport(data)}>Cronograma</a>
       <a onClick={() => humanResourcesExport(data)}>Recursos humanos</a>
+      <a onClick={() => financialMonitoringExport(data)}>Monitoreo financiero</a>
     </Space>
   )
 
