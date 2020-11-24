@@ -1,4 +1,18 @@
-import { Modal, Form, Input, InputNumber, Divider, Alert, Statistic, Space, Typography } from "antd"
+import {
+  Modal,
+  Form,
+  Input,
+  InputNumber,
+  Divider,
+  Alert,
+  Statistic,
+  Space,
+  Typography,
+  Switch,
+  Col,
+  Tag,
+  Row
+} from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
 import { cellFormat, getSelectValue, warning } from "../../../../../../../../helpers"
 import { conceptTypes }from "../../../../../../../../helpers/selectOptions/implementer/submission"
@@ -14,11 +28,16 @@ import {
   projectMonths,
   listConcepts
 } from "../../../helpers"
+import moment from "moment"
+import { useAuth } from "../../../../../../../../contexts/auth"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const [state, setState] = useState(INIT_STATE)
   const [stateOldAmount, setStateOldAmount] = useState(false)
   const [form] = Form.useForm()
+
+  const { user } = useAuth()
+  const isAdmin = user?.claims?.role === "ADMIN"
 
   useEffect(() => {
     if(edit) {
@@ -103,6 +122,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     form.setFieldsValue({ category: type })
   }
 
+  const readOnly = edit?.reviewedAt ? true : false
+
   return (
     <Modal
       destroyOnClose
@@ -121,6 +142,20 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
         form={form}>
+
+        {isAdmin &&
+          <Col span={20}>
+            <Form.Item
+              label="Bloquear revisión"
+              id="reviewedAt"
+              name="reviewedAt"
+              getValueFromEvent={value => value && moment().format()}
+              style={{ marginBottom: "0" }}>
+              <Switch size="small" defaultChecked={readOnly} />
+            </Form.Item>
+          </Col>
+        }
+
         <Form.Item
           name="documents"
           getValueFromEvent={onDoneFile}>
@@ -128,7 +163,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
             fileList={toFileList(edit?.documents)}
             onRemoveFile={onRemoveFile}
             maxFile={2}
-            accept={"application/pdf,application/xml"}>
+            accept={"application/pdf,application/xml"}
+            readOnly>
             Subir factura
           </UploadButtonForm>
         </Form.Item>
@@ -176,7 +212,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <SelectField
             id="monthAt"
-            options={projectMonths(submission)} />
+            options={projectMonths(submission)}
+            disabled={readOnly}/>
         </Form.Item>
         <Form.Item
           label="ID Concepto:"
@@ -186,7 +223,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           <SelectField
             id="concept"
             onChange={handleChangeListConcepts}
-            options={listConcepts(submission)} />
+            options={listConcepts(submission)}
+            disabled={readOnly}/>
         </Form.Item>
         <Form.Item
           label="ID Rubro:"
@@ -209,7 +247,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <DateField
             id="paymentAt"
-            format="DD/MM/YYYY" />
+            format="DD/MM/YYYY"
+            disabled={readOnly}/>
         </Form.Item>
         <Divider orientation="left">Coinversión</Divider>
         <Space className="wrapper-number">
@@ -221,7 +260,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               name="ficosecPayment"
               onChange={(value) => onChange("ficosecPaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+              parser={value => value.replace(/\$\s?|(,*)/g, '')}
+              readOnly/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.ficosecPaymentPercentage}%`}</Typography.Title>
         </Space>
@@ -234,7 +274,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               name="investmentOnePayment"
               onChange={(value) => onChange("investmentOnePaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+              parser={value => value.replace(/\$\s?|(,*)/g, '')}
+              readOnly/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.investmentOnePaymentPercentage}%`}</Typography.Title>
         </Space>
@@ -247,7 +288,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               name="investmentTwoPayment"
               onChange={(value) => onChange("investmentTwoPaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+              parser={value => value.replace(/\$\s?|(,*)/g, '')}
+              readOnly/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.investmentTwoPaymentPercentage}%`}</Typography.Title>
         </Space>
@@ -260,7 +302,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               name="implementerPayment"
               onChange={(value) => onChange("implementerPaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-              parser={value => value.replace(/\$\s?|(,*)/g, '')} />
+              parser={value => value.replace(/\$\s?|(,*)/g, '')}
+              readOnly/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.implementerPaymentPercentage}%`}</Typography.Title>
         </Space>
