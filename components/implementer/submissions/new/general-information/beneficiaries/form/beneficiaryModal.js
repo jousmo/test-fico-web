@@ -26,6 +26,8 @@ export function BeneficiaryModal({ edit, onCancel, onSave, review, ...props }) {
       if(typeof edit?.index !== "undefined") {
         values.index = edit.index
         edit.age = null
+        edit.educationLevel = null
+        edit.gender = null
         values = merge(edit, values)
       }
       values.number = Number(values.number)
