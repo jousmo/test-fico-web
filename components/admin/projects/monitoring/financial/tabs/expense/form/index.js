@@ -120,7 +120,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     form.setFieldsValue({ category: type })
   }
 
-  const readOnly = edit?.reviewedAt ? true : false
+  const readOnly = edit?.reviewed
 
   return (
     <Modal
@@ -145,9 +145,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           <Col span={20}>
             <Form.Item
               label="Bloquear revisión"
-              id="reviewedAt"
-              name="reviewedAt"
-              getValueFromEvent={value => value && moment().format()}
+              id="reviewed"
+              name="reviewed"
               style={{ marginBottom: "0" }}>
               <Switch size="small" defaultChecked={readOnly} />
             </Form.Item>
