@@ -247,6 +247,7 @@ export const getById = gql`
         issuedAt
         receptor
         monthAt
+        reviewedAt
         concept
         category
         paymentAt
