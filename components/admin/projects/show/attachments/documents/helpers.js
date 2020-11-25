@@ -49,9 +49,14 @@ const typeConcept = type => conceptTypes.find(el => el.value === type)
 
 const typeBooleans = type => [true].includes(type) ? "Si" : "No"
 
-const translateDate = (date, format) => {
+const translateDate = (date, format, currentFormat = "YYYY/MM/DD") => {
   if (!date) return ""
-  return moment(date).format(format)
+  return moment(date, currentFormat).format(format)
+}
+
+const findNameConcept = (concepts, id) => {
+  const { name } = concepts?.find(concept => concept.id === id)
+  return name
 }
 
 export const generalInformationExport = async data => {
@@ -633,4 +638,64 @@ export const scheduleExport = async data => {
 
   const buf = await workbook.xlsx.writeBuffer()
   saveAs(new Blob([buf]), "Cronograma.xlsx")
+}
+
+export const financialMonitoringExport = async data => {
+  const workbook = new ExcelJS.Workbook()
+  let worksheet = workbook.addWorksheet("Monitoreo Financiero")
+
+  let titleInfo = worksheet.getCell("A1")
+  titleInfo.value = `Monitoreo Financiero`
+  titleInfo.font = { size: 20, bold: true }
+
+  let invoices = data?.invoices?.map(({
+    id,
+    documents,
+    ...el
+  }) => {
+    el.concept = findNameConcept(data?.concepts, el?.concept)
+    el.issuedAt = translateDate(el?.issuedAt, "DD/MM/YYYY")
+    el.monthAt = capitalize(translateDate(el?.monthAt, "MMMM YYYY", "MM YYYY"))
+    el.paymentAt = translateDate(el?.paymentAt, "DD/MM/YYYY")
+    el.category = typeConcept(el?.category)?.label
+    el.amount = displayMonthTotal(1, el?.amount)
+    el.ficosecPayment = displayMonthTotal(1, el?.ficosecPayment)
+    el.implementerPayment = displayMonthTotal(1, el?.implementerPayment)
+    el.investmentOnePayment = displayMonthTotal(1, el?.investmentOnePayment)
+    el.investmentTwoPayment = displayMonthTotal(1, el?.investmentTwoPayment)
+    el.percentage = `${el?.percentage} %`
+    return Object.values(el)
+  })
+
+  invoices = invoices?.length ? invoices : [[]]
+
+  worksheet.addTable({
+    name: `Monitoreo`,
+    ref: `A${worksheet?.lastRow?._number + 2}`,
+    headerRow: true,
+    style: {
+      showRowStripes: true,
+    },
+    columns: [
+      { name: "UUID" },
+      { name: "Razon social del emisor" },
+      { name: "Rfc del emisor" },
+      { name: "Fecha de emisión" },
+      { name: "Razon social del receptor" },
+      { name: "Mes de asignación" },
+      { name: "Concepto" },
+      { name: "Categoria" },
+      { name: "Fecha de pago" },
+      { name: "Ficosec" },
+      { name: "Coinversión 1" },
+      { name: "Coinversión 2" },
+      { name: "Implementadora" },
+      { name: "Importe factura" },
+      { name: "Uso del presupuesto" }
+    ],
+    rows: invoices
+  })
+
+  const buf = await workbook.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), "MonitoreoFinanciero.xlsx")
 }

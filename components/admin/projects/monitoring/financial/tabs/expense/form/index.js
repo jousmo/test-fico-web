@@ -9,9 +9,7 @@ import {
   Space,
   Typography,
   Switch,
-  Col,
-  Tag,
-  Row
+  Col
 } from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
 import { cellFormat, getSelectValue, warning } from "../../../../../../../../helpers"
@@ -122,7 +120,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     form.setFieldsValue({ category: type })
   }
 
-  const readOnly = edit?.reviewedAt ? true : false
+  const readOnly = edit?.reviewed
 
   return (
     <Modal
@@ -147,9 +145,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           <Col span={20}>
             <Form.Item
               label="Bloquear revisión"
-              id="reviewedAt"
-              name="reviewedAt"
-              getValueFromEvent={value => value && moment().format()}
+              id="reviewed"
+              name="reviewed"
               style={{ marginBottom: "0" }}>
               <Switch size="small" defaultChecked={readOnly} />
             </Form.Item>
@@ -261,7 +258,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               onChange={(value) => onChange("ficosecPaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
-              readOnly/>
+              disabled={readOnly}/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.ficosecPaymentPercentage}%`}</Typography.Title>
         </Space>
@@ -275,7 +272,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               onChange={(value) => onChange("investmentOnePaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
-              readOnly/>
+              disabled={readOnly}/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.investmentOnePaymentPercentage}%`}</Typography.Title>
         </Space>
@@ -289,7 +286,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               onChange={(value) => onChange("investmentTwoPaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
-              readOnly/>
+              disabled={readOnly}/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.investmentTwoPaymentPercentage}%`}</Typography.Title>
         </Space>
@@ -303,7 +300,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
               onChange={(value) => onChange("implementerPaymentPercentage", value)}
               formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               parser={value => value.replace(/\$\s?|(,*)/g, '')}
-              readOnly/>
+              disabled={readOnly}/>
           </Form.Item>
           <Typography.Title level={4}>{`${state?.implementerPaymentPercentage}%`}</Typography.Title>
         </Space>
