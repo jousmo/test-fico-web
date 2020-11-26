@@ -650,6 +650,7 @@ export const financialMonitoringExport = async data => {
 
   let invoices = data?.invoices?.map(({
     id,
+    reviewed,
     documents,
     ...el
   }) => {
