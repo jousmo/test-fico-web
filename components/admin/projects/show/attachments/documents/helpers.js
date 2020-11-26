@@ -648,8 +648,6 @@ export const financialMonitoringExport = async data => {
   titleInfo.value = `Monitoreo Financiero`
   titleInfo.font = { size: 20, bold: true }
 
-
-  debugger
   let invoices = data?.invoices?.map(({
     id,
     reviewed,
