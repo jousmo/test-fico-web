@@ -9,6 +9,7 @@ import {
 import PDFHeading from "../heading"
 import { dataDecorator } from "./helpers"
 import { money } from "../../../../../helpers/cellFormat"
+import { capitalize, chunk } from "lodash"
 import "../style.sass"
 
 export function MinistrationsPDF(){
@@ -17,33 +18,37 @@ export function MinistrationsPDF(){
   } = useContext(AdminSubmissionContext)
   const submission = submissionResult?.data?.Submission
 
-  const getPeriodTitle = (month, period) => {
+  const getPeriodTitle = (quarters, period) => {
     return (
       <>
         <Typography.Text>
-          Periodo {period}
+          Trimestre {period}
         </Typography.Text>
         <br/>
         <Typography.Text type="secondary">
-          {month.format("MMMM YYYY")}
+          {`${capitalize(quarters[0].month.format("MMMM"))} - ${capitalize(quarters[quarters.length - 1].month.format("MMMM"))}`}
         </Typography.Text>
       </>
     )
   }
 
   const getMonthlySummary = (pageData) => {
-    const totalMonthly = []
+    const totalQuarter = []
     let total = 0
 
-    pageData.forEach(row => {
+    pageData?.forEach(row => {
       total += row["total"]
-      Object.keys(row).forEach((key, index) => {
-        if (key !== "name" && key !== "total"){
-          if (!totalMonthly[index]){
-            totalMonthly[index] = 0
+
+      const cleanRows = Object.keys(row).slice(0, -2)
+      const quarter = chunk(cleanRows, 3)
+
+      quarter?.forEach((el, index) => {
+        el?.forEach(item => {
+          if (!totalQuarter[index]) {
+            totalQuarter[index] = 0
           }
-          totalMonthly[index] += row[key]
-        }
+          totalQuarter[index] += row[+item]
+        })
       })
     })
 
@@ -52,7 +57,7 @@ export function MinistrationsPDF(){
         <Table.Summary.Cell>
           Total
         </Table.Summary.Cell>
-        {totalMonthly.map(amount =>
+        {totalQuarter?.map(amount =>
           <Table.Summary.Cell>
             {money(amount).children}
           </Table.Summary.Cell>
@@ -64,8 +69,7 @@ export function MinistrationsPDF(){
     )
   }
 
-  const range = moment.range(moment(submission?.startDate),
-    moment(submission?.endDate))
+  const range = moment.range(moment(submission?.startDate), moment(submission?.endDate))
   const months = Array.from(range.by("month"))
 
   const yearsSet = new Set()
@@ -74,6 +78,7 @@ export function MinistrationsPDF(){
   const dataSource = dataDecorator(submission?.concepts, months)
 
   let periodCounter = 0
+  let quarterArray = []
 
   return (
     <div className="fico pdf ministrations">
@@ -93,19 +98,48 @@ export function MinistrationsPDF(){
               <Table.Column title={year}>
                 {months.map((month, monthIndex) => {
                   if (month.isSame(moment(year), "year")){
-                    periodCounter++
-                    return (
-                      <Table.Column
-                        key={`${yearIndex}-${monthIndex}`}
-                        render={(text, row) => (
-                          money(row[monthIndex])
-                        )}
-                        title={getPeriodTitle(month, periodCounter)}/>
-                    )
+
+                    if (quarterArray.length < 3) {
+                      quarterArray.push({ monthIndex, month })
+                    }
+
+                    if (quarterArray.length === 3) {
+                      const quarters = [...quarterArray]
+                      quarterArray = []
+                      periodCounter++
+
+                      return (
+                        <Table.Column
+                          key={`${yearIndex}-${monthIndex}`}
+                          render={row => {
+                            const total = quarters.reduce((prev, current) => {
+                              return prev + row[current.monthIndex]
+                            }, 0)
+                            return money(total)
+                          }}
+                          title={getPeriodTitle(quarters, periodCounter)}/>
+                      )
+                    }
                   } else {
                     periodCounter = 0
                   }
                 })}
+
+
+                {
+                  quarterArray.length > 0 && (
+                    <Table.Column
+                      key={`${yearIndex}-${Date.now()}`}
+                      render={row => {
+                        const total = quarterArray.reduce((prev, current) => {
+                          return prev + row[current.monthIndex]
+                        }, 0)
+                        return money(total)
+                      }}
+                      title={getPeriodTitle(quarterArray, periodCounter + 1)}/>
+                  )
+                }
+
                 <Table.Column
                   dataIndex="total"
                   key={`total-${yearIndex}`}
