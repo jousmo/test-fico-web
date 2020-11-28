@@ -12,6 +12,8 @@ import {
 } from "../../../../../../../../contexts/admin/submissions/show"
 import { getReport, getParticipants, getAppliedAt, onSearch } from "./helpers"
 import ModalCommentMonitoring from "../../../../../../../shared/modal-comment-monitoring"
+import { verificationTypes } from "../../../../../../../../helpers/selectOptions/implementer/submission"
+import { getReadableValue } from "../../../../../../../../helpers/selectOptions/getReadableValue"
 
 export function ObjectivesList({ data, dateFilter }) {
   const [state, setState] = useState({
@@ -111,6 +113,7 @@ export function ObjectivesList({ data, dateFilter }) {
           sorter={(a, b) =>
             a.meansOfVerification?.localeCompare(b.meansOfVerification)
           }
+          render={t => getReadableValue(verificationTypes, t) || "N/A"}
           showSorterTooltip={false}
           title="Medio de verificación" />
         <Table.Column
