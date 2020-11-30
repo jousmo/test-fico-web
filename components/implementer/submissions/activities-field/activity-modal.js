@@ -216,10 +216,10 @@ export function ActivityModal({
                   Meta
                 </FieldLabel>
               }>
-              <Input.TextArea
+              <Input
                 autoSize
                 id="goal"
-                type="text" />
+                type="number" />
             </Form.Item>
           </Col>
           <Col span={12}>
