@@ -300,6 +300,25 @@ export const getById = gql`
         name
       }
       createdAt
+      assistants{
+        id
+        folio
+        name
+        lastName
+        maidenName
+        gender
+        birthdate
+        curp
+        phone
+        state
+        municipality
+        colony
+        assistance{
+          id
+          activity
+          assistanceAt
+        }
+      }
     }
   }
 `
