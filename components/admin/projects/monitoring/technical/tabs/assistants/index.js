@@ -3,7 +3,7 @@ import { CompositeField } from "../../../../../../shared"
 import { ListAssistants } from "./list"
 import { decoratedData } from "./list/helper"
 import { ModalAssistants } from "./modal"
-import { useContext, useState } from "react"
+import React, { useContext, useState } from "react"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 
 export function MonitoringAssistants({ data, dateFilter }) {

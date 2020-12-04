@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { Table, Empty, Tag } from "antd"
 
 export function ListAssistants ({ dataSource }) {
@@ -21,7 +21,6 @@ export function ListAssistants ({ dataSource }) {
       dataSource={dataSource}
       size="small"
       locale={{emptyText: <Empty description="Agrega asistentes" />}}
-      scroll={{ x: true }}
       pagination={true}>
       <Table.Column
         width={1}
