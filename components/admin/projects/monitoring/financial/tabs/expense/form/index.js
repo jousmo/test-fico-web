@@ -26,7 +26,6 @@ import {
   projectMonths,
   listConcepts
 } from "../../../helpers"
-import moment from "moment"
 import { useAuth } from "../../../../../../../../contexts/auth"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
