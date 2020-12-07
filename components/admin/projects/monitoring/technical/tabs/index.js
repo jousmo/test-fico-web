@@ -6,7 +6,7 @@ import { MonitoringParticipants } from "./participants"
 import { MonitoringObstacles } from "./obstacles"
 import { MonitoringSchedule } from "./schedule"
 import "./style.sass"
-import {DateField} from "../../../../../shared/date-field"
+import { MonitoringAssistants } from "./assistants"
 
 function TechnicalMonitoringTabs({ data }) {
   const [filterState, setFilterState] = useState([])
@@ -25,16 +25,21 @@ function TechnicalMonitoringTabs({ data }) {
           format="DD/MM/YYYY"
           onChange={onFilterChange} />
       }>
-      <Tabs.TabPane tab="Objetivos y actividades" key="1">
+      <Tabs.TabPane tab="Asistentes" key="1">
+        <MonitoringAssistants data={data} dateFilter={filterState} />
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Beneficiarios" key="2">
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Objetivos y actividades" key="3">
         <MonitoringObjectives data={data} dateFilter={filterState} />
       </Tabs.TabPane>
-      <Tabs.TabPane tab="Retos y obstáculos" key="2">
-        <MonitoringObstacles data={data} dateFilter={filterState} />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="Participantes" key="3">
+      <Tabs.TabPane tab="Participantes" key="4">
         <MonitoringParticipants data={data} dateFilter={filterState} />
       </Tabs.TabPane>
-      <Tabs.TabPane tab="Cronograma" key="4">
+      <Tabs.TabPane tab="Retos y obstáculos" key="5">
+        <MonitoringObstacles data={data} dateFilter={filterState} />
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Cronograma" key="6">
         <MonitoringSchedule data={data} dateFilter={filterState}/>
       </Tabs.TabPane>
     </Tabs>
