@@ -32,6 +32,24 @@ function TechnicalMonitoringPage({ client, query }) {
     submission.mutations.updateById, { client: client }
   )
 
+  const [createProjectAssistants] = useMutation(
+    submission.mutations.createProjectAssistants, { client: client }
+  )
+
+  const createAssistants = useCallback(async assistant => {
+    try {
+      await createProjectAssistants({
+        variables: { data: assistant, id: query.id }
+      })
+      success()
+      refetch()
+    }
+    catch(e) {
+      warning()
+      console.error(e)
+    }
+  }, [createProjectAssistants, refetch])
+
   const updateSubmission = useCallback(async submission => {
     try {
       await updateSub({
@@ -80,6 +98,7 @@ function TechnicalMonitoringPage({ client, query }) {
   }, [updateMonitoring, refetch])
 
   const injectActions = useMemo(() => ({
+    createAssistants,
     updateSubmission,
     loading,
     update,
