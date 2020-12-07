@@ -8,7 +8,7 @@ import {
   TechnicalMonitoring
 } from "../../../../../../components/admin/projects/monitoring"
 import { submission } from "../../../../../../graphql/submission"
-import { useCallback, useMemo } from "react"
+import React, { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { success, warning } from "../../../../../../helpers/alert"
 import { cloneDeep } from "lodash"
