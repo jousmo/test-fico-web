@@ -1,7 +1,6 @@
 import { CompositeField, SelectField, DeleteButton } from "../../../../shared";
 import { Row, Col, Input, Form, Checkbox, Skeleton, Alert, Button, Empty } from "antd";
 import { implementer } from "../../../../../helpers/selectOptions";
-import { DeleteOutlined } from "@ant-design/icons";
 
 export function GovernmentForm({data, isLoading, onChange, error}) {
   if(isLoading) {
@@ -29,9 +28,9 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
           defaultValue={data?.Implementer?.councilMembers}
           onClickAdd={(addNew) => addNew({name: "", charge: "", remuneration: false})}
           addLabel="Agregar directivo">
-          {({ items, updateItem, removeItem }) => 
+          {({ items, updateItem, removeItem }) =>
             <div>
-              { items.map((item, index) => 
+              { items.map((item, index) =>
                 <Form layout="vertical">
                   <Row gutter={[10, 8]} justify="start">
                     <Col span={8}>

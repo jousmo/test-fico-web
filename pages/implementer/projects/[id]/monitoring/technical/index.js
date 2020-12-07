@@ -10,7 +10,7 @@ import {
 import { submission } from "../../../../../../graphql/submission"
 import React, { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { success, warning } from "../../../../../../helpers/alert"
+import { loadingAlert, success, warning } from "../../../../../../helpers/alert"
 import { cloneDeep } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
@@ -36,19 +36,55 @@ function TechnicalMonitoringPage({ client, query }) {
     submission.mutations.createProjectAssistants, { client: client }
   )
 
+  const [updateProjectAssistants] = useMutation(
+    submission.mutations.updateProjectAssistants, { client: client }
+  )
+
+  const [deleteProjectAssistants] = useMutation(
+    submission.mutations.deleteProjectAssistants, { client: client }
+  )
+
   const createAssistants = useCallback(async assistant => {
+    const saving = loadingAlert("Guardando", 0)
     try {
       await createProjectAssistants({
         variables: { data: assistant, id: query.id }
       })
       success()
+      saving()
       refetch()
-    }
-    catch(e) {
+    } catch(e) {
       warning()
       console.error(e)
     }
   }, [createProjectAssistants, refetch])
+
+  const updateAssistants = useCallback(async assistant => {
+    const saving = loadingAlert("Actualizando", 0)
+    try {
+      const { id, ...data } = assistant
+      await updateProjectAssistants({ variables: { data, id } })
+      success("Actualizado correctamente")
+      saving()
+      refetch()
+    } catch(e) {
+      warning()
+      console.error(e)
+    }
+  }, [updateProjectAssistants, refetch])
+
+  const deleteAssistants = useCallback(async id => {
+    const saving = loadingAlert("Eliminando", 0)
+    try {
+      await deleteProjectAssistants({ variables: { id } })
+      success("Eliminado correctamente")
+      saving()
+      refetch()
+    } catch(e) {
+      warning()
+      console.error(e)
+    }
+  }, [deleteProjectAssistants, refetch])
 
   const updateSubmission = useCallback(async submission => {
     try {
@@ -99,6 +135,8 @@ function TechnicalMonitoringPage({ client, query }) {
 
   const injectActions = useMemo(() => ({
     createAssistants,
+    updateAssistants,
+    deleteAssistants,
     updateSubmission,
     loading,
     update,
