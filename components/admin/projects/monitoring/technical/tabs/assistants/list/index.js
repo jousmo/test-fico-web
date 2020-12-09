@@ -1,7 +1,10 @@
 import React, { useState } from "react"
-import { Table, Empty, Tag } from "antd"
+import { Table, Empty, Tag, Space, Button } from "antd"
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
+import { translateGender, translateDate } from "./helper"
+import { DeleteButton } from "../../../../../../../shared"
 
-export function ListAssistants ({ dataSource }) {
+export function ListAssistants ({ dataSource, onEdit, onDelete }) {
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
 
   const onSelectChange = selectedRowKeys => {
@@ -46,10 +49,12 @@ export function ListAssistants ({ dataSource }) {
       <Table.Column
         width={1}
         dataIndex="gender"
+        render={text => translateGender(text)?.label}
         title="Sexo" />
       <Table.Column
         width={1}
         dataIndex="birthdate"
+        render={text => translateDate(text, "DD/MM/YYYY")}
         title="Fecha de nacimiento" />
       <Table.Column
         width={1}
@@ -83,6 +88,17 @@ export function ListAssistants ({ dataSource }) {
         )}
         dataIndex="activities"
         title="Actividad" />
+      <Table.Column
+        width={1}
+        title=""
+        render={(text, record, index) => <Space>
+          <Button
+            shape="circle"
+            icon={<EditOutlined />}
+            onClick={() => onEdit(record, index)} />
+          <DeleteButton
+            onClick={() => onDelete(record)}/>
+        </Space>} />
     </Table>
   )
 }

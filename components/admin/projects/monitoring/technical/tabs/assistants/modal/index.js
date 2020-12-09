@@ -7,9 +7,17 @@ import {
 } from "antd"
 import { getSelectValue, warning } from "../../../../../../../../helpers"
 import { DateField } from "../../../../../../../shared"
+import { useEffect } from "react"
+import { merge } from "lodash"
 
-export function ModalAssistants({ onSave, onCancel, ...props }) {
+export function ModalAssistants({ onSave, onCancel, edit, ...props }) {
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    if(edit) {
+      form.setFieldsValue(edit)
+    }
+  }, [edit])
 
   const onCancelModal = () => {
     form.resetFields()
@@ -19,7 +27,12 @@ export function ModalAssistants({ onSave, onCancel, ...props }) {
   const onSubmit = async () => {
     try {
       await form.validateFields()
-      const values = await form.getFieldsValue()
+      let values = await form.getFieldsValue()
+
+      if(typeof edit?.index !== "undefined") {
+        values.index = edit.index
+        values = merge(edit, values)
+      }
 
       form.resetFields()
       onSave && onSave(values)
@@ -32,7 +45,7 @@ export function ModalAssistants({ onSave, onCancel, ...props }) {
   return (
     <Modal
       destroyOnClose
-      title="Agregar asistente"
+      title={edit ? "Editar asistente" : "Agregar asistente"}
       width={600}
       okText="Guardar"
       cancelText="Cancelar"
@@ -64,8 +77,7 @@ export function ModalAssistants({ onSave, onCancel, ...props }) {
         <Form.Item
           label="Género:"
           name="gender">
-          <Radio.Group
-            onChange={null}>
+          <Radio.Group>
             <Radio value="M">Masculino</Radio>
             <Radio value="F">Femenino</Radio>
             <Radio value="O">Prefiero no decirlo</Radio>

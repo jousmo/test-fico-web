@@ -25,14 +25,14 @@ const decoratedData = assistants => {
   const elements = cloneDeep(assistants)
   return elements?.map(el => {
     el.age = ageByBirthdate(el?.birthdate)
-    el.birthdate = translateDate(el?.birthdate, "DD/MM/YYYY")
     el.activities = `+${totalActivities(el?.assistance)}`
-    el.gender = translateGender(el?.gender)?.label
     el.times = 5
     return el
   })
 }
 
 module.exports = {
-  decoratedData
+  decoratedData,
+  translateGender,
+  translateDate
 }
