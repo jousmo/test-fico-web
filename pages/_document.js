@@ -5,7 +5,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <script src="/assets/chat.js"></script>
+          <script src="/assets/vendors.js"></script>
         </Head>
         <body>
           <Main />
