@@ -60,6 +60,7 @@ export function SubmissionSummary() {
         isLoading={loading} />
       <div className="btn-container">
         <Button
+          loading={loading}
           icon={<RightCircleOutlined />}
           onClick={() => router.push(editRoute)}
           className="implementer continue-submission">
@@ -72,6 +73,7 @@ export function SubmissionSummary() {
             okText="Aceptar"
             cancelText="Cancelar">
             <Button
+              loading={loading}
               icon={<SendOutlined />}
               className="implementer send-submission">
               Enviar solicitud
