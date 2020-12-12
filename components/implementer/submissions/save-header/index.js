@@ -9,7 +9,7 @@ export function SaveHeader({ save, isSaving, ...props }){
         <Button
           icon={<SaveOutlined />}
           loading={isSaving}
-          onClick={() => { save() }}
+          onClick={save}
           type="primary"
           {...props}>
           Guardar

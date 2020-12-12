@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
 import nookies, { destroyCookie } from "nookies"
 import { firebase } from "../../helpers/auth"
+import moment from "moment"
 
 const AuthContext = React.createContext({
   user: null
@@ -13,7 +14,10 @@ export function AuthProvider({ children }) {
     return firebase.auth().onIdTokenChanged(async user => {
       if (!user) {
         setUser(null)
-        nookies.set(undefined, "token", "", { path: "/" })
+        nookies.set(undefined, "token", "", {
+          path: "/",
+          expires: moment().add("1", "hour").toDate()
+        })
         destroyCookie(null, "token")
         return
       }

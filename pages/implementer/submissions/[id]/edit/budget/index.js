@@ -24,6 +24,8 @@ import {
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function Budget({ client, query }) {
+  const submissionId = query.id
+
   const [state, setState] = useState({
     budget: {},
     dirty: false,
@@ -31,7 +33,16 @@ function Budget({ client, query }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, { client: client }
+    submission.mutations.updateById, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getById,
+          variables: { id: query.id }
+        }
+      ]
+    }
   )
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -44,7 +55,8 @@ function Budget({ client, query }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, setState, updateSubmission, query.id)
+    await setSave(state, setState, updateSubmission, submissionId)
+    setState({ ...state, budget: {} })
   }, [state, updateSubmission])
 
   const readOnly = data?.Submission?.state === "PROJECT"
@@ -56,7 +68,7 @@ function Budget({ client, query }) {
     error,
     data,
     hiddenComments
-  }), [state, loading])
+  }), [state, loading, data])
 
   return (
     <PageContext.Provider value={pageData({ save, step: 2 })}>

@@ -13,6 +13,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
   const { user } = useAuth()
   const [state, setState] = useState({ isModalOpen: false, edit: false })
   const { Submission } = data || {}
+  const cleanData = concept => _.omit(concept, ['index', 'budgeted'])
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
@@ -39,8 +40,6 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
     setState({ ...state, isModalOpen: true, edit: item })
   }
 
-  const cleanData = concept => _.omit(concept, ['index', 'budgeted'])
-
   const readOnly = data?.Submission?.state === "PROJECT" ||
     (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
 
@@ -51,7 +50,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
         onChange={onChange}
         addLabel="Agregar concepto"
         isAddDisabled={readOnly}
-        defaultValue={Submission?.concepts}>
+        value={Submission?.concepts}>
         {({ items, addNew, removeItem, replaceItemAtIndex }) =>
           <>
             {state.isModalOpen &&
