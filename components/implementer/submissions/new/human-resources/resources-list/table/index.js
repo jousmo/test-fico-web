@@ -130,7 +130,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
           <CompositeField
             onChange={onConceptsChange}
             isAddDisabled
-            defaultValue={humanResources}>
+            value={humanResources}>
             {({items, updateItem, onFilesChange}) =>
               <div style={{overflowX: "auto"}}>
                 <div style={{width: "1650px"}}>

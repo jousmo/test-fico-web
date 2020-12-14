@@ -46,7 +46,7 @@ export function BeneficiaryItem({ data, onEdit, onDelete, index, readOnly, hidde
           <CommentButton
             name={`beneficiary_${index}`}
             index={index}
-            section="beneficiary" />
+            section="BENEFICIARY" />
         }
       </Typography.Title>
       <Typography.Text type="secondary">

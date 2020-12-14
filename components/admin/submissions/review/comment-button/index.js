@@ -6,8 +6,6 @@ import {
 } from "../../../../../contexts/admin/submissions/review/comments/context"
 
 export function CommentButton({index, name, section, ...props}) {
-  const [state, setState] = useState({ commentsNumber: 0 })
-
   const commentsContext = useContext(CommentsContext)
 
   if(!commentsContext) {
@@ -22,16 +20,13 @@ export function CommentButton({index, name, section, ...props}) {
     getCommentsNumber
   } = commentsContext
 
-  useEffect(() => {
-    const comments = getCommentsNumber(field)
-    setState({ commentsNumber: comments })
-  }, [name, section])
+  const comments = getCommentsNumber(field)
 
   const onClick = () => {
     openCommentsModal(field)
   }
 
-  if (state.commentsNumber > 0){
+  if (comments > 0){
     return (
       <Button
         size="small"
@@ -44,7 +39,7 @@ export function CommentButton({index, name, section, ...props}) {
         }
         onClick={onClick}
         icon={<MessageOutlined />}>
-        {state.commentsNumber}
+        {comments}
       </Button>
     )
   }

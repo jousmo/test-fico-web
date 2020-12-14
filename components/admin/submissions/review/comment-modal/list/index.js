@@ -31,7 +31,7 @@ export function CommentListing({ comments, onDelete, revision }){
                 <Typography.Text type="secondary">
                   {getReadableValue(submissionStatusOptions, element.revision)} -
                   &nbsp;
-                  {moment(element.createdAt).format("DD/MM/YYYY HH:MM")}
+                  {moment(element.createdAt).format("DD/MM/YYYY")}
                 </Typography.Text>
               } />
           </List.Item>

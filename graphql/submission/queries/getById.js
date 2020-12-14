@@ -33,6 +33,13 @@ export const getById = gql`
         id
         description
         orderIndex
+        comments {
+          id
+          fieldName
+          revision
+          comment
+          type
+        }
         indicators {
           id
           type
@@ -49,6 +56,7 @@ export const getById = gql`
           measurementPeriodicity
           products
           comments {
+            id
             fieldName
             revision
             comment
@@ -77,6 +85,7 @@ export const getById = gql`
             completedAt
           }
           comments {
+            id
             fieldName
             revision
             comment
@@ -93,6 +102,7 @@ export const getById = gql`
         age
         preventionLevel
         comments {
+          id
           fieldName
           revision
           comment
@@ -122,6 +132,7 @@ export const getById = gql`
           url
         }
         comments {
+          id
           fieldName
           revision
           comment
@@ -143,6 +154,7 @@ export const getById = gql`
         measurementPeriodicity
         products
         comments {
+          id
           fieldName
           revision
           comment
@@ -164,6 +176,7 @@ export const getById = gql`
         measurementPeriodicity
         products
         comments {
+          id
           fieldName
           revision
           comment
@@ -204,6 +217,7 @@ export const getById = gql`
             url
           }
           comments {
+            id
             fieldName
             revision
             comment
@@ -211,6 +225,7 @@ export const getById = gql`
           }
         }
         comments {
+          id
           fieldName
           revision
           comment
@@ -225,6 +240,7 @@ export const getById = gql`
       agreementNumber
       technicalOpinion
       comments {
+        id
         fieldName
         revision
         comment

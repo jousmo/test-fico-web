@@ -84,7 +84,7 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "title",
+                  name: `title-${objectiveIndex || 0}`,
                   section: indicatorType,
                   index: commentIndex}}>
                   Título del indicador
@@ -103,7 +103,7 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "description",
+                  name: `description-${objectiveIndex || 0}`,
                   section: indicatorType,
                   index: commentIndex}}>
                   Descripción
@@ -122,7 +122,7 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "methodology",
+                  name: `methodology-${objectiveIndex || 0}`,
                   section: indicatorType,
                   index: commentIndex}}>
                   Metodología
@@ -141,7 +141,7 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "formula",
+                  name: `formula-${objectiveIndex || 0}`,
                   section: indicatorType,
                   index: commentIndex}}>
                   Fórmula
@@ -160,7 +160,7 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "meansOfVerification",
+                  name: `meansOfVerification-${objectiveIndex || 0}`,
                   section: indicatorType,
                   index: commentIndex}}>
                   Medio de verificación
@@ -181,7 +181,7 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "baseline",
+                  name: `baseline-${objectiveIndex || 0}`,
                   section: indicatorType,
                   index: commentIndex}}>
                   Línea base
@@ -200,7 +200,7 @@ export function IndicatorModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "goal",
+                  name: `goal-${objectiveIndex || 0}`,
                   section: indicatorType,
                   index: commentIndex}}>
                   Meta

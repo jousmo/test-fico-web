@@ -38,7 +38,16 @@ function TechnicalSpecification({ client, query }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, { client: client }
+    submission.mutations.updateById, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getById,
+          variables: { id: query.id }
+        }
+      ]
+    }
   )
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -52,6 +61,7 @@ function TechnicalSpecification({ client, query }) {
 
   const save = useCallback(async () => {
     await setSave(state, setState, updateSubmission, submissionId)
+    setState({ ...state, technicalSpecification: {} })
   }, [state])
 
   const injectActions = useMemo(() => ({
@@ -60,7 +70,7 @@ function TechnicalSpecification({ client, query }) {
     error,
     data,
     review: true
-  }), [state, loading])
+  }), [state, loading, data])
 
   const readOnly = data?.Submission?.state === "PROJECT"
 

@@ -75,7 +75,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "title",
+                  name: `title-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Título de la actividad
@@ -94,7 +94,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "description",
+                  name: `description-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Descripción de indicador
@@ -113,7 +113,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "responsible",
+                  name: `responsible-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Responsable
@@ -132,7 +132,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "methodology",
+                  name: `methodology-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Metodología
@@ -151,7 +151,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "formula",
+                  name: `formula-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Fórmula
@@ -170,7 +170,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "meansOfVerification",
+                  name: `meansOfVerification-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Medio de verificación
@@ -191,7 +191,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "baseline",
+                  name: `baseline-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Línea base
@@ -210,7 +210,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "goal",
+                  name: `goal-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Meta
@@ -229,7 +229,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "place",
+                  name: `place-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Lugar de intervención
@@ -248,7 +248,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "months",
+                  name: `months-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Meses de implementación
@@ -267,7 +267,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "inputs",
+                  name: `inputs-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Insumos
@@ -286,7 +286,7 @@ export function ActivityModal({
               label={
                 <FieldLabel comentable={{
                   hidden: hiddenComments,
-                  name: "products",
+                  name: `products-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
                   Productos

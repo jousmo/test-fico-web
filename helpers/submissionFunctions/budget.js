@@ -1,6 +1,9 @@
 import { loadingAlert, success, warning } from "../alert"
+import { omit } from "lodash"
 
 export const setUpdateBudget = (budget, state, setState) => {
+  budget.concepts = budget?.concepts?.map(concept => omit(concept, ["budgeted"])) || []
+
   const newBudget = {
     ...state.budget,
     ...budget
