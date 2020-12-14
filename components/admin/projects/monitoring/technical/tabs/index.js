@@ -7,6 +7,7 @@ import { MonitoringObstacles } from "./obstacles"
 import { MonitoringSchedule } from "./schedule"
 import "./style.sass"
 import { MonitoringAssistants } from "./assistants"
+import { MonitoringBeneficiaries } from "./beneficiaries"
 
 function TechnicalMonitoringTabs({ data }) {
   const [filterState, setFilterState] = useState([])
@@ -29,6 +30,7 @@ function TechnicalMonitoringTabs({ data }) {
         <MonitoringAssistants data={data} dateFilter={filterState} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Beneficiarios" key="2">
+        <MonitoringBeneficiaries data={data} dateFilter={filterState} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Objetivos y actividades" key="3">
         <MonitoringObjectives data={data} dateFilter={filterState} />

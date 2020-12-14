@@ -4,20 +4,14 @@ import { EditOutlined } from "@ant-design/icons"
 import { translateGender, translateDate } from "../../../../../../../../helpers/assistantsBeneficiaries"
 import { DeleteButton } from "../../../../../../../shared"
 
-export function ListAssistants ({ dataSource, onEdit, onDelete, selectedRows, setSelectedRows }) {
+export function ListBeneficiaries ({ dataSource, onEdit, onDelete, selectedRows, setSelectedRows }) {
   const onSelectChange = (selectedRowKeys, selectedRows) => {
     setSelectedRows(selectedRows)
   }
 
-  const onSelectDisabled = record => ({
-    disabled: record?.beneficiary,
-    name: record?.folio
-  })
-
   const rowSelection = {
     selectedRows,
-    onChange: onSelectChange,
-    getCheckboxProps: onSelectDisabled
+    onChange: onSelectChange
   }
 
   return (
@@ -27,7 +21,7 @@ export function ListAssistants ({ dataSource, onEdit, onDelete, selectedRows, se
       style={{marginTop: "1.5rem"}}
       dataSource={dataSource}
       size="small"
-      locale={{emptyText: <Empty description="Agrega asistentes" />}}
+      locale={{emptyText: <Empty description="Agrega beneficiario" />}}
       pagination={true}>
       <Table.Column
         width={1}

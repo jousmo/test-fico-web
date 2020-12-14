@@ -1,7 +1,7 @@
 import { Card, Button, Space } from "antd"
 import { CompositeField, ConfirmModal } from "../../../../../../shared"
 import { ListAssistants } from "./list"
-import { decoratedData } from "./list/helper"
+import { decoratedData } from "../../../../../../../helpers/assistantsBeneficiaries"
 import { ModalAssistants } from "./modal"
 import React, { useContext, useState } from "react"
 import { omit } from "lodash"
@@ -29,8 +29,8 @@ export function MonitoringAssistants({ data, dateFilter }) {
   }
 
   const onOk = () => {
-    createBeneficiaries && createBeneficiaries(selectedRows)
     setSelectedRows([])
+    createBeneficiaries && createBeneficiaries(selectedRows)
     onToggleConfirm()
   }
 

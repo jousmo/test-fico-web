@@ -336,6 +336,26 @@ export const getById = gql`
           assistanceAt
         }
       }
+      projectBeneficiaries{
+        id
+        folio
+        name
+        lastName
+        maidenName
+        gender
+        birthdate
+        curp
+        phone
+        state
+        municipality
+        colony
+        projectAssistantId
+        assistance{
+          id
+          activity
+          assistanceAt
+        }
+      }
     }
   }
 `
