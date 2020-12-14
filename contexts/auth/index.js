@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import nookies, { destroyCookie } from "nookies"
+import nookies from "nookies"
 import { firebase } from "../../helpers/auth"
 import moment from "moment"
 
@@ -12,21 +12,24 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     return firebase.auth().onIdTokenChanged(async user => {
-      if (!user) {
-        setUser(null)
-        nookies.set(undefined, "token", "", {
+      if (user) {
+        const { claims } = await user.getIdTokenResult()
+        const token = await user.getIdToken()
+        setUser({ ...user, claims })
+        nookies.set(undefined, "token", token, {
           path: "/",
           expires: moment().add("1", "hour").toDate()
         })
-        destroyCookie(null, "token")
-        return
       }
-      const { claims } = await user.getIdTokenResult()
-
-      const token = await user.getIdToken()
-      setUser({ ...user, claims })
-      nookies.set(undefined, "token", token, { path: "/" })
     })
+  }, [])
+
+  useEffect(() => {
+    const handle = setInterval(async () => {
+      const user = firebase.auth().currentUser
+      if (user) await user.getIdToken(true)
+    }, 10 * 60 * 1000)
+    return () => clearInterval(handle)
   }, [])
 
   return (

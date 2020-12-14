@@ -1,19 +1,23 @@
-import React, { useState } from "react"
+import React from "react"
 import { Table, Empty, Tag, Space, Button } from "antd"
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
+import { EditOutlined } from "@ant-design/icons"
 import { translateGender, translateDate } from "./helper"
 import { DeleteButton } from "../../../../../../../shared"
 
-export function ListAssistants ({ dataSource, onEdit, onDelete }) {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([])
-
-  const onSelectChange = selectedRowKeys => {
-    setSelectedRowKeys(selectedRowKeys)
+export function ListAssistants ({ dataSource, onEdit, onDelete, selectedRows, setSelectedRows }) {
+  const onSelectChange = (selectedRowKeys, selectedRows) => {
+    setSelectedRows(selectedRows)
   }
 
+  const onSelectDisabled = record => ({
+    disabled: record?.beneficiary,
+    name: record?.folio
+  })
+
   const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange
+    selectedRows,
+    onChange: onSelectChange,
+    getCheckboxProps: onSelectDisabled
   }
 
   return (

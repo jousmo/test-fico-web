@@ -329,6 +329,7 @@ export const getById = gql`
         state
         municipality
         colony
+        beneficiary
         assistance{
           id
           activity

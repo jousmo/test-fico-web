@@ -11,13 +11,13 @@ import { submission } from "../../../../../../graphql/submission"
 import React, { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { loadingAlert, success, warning } from "../../../../../../helpers/alert"
-import { cloneDeep } from "lodash"
+import { cloneDeep, omit } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function TechnicalMonitoringPage({ client, query }) {
   const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: query.id }
+    variables: { id: query?.id }
   })
 
   const [createMonitoring] = useMutation(
@@ -36,6 +36,10 @@ function TechnicalMonitoringPage({ client, query }) {
     submission.mutations.createProjectAssistants, { client: client }
   )
 
+  const [createProjectBeneficiaries] = useMutation(
+    submission.mutations.createProjectBeneficiaries, { client: client }
+  )
+
   const [updateProjectAssistants] = useMutation(
     submission.mutations.updateProjectAssistants, { client: client }
   )
@@ -43,6 +47,25 @@ function TechnicalMonitoringPage({ client, query }) {
   const [deleteProjectAssistants] = useMutation(
     submission.mutations.deleteProjectAssistants, { client: client }
   )
+
+  const createBeneficiaries = useCallback(async beneficiaries => {
+    const saving = loadingAlert("Creando beneficiarios", 0)
+    try {
+      for (const beneficiary of beneficiaries) {
+        const { id } = beneficiary
+        const data = omit(beneficiary, ['id', 'folio', 'age', 'activities', 'times', 'beneficiary'])
+        data.projectAssistantId = id
+        await createProjectBeneficiaries({ variables: { data, id: query.id } })
+        await updateProjectAssistants({ variables: { data: { beneficiary: true }, id } })
+      }
+      success()
+      saving()
+      refetch()
+    } catch(e) {
+      warning()
+      console.error(e)
+    }
+  }, [createProjectBeneficiaries, updateProjectAssistants, refetch])
 
   const createAssistants = useCallback(async assistant => {
     const saving = loadingAlert("Guardando", 0)
@@ -134,6 +157,7 @@ function TechnicalMonitoringPage({ client, query }) {
   }, [updateMonitoring, refetch])
 
   const injectActions = useMemo(() => ({
+    createBeneficiaries,
     createAssistants,
     updateAssistants,
     deleteAssistants,

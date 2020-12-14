@@ -1,5 +1,5 @@
-import { Card } from "antd"
-import { CompositeField } from "../../../../../../shared"
+import { Card, Button, Space } from "antd"
+import { CompositeField, ConfirmModal } from "../../../../../../shared"
 import { ListAssistants } from "./list"
 import { decoratedData } from "./list/helper"
 import { ModalAssistants } from "./modal"
@@ -10,12 +10,29 @@ import { AdminSubmissionContext } from "../../../../../../../contexts/admin/subm
 export function MonitoringAssistants({ data, dateFilter }) {
   const { Submission } = data || {}
   const dataSource = decoratedData(Submission?.assistants)
-  const { createAssistants, updateAssistants, deleteAssistants } = useContext(AdminSubmissionContext)
+  const {
+    createAssistants,
+    updateAssistants,
+    deleteAssistants,
+    createBeneficiaries
+  } = useContext(AdminSubmissionContext)
+  const [selectedRows, setSelectedRows] = useState([])
 
   const [state, setState] = useState({
+    openConfirm: false,
     isModalOpen: false,
     edit: false
   })
+
+  const onToggleConfirm = () => {
+    setState({ ...state, openConfirm: !state.openConfirm })
+  }
+
+  const onOk = () => {
+    createBeneficiaries && createBeneficiaries(selectedRows)
+    setSelectedRows([])
+    onToggleConfirm()
+  }
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
@@ -49,6 +66,11 @@ export function MonitoringAssistants({ data, dateFilter }) {
 
   return (
     <Card className="assistants">
+      <Space size="middle" style={{marginBottom: "1rem"}}>
+        <Button>Agregar asistencia</Button>
+        <Button onClick={onToggleConfirm}>Convertir a beneficiario</Button>
+        <Button type="primary">Descargar</Button>
+      </Space>
       <CompositeField
         onClickAdd={onClickAdd}
         onChange={null}
@@ -64,12 +86,22 @@ export function MonitoringAssistants({ data, dateFilter }) {
               edit={state.edit}
               className="fico modal-assistants"/>
             <ListAssistants
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
               dataSource={items}
               onEdit={onEdit}
               onDelete={onDelete}/>
           </>
         }
       </CompositeField>
+      <ConfirmModal
+        cancelText="Cancelar"
+        onCancel={onToggleConfirm}
+        onOk={onOk}
+        okButtonProps={{ disabled: !selectedRows.length }}
+        okText="Crear beneficiarios"
+        title="¿Estas seguro de convertir estos asistentes a beneficiarios?"
+        visible={state?.openConfirm}/>
     </Card>
   )
 }
