@@ -1,11 +1,13 @@
 import { message } from "antd"
 import { firebase } from "./index"
-import { destroyCookie } from "nookies"
+import nookies from "nookies"
 
 export async function Logout() {
   const loggingOut = message.loading("Cerrando sesión")
   await firebase.auth().signOut()
-  destroyCookie(null, "token")
+  nookies.set(undefined, "token", "", {
+    path: "/"
+  })
   window.location.href = "/"
   loggingOut()
 }
