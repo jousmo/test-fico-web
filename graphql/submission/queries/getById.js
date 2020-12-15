@@ -329,6 +329,27 @@ export const getById = gql`
         state
         municipality
         colony
+        beneficiary
+        assistance{
+          id
+          activity
+          assistanceAt
+        }
+      }
+      projectBeneficiaries{
+        id
+        folio
+        name
+        lastName
+        maidenName
+        gender
+        birthdate
+        curp
+        phone
+        state
+        municipality
+        colony
+        projectAssistantId
         assistance{
           id
           activity

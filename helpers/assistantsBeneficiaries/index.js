@@ -1,7 +1,7 @@
 import { extendMoment } from "moment-range"
 import Moment from "moment"
 import { cloneDeep, uniq } from "lodash"
-import { genderTypes } from "../../../../../../../../helpers/selectOptions/implementer/submission"
+import { genderTypes } from "../selectOptions/implementer/submission"
 const moment = extendMoment(Moment)
 moment.locale("es")
 
