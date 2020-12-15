@@ -3,8 +3,9 @@ import { CompositeField } from "../../../../../../shared"
 import { ListBeneficiaries } from "./list"
 import { decoratedData } from "../../../../../../../helpers/assistantsBeneficiaries"
 import { ModalBeneficiaries } from "./modal"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { omit } from "lodash"
+import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 
 export function MonitoringBeneficiaries({ data, dateFilter }) {
   const { Submission } = data || {}
@@ -15,6 +16,7 @@ export function MonitoringBeneficiaries({ data, dateFilter }) {
     isModalOpen: false,
     edit: false
   })
+  const { createBeneficiaries, updateBeneficiaries, deleteBeneficiaries } = useContext(AdminSubmissionContext)
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
@@ -29,9 +31,9 @@ export function MonitoringBeneficiaries({ data, dateFilter }) {
       const updateBeneficiary = omit(beneficiary,
         ['index', 'folio', 'age', 'activities', 'times']
       )
-      // updateAssistants && updateAssistants(updateAssistant)
+      updateBeneficiaries && updateBeneficiaries(updateBeneficiary)
     } else {
-      // createAssistants && createAssistants(assistant)
+      createBeneficiaries && createBeneficiaries(beneficiary, false)
     }
 
     onCancel()
@@ -42,14 +44,14 @@ export function MonitoringBeneficiaries({ data, dateFilter }) {
     setState({ ...state, isModalOpen: true, edit: item })
   }
 
-  const onDelete = ({ id }) => {
-    // deleteAssistants && deleteAssistants(id)
+  const onDelete = ({ id, projectAssistantId = null }) => {
+    deleteBeneficiaries && deleteBeneficiaries(id, projectAssistantId)
   }
 
   return (
     <Card className="assistants">
       <Space size="middle" style={{marginBottom: "1rem"}}>
-        <Button>Agregar asistencia</Button>
+        <Button>Relacionar a objetivo especifico</Button>
         <Button type="primary">Descargar</Button>
       </Space>
       <CompositeField
