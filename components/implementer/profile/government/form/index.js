@@ -2,7 +2,7 @@ import { CompositeField, SelectField, DeleteButton } from "../../../../shared";
 import { Row, Col, Input, Form, Checkbox, Skeleton, Alert, Button, Empty } from "antd";
 import { implementer } from "../../../../../helpers/selectOptions";
 
-export function GovernmentForm({data, isLoading, onChange, error}) {
+export function GovernmentForm({data, isLoading, onChange, error, disabled}) {
   if(isLoading) {
     return <Skeleton active />
   }
@@ -27,7 +27,8 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
           onChange={onChange}
           defaultValue={data?.Implementer?.councilMembers}
           onClickAdd={(addNew) => addNew({name: "", charge: "", remuneration: false})}
-          addLabel="Agregar directivo">
+          addLabel="Agregar directivo"
+          isAddDisabled={disabled}>
           {({ items, updateItem, removeItem }) =>
             <div>
               { items.map((item, index) =>
@@ -42,7 +43,8 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
                           name="name"
                           defaultValue={item.name}
                           onChange={updateItem(index)}
-                          type="text" />
+                          type="text"
+                          disabled={disabled}/>
                       </Form.Item>
                     </Col>
                     <Col span={8}>
@@ -54,7 +56,8 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
                           name="charge"
                           defaultValue={item.charge}
                           onChange={updateItem(index)}
-                          options={implementer.profile.chargeTypes} />
+                          options={implementer.profile.chargeTypes}
+                          disabled={disabled}/>
                       </Form.Item>
                     </Col>
                     <Col span={8}>
@@ -65,10 +68,11 @@ export function GovernmentForm({data, isLoading, onChange, error}) {
                           id="remuneration"
                           name="remuneration"
                           onChange={updateItem(index)}
-                          checked={item.remuneration}>
+                          checked={item.remuneration}
+                          disabled={disabled}>
                           No recibe remuneración
                         </Checkbox>
-                        <DeleteButton onClick={removeItem(index)} />
+                        {!disabled && <DeleteButton onClick={removeItem(index)} />}
                       </Form.Item>
                     </Col>
                   </Row>

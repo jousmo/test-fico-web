@@ -17,7 +17,8 @@ export function GeneralInformationForm({
   error,
   isGovernment,
   addDocument,
-  removeDocument
+  removeDocument,
+  disabled
 }) {
   if(isLoading) {
     return <Skeleton active />
@@ -65,7 +66,8 @@ export function GeneralInformationForm({
               name="type"
               onChange={onChange}
               defaultValue={data?.Implementer?.type || "CIVIL_ORGANIZATION"}
-              options={implementer.profile.implementerTypes} />
+              options={implementer.profile.implementerTypes}
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -73,7 +75,10 @@ export function GeneralInformationForm({
             style={{display: "inline", visibility: "hidden"}}
             label="Tipo de la implementadora">
             <Select>
-              <Select.Option value="1">Test</Select.Option>
+              <Select.Option
+                value="1"
+                disabled={disabled}>Test
+              </Select.Option>
             </Select>
           </Form.Item>
         </Col>
@@ -86,7 +91,8 @@ export function GeneralInformationForm({
               name="name"
               defaultValue={data?.Implementer?.name}
               onChange={onChange}
-              type="text" />
+              type="text"
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -98,7 +104,8 @@ export function GeneralInformationForm({
               name="director"
               defaultValue={data?.Implementer?.director}
               onChange={onChange}
-              type="text" />
+              type="text"
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -110,7 +117,8 @@ export function GeneralInformationForm({
               name="rfc"
               defaultValue={data?.Implementer?.rfc}
               onChange={onChange}
-              type="text" />
+              type="text"
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Visibility visible={!isGovernment}>
@@ -123,7 +131,8 @@ export function GeneralInformationForm({
                 name="commercialName"
                 defaultValue={data?.Implementer?.commercialName}
                 onChange={onChange}
-                type="text" />
+                type="text"
+                disabled={disabled}/>
             </Form.Item>
           </Col>
         </Visibility>
@@ -136,7 +145,8 @@ export function GeneralInformationForm({
               name="commercialAddress"
               defaultValue={data?.Implementer?.commercialAddress}
               onChange={onChange}
-              type="text" />
+              type="text"
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -148,7 +158,8 @@ export function GeneralInformationForm({
               name="fiscalAddress"
               defaultValue={data?.Implementer?.fiscalAddress}
               onChange={onChange}
-              type="text" />
+              type="text"
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -160,7 +171,8 @@ export function GeneralInformationForm({
               name="phone"
               defaultValue={data?.Implementer?.phone}
               onChange={onChange}
-              type="tel" />
+              type="tel"
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -172,7 +184,8 @@ export function GeneralInformationForm({
               name="legalRepresentative"
               defaultValue={data?.Implementer?.legalRepresentative}
               onChange={onChange}
-              type="text" />
+              type="text"
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -184,7 +197,8 @@ export function GeneralInformationForm({
               name="email"
               defaultValue={data?.Implementer?.email}
               onChange={onChange}
-              type="text" />
+              type="text"
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Visibility visible={!isGovernment}>
@@ -196,7 +210,8 @@ export function GeneralInformationForm({
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
                 maxFile={1}
-                accept={"application/pdf"}>
+                accept={"application/pdf"}
+                disabled={disabled}>
                 Subir oficio
               </UploadButtonForm>
             </Form.Item>
@@ -211,7 +226,8 @@ export function GeneralInformationForm({
               name="mission"
               defaultValue={data?.Implementer?.mission}
               onChange={onChange}
-              autoSize={{minRows: 3}} />
+              autoSize={{minRows: 3}}
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={24}>
@@ -223,7 +239,8 @@ export function GeneralInformationForm({
               name="vision"
               defaultValue={data?.Implementer?.vision}
               onChange={onChange}
-              autoSize={{minRows: 3}} />
+              autoSize={{minRows: 3}}
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Visibility visible={!isGovernment}>
@@ -236,7 +253,8 @@ export function GeneralInformationForm({
                 name="history"
                 defaultValue={data?.Implementer?.history}
                 onChange={onChange}
-                autoSize={{minRows: 3}} />
+                autoSize={{minRows: 3}}
+                disabled={disabled}/>
             </Form.Item>
           </Col>
         </Visibility>
@@ -249,7 +267,8 @@ export function GeneralInformationForm({
               name="institutionalExperience"
               defaultValue={data?.Implementer?.institutionalExperience}
               onChange={onChange}
-              autoSize={{minRows: 3}} />
+              autoSize={{minRows: 3}}
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={24}>
@@ -261,7 +280,8 @@ export function GeneralInformationForm({
               name="previousSupports"
               defaultValue={data?.Implementer?.previousSupports}
               onChange={onChange}
-              autoSize={{minRows: 3}} />
+              autoSize={{minRows: 3}}
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={24}>
@@ -273,7 +293,8 @@ export function GeneralInformationForm({
               name="alliances"
               defaultValue={data?.Implementer?.alliances}
               onChange={onChange}
-              autoSize={{minRows: 3}} />
+              autoSize={{minRows: 3}}
+              disabled={disabled}/>
           </Form.Item>
         </Col>
         <Col span={24}>
@@ -285,7 +306,8 @@ export function GeneralInformationForm({
               name="incomesAndExpenses"
               defaultValue={data?.Implementer?.incomesAndExpenses}
               onChange={onChange}
-              autoSize={{minRows: 3}} />
+              autoSize={{minRows: 3}}
+              disabled={disabled}/>
           </Form.Item>
         </Col>
       </Row>

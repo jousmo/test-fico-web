@@ -13,6 +13,8 @@ import {
 } from "../../../helpers/selectOptions/getReadableValue"
 import numeral from "numeral"
 import { StatusTag } from "../../admin/projects/list/table/status-tag"
+import { EyeOutlined } from "@ant-design/icons"
+import Link from "next/link"
 
 function SummaryBody({ data, admin, extra }) {
   const {
@@ -33,7 +35,9 @@ function SummaryBody({ data, admin, extra }) {
       title={<Typography.Title level={3}>{name}</Typography.Title>}>
       {admin &&
         <Descriptions.Item label="Implementadora" span={5}>
-          {implementer?.name}
+          <Link href={`/admin/implementer/${implementer?.id}`}>
+            <a>{implementer?.name}</a>
+          </Link>
         </Descriptions.Item>
       }
       <Descriptions.Item span={5}>

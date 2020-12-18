@@ -9,6 +9,9 @@ export const getAll = gql`
       role
       displayName
       disabled
+      implementer{
+        id
+      }
     }
   }
 `
