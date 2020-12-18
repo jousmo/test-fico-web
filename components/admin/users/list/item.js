@@ -2,6 +2,7 @@ import { List, Space } from "antd"
 import { MailOutlined, UserOutlined, CheckSquareOutlined, CloseSquareOutlined } from "@ant-design/icons"
 import { Avatar, IconLabel } from "../../../shared"
 import { ActionButton } from "../../../shared/action-button"
+import Link from "next/link"
 
 export function UserItem ({ user, onRecovery, onEdit, onDisabled }) {
   const ROLES = {
@@ -13,7 +14,13 @@ export function UserItem ({ user, onRecovery, onEdit, onDisabled }) {
     <List.Item>
       <List.Item.Meta
         avatar={<Avatar>{user?.displayName}</Avatar>}
-        title={user?.displayName}
+        title={
+          user?.role !== "ADMIN" ? (
+            <Link href={`/admin/implementer/${user?.implementer?.id}`}>
+              <a>{user?.displayName}</a>
+            </Link>
+          ) : user?.displayName
+        }
         description={
           <>
             <IconLabel icon={<UserOutlined />}>

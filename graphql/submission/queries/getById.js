@@ -5,6 +5,7 @@ export const getById = gql`
     Submission(id: $id) {
       id
       implementer {
+        id
         name
         councilMembers {
           name

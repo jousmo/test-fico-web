@@ -6,7 +6,7 @@ import { useState } from "react"
 import * as cellFormat from "../../../../../helpers/cellFormat";
 import { money } from "../../../../../helpers/valueFormat"
 
-function ProjectsForm({ data, onChange }) {
+function ProjectsForm({ data, onChange, disabled }) {
   const [state, setState] = useState({ isModalOpen: false })
 
   const onClickAdd = () => {
@@ -44,7 +44,8 @@ function ProjectsForm({ data, onChange }) {
           onChange={onChange}
           defaultValue={data?.Implementer?.projects}
           onClickAdd={onClickAdd}
-          addLabel="Agregar proyecto">
+          addLabel="Agregar proyecto"
+          isAddDisabled={disabled}>
           {({ items, addNew, removeItem }) =>
             <div>
               <ProjectModal
@@ -77,10 +78,12 @@ function ProjectsForm({ data, onChange }) {
                   title="Objetivo general"
                   render={value => <Tooltip length={15} value={value}/>}
                   dataIndex="objective" />
-                <Table.Column
-                  title=""
-                  key="actions"
-                  render={cellFormat.deleteAction(removeItem)} />
+                {!disabled && (
+                  <Table.Column
+                    title=""
+                    key="actions"
+                    render={cellFormat.deleteAction(removeItem)} />
+                )}
               </Table>
             </div>
           }

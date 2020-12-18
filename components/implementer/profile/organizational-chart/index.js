@@ -8,9 +8,9 @@ export function OrganizationalChart() {
     removeDocument,
     addDocument,
     loading,
-    data
+    data,
+    disabled = false
   } = useContext(ImplementerProfileContext)
-
 
   if(loading) {
     return <Skeleton active />
@@ -49,7 +49,8 @@ export function OrganizationalChart() {
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
                 maxFile={1}
-                accept={"application/pdf"}>
+                accept={"application/pdf"}
+                disabled={disabled}>
                 Subir
               </UploadButtonForm>
             </Form.Item>

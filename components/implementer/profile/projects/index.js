@@ -8,7 +8,8 @@ export function Projects() {
     updateGeneralInformation,
     loading,
     error,
-    data
+    data,
+    disabled = false
   } = useContext(ImplementerProfileContext)
 
   const onChange = data => {
@@ -21,7 +22,8 @@ export function Projects() {
         data={data}
         isLoading={loading}
         error={error}
-        onChange={onChange} />
+        onChange={onChange}
+        disabled={disabled} />
     </Section>
   )
 }

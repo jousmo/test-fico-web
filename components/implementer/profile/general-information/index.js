@@ -14,7 +14,8 @@ export function GeneralInformation() {
     loading,
     error,
     data,
-    isGovernment
+    isGovernment,
+    disabled = false
   } = useContext(ImplementerProfileContext)
 
   const onChange = ({ currentTarget: { id, value } }) => {
@@ -33,7 +34,8 @@ export function GeneralInformation() {
         isLoading={loading}
         addDocument={addDocument}
         removeDocument={removeDocument}
-        isGovernment={isGovernment()} />
+        isGovernment={isGovernment()}
+        disabled={disabled} />
     </Section>
   )
 }

@@ -10,7 +10,8 @@ export function LegalDocuments() {
     loading,
     addDocument,
     isGovernment,
-    removeDocument
+    removeDocument,
+    disabled = false
   } = useContext(ImplementerProfileContext)
 
   return (
@@ -21,7 +22,8 @@ export function LegalDocuments() {
         data={data?.Implementer}
         addDocument={addDocument}
         removeDocument={removeDocument}
-        isGovernment={isGovernment()} />
+        isGovernment={isGovernment()}
+        disabled={disabled}/>
     </Section>
   )
 }
