@@ -65,6 +65,12 @@ export default function AdminMenu({ step, submenu }) {
           <a>Usuarios</a>
         </Link>
       </Menu.Item>
+      <Menu.Item key="census">
+        <TeamOutlined />
+        <Link href="/admin/census">
+          <a>Padrón de beneficiarios</a>
+        </Link>
+      </Menu.Item>
     </Menu>
   )
 }
