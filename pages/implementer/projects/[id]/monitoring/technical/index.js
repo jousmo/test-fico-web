@@ -73,29 +73,30 @@ function TechnicalMonitoringPage({ client, query }) {
         })
       }
       success()
-      saving()
       refetch()
     } catch(e) {
       warning()
       console.error(e)
     }
+    saving()
   }, [createProjectBeneficiaries, updateProjectAssistants, refetch])
 
   const updateBeneficiaries = useCallback(async beneficiary => {
     const saving = loadingAlert("Actualizando", 0)
     try {
-      const { id, projectAssistantId, ...data } = beneficiary
+      const { id, ...data } = beneficiary
       await updateProjectBeneficiaries({ variables: { data, id } })
-      if (projectAssistantId) {
-        await updateProjectAssistants({ variables: { data, id: projectAssistantId } })
+      if (data?.projectAssistantId) {
+        const { projectAssistantId, ...newData } = data
+        await updateProjectAssistants({ variables: { data: newData, id: data?.projectAssistantId } })
       }
       success("Actualizado correctamente")
-      saving()
       refetch()
     } catch(e) {
       warning()
       console.error(e)
     }
+    saving()
   }, [updateProjectBeneficiaries, updateProjectAssistants, refetch])
 
   const deleteBeneficiaries = useCallback(async (id, projectAssistantId) => {
@@ -106,12 +107,12 @@ function TechnicalMonitoringPage({ client, query }) {
         await updateProjectAssistants({ variables: { data: { beneficiary: false }, id: projectAssistantId } })
       }
       success("Eliminado correctamente")
-      saving()
       refetch()
     } catch(e) {
       warning()
       console.error(e)
     }
+    saving()
   }, [deleteProjectBeneficiaries, updateProjectAssistants, refetch])
 
   const createAssistants = useCallback(async assistant => {
@@ -121,12 +122,12 @@ function TechnicalMonitoringPage({ client, query }) {
         variables: { data: assistant, id: query.id }
       })
       success()
-      saving()
       refetch()
     } catch(e) {
-      warning()
+      warning(e.graphQLErrors[0].message)
       console.error(e)
     }
+    saving()
   }, [createProjectAssistants, refetch])
 
   const updateAssistants = useCallback(async assistant => {
@@ -135,25 +136,25 @@ function TechnicalMonitoringPage({ client, query }) {
       const { id, ...data } = assistant
       await updateProjectAssistants({ variables: { data, id } })
       success("Actualizado correctamente")
-      saving()
       refetch()
     } catch(e) {
       warning()
       console.error(e)
     }
-  }, [updateProjectAssistants, refetch])
+    saving()
+  }, [updateProjectAssistants, updateProjectBeneficiaries, refetch])
 
   const deleteAssistants = useCallback(async id => {
     const saving = loadingAlert("Eliminando", 0)
     try {
       await deleteProjectAssistants({ variables: { id } })
       success("Eliminado correctamente")
-      saving()
       refetch()
     } catch(e) {
       warning()
       console.error(e)
     }
+    saving()
   }, [deleteProjectAssistants, refetch])
 
   const updateSubmission = useCallback(async submission => {
@@ -220,7 +221,7 @@ function TechnicalMonitoringPage({ client, query }) {
 
   return (
     <PageContext.Provider
-      value={{ type: "admin", step: "active", submenu: "projects" }}>
+      value={{ type: "implementer", step: "active", submenu: "projects" }}>
       <AdminSubmissionContext.Provider value={injectActions}>
         <Layout subheader={false}>
           <TechnicalMonitoring />
