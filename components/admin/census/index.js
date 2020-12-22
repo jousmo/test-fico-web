@@ -14,7 +14,7 @@ export function CensusList() {
     <section>
       <PageHeader title="Padrón de beneficiarios y asistentes" />
       <CensusTabs
-        data={data}
+        data={data?.Census}
         error={error}
         isLoading={loading} />
     </section>

@@ -37,7 +37,7 @@ export function ListCensus ({ title, dataSource }) {
         width={1}
         dataIndex="birthdate"
         render={text => translateDate(text, "DD/MM/YYYY")}
-        title="Fecha de nac" />
+        title="Fecha de nacimiento" />
       <Table.Column
         width={1}
         dataIndex="curp"
@@ -59,7 +59,7 @@ export function ListCensus ({ title, dataSource }) {
       {title !== "asistentes" && (
         <Table.Column
           width={1}
-          dataIndex="problem"
+          dataIndex="problematic"
           title="Problemática" />
       )}
       <Table.Column
@@ -76,8 +76,8 @@ export function ListCensus ({ title, dataSource }) {
             {text}
           </>
         )}
-        dataIndex="activities"
-        title="Eje" />
+        dataIndex={title === "asistentes" ? "activities" : "axis" }
+        title={title === "asistentes" ? "Actividades" : "Eje" }/>
       <Table.Column
         width={1}
         render={text => (
@@ -92,8 +92,8 @@ export function ListCensus ({ title, dataSource }) {
             {text}
           </>
         )}
-        dataIndex="activities"
-        title="Actividad" />
+        dataIndex="projects"
+        title="Proyectos" />
     </Table>
   )
 }

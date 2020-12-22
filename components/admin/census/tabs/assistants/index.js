@@ -1,13 +1,11 @@
 import { ListCensus } from "../../list"
-import React, { useContext } from "react"
+import React from "react"
 import { SearchFieldPrimary } from "../../../../shared"
-import { AdminSubmissionContext } from "../../../../../contexts/admin/submissions/show"
-import { decoratedData } from "../../../../../helpers/assistantsBeneficiaries"
+import { decoratedCensusData } from "../../../../../helpers/assistantsBeneficiaries"
 import { Button, Card, Space } from "antd"
 
-export function CensusAssistants() {
-  const { data } = useContext(AdminSubmissionContext)
-  const dataSource = decoratedData(data?.assistants)
+export function CensusAssistants({ data }) {
+  const dataSource = decoratedCensusData(data)
 
   return (
     <Card className="assistants">
@@ -15,7 +13,7 @@ export function CensusAssistants() {
       <Space size="middle" style={{margin: "1rem 0", float: "right" }}>
         <Button type="primary">Descargar</Button>
       </Space>
-      <ListCensus title="asistentes" dataSource={dataSource}/>
+      <ListCensus title="asistentes" dataSource={dataSource} />
     </Card>
   )
 }
