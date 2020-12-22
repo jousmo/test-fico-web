@@ -24,7 +24,7 @@ function ProjectsForm({ data, onChange, disabled }) {
 
   const getFinancing = row => {
     const result = { own: 0, public: 0, private: 0 }
-    row.financing.forEach(el => {
+    row.financing?.forEach(el => {
       if (el.type === "OWN") {
         result.own = result.own + el.amount
       } else if (el.type === "PRIVATE") {
@@ -63,7 +63,7 @@ function ProjectsForm({ data, onChange, disabled }) {
                   dataIndex="name" />
                 <Table.Column
                   title="Monto"
-                  render={(t, row) => money(row.financing.reduce((prev, current) => prev + current.amount, 0))}
+                  render={(t, row) => money(row.financing?.reduce((prev, current) => prev + current.amount, 0))}
                   dataIndex="amount" />
                 <Table.Column
                   render={(t, row) => money(getFinancing(row).own)}
