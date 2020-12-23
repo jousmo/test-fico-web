@@ -9,7 +9,9 @@ function BudgetSummaryTable({ data }) {
 
   const getValue = (row, type) => {
     const amount = row[type]
-    const percentage = ((amount * 100) / row.total).toFixed(2)
+    const total = amount !== 0 ? row.total : 1
+
+    const percentage = ((amount * 100) / total).toFixed(2)
     return `${money(amount)} (${percentage}%)`
   }
 
