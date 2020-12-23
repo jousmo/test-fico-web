@@ -32,51 +32,52 @@ export function GovernmentForm({data, isLoading, onChange, error, disabled}) {
           {({ items, updateItem, removeItem }) =>
             <div>
               { items.map((item, index) =>
-                <Form layout="vertical">
-                  <Row gutter={[10, 8]} justify="start">
-                    <Col span={8}>
-                      <Form.Item
-                        style={{display: "inline"}}
-                        label="Nombre">
-                        <Input
-                          id="name"
-                          name="name"
-                          defaultValue={item.name}
-                          onChange={updateItem(index)}
-                          type="text"
-                          disabled={disabled}/>
-                      </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                      <Form.Item
-                        style={{display: "inline"}}
-                        label="Cargo">
-                        <SelectField
-                          id="charge"
-                          name="charge"
-                          defaultValue={item.charge}
-                          onChange={updateItem(index)}
-                          options={implementer.profile.chargeTypes}
-                          disabled={disabled}/>
-                      </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                      <Form.Item
-                        style={{display: "inline"}}
-                        label=" ">
-                        <Checkbox
-                          id="remuneration"
-                          name="remuneration"
-                          onChange={updateItem(index)}
-                          checked={item.remuneration}
-                          disabled={disabled}>
-                          No recibe remuneración
-                        </Checkbox>
-                        {!disabled && <DeleteButton onClick={removeItem(index)} />}
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                </Form>
+                <Row key={`${item.name}-${index}`} gutter={[10, 8]} justify="start">
+                  <Col span={8}>
+                    <Form.Item
+                      style={{display: "inline"}}
+                      label="Nombre">
+                      <Input
+                        id="council_name"
+                        name="name"
+                        defaultValue={item.name}
+                        onChange={updateItem(index)}
+                        type="text"
+                        disabled={disabled}/>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      style={{display: "inline"}}
+                      label="Cargo">
+                      <SelectField
+                        id="charge"
+                        name="charge"
+                        defaultValue={item.charge}
+                        onChange={updateItem(index)}
+                        options={implementer.profile.chargeTypes}
+                        disabled={disabled}/>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      style={{display: "inline"}}
+                      label=" ">
+                      <Checkbox
+                        id="remuneration"
+                        name="remuneration"
+                        onChange={event => {
+                          event.target.value = event.target.checked
+                          updateItem(index)(event)
+                        }}
+                        defaultChecked={item.remuneration}
+                        disabled={disabled}>
+                        No recibe remuneración
+                      </Checkbox>
+                      {!disabled && <DeleteButton onClick={removeItem(index)} />}
+                    </Form.Item>
+                  </Col>
+                </Row>
               ) }
               { !items.length ?
                 <Empty
