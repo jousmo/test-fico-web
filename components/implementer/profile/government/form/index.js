@@ -38,7 +38,7 @@ export function GovernmentForm({data, isLoading, onChange, error, disabled}) {
                       style={{display: "inline"}}
                       label="Nombre">
                       <Input
-                        id="council_name"
+                        id="name"
                         name="name"
                         defaultValue={item.name}
                         onChange={updateItem(index)}
