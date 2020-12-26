@@ -1,8 +1,10 @@
 import React from "react"
 import { Table, Empty, Tag } from "antd"
 import { translateGender, translateDate } from "../../../../helpers/assistantsBeneficiaries"
+import Link from "next/link"
 
 export function ListCensus ({ title, dataSource }) {
+  const URI = title === "asistentes" ? '/admin/census/assistant/' : '/admin/census/beneficiary/'
   return (
     <Table
       rowKey={a => a.id}
@@ -13,7 +15,11 @@ export function ListCensus ({ title, dataSource }) {
       pagination={true}>
       <Table.Column
         width={1}
-        render={text => <a>{text}</a>}
+        render={(text, record) =>
+          <Link href={`${URI}${record.id}`}>
+            <a>{text}</a>
+          </Link>
+        }
         dataIndex="folio"
         title="Folio" />
       <Table.Column
