@@ -17,8 +17,10 @@ export const getBeneficiaryById = gql`
       colony
       submission {
         id
+        name
         issueDescription
         strategicAxis
+        preventionLevel
         specificObjectives{
           id
           activities{

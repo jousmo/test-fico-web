@@ -5,8 +5,8 @@ import { withApollo } from "../../../../../helpers"
 import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 import { useQuery } from "@apollo/react-hooks"
 import { census } from "../../../../../graphql"
-import { useMemo } from "react"
-import { CensusBeneficiaryDetail } from "../../../../../components/admin/census/beneficiary"
+import React, { useMemo } from "react"
+import CensusBeneficiaryDetail from "../../../../../components/admin/census/beneficiary"
 
 function CensusBeneficiary({ client, query }) {
   const { loading, error, data } = useQuery(census.queries.getBeneficiaryById, {
@@ -24,7 +24,10 @@ function CensusBeneficiary({ client, query }) {
     <PageContext.Provider value={{ type: "admin", step: "census", submenu: "census" }}>
       <AdminSubmissionContext.Provider value={injectActions}>
         <Layout subheader={false}>
-          <CensusBeneficiaryDetail />
+          <CensusBeneficiaryDetail
+            data={data}
+            error={error}
+            isLoading={loading} />
         </Layout>
       </AdminSubmissionContext.Provider>
     </PageContext.Provider>

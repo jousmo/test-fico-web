@@ -5,12 +5,7 @@ import { DateField } from "../../../../../shared"
 
 export function CensusBeneficiaryInfo({ data }) {
   const [form] = Form.useForm()
-
-  useEffect(() => {
-    if(data) {
-      form.setFieldsValue(data)
-    }
-  }, [data])
+  form.setFieldsValue(data)
 
   return (
     <Card>

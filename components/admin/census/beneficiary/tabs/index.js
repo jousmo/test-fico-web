@@ -1,10 +1,10 @@
 import { Tabs } from "antd"
 import React from "react"
-import "../../tabs/style.sass"
-import { withForm } from "../../../../../helpers"
+import "../style.sass"
 import { CensusBeneficiaryInfo } from "./general"
+import { CensusBeneficiaryProjects } from "./projects"
 
-function CensusBeneficiaryTabs({ data }) {
+export function CensusBeneficiaryTabs({ data }) {
   return (
     <Tabs
       className="fico census"
@@ -13,7 +13,7 @@ function CensusBeneficiaryTabs({ data }) {
         <CensusBeneficiaryInfo data={data} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Proyectos" key="2">
-        <h1>Proyectos</h1>
+        <CensusBeneficiaryProjects data={data?.submission} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Actividad" key="3">
         <h1>Actividad</h1>
@@ -21,5 +21,3 @@ function CensusBeneficiaryTabs({ data }) {
     </Tabs>
   )
 }
-
-export default withForm(CensusBeneficiaryTabs)
