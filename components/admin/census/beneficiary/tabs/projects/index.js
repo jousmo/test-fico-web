@@ -32,7 +32,7 @@ export function CensusBeneficiaryProjects({ data }) {
               </Typography.Text>
             </Space>
             <Typography.Text type="secondary">
-              Temática
+              Problemática
               <Typography.Paragraph>
                 {issueTypes.find(item => item.value === el?.issueDescription).label}
               </Typography.Paragraph>
