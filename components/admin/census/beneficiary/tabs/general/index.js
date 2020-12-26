@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Card, Form, Input, Radio, Typography } from "antd"
 import { getSelectValue } from "../../../../../../helpers"
 import { DateField } from "../../../../../shared"

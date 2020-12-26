@@ -1,12 +1,17 @@
 import { extendMoment } from "moment-range"
 import Moment from "moment"
 import { cloneDeep, uniq } from "lodash"
-import { genderTypes, issueTypes } from "../selectOptions/implementer/submission"
+import {
+  genderTypes,
+  issueTypes,
+  strategicAxisTypes
+} from "../selectOptions/implementer/submission"
 const moment = extendMoment(Moment)
 moment.locale("es")
 
 const translateGender = gender => genderTypes.find(el => el.value === gender)
 const translateIssueTypes = type => issueTypes.find(el => el.value === type)
+const translateStrategicAxisTypes = type => strategicAxisTypes.find(el => el.value === type)
 
 const ageByBirthdate = date => {
   const age = moment().diff(date, 'years', true)
@@ -59,7 +64,22 @@ const decoratedCensusData = census => {
   })
 }
 
+const decoratedCensusBeneficiary = submission => {
+  const elements = cloneDeep(submission)
+  return elements?.map(el => {
+    for (const objective of el?.specificObjectives) {
+      return {
+        name: objective?.description,
+        date: translateDate(objective?.createdAt, "DD/MM/YYYY"),
+        strategicAxis: translateStrategicAxisTypes(el?.strategicAxis).label,
+        issueDescription: translateIssueTypes(el?.issueDescription).label
+      }
+    }
+  })
+}
+
 module.exports = {
+  decoratedCensusBeneficiary,
   decoratedCensusData,
   decoratedData,
   translateGender,
