@@ -1,12 +1,6 @@
-import {
-  Modal,
-  Form,
-  Input,
-  Divider,
-  Radio
-} from "antd"
-import { getSelectValue, warning } from "../../../../../../../../helpers"
-import { CensusForm, DateField } from "../../../../../../../shared"
+import { Modal, Form } from "antd"
+import { warning } from "../../../../../../../../helpers"
+import { CensusForm } from "../../../../../../../shared"
 import { useEffect } from "react"
 import { merge } from "lodash"
 
