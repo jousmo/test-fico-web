@@ -1,9 +1,9 @@
 import { Tabs } from "antd"
 import React from "react"
-import "../style.sass"
 import { CensusBeneficiaryInfo } from "./general"
 import { CensusBeneficiaryProjects } from "./projects"
 import { CensusBeneficiaryObjectives } from "./objectives"
+import "../style.sass"
 
 export function CensusBeneficiaryTabs({ data }) {
   return (

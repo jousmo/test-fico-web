@@ -5,9 +5,9 @@ import {
   issueTypes,
   strategicAxisTypes,
   preventionLevelTypes
-} from "../../../../../../helpers/selectOptions/implementer/submission"
+} from "../../../helpers/selectOptions/implementer/submission"
 
-export function CensusBeneficiaryProjects({ data }) {
+export function CensusProjects({ data }) {
   return (
     <Row justify="start" gutter={[16, 24]}>
       {data?.map((el, index) =>

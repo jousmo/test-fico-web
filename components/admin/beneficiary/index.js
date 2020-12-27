@@ -1,7 +1,7 @@
 import React from "react"
-import { PageHeader } from "../../../shared"
+import { PageHeader } from "../../shared"
 import { CensusBeneficiaryTabs } from "./tabs"
-import { withForm } from "../../../../helpers"
+import { withForm } from "../../../helpers"
 
 function CensusBeneficiaryDetail({ data }) {
   const { name, lastName, maidenName } = data?.CensusBeneficiaryById || {}

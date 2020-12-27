@@ -1,7 +1,6 @@
 import React from "react"
 import { Card, Empty, Table } from "antd"
-import { decoratedCensusBeneficiary } from "../../../../../../helpers/assistantsBeneficiaries"
-
+import { decoratedCensusBeneficiary } from "../../../../../helpers/assistantsBeneficiaries"
 
 export function CensusBeneficiaryObjectives({ data }) {
   const dataSource = decoratedCensusBeneficiary(data)

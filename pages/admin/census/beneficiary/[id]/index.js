@@ -6,7 +6,7 @@ import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 import { useQuery } from "@apollo/react-hooks"
 import { census } from "../../../../../graphql"
 import React, { useMemo } from "react"
-import CensusBeneficiaryDetail from "../../../../../components/admin/census/beneficiary"
+import CensusBeneficiaryDetail from "../../../../../components/admin/beneficiary"
 
 function CensusBeneficiary({ client, query }) {
   const { loading, error, data } = useQuery(census.queries.getBeneficiaryById, {
