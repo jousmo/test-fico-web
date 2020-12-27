@@ -8,9 +8,11 @@ import { MonitoringSchedule } from "./schedule"
 import "./style.sass"
 import { MonitoringAssistants } from "./assistants"
 import { MonitoringBeneficiaries } from "./beneficiaries"
+import { useAuth } from "../../../../../../contexts/auth"
 
 function TechnicalMonitoringTabs({ data }) {
   const [filterState, setFilterState] = useState([])
+  const { user } = useAuth()
 
   const onFilterChange = value => {
     value = value && value?.map(v => v.format("YYYYMMDD"))
@@ -26,12 +28,16 @@ function TechnicalMonitoringTabs({ data }) {
           format="DD/MM/YYYY"
           onChange={onFilterChange} />
       }>
-      <Tabs.TabPane tab="Asistentes" key="1">
-        <MonitoringAssistants data={data} dateFilter={filterState} />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="Beneficiarios" key="2">
-        <MonitoringBeneficiaries data={data} dateFilter={filterState} />
-      </Tabs.TabPane>
+      {user?.claims?.role !== "ADMIN" && (
+        <>
+          <Tabs.TabPane tab="Asistentes" key="1">
+            <MonitoringAssistants data={data} dateFilter={filterState} />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab="Beneficiarios" key="2">
+            <MonitoringBeneficiaries data={data} dateFilter={filterState} />
+          </Tabs.TabPane>
+        </>
+      )}
       <Tabs.TabPane tab="Objetivos y actividades" key="3">
         <MonitoringObjectives data={data} dateFilter={filterState} />
       </Tabs.TabPane>
