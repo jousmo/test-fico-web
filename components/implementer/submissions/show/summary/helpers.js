@@ -2,7 +2,6 @@ export const requiredFields = [
   "allies",
   "beneficiaries",
   "concepts",
-  "consultants",
   "description",
   "developmentObjective",
   "developmentObjectiveIndicators",
