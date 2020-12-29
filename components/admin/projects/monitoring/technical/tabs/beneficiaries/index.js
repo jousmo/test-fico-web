@@ -7,7 +7,7 @@ import React, { useContext, useState } from "react"
 import { omit } from "lodash"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 
-export function MonitoringBeneficiaries({ data, dateFilter }) {
+export function MonitoringBeneficiaries({ data }) {
   const { Submission } = data || {}
   const dataSource = decoratedData(Submission?.projectBeneficiaries)
   const [selectedRows, setSelectedRows] = useState([])

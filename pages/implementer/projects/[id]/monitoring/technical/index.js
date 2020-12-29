@@ -1,16 +1,16 @@
 import { Layout } from "../../../../../../components/shared"
-import { PageContext } from "../../../../../../contexts/page"
-import { withApollo } from "../../../../../../helpers/withApollo"
+import { PageContext } from "../../../../../../contexts"
+import { withApollo } from "../../../../../../helpers"
 import {
   AdminSubmissionContext
 } from "../../../../../../contexts/admin/submissions/show"
 import {
   TechnicalMonitoring
 } from "../../../../../../components/admin/projects/monitoring"
-import { submission } from "../../../../../../graphql/submission"
+import { submission } from "../../../../../../graphql"
 import React, { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { loadingAlert, success, warning } from "../../../../../../helpers/alert"
+import { loadingAlert, success, warning } from "../../../../../../helpers"
 import { cloneDeep, omit } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 

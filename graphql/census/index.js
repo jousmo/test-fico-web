@@ -1,3 +1,3 @@
-import * as queries from "./queries/getAll"
+import * as queries from "./queries"
 
 export const census = { queries }
