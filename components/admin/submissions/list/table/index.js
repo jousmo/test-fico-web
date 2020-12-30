@@ -57,7 +57,7 @@ function SubmissionsListingTable({ data }) {
       <Table.Column
         dataIndex="status"
         filters={statusFilterOptions}
-        onFilter={(value, record) => record.status.indexOf(value) === 0}
+        onFilter={(value, record) => record.status?.indexOf(value) === 0}
         render={text =>
           getReadableValue(submissionStatusOptions, text)
         }
@@ -70,12 +70,12 @@ function SubmissionsListingTable({ data }) {
       <Table.Column
         dataIndex="region"
         filters={regionFilterOptions}
-        onFilter={(value, record) => record.region.indexOf(value) === 0}
+        onFilter={(value, record) => record.region?.indexOf(value) === 0}
         title="Región" />
       <Table.Column
         dataIndex="strategicAxis"
         filters={axisFilterOptions}
-        onFilter={(value, record) => record.strategicAxis.indexOf(value) === 0}
+        onFilter={(value, record) => record.strategicAxis?.indexOf(value) === 0}
         render={text =>
           <Tooltip value={getReadableValue(strategicAxisTypes, text)} />
         }
