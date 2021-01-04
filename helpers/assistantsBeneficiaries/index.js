@@ -50,8 +50,13 @@ const totAct = submissions => {
   return { issueDescription, activities }
 }
 
-const decoratedCensusData = census => {
-  const elements = cloneDeep(census)
+const decoratedCensusData = (census, dateFilter) => {
+  let elements = cloneDeep(census)
+
+  if (dateFilter?.length > 0) {
+    elements = elements.filter(el => moment(el.birthdate).isBetween(dateFilter[0], dateFilter[1]))
+  }
+
   return elements?.map(el => {
     const { issueDescription, activities } = totAct(el?.submission)
     const problematic = translateIssueTypes(issueDescription[0]).label
