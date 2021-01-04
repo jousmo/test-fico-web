@@ -4,7 +4,7 @@ import { Empty, Table } from "antd"
 import { useState } from "react"
 import { ConceptModal } from "./concept-modal"
 import { conceptTypes } from "../../../../../../../helpers/selectOptions/implementer/submission"
-import { renderInvestment, renderTotal } from "./helpers"
+import { renderInvestment, renderTotal, renderSummary } from "./helpers"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 import { useAuth } from "../../../../../../../contexts/auth"
 import * as _ from "lodash"
@@ -69,7 +69,8 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
                 pagination={false}
                 locale={{emptyText: <Empty description="Agrega todos los conceptos
                 que serán utilizados durante el proyecto" />}}
-                rowKey={(r, i) => i}>
+                rowKey={(r, i) => i}
+                summary={concepts => renderSummary(concepts, data?.Submission)}>
                 <Table.Column
                   key="comments"
                   render={(text, row, index) => (
