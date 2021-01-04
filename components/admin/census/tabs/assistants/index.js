@@ -4,9 +4,9 @@ import { SearchFieldPrimary } from "../../../../shared"
 import { decoratedCensusData } from "../../../../../helpers/assistantsBeneficiaries"
 import { Button, Card, Space } from "antd"
 
-export function CensusAssistants({ data }) {
+export function CensusAssistants({ data, dateFilter }) {
   const [state, setState] = useState(undefined)
-  const dataSource = decoratedCensusData(data)
+  const dataSource = decoratedCensusData(data, dateFilter)
 
   const onSearch = value => {
     if (!value) {
