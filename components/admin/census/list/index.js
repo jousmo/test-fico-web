@@ -37,6 +37,11 @@ export function ListCensus ({ title, dataSource }) {
       <Table.Column
         width={1}
         dataIndex="gender"
+        filters={[
+          {text: "Masculino", value: "M"},
+          {text: "Femenino", value: "F"}
+        ]}
+        onFilter={(value, record) => record.gender?.indexOf(value) === 0}
         render={text => translateGender(text)?.label}
         title="Sexo" />
       <Table.Column
