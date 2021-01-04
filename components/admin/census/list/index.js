@@ -5,6 +5,20 @@ import Link from "next/link"
 
 export function ListCensus ({ title, dataSource }) {
   const URI = title === "asistentes" ? '/admin/census/assistant/' : '/admin/census/beneficiary/'
+
+  const getOptions = type => {
+    return dataSource.reduce((prev, current) => {
+      const value = current[type]
+      if (!prev?.find(el => el.value === value)) {
+        prev.push({ text: value, value })
+      }
+      return prev
+    }, []).sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()))
+  }
+
+  const municipalityOptions = getOptions("municipality")
+  const colonyOptions = getOptions("colony")
+
   return (
     <Table
       rowKey={a => a.id}
@@ -57,11 +71,15 @@ export function ListCensus ({ title, dataSource }) {
         <Table.Column
           width={1}
           dataIndex="municipality"
+          filters={municipalityOptions}
+          onFilter={(value, record) => record.municipality?.indexOf(value) === 0}
           title="Municipio" />
       )}
       <Table.Column
         width={1}
         dataIndex="colony"
+        filters={colonyOptions}
+        onFilter={(value, record) => record.colony?.indexOf(value) === 0}
         title="Colonia" />
       <Table.Column
         width={1}
