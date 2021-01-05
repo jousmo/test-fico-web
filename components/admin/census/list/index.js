@@ -41,14 +41,20 @@ export function ListCensus ({ title, dataSource }) {
       <Table.Column
         width={1}
         dataIndex="name"
+        sorter={(a, b) => a.name?.localeCompare(b.name)}
+        showSorterTooltip={false}
         title="Nombre" />
       <Table.Column
         width={1}
         dataIndex="lastName"
+        sorter={(a, b) => a.lastName?.localeCompare(b.lastName)}
+        showSorterTooltip={false}
         title="Apellido P" />
       <Table.Column
         width={1}
         dataIndex="maidenName"
+        sorter={(a, b) => a.maidenName?.localeCompare(b.maidenName)}
+        showSorterTooltip={false}
         title="Apellido M" />
       <Table.Column
         width={1}
