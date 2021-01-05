@@ -4,8 +4,8 @@ import { SearchFieldPrimary } from "../../../../shared"
 import { decoratedCensusData } from "../../../../../helpers/assistantsBeneficiaries"
 import { Button, Card, Space } from "antd"
 
-export function CensusBeneficiaries({ data }) {
-  const dataSource = decoratedCensusData(data)
+export function CensusBeneficiaries({ data, dateFilter }) {
+  const dataSource = decoratedCensusData(data, dateFilter)
 
   return (
     <Card className="assistants">
