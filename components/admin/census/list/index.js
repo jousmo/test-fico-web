@@ -83,6 +83,8 @@ export function ListCensus ({ title, dataSource }) {
           dataIndex="municipality"
           filters={municipalityOptions}
           onFilter={(value, record) => record.municipality?.indexOf(value) === 0}
+          sorter={(a, b) => a.municipality?.localeCompare(b.municipality)}
+          showSorterTooltip={false}
           title="Municipio" />
       )}
       <Table.Column
