@@ -92,6 +92,8 @@ export function ListCensus ({ title, dataSource }) {
         dataIndex="colony"
         filters={colonyOptions}
         onFilter={(value, record) => record.colony?.indexOf(value) === 0}
+        sorter={(a, b) => a.colony?.localeCompare(b.colony)}
+        showSorterTooltip={false}
         title="Colonia" />
       <Table.Column
         width={1}
