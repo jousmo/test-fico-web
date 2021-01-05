@@ -69,6 +69,8 @@ export function ListCensus ({ title, dataSource }) {
       <Table.Column
         width={1}
         dataIndex="birthdate"
+        sorter={(a, b) => a.birthdate?.localeCompare(b.birthdate)}
+        showSorterTooltip={false}
         render={text => translateDate(text, "DD/MM/YYYY")}
         title="Fecha de nacimiento" />
       <Table.Column
