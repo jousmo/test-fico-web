@@ -10,7 +10,7 @@ export function CensusBeneficiaries({ data, dateFilter }) {
   return (
     <Card className="assistants">
       <SearchFieldPrimary onSearch={null} />
-      <Space size="middle" style={{margin: "1rem 0", float: "right" }}>
+      <Space size="middle">
         <Button type="primary">Descargar</Button>
       </Space>
       <ListCensus title="beneficiarios" dataSource={dataSource} />
