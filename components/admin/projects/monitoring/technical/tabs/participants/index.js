@@ -45,7 +45,7 @@ export function MonitoringParticipants({ data, dateFilter }) {
         data={beneficiaries}
         openModal={openModal} />
       <ParticipantsList
-        title="Participantes"
+        title="Asistentes"
         data={participants}
         openModal={openModal} />
     </div>
