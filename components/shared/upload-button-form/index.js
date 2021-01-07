@@ -42,8 +42,7 @@ export function UploadButtonForm({
       onChange={onUploadChange}
       onRemove={onRemoveFile}
       accept={accept}
-      multiple
-      disabled={state.disabled}>
+      multiple>
       <Button disabled={state.disabled}>
         <UploadOutlined /> {children}
       </Button>

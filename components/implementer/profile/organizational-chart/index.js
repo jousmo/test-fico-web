@@ -1,7 +1,8 @@
-import {Form, Row, Col, Skeleton} from "antd"
+import { Form, Row, Col, Skeleton } from "antd"
 import { Section, UploadButtonForm } from "../../../shared"
 import { useContext } from "react"
 import { ImplementerProfileContext } from "../../../../contexts/implementer/profile"
+import "./styles.sass"
 
 export function OrganizationalChart() {
   const {
@@ -36,6 +37,7 @@ export function OrganizationalChart() {
   return (
     <Section title="6. Organigrama">
       <Form
+        className="organizational-chart"
         name="organizational-chart"
         layout="vertical">
         <Row gutter={[10, 8]} justify="start">
