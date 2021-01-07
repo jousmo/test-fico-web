@@ -105,6 +105,8 @@ export function ListCensus ({ title, dataSource }) {
           <Table.Column
             width={1}
             dataIndex="problematic"
+            sorter={(a, b) => a.problematic?.localeCompare(b.problematic)}
+            showSorterTooltip={false}
             title="Problemática" />
         )}
         <Table.Column
