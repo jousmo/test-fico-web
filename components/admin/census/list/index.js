@@ -19,6 +19,7 @@ export function ListCensus ({ title, dataSource }) {
 
   const municipalityOptions = getOptions("municipality")
   const colonyOptions = getOptions("colony")
+  const problematicOptions = getOptions("problematic")
 
   return (
     <ScrollableView>
@@ -105,6 +106,8 @@ export function ListCensus ({ title, dataSource }) {
           <Table.Column
             width={1}
             dataIndex="problematic"
+            filters={problematicOptions}
+            onFilter={(value, record) => record.problematic?.indexOf(value) === 0}
             sorter={(a, b) => a.problematic?.localeCompare(b.problematic)}
             showSorterTooltip={false}
             title="Problemática" />
