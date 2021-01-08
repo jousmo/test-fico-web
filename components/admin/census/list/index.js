@@ -37,7 +37,7 @@ export function ListCensus ({ title, dataSource }) {
             </Link>
           }
           dataIndex="folio"
-          sorter={(a, b) => a.folio > b.folio}
+          sorter={(a, b) => a.folio - b.folio}
           showSorterTooltip={false}
           title="Folio" />
         <Table.Column
