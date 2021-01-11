@@ -18,26 +18,26 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
   const { user } = useAuth()
 
   const hrState = {}
+  let hrCount = 0
   const concepts = data?.Submission?.concepts?.map(({ budgeted, ...concept }) => concept) || []
   const humanResources = concepts?.map((concept, index) => {
-    hrState[index] = {
-      salary: concept.humanResource[0]?.salary || 0,
-      hasTax: concept.humanResource[0]?.contractType !== "EMPLOYEE",
-      tax: concept.humanResource[0]?.taxes,
-      budgeted: concept.totalUnits * concept.unitCost,
-    }
-    return (
-      [
-        "HUMAN_RESOURCE",
-        "ADMINISTRATIVE_HUMAN_RESOURCE"
-      ].includes(concept.type) &&
-      {
-        key: index,
+    if (["HUMAN_RESOURCE", "ADMINISTRATIVE_HUMAN_RESOURCE"].includes(concept.type)) {
+      hrState[hrCount] = {
+        salary: concept.humanResource[0]?.salary || 0,
+        hasTax: concept.humanResource[0]?.contractType !== "EMPLOYEE",
+        tax: concept.humanResource[0]?.taxes,
+        budgeted: concept.totalUnits * concept.unitCost,
+      }
+      const hr = {
+        conceptKey: index,
+        hrKey: hrCount,
         position: concept.name,
         ...concept.humanResource[0]
       }
-    )
-  }).filter(e => e !== false) || []
+      hrCount++
+      return hr
+    }
+  }).filter(e => e !== undefined) || []
 
   const [state, setState] = useState(hrState)
   const [totalState, setTotalState] = useState(false)
@@ -46,17 +46,17 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
     .map(r => r.position)
     .some((p, i, a) => a.indexOf(p) !== i)
 
-  const onConceptsChange = (newHumanResources) => {
+  const onConceptsChange = newHumanResources => {
     const newConcepts = [...concepts]
     let correctlyBudgeted = true
 
     newHumanResources?.forEach(humanResource => {
       const formattedValues = formatValues(humanResource)
-      newConcepts[humanResource.key].humanResource[0] = formattedValues
+      newConcepts[humanResource.conceptKey].humanResource[0] = formattedValues
 
       const { taxes, salary } = formattedValues
       const total = !isNaN(taxes) ? salary + ((taxes * salary) / 100) : salary
-      if (total !== state[humanResource.key].budgeted) {
+      if (total !== state[humanResource.hrKey].budgeted) {
         correctlyBudgeted = false
       }
     })
@@ -66,7 +66,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
   }
 
   const formatValues = (hr) => {
-    const humanResource = { ...hr }
+    const { conceptKey, hrKey, ...humanResource } = hr
 
     humanResource.hours = Number(humanResource.hours)
     humanResource.salary = Number(humanResource.salary)
@@ -135,23 +135,23 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
               <div style={{overflowX: "auto"}}>
                 <div style={{width: "1650px"}}>
                   <HumanResourcesColumns />
-                  {items.map((item, index) =>
+                  {items.map(item =>
                     <Row
                       align="middle"
                       gutter={[10, 8]}
                       justify="start"
-                      key={index}>
+                      key={item.hrKey}>
                       <Col flex="50px">
                         {!hiddenComments &&
                           <CommentButton
-                            index={item.key}
-                            name={item.key.toString()}
+                            index={item.hrKey}
+                            name={item.hrKey.toString()}
                             small
                             section="HUMAN_RESOURCE" />
                         }
                       </Col>
                       <Col flex="30px">
-                        <span key={`userIcon-${index}`}>
+                        <span key={`userIcon-${item.hrKey}`}>
                           &nbsp;<UserOutlined />
                         </span>
                       </Col>
@@ -160,7 +160,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           id="position"
                           name="position"
                           defaultValue={item.position}
-                          onChange={updateItem(index)}
+                          onChange={updateItem(item.hrKey)}
                           disabled={readOnly}
                           type="text" />
                       </Col>
@@ -169,7 +169,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           id="name"
                           name="name"
                           defaultValue={item.name}
-                          onChange={updateItem(index)}
+                          onChange={updateItem(item.hrKey)}
                           disabled={readOnly}
                           type="text" />
                       </Col>
@@ -177,7 +177,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                         <Input
                           id="tasks"
                           name="tasks"
-                          onChange={updateItem(index)}
+                          onChange={updateItem(item.hrKey)}
                           defaultValue={item.tasks}
                           disabled={readOnly}
                           type="text" />
@@ -186,7 +186,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                         <Input
                           id="overseer"
                           name="overseer"
-                          onChange={updateItem(index)}
+                          onChange={updateItem(item.hrKey)}
                           defaultValue={item.overseer}
                           disabled={readOnly}
                           type="text" />
@@ -196,7 +196,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           id="hours"
                           name="hours"
                           min={1}
-                          onChange={updateItem(index)}
+                          onChange={updateItem(item.hrKey)}
                           defaultValue={item.hours}
                           disabled={readOnly}
                           type="number" />
@@ -206,7 +206,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           id="contractType"
                           name="contractType"
                           options={contractTypes}
-                          onChange={event => onContracyTypeChange(event, updateItem, index)}
+                          onChange={event => onContracyTypeChange(event, updateItem, item.hrKey)}
                           disabled={readOnly}
                           defaultValue={item.contractType} />
                       </Col>
@@ -216,7 +216,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           id="salary"
                           name="salary"
                           min={0}
-                          onBlur={event => onNumberChange(event, updateItem, index, "salary")}
+                          onBlur={event => onNumberChange(event, updateItem, item.hrKey, "salary")}
                           defaultValue={item.salary}
                           disabled={readOnly}
                           type="number" />
@@ -225,7 +225,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                         <Radio.Group
                           id="benefits"
                           name="benefits"
-                          onChange={updateItem(index)}
+                          onChange={updateItem(item.hrKey)}
                           disabled={readOnly}
                           defaultValue={item.benefits}>
                           <Radio value={true}>Si</Radio>
@@ -236,9 +236,9 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                         <Input
                           addonBefore="%"
                           id="taxes"
-                          disabled={readOnly || !state[index]?.hasTax}
+                          disabled={readOnly || !state[item.hrKey]?.hasTax}
                           name="taxes"
-                          onBlur={event => onNumberChange(event, updateItem, index, "tax")}
+                          onBlur={event => onNumberChange(event, updateItem, item.hrKey, "tax")}
                           defaultValue={item.taxes}
                           type="number" />
                       </Col>
@@ -248,13 +248,13 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           id="total"
                           name="total"
                           disabled
-                          onChange={updateItem(index)}
+                          onChange={updateItem(item.hrKey)}
                           defaultValue={item.total}
                           value={
-                            state[index].hasTax ? (
-                              state[index].salary + ((state[index].tax * state[index].salary) / 100)
+                            state[item.hrKey].hasTax ? (
+                              state[item.hrKey].salary + ((state[item.hrKey].tax * state[item.hrKey].salary) / 100)
                             ) : (
-                              state[index].salary
+                              state[item.hrKey].salary
                             )
                           }
                           type="number" />
@@ -268,10 +268,10 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                           small
                           fileList={toFileList(item.documents) || []}
                           onRemoveFile={file =>
-                            onRemoveFile(file, item.documents, index, onFilesChange)
+                            onRemoveFile(file, item.documents, item.hrKey, onFilesChange)
                           }
                           onChange={files =>
-                            onDoneFile(index, files, onFilesChange)
+                            onDoneFile(item.hrKey, files, onFilesChange)
                           }
                           maxFile={2}
                           accept={"application/pdf"} />
