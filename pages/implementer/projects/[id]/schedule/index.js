@@ -1,6 +1,5 @@
 import { Layout } from "../../../../../components/shared"
 import { PageContext } from "../../../../../contexts/page"
-import { withApollo } from "../../../../../helpers/withApollo"
 import {
   AdminSubmissionContext
 } from "../../../../../contexts/admin/submissions/show"
@@ -10,7 +9,7 @@ import {
 import { submission } from "../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { loadingAlert, success, warning } from "../../../../../helpers/alert"
+import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../../helpers"
 import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 
 function ProjectSchedulePage({ client, query }) {
@@ -44,6 +43,7 @@ function ProjectSchedulePage({ client, query }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [updateSubmission])

@@ -12,12 +12,7 @@ import { PageContext } from "../../../../../contexts/page"
 import { submission } from "../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../helpers/withApollo"
-import {
-  success,
-  loadingAlert,
-  selectOptions, warning
-} from "../../../../../helpers"
+import { Bugsnag, success, loadingAlert, selectOptions, warning, withApollo } from "../../../../../helpers"
 import moment from "moment"
 import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 
@@ -51,6 +46,7 @@ function SubmissionsByStatus({ client, query }) {
       success()
     }
     catch(e){
+      Bugsnag.notify(new Error(e))
       console.error(e)
       warning()
     }

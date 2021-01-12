@@ -9,7 +9,7 @@ import {
 import { submission } from "../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { loadingAlert, success, warning, withApollo } from "../../../../helpers"
+import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../helpers"
 import { PageContext } from "../../../../contexts/page"
 import { AuthCheck } from "../../../../helpers/auth/auth-check"
 
@@ -41,6 +41,7 @@ function Submission({ client, query }) {
       success()
     }
     catch (e) {
+      Bugsnag.notify(new Error(e))
       console.error(e)
       warning()
     }

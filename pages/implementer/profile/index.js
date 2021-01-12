@@ -13,10 +13,9 @@ import {
   ImplementerProfileContext
 } from "../../../contexts/implementer/profile"
 import { useEffect, useState, useCallback, useMemo } from "react"
-import { withApollo } from "../../../helpers/withApollo"
 import { implementer } from "../../../graphql"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { success, warning, loadingAlert } from "../../../helpers/alert"
+import { Bugsnag, success, warning, loadingAlert, withApollo } from "../../../helpers"
 import { AuthCheck } from "../../../helpers/auth/auth-check"
 
 function Profile({ client }) {
@@ -55,6 +54,7 @@ function Profile({ client }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [state, updateProfile])

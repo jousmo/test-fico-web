@@ -3,11 +3,10 @@ import { AdminUserContext } from "../../../contexts/admin/users"
 import { user } from "../../../graphql/user"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../helpers/withApollo"
 import { PageContext } from "../../../contexts/page"
 import { AuthCheck } from "../../../helpers/auth/auth-check"
 import { Users } from "../../../components/admin/users"
-import { loadingAlert, success, warning } from "../../../helpers/alert"
+import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../helpers"
 
 function AdminUsers({ client }) {
   const { loading, error, data } = useQuery(user.queries.getAll, {
@@ -63,6 +62,7 @@ function AdminUsers({ client }) {
       success("Cuenta creada", 0)
     } catch (e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -75,6 +75,7 @@ function AdminUsers({ client }) {
       success("Correo de recuperación enviado")
     } catch (e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -87,6 +88,7 @@ function AdminUsers({ client }) {
       success("Cuenta actualizada")
     } catch (e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -99,6 +101,7 @@ function AdminUsers({ client }) {
       success(status ? "Cuenta desactivada" : "Cuenta activada")
     } catch (e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()

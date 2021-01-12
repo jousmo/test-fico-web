@@ -1,5 +1,5 @@
 import { Layout } from "../../../../components/shared"
-import { success, warning, loadingAlert } from "../../../../helpers"
+import { Bugsnag, success, warning, loadingAlert, withApollo } from "../../../../helpers"
 import {
   AgreementDocuments,
   Attachments,
@@ -13,7 +13,6 @@ import { AdminSubmissionContext } from "../../../../contexts/admin/submissions/s
 import { submission } from "../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../helpers/withApollo"
 import { PageContext } from "../../../../contexts/page"
 import { AuthCheck } from "../../../../helpers/auth/auth-check"
 
@@ -47,6 +46,7 @@ function Submission({ client, query }) {
       success()
     }
     catch (e) {
+      Bugsnag.notify(new Error(e))
       console.error(e)
       warning()
     }
