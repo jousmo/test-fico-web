@@ -1,4 +1,5 @@
 import { success, loadingAlert, warning } from "../alert"
+import { Bugsnag } from "../bugsnag"
 
 export const setUpdateGeneralInformation = (generalInformation, state, setState) => {
   const newGeneralInformation = {
@@ -21,6 +22,7 @@ export const setSave = async (state, setState, updateSubmission, id) => {
   }
   catch(e) {
     warning()
+    Bugsnag.notify(new Error(e))
     console.error(e)
   }
   setState({ ...state, isSaving: false })

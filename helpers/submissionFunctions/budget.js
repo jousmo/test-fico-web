@@ -1,5 +1,6 @@
 import { loadingAlert, success, warning } from "../alert"
 import { omit } from "lodash"
+import { Bugsnag } from "../bugsnag"
 
 export const setUpdateBudget = (budget, state, setState) => {
   budget.concepts = budget?.concepts?.map(concept => omit(concept, ["budgeted"])) || []
@@ -28,6 +29,7 @@ export const setSave = async (state, setState, updateSubmission, id) => {
   }
   catch(e) {
     warning()
+    Bugsnag.notify(new Error(e))
     console.error(e)
   }
   setState({ ...state, isSaving: false })
