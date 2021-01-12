@@ -1,4 +1,5 @@
 import { Skeleton, Alert } from "antd"
+import { Bugsnag } from "../bugsnag"
 
 export function withForm(func) {
   return function component({
@@ -13,6 +14,7 @@ export function withForm(func) {
     }
 
     if(!data || error) {
+      Bugsnag.notify(new Error(error))
       return (
         <Alert
           message="Error"
