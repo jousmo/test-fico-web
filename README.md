@@ -62,7 +62,6 @@ y Parral).
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
 * [Node.js](https://nodejs.org/en/download/) 10.13 or later
 
 ### Installation
