@@ -1,15 +1,16 @@
 import { Card, Button, Space } from "antd"
-import { CompositeField, ConfirmModal } from "../../../../../../shared"
+import { CompositeField, ConfirmModal, SearchFieldPrimary } from "../../../../../../shared"
 import { ListAssistants } from "./list"
 import { decoratedData } from "../../../../../../../helpers/assistantsBeneficiaries"
 import { ModalAssistants } from "./modal"
 import React, { useContext, useState } from "react"
 import { omit } from "lodash"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
+import { onSearch } from "../../../../../census/tabs/card/helpers"
 
 export function MonitoringAssistants({ data, dateFilter }) {
   const { Submission } = data || {}
-  const dataSource = decoratedData(Submission?.assistants)
+  const dataSource = decoratedData(Submission?.assistants, dateFilter)
   const {
     createAssistants,
     updateAssistants,
@@ -23,6 +24,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     isModalOpen: false,
     edit: false
   })
+  const [assistants, setAssistants] = useState(undefined)
 
   const onToggleConfirm = () => {
     setState({ ...state, openConfirm: !state.openConfirm })
@@ -65,43 +67,48 @@ export function MonitoringAssistants({ data, dateFilter }) {
   }
 
   return (
-    <Card className="assistants">
-      <Space size="middle" style={{marginBottom: "1rem"}}>
-        <Button>Agregar asistencia</Button>
-        <Button onClick={onToggleConfirm}>Convertir a beneficiario</Button>
-        <Button type="primary">Descargar</Button>
-      </Space>
-      <CompositeField
-        onClickAdd={onClickAdd}
-        onChange={null}
-        value={dataSource}
-        addLabel="Agregar asistentes"
-        orientation="TOP">
-        {({ items }) =>
-          <>
-            <ModalAssistants
-              visible={state.isModalOpen}
-              onSave={onSave}
-              onCancel={onCancel}
-              edit={state.edit}
-              className="fico modal-assistants"/>
-            <ListAssistants
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-              dataSource={items}
-              onEdit={onEdit}
-              onDelete={onDelete}/>
-          </>
-        }
-      </CompositeField>
-      <ConfirmModal
-        cancelText="Cancelar"
-        onCancel={onToggleConfirm}
-        onOk={onOk}
-        okButtonProps={{ disabled: !selectedRows.length }}
-        okText="Crear beneficiarios"
-        title="¿Estas seguro de convertir estos asistentes a beneficiarios?"
-        visible={state?.openConfirm}/>
-    </Card>
+    <>
+      <SearchFieldPrimary
+        onSearch={value => onSearch(dataSource, setAssistants, value)}
+        style={{marginBottom: "1rem"}}  />
+      <Card className="assistants">
+        <Space size="middle" style={{marginBottom: "1rem"}}>
+          <Button>Agregar asistencia</Button>
+          <Button onClick={onToggleConfirm}>Convertir a beneficiario</Button>
+          <Button type="primary">Descargar</Button>
+        </Space>
+        <CompositeField
+          onClickAdd={onClickAdd}
+          onChange={null}
+          value={assistants ? assistants : dataSource}
+          addLabel="Agregar asistentes"
+          orientation="TOP">
+          {({ items }) =>
+            <>
+              <ModalAssistants
+                visible={state.isModalOpen}
+                onSave={onSave}
+                onCancel={onCancel}
+                edit={state.edit}
+                className="fico modal-assistants"/>
+              <ListAssistants
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+                dataSource={items}
+                onEdit={onEdit}
+                onDelete={onDelete}/>
+            </>
+          }
+        </CompositeField>
+        <ConfirmModal
+          cancelText="Cancelar"
+          onCancel={onToggleConfirm}
+          onOk={onOk}
+          okButtonProps={{ disabled: !selectedRows.length }}
+          okText="Crear beneficiarios"
+          title="¿Estas seguro de convertir estos asistentes a beneficiarios?"
+          visible={state?.openConfirm}/>
+      </Card>
+    </>
   )
 }
