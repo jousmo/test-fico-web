@@ -4,7 +4,7 @@ import { SearchFieldPrimary } from "../../../../shared"
 import { decoratedCensusData } from "../../../../../helpers/assistantsBeneficiaries"
 import { Button, Card, Space } from "antd"
 
-export function CensusAssistants({ data, dateFilter }) {
+export function CensusCard({ data, dateFilter, section }) {
   const [state, setState] = useState(undefined)
   const dataSource = decoratedCensusData(data, dateFilter)
 
@@ -18,21 +18,23 @@ export function CensusAssistants({ data, dateFilter }) {
       assistant.phone?.includes(value) ||
       assistant.name?.toLowerCase().includes(value.toLowerCase()) ||
       assistant.curp?.toLowerCase().includes(value.toLowerCase()) ||
+      assistant.colony?.toLowerCase().includes(value.toLowerCase()) ||
       assistant.lastName?.toLowerCase().includes(value.toLowerCase()) ||
       assistant.maidenName?.toLowerCase().includes(value.toLowerCase()) ||
+      assistant.problematic?.toLowerCase().includes(value.toLowerCase()) ||
       assistant.municipality?.toLowerCase().includes(value.toLowerCase())
     )
     setState(filter)
   }
 
   return (
-    <Card className="assistants">
+    <Card>
       <SearchFieldPrimary onSearch={onSearch} />
       <Space size="middle">
         <Button type="primary">Descargar</Button>
       </Space>
       <ListCensus
-        title="asistentes"
+        title={section}
         dataSource={state ? state : dataSource} />
     </Card>
   )
