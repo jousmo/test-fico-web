@@ -1,8 +1,7 @@
 import { DatePicker, Tabs } from "antd"
 import React, { useState } from "react"
 import "./style.sass"
-import { CensusBeneficiaries } from "./beneficiaries"
-import { CensusAssistants } from "./assistants"
+import { CensusCard } from "./card"
 import { withForm } from "../../../../helpers"
 
 function CensusTabs({ data }) {
@@ -23,10 +22,16 @@ function CensusTabs({ data }) {
           onChange={onFilterChange} />
       }>
       <Tabs.TabPane tab="Beneficiarios" key="1">
-        <CensusBeneficiaries data={data?.beneficiaries} dateFilter={filterState} />
+        <CensusCard
+          data={data?.beneficiaries}
+          dateFilter={filterState}
+          section="beneficiarios" />
       </Tabs.TabPane>
       <Tabs.TabPane tab="Asistentes" key="2">
-        <CensusAssistants data={data?.assistants} dateFilter={filterState} />
+        <CensusCard
+          data={data?.beneficiaries}
+          dateFilter={filterState}
+          section="asistentes" />
       </Tabs.TabPane>
     </Tabs>
   )
