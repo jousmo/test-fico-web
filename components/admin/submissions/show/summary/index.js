@@ -72,7 +72,7 @@ export function SubmissionSummary() {
   }
 
   let headingButtons = null
-  if (statusIndex >= 0 && statusIndex < 9) {
+  if (statusIndex >= 0 && statusIndex <= 9) {
     headingButtons = (
       <Col>
         <ConfirmButton
