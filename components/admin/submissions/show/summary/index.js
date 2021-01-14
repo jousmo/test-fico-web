@@ -72,13 +72,15 @@ export function SubmissionSummary() {
   }
 
   let headingButtons = null
-  if (statusIndex >= 0 && statusIndex < 9) {
+  if (statusIndex >= 0 && statusIndex <= 9) {
     headingButtons = (
       <Col>
-        <ConfirmButton
-          icon={<RetweetOutlined />}
-          confirmText="Solicitar revisión"
-          onClick={onRequestReview} />
+        {statusIndex < 9 && (
+          <ConfirmButton
+            icon={<RetweetOutlined />}
+            confirmText="Solicitar revisión"
+            onClick={onRequestReview} />
+        )}
         <ConfirmButton
           icon={<CloseOutlined />}
           confirmText="Rechazar solicitud" />
