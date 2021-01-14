@@ -1,4 +1,4 @@
-import { withForm } from "../../../../../../helpers/withForm"
+import { Bugsnag, withForm } from "../../../../../../helpers"
 import { Button, Form, Input } from "antd"
 import { DateField, UploadButton, Visibility } from "../../../../../shared"
 import { useCallback, useState } from 'react'
@@ -40,6 +40,7 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract, refetch })
       cb(null, refetch)
     } catch (e) {
       cb(e)
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [submissionId, refetch])
@@ -51,6 +52,7 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract, refetch })
       cb(null, refetch)
     } catch (e) {
       cb(e)
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [refetch])

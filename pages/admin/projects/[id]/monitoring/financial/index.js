@@ -1,6 +1,5 @@
 import { Layout } from "../../../../../../components/shared"
 import { PageContext } from "../../../../../../contexts/page"
-import { withApollo } from "../../../../../../helpers/withApollo"
 import {
   MonitoringFinancial
 } from "../../../../../../components/admin/projects/monitoring"
@@ -8,7 +7,7 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
-import { success, warning, loadingAlert } from "../../../../../../helpers/alert"
+import { Bugsnag, success, warning, loadingAlert, withApollo } from "../../../../../../helpers"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function FinancialMonitoringPage({ client, query }) {
@@ -51,6 +50,7 @@ function FinancialMonitoringPage({ client, query }) {
       success()
     } catch (e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [createProjectInvoice])
@@ -64,6 +64,7 @@ function FinancialMonitoringPage({ client, query }) {
       success()
     } catch (e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [updateProjectInvoice])

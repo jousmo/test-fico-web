@@ -1,4 +1,4 @@
-import { withForm } from "../../../../../../helpers/withForm"
+import { Bugsnag, withForm } from "../../../../../../helpers"
 import { Alert, Col, Form, List, Row } from "antd"
 import { FileInput } from "./fileInput"
 import { useCallback } from 'react'
@@ -27,6 +27,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
       cb(null, refetch)
     } catch (e) {
       cb(e)
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [submissionId, refetch])
@@ -38,6 +39,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
       cb(null, refetch)
     } catch (e) {
       cb(e)
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [refetch])

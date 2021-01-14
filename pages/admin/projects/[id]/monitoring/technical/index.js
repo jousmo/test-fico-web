@@ -1,6 +1,5 @@
 import { Layout } from "../../../../../../components/shared"
 import { PageContext } from "../../../../../../contexts/page"
-import { withApollo } from "../../../../../../helpers/withApollo"
 import {
   AdminSubmissionContext
 } from "../../../../../../contexts/admin/submissions/show"
@@ -10,7 +9,7 @@ import {
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { success, warning, loadingAlert } from "../../../../../../helpers/alert"
+import { Bugsnag, success, warning, loadingAlert, withApollo } from "../../../../../../helpers"
 import { cloneDeep } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
@@ -46,6 +45,7 @@ function TechnicalMonitoringPage({ client, query }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -59,6 +59,7 @@ function TechnicalMonitoringPage({ client, query }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
     }
   }, [updateActivity])
 
@@ -73,6 +74,7 @@ function TechnicalMonitoringPage({ client, query }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -95,6 +97,7 @@ function TechnicalMonitoringPage({ client, query }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()

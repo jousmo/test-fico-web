@@ -16,10 +16,9 @@ import {
 import { submission } from "../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../helpers/withApollo"
 import { PageContext } from "../../../../contexts/page"
 import { AuthCheck } from "../../../../helpers/auth/auth-check"
-import { loadingAlert, success, warning } from "../../../../helpers/alert"
+import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../helpers"
 
 function Project({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -52,6 +51,7 @@ function Project({ client, query }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [updateSubmission])

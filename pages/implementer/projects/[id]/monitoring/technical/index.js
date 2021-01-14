@@ -1,6 +1,5 @@
 import { Layout } from "../../../../../../components/shared"
 import { PageContext } from "../../../../../../contexts"
-import { withApollo } from "../../../../../../helpers"
 import {
   AdminSubmissionContext
 } from "../../../../../../contexts/admin/submissions/show"
@@ -10,7 +9,7 @@ import {
 import { submission } from "../../../../../../graphql"
 import React, { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { loadingAlert, success, warning } from "../../../../../../helpers"
+import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../../../helpers"
 import { cloneDeep, omit } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
@@ -76,6 +75,7 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     } catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -94,6 +94,7 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     } catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -110,6 +111,7 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     } catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -124,6 +126,7 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
       refetch()
     } catch(e) {
+      Bugsnag.notify(new Error(e.graphQLErrors[0].message))
       warning(e.graphQLErrors[0].message)
       console.error(e)
     }
@@ -139,6 +142,7 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     } catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -152,6 +156,7 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     } catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
@@ -166,6 +171,7 @@ function TechnicalMonitoringPage({ client, query }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [updateSub])
@@ -180,6 +186,7 @@ function TechnicalMonitoringPage({ client, query }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [createMonitoring, refetch])
@@ -200,6 +207,7 @@ function TechnicalMonitoringPage({ client, query }) {
     }
     catch(e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
   }, [updateMonitoring, refetch])

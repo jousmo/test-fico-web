@@ -2,7 +2,7 @@ import { Modal, Form, Input } from "antd"
 import { CommentMonitoringListing } from "../comment-monitoring-listing"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../graphql/submission"
-import { withApollo } from "../../../helpers/withApollo"
+import { Bugsnag, withApollo } from "../../../helpers"
 import { useCallback, useEffect, useState } from "react"
 import { loadingAlert, success, warning } from "../../../helpers/alert"
 import "./style.sass"
@@ -86,6 +86,7 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
       form.resetFields()
     } catch (e) {
       warning()
+      Bugsnag.notify(new Error(e))
       console.error(e)
     }
     saving()
