@@ -14,7 +14,7 @@ export function DateField({
 }) {
   const onDateChange = value => {
     if(value?.length > 0) {
-      value = value.map(v => v.format("YYYYMM[01]"))
+      value = value?.map(v => v.format("YYYYMM[01]"))
     }
     else {
       value = value?.format()
@@ -34,10 +34,10 @@ export function DateField({
         id={id}
         name={name}
         style={fullWidth && {width: "100%"}}
-        defaultValue={defaultValue && defaultValue.map(v => moment(v))}
+        defaultValue={defaultValue && defaultValue?.map(v => moment(v))}
         placeholder={placeholder}
         onChange={onDateChange}
-        value={value && value.map(v => moment(v))}
+        value={value && value?.map(v => moment(v))}
         {...props} />
     )
   }

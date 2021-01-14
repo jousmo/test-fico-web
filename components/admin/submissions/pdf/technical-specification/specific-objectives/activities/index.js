@@ -12,7 +12,7 @@ export default function ActivitiesPDF({ activity }){
   if(Array.isArray(activity.months)) {
     const range = Array
       .from(moment.range(activity.months[0], activity.months[1]).by("month"))
-      .map(r => r.format("MMMM YYYY"))
+      ?.map(r => r.format("MMMM YYYY"))
 
     formattedMonths = `${range.join(", ")}.`
   }

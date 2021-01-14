@@ -43,7 +43,7 @@ export function ParticipantsField({ defaultValue, onChange, type, readOnly }) {
             onSave={onSave(addNew, replaceItemAtIndex)}
             visible={state.isModalOpen}
             type={type} />
-          { items.map((item, index) =>
+          { items?.map((item, index) =>
             <ParticipantsItem
               data={item}
               readOnly={readOnly}

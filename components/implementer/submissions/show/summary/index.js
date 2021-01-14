@@ -23,14 +23,14 @@ export function SubmissionSummary() {
 
   const editRoute = `/implementer/submissions/${data?.Submission?.id}/edit/general-information`
   const status = data?.Submission?.status
-  const statusIndex = submissionStatusOptions.findIndex(e => e.value === status)
+  const statusIndex = submissionStatusOptions?.findIndex(e => e.value === status)
 
   const onReview = () => {
     if (status.includes("REVIEW")){
       message.warning("La solicitud ya se encuentra en revisión")
     } else {
       let isFinished = true
-      Object.keys(data?.Submission).forEach(key => {
+      Object.keys(data?.Submission)?.forEach(key => {
         const value = data?.Submission[key]
         if (requiredFields.includes(key) && (!value || value.length === 0)) {
           isFinished = false

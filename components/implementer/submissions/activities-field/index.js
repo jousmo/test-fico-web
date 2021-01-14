@@ -60,7 +60,7 @@ export function ActivitiesField({
             edit={state.edit}
             review={review}
             hiddenComments={hiddenComments} />
-          { items.map((item, index) =>
+          { items?.map((item, index) =>
             <ActivityItem
               data={item}
               key={`activity_${index}`}

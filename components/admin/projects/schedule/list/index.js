@@ -21,10 +21,10 @@ function ProjectScheduleList({ data, save }) {
 
   const onSave = (schedules, activityId, objectiveId) => {
     const newObjectives = [ ...data.Submission.specificObjectives ]
-    const objectiveIndex = newObjectives.findIndex(el => el.id === objectiveId)
+    const objectiveIndex = newObjectives?.findIndex(el => el.id === objectiveId)
 
     const newActivities = [ ...newObjectives[objectiveIndex].activities ]
-    const activityIndex = newActivities.findIndex(el => el.id === activityId)
+    const activityIndex = newActivities?.findIndex(el => el.id === activityId)
 
     newActivities[activityIndex].schedules = schedules
     newObjectives[objectiveIndex].activities = newActivities

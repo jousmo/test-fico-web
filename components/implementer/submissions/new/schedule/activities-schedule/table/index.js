@@ -24,7 +24,7 @@ function ActivitiesTable({ data }) {
   }
 
   let monthsColumns = new Set()
-  const dataSource = activities.map((activity, index) => {
+  const dataSource = activities?.map((activity, index) => {
     let result = {
       key: index,
       activity: `Actividad ${index + 1}`
@@ -35,10 +35,10 @@ function ActivitiesTable({ data }) {
       ranges[i] = moment.range(range[0], range[1])
     })
 
-    ranges.forEach(range => {
-      Array.from(range.by('month')).map(
+    ranges?.forEach(range => {
+      Array.from(range.by('month'))?.map(
         m => m.format('YYYYMM')
-      ).forEach(month => {
+      )?.forEach(month => {
         monthsColumns.add(month)
         result[month] = <ActivityBox />
       })
@@ -54,7 +54,7 @@ function ActivitiesTable({ data }) {
         render={(text, record, index) => getLabel(record, index)}
         title="Actividad" />
 
-      {columns.map((month, index) => {
+      {columns?.map((month, index) => {
         const column =
           capitalize(moment(month, "YYYYMM").format("MMM YYYY"))
         return (

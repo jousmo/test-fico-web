@@ -131,6 +131,6 @@ export const onDeleteHelper = (comment, state, setState, update) => {
     default:
       break
   }
-  newComments = newComments.filter(e => e.fieldName === state.field.name)
+  newComments = newComments?.filter(e => e.fieldName === state.field.name)
   setState({ ...state, submission: newSubmission, comments: newComments })
 }

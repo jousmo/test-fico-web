@@ -28,8 +28,8 @@ export function SubmissionSummary() {
   } = useContext(AdminSubmissionContext)
 
   const status = data?.Submission?.status
-  const statusIndex = submissionStatusOptions.findIndex(e => e.value === status)
-  const findDocument = data?.Submission?.documents.filter(document => document.type === "AGREEMENT")
+  const statusIndex = submissionStatusOptions?.findIndex(e => e.value === status)
+  const findDocument = data?.Submission?.documents?.filter(document => document.type === "AGREEMENT")
 
   const [state, setState] = useState({
     isModalOpen: false

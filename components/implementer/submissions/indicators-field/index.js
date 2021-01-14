@@ -59,7 +59,7 @@ export function IndicatorsField({
             visible={state.isModalOpen}
             edit={state.edit}
             hiddenComments={hiddenComments} />
-          { items.map((item, index) =>
+          { items?.map((item, index) =>
             <IndicatorItem
               data={item}
               key={`indicator_${index}`}

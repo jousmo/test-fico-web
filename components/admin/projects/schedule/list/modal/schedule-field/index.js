@@ -15,7 +15,7 @@ export function ScheduleField({ ...props }){
       {...props}>
       {({ items, updateItem, removeItem }) =>
         <div>
-          { items.map((item, index) =>
+          { items?.map((item, index) =>
             <Row
               gutter={[10, 8]}
               justify="start"

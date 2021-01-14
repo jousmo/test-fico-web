@@ -61,7 +61,7 @@ function BeneficiariesForm({ data, onChange, hiddenComments, review }) {
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 visible={state.isModalOpen}
                 onCancel={onCancel} />
-              { items.map((item, key) =>
+              { items?.map((item, key) =>
                 <BeneficiaryItem
                   key={key}
                   index={key}

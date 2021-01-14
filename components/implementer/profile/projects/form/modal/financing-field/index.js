@@ -24,7 +24,7 @@ export function FinancingField({ total, ...props }) {
           <Col span={6}>Tipo</Col>
           <Col span={8}>Aportador</Col>
           <Col span={6}>Monto ($)</Col>
-          { items.map((item, index) =>
+          { items?.map((item, index) =>
             <>
               <Col span={6}>
                 <Form.Item

@@ -8,7 +8,7 @@ import { submissionStatusOptions } from "../../../../../../helpers/selectOptions
 function SubmissionAttachments({ data }) {
   const router = useRouter()
   const url = `/admin/submissions/${router.query.id}/pdf`
-  const statusIndex = submissionStatusOptions.findIndex(e => e.value === data?.status)
+  const statusIndex = submissionStatusOptions?.findIndex(e => e.value === data?.status)
 
   const attachments = (
     <Space direction="vertical">

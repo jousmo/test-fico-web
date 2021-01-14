@@ -37,13 +37,13 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
       hrCount++
       return hr
     }
-  }).filter(e => e !== undefined) || []
+  })?.filter(e => e !== undefined) || []
 
   const [state, setState] = useState(hrState)
   const [totalState, setTotalState] = useState(false)
 
   const hasDuplicates = humanResources
-    .map(r => r.position)
+    ?.map(r => r.position)
     .some((p, i, a) => a.indexOf(p) !== i)
 
   const onConceptsChange = newHumanResources => {
@@ -88,7 +88,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
   }
 
   const onRemoveFile = (file, oldDocuments, index, onFilesChange) => {
-    const documents = oldDocuments.filter(document => document.url !== file.url)
+    const documents = oldDocuments?.filter(document => document.url !== file.url)
     onFilesChange(index, documents, "documents")
   }
 
@@ -135,7 +135,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
               <div style={{overflowX: "auto"}}>
                 <div style={{width: "1650px"}}>
                   <HumanResourcesColumns />
-                  {items.map(item =>
+                  {items?.map(item =>
                     <Row
                       align="middle"
                       gutter={[10, 8]}

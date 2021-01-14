@@ -10,7 +10,7 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract, refetch })
 
   const { id: submissionId, status, documents } = data || {}
   const onAgreement = status === "ON_AGREEMENT"
-  const files = documents?.filter(document => document.type === "AGREEMENT").map(item => ({...item, uid: item.id}))
+  const files = documents?.filter(document => document.type === "AGREEMENT")?.map(item => ({...item, uid: item.id}))
 
   const [createDocumentSubmission] = useMutation(
     submission.mutations.createDocumentSubmission, { client: client }

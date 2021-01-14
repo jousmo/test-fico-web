@@ -9,9 +9,9 @@ import {
 const moment = extendMoment(Moment)
 moment.locale("es")
 
-const translateGender = gender => genderTypes.find(el => el.value === gender)
-const translateIssueTypes = type => issueTypes.find(el => el.value === type)
-const translateStrategicAxisTypes = type => strategicAxisTypes.find(el => el.value === type)
+const translateGender = gender => genderTypes?.find(el => el.value === gender)
+const translateIssueTypes = type => issueTypes?.find(el => el.value === type)
+const translateStrategicAxisTypes = type => strategicAxisTypes?.find(el => el.value === type)
 
 const ageByBirthdate = date => {
   const age = moment().diff(date, 'years', true)
@@ -31,7 +31,7 @@ const decoratedData = (assistants, dateFilter) => {
   let elements = cloneDeep(assistants)
 
   if (dateFilter?.length > 0) {
-    elements = elements.filter(el => moment(el.birthdate).isBetween(dateFilter[0], dateFilter[1]))
+    elements = elements?.filter(el => moment(el.birthdate).isBetween(dateFilter[0], dateFilter[1]))
   }
 
   return elements?.map(el => {
@@ -59,7 +59,7 @@ const decoratedCensusData = (census, dateFilter) => {
   let elements = cloneDeep(census)
 
   if (dateFilter?.length > 0) {
-    elements = elements.filter(el => moment(el.birthdate).isBetween(dateFilter[0], dateFilter[1]))
+    elements = elements?.filter(el => moment(el.birthdate).isBetween(dateFilter[0], dateFilter[1]))
   }
 
   return elements?.map(el => {

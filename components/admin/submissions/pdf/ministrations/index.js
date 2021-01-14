@@ -83,7 +83,7 @@ export function MinistrationsPDF(){
   return (
     <div className="fico pdf ministrations">
       <PDFHeading title="Ministración" />
-      { Array.from(yearsSet).map((year, yearIndex) => {
+      { Array.from(yearsSet)?.map((year, yearIndex) => {
         return(
           <>
             <Table
@@ -96,7 +96,7 @@ export function MinistrationsPDF(){
                 dataIndex="name"
                 title="Aportante" />
               <Table.Column title={year}>
-                {months.map((month, monthIndex) => {
+                {months?.map((month, monthIndex) => {
                   if (month.isSame(moment(year), "year")){
 
                     if (quarterArray.length < 3) {

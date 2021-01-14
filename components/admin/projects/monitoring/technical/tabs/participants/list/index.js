@@ -19,7 +19,7 @@ export function ParticipantsList({ data = {}, openModal, title }){
       <HeaderColumns />
       <Collapse defaultActiveKey={["1"]} bordered={false}>
         <Collapse.Panel key="1" header="Primaria">
-          {sortedPrimary.map((ages, index) =>
+          {sortedPrimary?.map((ages, index) =>
             <ParticipantRow
               age={ages}
               items={PRIMARY[ages]}
@@ -29,7 +29,7 @@ export function ParticipantsList({ data = {}, openModal, title }){
           )}
         </Collapse.Panel>
         <Collapse.Panel key="2" header="Secundaria">
-          {sortedSecondary.map((ages, index) =>
+          {sortedSecondary?.map((ages, index) =>
             <ParticipantRow
               age={ages}
               items={SECONDARY[ages]}
@@ -39,7 +39,7 @@ export function ParticipantsList({ data = {}, openModal, title }){
           )}
         </Collapse.Panel>
         <Collapse.Panel key="3" header="Terciaria">
-          {sortedTertiary.map((ages, index) =>
+          {sortedTertiary?.map((ages, index) =>
             <ParticipantRow
               age={ages}
               items={TERTIARY[ages]}

@@ -15,7 +15,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
   )
 
   const getAction = (type) => {
-    const [document] = documents.filter(document => document.type === type)
+    const [document] = documents?.filter(document => document.type === type)
 
     if (!document?.id) return null
 

@@ -22,15 +22,15 @@ function SubmissionsListingTable({ data }) {
     }
   } = implementer
 
-  const statusFilterOptions = submissionStatusOptions.map(option => (
+  const statusFilterOptions = submissionStatusOptions?.map(option => (
     {text: option.label, value: option.value}
   ))
 
-  const axisFilterOptions = strategicAxisTypes.map(option => (
+  const axisFilterOptions = strategicAxisTypes?.map(option => (
     {text: option.label, value: option.value}
   ))
 
-  const regionFilterOptions = regions.map(option => (
+  const regionFilterOptions = regions?.map(option => (
     {text: option.label, value: option.value}
   ))
 

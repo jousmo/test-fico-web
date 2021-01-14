@@ -24,28 +24,28 @@ const projectMonths = ({ startDate,  endDate }) => Array
       .range(moment(startDate), moment(endDate))
       .by("month")
   )
-  .map(r => r.format("MMMM YYYY"))
+  ?.map(r => r.format("MMMM YYYY"))
 
 const displayMonthTotal = (unitCost, value) =>
   numeral(unitCost * Number(value || 0)).format("$0,0.00")
 
-const typeSubmission = type => submissionTypes.find(el => el.value === type)
+const typeSubmission = type => submissionTypes?.find(el => el.value === type)
 
-const axisTypesStrategic = type => strategicAxisTypes.find(el => el.value === type)
+const axisTypesStrategic = type => strategicAxisTypes?.find(el => el.value === type)
 
-const levelTypesPrevention = type => preventionLevelTypes.find(el => el.value === type)
+const levelTypesPrevention = type => preventionLevelTypes?.find(el => el.value === type)
 
-const typesScope = type => scopeTypes.find(el => el.value === type)
+const typesScope = type => scopeTypes?.find(el => el.value === type)
 
-const typesIssue = type => issueTypes.find(el => el.value === type)
+const typesIssue = type => issueTypes?.find(el => el.value === type)
 
-const personTypesFiscal = type => fiscalPersonTypes.find(el => el.value === type)
+const personTypesFiscal = type => fiscalPersonTypes?.find(el => el.value === type)
 
-const levelTypesEducation = type => educationLevelTypes.find(el => el.value === type)
+const levelTypesEducation = type => educationLevelTypes?.find(el => el.value === type)
 
-const periodicityTypesMeasurement = type => measurementPeriodicityTypes.find(el => el.value === type)
+const periodicityTypesMeasurement = type => measurementPeriodicityTypes?.find(el => el.value === type)
 
-const typeConcept = type => conceptTypes.find(el => el.value === type)
+const typeConcept = type => conceptTypes?.find(el => el.value === type)
 
 const typeBooleans = type => [true].includes(type) ? "Si" : "No"
 
@@ -337,7 +337,7 @@ export const technicalSpecificationExport = async data => {
     titleInfo.value = "Indicadores"
     titleInfo.font = { size: 14, bold: true }
 
-    let indicators = specificObjectives?.indicators.map(({
+    let indicators = specificObjectives?.indicators?.map(({
       id,
       type,
       comments,
@@ -380,7 +380,7 @@ export const technicalSpecificationExport = async data => {
     titleInfo.value = "Actividades"
     titleInfo.font = { size: 14, bold: true }
 
-    let activities = specificObjectives?.activities.map(({
+    let activities = specificObjectives?.activities?.map(({
       id,
       comments,
       orderIndex,

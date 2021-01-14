@@ -7,7 +7,7 @@ import { submission } from '../../../../../../graphql/submission'
 
 function AgreementDocumentsForm({ data, client, refetch }) {
   const submissionId = data?.id
-  const documents = data?.documents.map(document => ({...document, uid: document.id}))
+  const documents = data?.documents?.map(document => ({...document, uid: document.id}))
 
   const [createDocumentSubmission] = useMutation(
     submission.mutations.createDocumentSubmission, { client: client }
@@ -68,7 +68,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
                 typeFile="CONSTITUTIVE"
                 label="Acta constitutiva"
                 className="documentsAgreement"
-                files={documents.filter(document => document.type === "CONSTITUTIVE")}
+                files={documents?.filter(document => document.type === "CONSTITUTIVE")}
                 onDoneFile={onDoneFile}
                 onRemoveFile={onRemoveFile}
               />
@@ -76,7 +76,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
                 typeFile="LEGAL_POWER"
                 label="Poder representante legal"
                 className="documentsAgreement"
-                files={documents.filter(document => document.type === "LEGAL_POWER")}
+                files={documents?.filter(document => document.type === "LEGAL_POWER")}
                 onDoneFile={onDoneFile}
                 onRemoveFile={onRemoveFile}
               />
@@ -84,7 +84,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
                 typeFile="IDENTIFICATION"
                 label="Copia de la identificación oficial de representante legal"
                 className="documentsAgreement"
-                files={documents.filter(document => document.type === "IDENTIFICATION")}
+                files={documents?.filter(document => document.type === "IDENTIFICATION")}
                 onDoneFile={onDoneFile}
                 onRemoveFile={onRemoveFile}
               />
@@ -92,7 +92,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
                 typeFile="CONSTANCY"
                 label="Copia de constancia de situación"
                 className="documentsAgreement"
-                files={documents.filter(document => document.type === "CONSTANCY")}
+                files={documents?.filter(document => document.type === "CONSTANCY")}
                 onDoneFile={onDoneFile}
                 onRemoveFile={onRemoveFile}
               />
@@ -100,7 +100,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
                 typeFile="PROOF_RESIDENCY"
                 label="Comprobante de domicilio"
                 className="documentsAgreement"
-                files={documents.filter(document => document.type === "PROOF_RESIDENCY")}
+                files={documents?.filter(document => document.type === "PROOF_RESIDENCY")}
                 onDoneFile={onDoneFile}
                 onRemoveFile={onRemoveFile}
               />
@@ -108,7 +108,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
                 typeFile="ACCOUNT_BALANCE"
                 label="Copia de la caratula del estado de cuenta (Cuenta exclusiva de proyecto)"
                 className="documentsAgreement"
-                files={documents.filter(document => document.type === "ACCOUNT_BALANCE")}
+                files={documents?.filter(document => document.type === "ACCOUNT_BALANCE")}
                 onDoneFile={onDoneFile}
                 onRemoveFile={onRemoveFile}
               />

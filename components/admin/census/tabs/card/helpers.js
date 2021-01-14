@@ -11,7 +11,7 @@ const translateDate = (date, format, currentFormat = "YYYY/MM/DD") => {
   return moment(date, currentFormat).format(format)
 }
 
-const translateGender = gender => genderTypes.find(el => el.value === gender)
+const translateGender = gender => genderTypes?.find(el => el.value === gender)
 
 export const onSearch = (data, setState, value) => {
   if (!value) {

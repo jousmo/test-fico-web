@@ -21,20 +21,20 @@ export function CensusProjects({ data }) {
               <Typography.Text type="secondary">
                 Eje
                 <Typography.Paragraph>
-                  {strategicAxisTypes.find(item => item.value === el?.strategicAxis).label}
+                  {strategicAxisTypes?.find(item => item.value === el?.strategicAxis).label}
                 </Typography.Paragraph>
               </Typography.Text>
               <Typography.Text type="secondary">
                 Nivel de prevención
                 <Typography.Paragraph>
-                  {el?.preventionLevel?.map(i => preventionLevelTypes.find(item => item.value === i)?.label)?.join(',')}
+                  {el?.preventionLevel?.map(i => preventionLevelTypes?.find(item => item.value === i)?.label)?.join(',')}
                 </Typography.Paragraph>
               </Typography.Text>
             </Space>
             <Typography.Text type="secondary">
               Problemática
               <Typography.Paragraph>
-                {issueTypes.find(item => item.value === el?.issueDescription).label}
+                {issueTypes?.find(item => item.value === el?.issueDescription).label}
               </Typography.Paragraph>
             </Typography.Text>
             <Button>Ver detalle</Button>

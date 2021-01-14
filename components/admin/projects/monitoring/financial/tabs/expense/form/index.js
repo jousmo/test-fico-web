@@ -97,7 +97,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
 
   const onRemoveFile = async ({ type, url }) => {
     const oldDocuments = form.getFieldValue("documents")
-    const documents = oldDocuments.filter(document => document.url !== url)
+    const documents = oldDocuments?.filter(document => document.url !== url)
 
     if (type === "XML" || type === "text/xml") {
       await form.setFieldsValue(RESET_XML_DATA)
@@ -115,7 +115,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   }
 
   const handleChangeListConcepts = ({currentTarget: { value }}) => {
-    const { type } = submission?.concepts.find(concept => concept.id === value)
+    const { type } = submission?.concepts?.find(concept => concept.id === value)
     form.setFieldsValue({ category: type })
   }
 
