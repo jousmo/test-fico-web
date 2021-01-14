@@ -27,8 +27,13 @@ const totalActivities = assistance => {
   return uniq(assistance?.map(el => el?.activity)).length
 }
 
-const decoratedData = assistants => {
-  const elements = cloneDeep(assistants)
+const decoratedData = (assistants, dateFilter) => {
+  let elements = cloneDeep(assistants)
+
+  if (dateFilter?.length > 0) {
+    elements = elements.filter(el => moment(el.birthdate).isBetween(dateFilter[0], dateFilter[1]))
+  }
+
   return elements?.map(el => {
     el.age = ageByBirthdate(el?.birthdate)
     el.activities = `+${totalActivities(el?.assistance)}`

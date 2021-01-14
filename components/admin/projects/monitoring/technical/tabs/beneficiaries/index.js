@@ -1,21 +1,23 @@
 import { Button, Card, Space } from "antd"
-import { CompositeField } from "../../../../../../shared"
+import { CompositeField, SearchFieldPrimary } from "../../../../../../shared"
 import { ListBeneficiaries } from "./list"
 import { decoratedData } from "../../../../../../../helpers/assistantsBeneficiaries"
 import { ModalBeneficiaries } from "./modal"
 import React, { useContext, useState } from "react"
 import { omit } from "lodash"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
+import { onSearch } from "../../../../../census/tabs/card/helpers"
 
-export function MonitoringBeneficiaries({ data }) {
+export function MonitoringBeneficiaries({ data, dateFilter }) {
   const { Submission } = data || {}
-  const dataSource = decoratedData(Submission?.projectBeneficiaries)
+  const dataSource = decoratedData(Submission?.projectBeneficiaries, dateFilter)
   const [selectedRows, setSelectedRows] = useState([])
   const [state, setState] = useState({
     openConfirm: false,
     isModalOpen: false,
     edit: false
   })
+  const [beneficiaries, setBeneficiaries] = useState(undefined)
   const { createBeneficiaries, updateBeneficiaries, deleteBeneficiaries } = useContext(AdminSubmissionContext)
 
   const onClickAdd = () => {
@@ -49,34 +51,39 @@ export function MonitoringBeneficiaries({ data }) {
   }
 
   return (
-    <Card className="assistants">
-      <Space size="middle" style={{marginBottom: "1rem"}}>
-        <Button>Relacionar a objetivo especifico</Button>
-        <Button type="primary">Descargar</Button>
-      </Space>
-      <CompositeField
-        onClickAdd={onClickAdd}
-        onChange={null}
-        value={dataSource}
-        addLabel="Agregar beneficiarios"
-        orientation="TOP">
-        {({ items }) =>
-          <>
-            <ModalBeneficiaries
-              visible={state.isModalOpen}
-              onSave={onSave}
-              onCancel={onCancel}
-              edit={state.edit}
-              className="fico modal-assistants"/>
-            <ListBeneficiaries
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-              dataSource={items}
-              onEdit={onEdit}
-              onDelete={onDelete}/>
-          </>
-        }
-      </CompositeField>
-    </Card>
+    <>
+      <SearchFieldPrimary
+        onSearch={value => onSearch(dataSource, setBeneficiaries, value)}
+        style={{marginBottom: "1rem"}}  />
+      <Card className="assistants">
+        <Space size="middle" style={{marginBottom: "1rem"}}>
+          <Button>Relacionar a objetivo especifico</Button>
+          <Button type="primary">Descargar</Button>
+        </Space>
+        <CompositeField
+          onClickAdd={onClickAdd}
+          onChange={null}
+          value={beneficiaries ? beneficiaries : dataSource}
+          addLabel="Agregar beneficiarios"
+          orientation="TOP">
+          {({ items }) =>
+            <>
+              <ModalBeneficiaries
+                visible={state.isModalOpen}
+                onSave={onSave}
+                onCancel={onCancel}
+                edit={state.edit}
+                className="fico modal-assistants"/>
+              <ListBeneficiaries
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+                dataSource={items}
+                onEdit={onEdit}
+                onDelete={onDelete}/>
+            </>
+          }
+        </CompositeField>
+      </Card>
+    </>
   )
 }

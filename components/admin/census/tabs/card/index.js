@@ -1,19 +1,23 @@
 import { ListCensus } from "../../list"
-import React from "react"
+import React, { useState } from "react"
 import { SearchFieldPrimary } from "../../../../shared"
 import { decoratedCensusData } from "../../../../../helpers/assistantsBeneficiaries"
 import { Button, Card, Space } from "antd"
+import { onSearch } from "./helpers"
 
-export function CensusBeneficiaries({ data, dateFilter }) {
+export function CensusCard({ data, dateFilter, section }) {
+  const [state, setState] = useState(undefined)
   const dataSource = decoratedCensusData(data, dateFilter)
 
   return (
-    <Card className="assistants">
-      <SearchFieldPrimary onSearch={null} />
+    <Card>
+      <SearchFieldPrimary onSearch={value => onSearch(dataSource, setState, value)} />
       <Space size="middle">
         <Button type="primary">Descargar</Button>
       </Space>
-      <ListCensus title="beneficiarios" dataSource={dataSource} />
+      <ListCensus
+        title={section}
+        dataSource={state ? state : dataSource} />
     </Card>
   )
 }
