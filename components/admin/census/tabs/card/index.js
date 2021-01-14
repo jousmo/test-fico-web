@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { SearchFieldPrimary } from "../../../../shared"
 import { decoratedCensusData } from "../../../../../helpers/assistantsBeneficiaries"
 import { Button, Card, Space } from "antd"
-import { onSearch } from "./helpers"
+import { onSearch, beneficiariesExport } from "./helpers"
 
 export function CensusCard({ data, dateFilter, section }) {
   const [state, setState] = useState(undefined)
@@ -13,7 +13,7 @@ export function CensusCard({ data, dateFilter, section }) {
     <Card>
       <SearchFieldPrimary onSearch={value => onSearch(dataSource, setState, value)} />
       <Space size="middle">
-        <Button type="primary">Descargar</Button>
+        <Button type="primary" onClick={() => beneficiariesExport(dataSource)}>Descargar</Button>
       </Space>
       <ListCensus
         title={section}
