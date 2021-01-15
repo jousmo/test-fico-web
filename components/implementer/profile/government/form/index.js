@@ -41,7 +41,7 @@ export function GovernmentForm({data, isLoading, onChange, error, disabled}) {
                         id="name"
                         name="name"
                         defaultValue={item.name}
-                        onChange={updateItem(index)}
+                        onBlur={updateItem(index)}
                         type="text"
                         disabled={disabled}/>
                     </Form.Item>
