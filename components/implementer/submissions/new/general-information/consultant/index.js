@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import {
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/new"
@@ -6,7 +6,7 @@ import { Section, VisibilityRadio } from "../../../../../shared"
 import ConsultantForm from "./form"
 
 export function Consultant() {
-  const [state, setState] = useState(true)
+  const [state, setState] = useState(false)
 
   const {
     updateGeneralInformation,
@@ -27,6 +27,12 @@ export function Consultant() {
       onChange([])
     }
   }
+
+  useEffect(() => {
+    if (data?.Submission?.consultants.length) {
+      setState(true)
+    }
+  }, [data])
 
   return (
     <Section title="2. Consultores">
