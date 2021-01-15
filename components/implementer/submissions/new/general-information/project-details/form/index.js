@@ -118,7 +118,7 @@ function ProjectDetailsForm({
               </FieldLabel>
             }>
             <TownshipSelect
-              defaultValue={data?.Submission?.township}
+              defaultValue={data?.Submission?.township || []}
               onChange={onChange}
               disabled={readOnly}
               setRegion={form.setFieldsValue} />
