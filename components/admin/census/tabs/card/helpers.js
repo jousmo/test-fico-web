@@ -5,6 +5,7 @@ import Moment from "moment"
 import { genderTypes } from "../../../../../helpers/selectOptions/implementer/submission"
 const moment = extendMoment(Moment)
 moment.locale("es")
+import { capitalize } from "lodash"
 
 const translateDate = (date, format, currentFormat = "YYYY/MM/DD") => {
   if (!date) return ""
@@ -32,29 +33,45 @@ export const onSearch = (data, setState, value) => {
   setState(filter)
 }
 
-export const beneficiariesExport = async data => {
+export const censusExport = async (data, section) => {
+  const title = capitalize(section)
   const workbook = new ExcelJS.Workbook()
-  const worksheet = workbook.addWorksheet("Beneficiarios")
+  const worksheet = workbook.addWorksheet(title)
 
   let titleInfo = worksheet.getCell("A1")
-  titleInfo.value = "Beneficiarios"
+  titleInfo.value = title
   titleInfo.font = { size: 20, bold: true }
 
-  let beneficiaries = data?.map(({
-    id,
-    activities,
-    submission,
-    ...el
-  }) => {
-    el.birthdate = translateDate(el?.birthdate, "DD/MM/YYYY")
-    el.gender = translateGender(el?.gender)?.label
-    return Object.values(el)
-  })
+  let census = []
 
-  beneficiaries = beneficiaries?.length ? beneficiaries : [[]]
+  if (title === 'Asistentes') {
+    census = data?.map(({
+      id,
+      axis,
+      submission,
+      ...el
+    }) => {
+      el.birthdate = translateDate(el?.birthdate, "DD/MM/YYYY")
+      el.gender = translateGender(el?.gender)?.label
+      return Object.values(el)
+    })
+  } else {
+    census = data?.map(({
+      id,
+      activities,
+      submission,
+      ...el
+    }) => {
+      el.birthdate = translateDate(el?.birthdate, "DD/MM/YYYY")
+      el.gender = translateGender(el?.gender)?.label
+      return Object.values(el)
+    })
+  }
+
+  census = census?.length ? census : [[]]
 
   worksheet.addTable({
-    name: `Beneficiarios`,
+    name: title,
     ref: `A${worksheet?.lastRow?._number + 2}`,
     headerRow: true,
     style: {
@@ -73,14 +90,14 @@ export const beneficiariesExport = async data => {
       { name: "Municipio" },
       { name: "Colonia" },
       { name: "Edad" },
-      { name: "Eje" },
+      { name: "Eje / Actividades" },
       { name: "Problemática" },
       { name: "Proyectos" }
     ],
-    rows: beneficiaries
+    rows: census
   })
 
   const buf = await workbook.xlsx.writeBuffer()
-  saveAs(new Blob([buf]), "Beneficiarios.xlsx")
+  saveAs(new Blob([buf]), `${title}.xlsx`)
 }
 

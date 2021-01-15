@@ -29,7 +29,7 @@ function CensusTabs({ data }) {
       </Tabs.TabPane>
       <Tabs.TabPane tab="Asistentes" key="2">
         <CensusCard
-          data={data?.beneficiaries}
+          data={data?.assistants}
           dateFilter={filterState}
           section="asistentes" />
       </Tabs.TabPane>
