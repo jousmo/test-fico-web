@@ -17,7 +17,7 @@ export function TownshipSelect({
     }
 
     let region = options?.find(region => (
-      region?.townships?.includes(value[0])
+      region?.townships?.includes(values[0])
     )).region
 
     if (region === "Otro"){
