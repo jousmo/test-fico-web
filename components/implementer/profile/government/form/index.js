@@ -31,7 +31,7 @@ export function GovernmentForm({data, isLoading, onChange, error, disabled}) {
           isAddDisabled={disabled}>
           {({ items, updateItem, removeItem }) =>
             <div>
-              { items.map((item, index) =>
+              { items?.map((item, index) =>
                 <Row key={`${item.name}-${index}`} gutter={[10, 8]} justify="start">
                   <Col span={8}>
                     <Form.Item

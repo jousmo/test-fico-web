@@ -86,7 +86,7 @@ function TechnicalMonitoringPage({ client, query }) {
     const { id, ...updatedMonitoring } = newMonitoring
 
     updatedMonitoring.participants = [...updatedMonitoring.participants]
-      .map(({uuid, ...p}) => p)
+      ?.map(({uuid, ...p}) => p)
 
     try {
       await updateMonitoring({

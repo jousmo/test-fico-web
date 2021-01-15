@@ -1,5 +1,5 @@
 export const deleteHRComments = (submission, toDelete, index) => {
-  const concepts = [...submission?.concepts].map(({ budgeted, ...concept }) => concept)
+  const concepts = [...submission?.concepts]?.map(({ budgeted, ...concept }) => concept)
   const concept = concepts[index]
   const humanResource = concept?.humanResource[0]
   const newComments = humanResource?.comments?.filter(e =>
@@ -16,7 +16,7 @@ export const deleteHRComments = (submission, toDelete, index) => {
 }
 
 export const addHRComment = (submission, comment, index) => {
-  const concepts = [...submission?.concepts].map(({ budgeted, ...concept }) => concept)
+  const concepts = [...submission?.concepts]?.map(({ budgeted, ...concept }) => concept)
   const concept = concepts[index]
   const humanResource = concept?.humanResource[0]
   const comments = humanResource?.comments || []

@@ -7,8 +7,8 @@ export const dataDecorator = (concepts, months) => {
   const totalPerInvestor = {}
   const dataSource = {}
   Object.keys(investments).forEach(year => {
-    dataSource[year] = Object.keys(investments[year]).map(investor => {
-      const anualTotal = investments[year][investor].reduce((a, b) => {
+    dataSource[year] = Object.keys(investments[year])?.map(investor => {
+      const anualTotal = investments[year][investor]?.reduce((a, b) => {
         if (isNaN(b)){
           return a
         }
@@ -26,7 +26,7 @@ export const dataDecorator = (concepts, months) => {
     })
   })
 
-  const totalDataSource = Object.keys(totalPerInvestor).map(key => (
+  const totalDataSource = Object.keys(totalPerInvestor)?.map(key => (
     { name: key, total: totalPerInvestor[key] }
   ))
 

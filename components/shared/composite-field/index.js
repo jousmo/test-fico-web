@@ -81,7 +81,7 @@ export function CompositeField({
 
   const removeItem = index => {
     return event => {
-      const newItems = Array.from(state.items).filter((it, i) => i !== index)
+      const newItems = Array.from(state.items)?.filter((it, i) => i !== index)
       setState({ items: newItems, maxReached: isMaxReached(newItems.length) })
       handleChange(newItems)
     }

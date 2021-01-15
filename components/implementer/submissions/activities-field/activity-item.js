@@ -25,10 +25,10 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
   let formattedMonths = months
 
   if(Array.isArray(months)) {
-    const ranges = months.map(value => {
+    const ranges = months?.map(value => {
       const range = Array
         .from(moment.range(value[0], value[1]).by("month"))
-        .map(r => r.format("MMMM YYYY"))
+        ?.map(r => r.format("MMMM YYYY"))
 
       return range.join(", ")
     })

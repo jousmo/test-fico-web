@@ -9,7 +9,7 @@ export function SchedulesField({ readOnly, ...props }) {
       {...props}>
       {({ items, updateItem }) =>
         <Row>
-          { items.map((item, index) =>
+          { items?.map((item, index) =>
             <>
               <Col span={10} style={{ padding: "0 5px" }}>
                 <Form.Item

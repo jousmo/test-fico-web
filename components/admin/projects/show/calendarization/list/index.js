@@ -9,7 +9,7 @@ function CalendarizationList({ data }){
 
   const latestUpdated = data?.Submission?.specificObjectives?.reduce((result, objective) => {
     objective.activities?.forEach(activity => {
-      activity.schedules.map(({ scheduledAt }) => {
+      activity.schedules?.map(({ scheduledAt }) => {
         if (scheduledAt > result){
           result = scheduledAt
         }

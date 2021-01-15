@@ -48,5 +48,5 @@ export const getMonths = dates => {
   }
 
   return Array.from(moment.range(startDate, endDate).by("month"))
-    .map(r => ({ label: _.capitalize(r.format("MMM YY")), value: r.format("MMYYYY")}))
+    ?.map(r => ({ label: _.capitalize(r.format("MMM YY")), value: r.format("MMYYYY")}))
 }

@@ -44,9 +44,9 @@ export function SchedulePDF(){
           dataIndex="activity"
           title="Actividad"/>
 
-        { yearColumns.map((year, yearIndex) => (
+        { yearColumns?.map((year, yearIndex) => (
           <Table.ColumnGroup key={`year_${yearIndex}`} title={year}>
-            { monthsColumns.map((month, monthIndex) => {
+            { monthsColumns?.map((month, monthIndex) => {
               if (month.substring(0,4) === year) {
                 return (
                   <Table.Column

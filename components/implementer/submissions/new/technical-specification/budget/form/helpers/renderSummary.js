@@ -23,13 +23,13 @@ export const renderSummary = (concepts, submission) => {
     const totalCost = concept.totalUnits * concept.unitCost
 
     const firstAllyPercentage = concept.investmentDistribution
-      .find(e => e.name === firstAlly)?.percentage
+      ?.find(e => e.name === firstAlly)?.percentage
     const secondAllyPercentage = secondAlly ? concept.investmentDistribution
-      .find(e => e.name === secondAlly)?.percentage : 0
+      ?.find(e => e.name === secondAlly)?.percentage : 0
     const ficosecPercentage = concept.investmentDistribution
-      .find(e => e.name === "FICOSEC")?.percentage
+      ?.find(e => e.name === "FICOSEC")?.percentage
     const implementerPercentage = concept.investmentDistribution
-      .find(e => e.name === "Implementadora")?.percentage
+      ?.find(e => e.name === "Implementadora")?.percentage
 
     result = {
       units: result.units + concept.totalUnits,

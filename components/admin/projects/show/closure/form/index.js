@@ -54,7 +54,7 @@ function ProjectClosureForm({ data, save }) {
 
   const onRemoveFile = async ({ url }) => {
     const oldDocuments = [...data?.closureDocuments]
-    const closureDocuments = oldDocuments.filter(document => document.url !== url)
+    const closureDocuments = oldDocuments?.filter(document => document.url !== url)
     await form.setFieldsValue({ closureDocuments })
   }
 

@@ -65,7 +65,7 @@ function ConsultantForm({ data, onChange, hiddenComments, review }) {
                 onCancel={onCancel}
                 readOnly={readOnly}
                 hiddenComments={hiddenComments}/>
-              { items.map((item, key) =>
+              { items?.map((item, key) =>
                 <ConsultantItem
                   key={key}
                   index={key}

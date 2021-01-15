@@ -16,8 +16,8 @@ export function TownshipSelect({
       value: value
     }
 
-    let region = options.find(region => (
-      region.townships.includes(value)
+    let region = options?.find(region => (
+      region?.townships?.includes(value)
     )).region
 
     if (region === "Otro"){
@@ -46,11 +46,11 @@ export function TownshipSelect({
       defaultValue={defaultValue}
       showSearch
       {...props}>
-      { options.map((o, i) => (
+      { options?.map((o, i) => (
         <Select.OptGroup
           key={kebabCase(`${o.region}-${i}`)}
           label={o.region}>
-          { o.townships.map((township, index) => (
+          { o.townships?.map((township, index) => (
             <Select.Option
               key={kebabCase(`${township}-${index}`)}
               value={township}>

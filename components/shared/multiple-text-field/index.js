@@ -10,7 +10,7 @@ export function MultipleTextField({
   ...props
 }) {
   const onCompositeFieldChange = value => {
-    onChange && onChange(value.map(i => i.value))
+    onChange && onChange(value?.map(i => i.value))
   }
   const transformDefaultValue = value => {
     return { value }

@@ -12,7 +12,7 @@ export function MonitoringObstacles({ data = {}, dateFilter }){
 
   let obstacles = data?.Submission?.technicalUpdates
   if (dateFilter?.length > 0) {
-    obstacles = obstacles.filter(obstacle =>
+    obstacles = obstacles?.filter(obstacle =>
       moment(obstacle.createdAt).isBetween(dateFilter[0], dateFilter[1])
     )
   }

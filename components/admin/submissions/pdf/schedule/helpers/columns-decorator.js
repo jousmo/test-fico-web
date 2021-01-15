@@ -6,7 +6,7 @@ import ActivityBox from "../activity-box"
 export const columnDecorator = activities => {
   const monthsSet = new Set()
   const yearsSet = new Set()
-  const dataSource = activities.map((activity, index) => {
+  const dataSource = activities?.map((activity, index) => {
     const result = {
       key: index,
       activity: `Actividad ${index + 1}`
@@ -18,12 +18,12 @@ export const columnDecorator = activities => {
     })
 
     ranges.forEach(range => {
-      Array.from(range.by("month")).map(
+      Array.from(range.by("month"))?.map(
         m => {
           yearsSet.add(m.format("YYYY"))
           return m.format("YYYYMM")
         }
-      ).forEach(month => {
+      )?.forEach(month => {
         monthsSet.add(month)
         result[month] = <ActivityBox />
       })

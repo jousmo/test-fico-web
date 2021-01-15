@@ -16,7 +16,7 @@ export function SummaryConcept () {
   })
 
   const onChange = value => {
-    const checked = value.find(el => el !== state.checked)
+    const checked = value?.find(el => el !== state.checked)
     setState({ ...state, checked })
   }
 

@@ -100,7 +100,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
 
   const onRemoveFile = async ({ url }) => {
     const oldDocuments = form.getFieldValue("documents")
-    const documents = oldDocuments.filter(document => document.url !== url)
+    const documents = oldDocuments?.filter(document => document.url !== url)
 
     await form.setFieldsValue({ documents })
   }
@@ -341,7 +341,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
                   addLabel="Agregar apoyo">
                   {({ items, updateItem, removeItem }) =>
                     <div>
-                      { items.map((item, index) =>
+                      { items?.map((item, index) =>
                         <Row
                           gutter={[10, 8]}
                           justify="start"

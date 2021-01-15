@@ -19,7 +19,7 @@ export function UploadButtonForm({
     let fileList = [...info.fileList]
     fileList = fileList.slice(-maxFile)
 
-    fileList = fileList.map(file => {
+    fileList = fileList?.map(file => {
       if (file.response) {
         file.url = file.response.imageUrl
       }

@@ -14,7 +14,7 @@ export function ParticipantsModal({ data, level, ...props }){
       <Row gutter={[10, 8]}>
         <HeaderColumns />
         <Divider style={{ margin: "10px 0"}} />
-        {Object.keys(items).map(key =>
+        {Object.keys(items)?.map(key =>
           <>
             <Col span={8}>{items[key].name}</Col>
             <Col span={6}>{items[key].men}</Col>

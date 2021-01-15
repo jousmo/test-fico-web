@@ -70,9 +70,9 @@ export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
         <Col span={24}>
           <Typography.Text strong>Meses de implementación: </Typography.Text>
           <Typography.Text>
-            {edit?.months.map(range => (
+            {edit?.months?.map(range => (
               `${getDate(range[0])} - ${getDate(range[1])}`
-            )).join(" | ")}
+            ))?.join(" | ")}
           </Typography.Text>
         </Col>
         <Divider

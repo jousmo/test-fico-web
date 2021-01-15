@@ -10,7 +10,7 @@ function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
   const { user } = useAuth()
 
   const onSpecificObjectivesChange = newObjectives => {
-    const objectives = newObjectives.map((el, index) => ({ ...el, orderIndex: index + 1 }))
+    const objectives = newObjectives?.map((el, index) => ({ ...el, orderIndex: index + 1 }))
     onChange && onChange({
       currentTarget: {
         id: "specificObjectives",
@@ -94,7 +94,7 @@ function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
               onClickAdd={(addNew) => addNew({description: ""})}>
               {({ items, updateItem, removeItem }) =>
                 <div>
-                  { items.map((item, index) =>
+                  { items?.map((item, index) =>
                     <Form.Item key={`specific_objective_${item.orderIndex}`}>
                       <Row>
                         <Col flex="auto">

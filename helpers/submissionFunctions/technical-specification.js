@@ -21,11 +21,11 @@ export const setSave = async (state, setState, updateSubmission, id) => {
   try {
     const data = cloneDeep(state.technicalSpecification)
     data.specificObjectives = data.specificObjectives?.map(objective => {
-      objective.activities = objective.activities.map(({uuid, index, ...activity}) =>
+      objective.activities = objective.activities?.map(({uuid, index, ...activity}) =>
         activity
       )
 
-      objective.indicators = objective.indicators.map(({uuid, index, ...indicator}) =>
+      objective.indicators = objective.indicators?.map(({uuid, index, ...indicator}) =>
         indicator
       )
 

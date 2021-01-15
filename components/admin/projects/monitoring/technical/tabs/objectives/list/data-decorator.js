@@ -81,14 +81,14 @@ export const decoratedData = (data, dateFilter) => {
         })
       })
 
-      const objectiveIndex = result.findIndex(el => el.key === key)
+      const objectiveIndex = result?.findIndex(el => el.key === key)
       result[objectiveIndex] = {
         ...result[objectiveIndex],
         goal: accumulatedGoal
       }
   })
 
-  return result.map(el => {
+  return result?.map(el => {
     const { id, ...report } = data?.technicalMonitoringReports?.find(report => report.key === el.key) || {}
     return {
       ...el,

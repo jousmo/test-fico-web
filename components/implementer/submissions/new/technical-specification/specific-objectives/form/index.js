@@ -45,7 +45,7 @@ export default function SpecificObjectiveForm({
   const onSpecificObjectiveItemsChange = (index, type) => (indicators) => {
     const newSpecificObjectives = Array.from(specificObjectives)
 
-    newSpecificObjectives[index][type] = indicators.map((el, index) => ({ ...el, orderIndex: index + 1 }))
+    newSpecificObjectives[index][type] = indicators?.map((el, index) => ({ ...el, orderIndex: index + 1 }))
 
     onChange && onChange(newSpecificObjectives)
   }
@@ -55,7 +55,7 @@ export default function SpecificObjectiveForm({
 
   return (
     <>
-      { specificObjectives.map((objective, index) =>
+      { specificObjectives?.map((objective, index) =>
         <Section
           title={
             <>

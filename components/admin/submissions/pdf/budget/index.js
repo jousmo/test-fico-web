@@ -37,9 +37,9 @@ export function BudgetPDF() {
       const totalCost = concept.totalUnits * concept.unitCost
 
       const firstAllyPercentage = concept.investmentDistribution
-        .find(e => e.name === firstAlly).percentage
+        ?.find(e => e.name === firstAlly).percentage
       const secondAllyPercentage = secondAlly ? concept.investmentDistribution
-        .find(e => e.name === secondAlly).percentage : 0
+        ?.find(e => e.name === secondAlly).percentage : 0
 
       absoluteTotal += totalCost
       totalFirstAlly += getAmount(concept, firstAllyPercentage)
@@ -95,7 +95,7 @@ export function BudgetPDF() {
             <Table.Column
               render={(text, row) => {
                 const percentage = row.investmentDistribution
-                  .find(e => e.name === ally).percentage
+                  ?.find(e => e.name === ally).percentage
                 const total = getAmount(row, percentage)
                 return <>${total}&nbsp;<Tag>{percentage}%</Tag></>
               }}
@@ -104,10 +104,10 @@ export function BudgetPDF() {
           <Table.Column
             render={(text, row) => {
               const allies = row.investmentDistribution
-                .filter(e => e.type === "ALLIED")
+                ?.filter(e => e.type === "ALLIED")
               let totalPercentage = 0
               let totalAmount = 0
-              allies.forEach(ally => {
+              allies?.forEach(ally => {
                 totalPercentage += ally.percentage
                 totalAmount += getAmount(row, ally.percentage)
               })
