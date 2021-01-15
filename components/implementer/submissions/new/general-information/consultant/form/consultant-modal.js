@@ -1,4 +1,4 @@
-import { Modal, Form, Row, Col, Input, Empty } from "antd"
+import { Modal, Form, Row, Col, Input, Empty, Typography } from "antd"
 import { useEffect, useState } from "react"
 import {
   CompositeField,
@@ -6,8 +6,8 @@ import {
   DeleteButton,
   FieldLabel,
   RadioField,
-  UploadTooltip,
-  Visibility
+  Visibility,
+  UploadButtonForm
 } from "../../../../../../shared"
 import {
   getSelectValue,
@@ -21,7 +21,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
   const [form] = Form.useForm()
   const [state, setState] = useState({
     hasSupport: false,
-    personType: "NATURAL_PERSON"
+    personType: undefined
   })
 
   useEffect(() => {
@@ -292,17 +292,26 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
                   index: edit?.index,
                   name: "documents",
                   section: "CONSULTANT"}}>
-                  Documentos
+                  <>
+                    Documentos
+                    {state.personType && (
+                      <>
+                        <br/>
+                        <Typography.Text>{getTooltipBody()}</Typography.Text>
+                      </>
+                    )}
+                  </>
                 </FieldLabel>
               }>
-              <UploadTooltip
-                body={getTooltipBody()}
+              <UploadButtonForm
                 disabled={readOnly}
                 fileList={toFileList(edit?.documents) || []}
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
                 maxFile={5}
-                accept={"application/pdf"}/>
+                accept={"application/pdf"}>
+                Adjuntar documentos
+              </UploadButtonForm>
             </Form.Item>
           </Col>
           <Col span={24}>
