@@ -20,7 +20,8 @@ function ImplementerSubmissions({ client }) {
 
   const { loading, error, data } = useQuery(submission.queries.getAll, {
     client: client,
-    variables: { state: "SUBMISSION" }
+    variables: { state: "SUBMISSION" },
+    fetchPolicy: "network-only"
   })
 
   if (data) {
