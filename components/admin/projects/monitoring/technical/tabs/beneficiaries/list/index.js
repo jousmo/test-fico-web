@@ -56,6 +56,10 @@ export function ListBeneficiaries ({ dataSource, onEdit, onDelete, selectedRows,
         title="Fecha de nacimiento" />
       <Table.Column
         width={1}
+        dataIndex="curp"
+        title="CURP" />
+      <Table.Column
+        width={1}
         dataIndex="age"
         title="Edad" />
       <Table.Column
