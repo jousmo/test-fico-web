@@ -27,5 +27,14 @@ export const getAll = gql`
       createdAt
       budgeted
     }
+    
+    Implementer {
+      rfc
+      name
+      email
+      phone
+      director
+      legalRepresentative
+    }
   }
 `
