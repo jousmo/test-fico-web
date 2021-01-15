@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { Layout } from "../../../components/shared"
-import { Button } from "antd"
+import { Button, message } from "antd"
 import {
   SubmissionsListing
 } from "../../../components/implementer/submissions/list"
@@ -22,6 +22,19 @@ function ImplementerSubmissions({ client }) {
     client: client,
     variables: { state: "SUBMISSION" }
   })
+
+  if (data) {
+    let filledProfile = true
+    Object.values(data?.Implementer).forEach(value => {
+      if (!value || value === "") {
+        filledProfile = false
+      }
+    })
+    if (!filledProfile) {
+      message.warning("Favor de terminar tu perfil")
+      router.push(`/implementer/profile`)
+    }
+  }
 
   const injectActions = useMemo(() => ({
     loading,
