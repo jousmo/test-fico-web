@@ -10,14 +10,14 @@ export function TownshipSelect({
 }) {
   const options = implementer.submission.townships
 
-  const onSelectChange = value => {
+  const onSelectChange = values => {
     const township = {
       id: "township",
-      value: value
+      value: values
     }
 
     let region = options?.find(region => (
-      region?.townships?.includes(value)
+      region?.townships?.includes(values[0])
     )).region
 
     if (region === "Otro"){
@@ -42,6 +42,7 @@ export function TownshipSelect({
       id="township"
       name="township"
       onChange={onSelectChange}
+      mode="tags"
       placeholder="Selecciona..."
       defaultValue={defaultValue}
       showSearch
