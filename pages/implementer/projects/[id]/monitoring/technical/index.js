@@ -55,6 +55,10 @@ function TechnicalMonitoringPage({ client, query }) {
     submission.mutations.deleteProjectBeneficiaries, { client: client }
   )
 
+  const [updateActivity] = useMutation(
+    submission.mutations.updateActivity, { client: client }
+  )
+
   const createBeneficiaries = useCallback(async (beneficiaries, isConvert = true) => {
     const saving = loadingAlert(isConvert ? "Creando beneficiarios" : "Guardando", 0)
     try {
@@ -212,6 +216,18 @@ function TechnicalMonitoringPage({ client, query }) {
     }
   }, [updateMonitoring, refetch])
 
+  const saveActivity = useCallback(async activity => {
+    try {
+      await updateActivity({
+        variables: { data: activity }
+      })
+    }
+    catch(e) {
+      warning()
+      Bugsnag.notify(new Error(e))
+    }
+  }, [updateActivity])
+
   const injectActions = useMemo(() => ({
     createBeneficiaries,
     updateBeneficiaries,
@@ -220,6 +236,7 @@ function TechnicalMonitoringPage({ client, query }) {
     updateAssistants,
     deleteAssistants,
     updateSubmission,
+    saveActivity,
     loading,
     update,
     error,
