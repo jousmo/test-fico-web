@@ -46,7 +46,7 @@ function SubmissionsListingTable({ data }) {
     <Table
       className="fico submissions list table"
       dataSource={data}
-      rowKey={(row, index) => index}
+      rowKey={row  => row.id}
       onRow={record => handleClick(record)}
       size="small">
       <Table.Column
