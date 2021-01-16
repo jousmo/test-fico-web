@@ -21,7 +21,12 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
   let hrCount = 0
   const concepts = data?.Submission?.concepts?.map(({ budgeted, ...concept }) => concept) || []
   const humanResources = concepts?.map((concept, index) => {
-    if (["HUMAN_RESOURCE", "ADMINISTRATIVE_HUMAN_RESOURCE"].includes(concept.type)) {
+    if (
+      [
+        "HUMAN_RESOURCE",
+        "ADVERTISEMENT_HUMAN_RESOURCE",
+        "ADMINISTRATIVE_HUMAN_RESOURCE",
+      ].includes(concept.type)) {
       hrState[hrCount] = {
         salary: concept.humanResource[0]?.salary || 0,
         hasTax: concept.humanResource[0]?.contractType !== "EMPLOYEE",
