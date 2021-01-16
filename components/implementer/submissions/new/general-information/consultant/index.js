@@ -1,11 +1,13 @@
-import { useContext } from "react"
+import { useContext, useState, useEffect } from "react"
 import {
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/new"
-import { Section } from "../../../../../shared"
+import { Section, VisibilityRadio } from "../../../../../shared"
 import ConsultantForm from "./form"
 
 export function Consultant() {
+  const [state, setState] = useState(false)
+
   const {
     updateGeneralInformation,
     review,
@@ -19,15 +21,33 @@ export function Consultant() {
     updateGeneralInformation({ consultants: data })
   }
 
+  const onVisibilityChange = value => {
+    setState(value)
+    if (!value) {
+      onChange([])
+    }
+  }
+
+  useEffect(() => {
+    if (data?.Submission?.consultants.length) {
+      setState(true)
+    }
+  }, [data])
+
   return (
     <Section title="2. Consultores">
-      <ConsultantForm
-        isLoading={loading}
-        error={error}
-        data={data}
-        review={review}
-        onChange={onChange}
-        hiddenComments={hiddenComments} />
+      <VisibilityRadio
+        label="¿El proyecto cuenta con consultores?"
+        visible={state}
+        onChange={onVisibilityChange}>
+        <ConsultantForm
+          isLoading={loading}
+          error={error}
+          data={data}
+          review={review}
+          onChange={onChange}
+          hiddenComments={hiddenComments} />
+      </VisibilityRadio>
     </Section>
   )
 }
