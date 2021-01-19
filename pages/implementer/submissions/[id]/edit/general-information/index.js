@@ -40,14 +40,14 @@ function GeneralInformation({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getGeneralInfo,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getGeneralInfo, {
     client: client,
     variables: { id: query.id }
   })
@@ -65,8 +65,8 @@ function GeneralInformation({ client, query }) {
     return getIsCall(data, state)
   }, [data, state])
 
-  const readOnly = data?.Submission?.state === "PROJECT"
-  const hiddenComments = data?.Submission?.status === "CREATED"
+  const readOnly = data?.GeneralInformation?.state === "PROJECT"
+  const hiddenComments = data?.GeneralInformation?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
@@ -81,7 +81,7 @@ function GeneralInformation({ client, query }) {
     <PageContext.Provider value={pageData({ save, step: 0 })}>
       <CommentsProvider
         readOnly
-        submission={data?.Submission}>
+        submission={data?.GeneralInformation}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />

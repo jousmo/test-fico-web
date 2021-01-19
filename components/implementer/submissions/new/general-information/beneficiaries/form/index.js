@@ -40,8 +40,8 @@ function BeneficiariesForm({ data, onChange, hiddenComments, review }) {
     setState({ isModalOpen: true, edit: data })
   }
 
-  const readOnly = data?.Submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
+  const readOnly = data?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.status.includes("REVIEW"))
 
   return (
     <Form layout="vertical">
@@ -49,7 +49,7 @@ function BeneficiariesForm({ data, onChange, hiddenComments, review }) {
         style={{display: "inline"}}>
         <CompositeField
           onChange={onChange}
-          defaultValue={data?.Submission?.beneficiaries}
+          defaultValue={data?.beneficiaries}
           onClickAdd={onClickAdd}
           isAddDisabled={readOnly || review}
           addLabel="Agregar beneficiario">

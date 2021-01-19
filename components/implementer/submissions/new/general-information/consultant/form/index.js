@@ -39,10 +39,10 @@ function ConsultantForm({ data, onChange, hiddenComments, review }) {
     setState({ isModalOpen: true, edit: data })
   }
 
-  const consultants = data?.Submission?.consultants || []
+  const consultants = data?.consultants || []
 
-  const readOnly = data?.Submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
+  const readOnly = data?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.status.includes("REVIEW"))
 
   return (
     <Form layout="vertical">
@@ -59,7 +59,7 @@ function ConsultantForm({ data, onChange, hiddenComments, review }) {
               <ConsultantModal
                 edit={state.edit}
                 review={review}
-                limitDates={[data?.Submission?.startDate, data?.Submission?.endDate]}
+                limitDates={[data?.startDate, data?.endDate]}
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 visible={state.isModalOpen}
                 onCancel={onCancel}

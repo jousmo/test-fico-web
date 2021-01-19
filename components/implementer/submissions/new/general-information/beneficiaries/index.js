@@ -22,7 +22,7 @@ export function Beneficiaries() {
   return (
     <Section title="4. Beneficiarios">
       <BeneficiaryForm
-        data={data}
+        data={data?.GeneralInformation}
         review={review}
         isLoading={loading}
         error={error}
