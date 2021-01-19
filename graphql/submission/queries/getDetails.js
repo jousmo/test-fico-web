@@ -38,6 +38,10 @@ export const getDetails = gql`
       }
       implementer {
         name
+        councilMembers {
+          name
+          charge
+        }
       }
       beneficiaries {
         description
@@ -48,6 +52,15 @@ export const getDetails = gql`
         preventionLevel
       }
       documents {
+        id
+        url
+        name
+        type
+      }
+      closureDocuments {
+        id
+        url
+        name
         type
       }
     }
