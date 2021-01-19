@@ -33,6 +33,23 @@ export const getDetails = gql`
       evidenced
       difference
       createdAt
+      specificObjectives {
+        description
+      }
+      implementer {
+        name
+      }
+      beneficiaries {
+        description
+        number
+        gender
+        educationLevel
+        age
+        preventionLevel
+      }
+      documents {
+        type
+      }
     }
   }
 `
