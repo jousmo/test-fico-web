@@ -20,7 +20,7 @@ function Submission({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getDetails,
           variables: { id: query.id }
         }
       ]
