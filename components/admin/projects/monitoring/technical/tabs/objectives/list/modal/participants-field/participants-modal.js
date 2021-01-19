@@ -56,7 +56,7 @@ export function ParticipantsModal({ onSave, onCancel, type, ...props }) {
               rules={[{ required: true, message: "Campo requerido" }]}>
               <InputNumber
                 style={{ width: "100%" }}
-                min={1}
+                min={0}
                 placeholder="Ingrese cantidad" />
             </Form.Item>
           </Col>
