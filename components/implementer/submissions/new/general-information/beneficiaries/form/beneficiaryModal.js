@@ -53,6 +53,7 @@ export function BeneficiaryModal({ edit, onCancel, onSave, review, ...props }) {
       okText={`${edit ? "Guardar" : "Agregar"}`}
       okButtonProps={{ disabled: review }}
       cancelText={review ? "Cerrar" : "Cancelar"}
+      maskClosable={false}
       {...props}>
       <Form
         form={form}

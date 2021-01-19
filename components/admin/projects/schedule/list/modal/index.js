@@ -44,6 +44,7 @@ export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
       width={650}
       onCancel={onClose}
       okText="Guardar"
+      maskClosable={false}
       {...props}>
       <Row gutter={[10, 8]} justify="start">
         <Col span={24}>

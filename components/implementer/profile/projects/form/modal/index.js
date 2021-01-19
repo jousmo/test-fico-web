@@ -38,6 +38,7 @@ export function ProjectModal({ onSave, ...props }) {
       cancelText="Cancelar"
       width={650}
       destroyOnClose
+      maskClosable={false}
       {...props}>
       <Form
         form={form}

@@ -130,6 +130,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       cancelText="Cancelar"
       onOk={onSubmit}
       onCancel={onCancelModal}
+      maskClosable={false}
       {...props}>
       <Alert
         type="info"

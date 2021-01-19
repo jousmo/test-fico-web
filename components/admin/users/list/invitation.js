@@ -37,6 +37,7 @@ export function ModalInvitation ({ onSave, onCancel, ...props }) {
       cancelText="Cancelar"
       onOk={onSubmit}
       onCancel={onCancelModal}
+      maskClosable={false}
       {...props}>
       <Form
         form={form}

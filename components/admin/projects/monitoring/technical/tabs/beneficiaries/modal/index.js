@@ -45,6 +45,7 @@ export function ModalBeneficiaries({ onSave, onCancel, edit, ...props }) {
       cancelText="Cancelar"
       onOk={onSubmit}
       onCancel={onCancelModal}
+      maskClosable={false}
       {...props}>
       <CensusForm form={form} />
     </Modal>

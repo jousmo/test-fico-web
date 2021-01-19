@@ -49,6 +49,7 @@ export function CommentModal({
         onCancel={onCancel}
         footer={false}
         width={800}
+        maskClosable={false}
         {...props}>
         <CommentListing comments={state.comments} />
       </Modal>
@@ -64,6 +65,7 @@ export function CommentModal({
       cancelText="Cerrar"
       width={800}
       zIndex={1020}
+      maskClosable={false}
       {...props}>
       { !readOnly && (
         <Form

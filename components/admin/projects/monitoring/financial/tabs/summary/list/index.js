@@ -64,6 +64,7 @@ export function ListSummary({ view, year, search }) {
         visible={state.showModal}
         width={1400}
         onCancel={onCancel}
+        maskClosable={false}
         footer={<StatisticSummaryConcepts totalsSummaryConcepts={state.totalsSummaryConcepts} />}>
         <ListSummaryInvestment dataSource={state.summaryConcepts} />
       </Modal>

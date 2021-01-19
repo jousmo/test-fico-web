@@ -42,6 +42,7 @@ export function ParticipantsModal({ onSave, onCancel, type, ...props }) {
       width={350}
       okText="Guardar"
       cancelText="Cancelar"
+      maskClosable={false}
       {...props}>
       <Form
         form={form}

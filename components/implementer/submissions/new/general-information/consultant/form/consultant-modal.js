@@ -114,6 +114,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
       okButtonProps={{ disabled: review || readOnly }}
       cancelText={review ? "Cerrar" : "Cancelar"}
       width={800}
+      maskClosable={false}
       {...props}>
       <Form
         form={form}
