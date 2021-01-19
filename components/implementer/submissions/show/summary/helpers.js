@@ -3,7 +3,6 @@ import { submissionStatusOptions } from "../../../../../helpers/selectOptions/sh
 import moment from "moment"
 
 export const requiredFields = [
-  "allies",
   "scope",
   "beneficiaries",
   "concepts",
@@ -28,7 +27,6 @@ export const requiredFields = [
 ]
 
 export const fieldsLabels = {
-  allies: "Aliados",
   scope: "Ámbitos de intervención",
   beneficiaries: "Beneficiarios",
   concepts: "Conceptos",
