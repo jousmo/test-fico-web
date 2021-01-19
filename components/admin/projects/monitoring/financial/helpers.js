@@ -275,7 +275,7 @@ export const projectMonths = ({ startDate, endDate }) => Array
   )
   ?.map(r => ({ label: _.capitalize(r.format("MMMM YYYY")), value: r.format("MMYYYY")}))
 
-export const readXmlFile = async (documents, budgeted, oldAmount) => {
+export const readXmlFile = async (documents, budgeted) => {
   const document = documents?.find(el => el.type === "XML")
 
   if (!document) return {}

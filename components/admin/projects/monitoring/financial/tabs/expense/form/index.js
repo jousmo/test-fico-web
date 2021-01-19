@@ -87,7 +87,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     })
 
     try {
-      const nodes = await readXmlFile(documents, submission?.budgeted, stateOldAmount)
+      const nodes = await readXmlFile(documents, submission?.budgeted)
       await form.setFieldsValue({ documents, ...nodes })
       setState({ ...state, amount: nodes.amount, percentage: nodes.percentage || 0 })
     } catch (err) {
