@@ -45,14 +45,14 @@ function GeneralInformation({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getGeneralInfo,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getGeneralInfo, {
     client: client,
     variables: { id: query.id }
   })
@@ -79,12 +79,12 @@ function GeneralInformation({ client, query }) {
     review: true
   }), [state, loading, data])
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = data?.GeneralInformation?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
       <CommentsProvider
-        submission={data?.Submission}
+        submission={data?.GeneralInformation}
         update={updateGeneralInformation}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
