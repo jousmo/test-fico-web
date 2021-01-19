@@ -7,7 +7,7 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
-import { Bugsnag, success, warning, withApollo } from "../../../../../../helpers"
+import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../../../helpers"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function FinancialMonitoringPage({ client, query }) {
@@ -43,6 +43,7 @@ function FinancialMonitoringPage({ client, query }) {
   )
 
   const save = useCallback(async expense => {
+    const saving = loadingAlert("Guardando", 0)
     try {
       await createProjectInvoice({ variables: { data: expense, id: query.id } })
       success()
@@ -51,9 +52,11 @@ function FinancialMonitoringPage({ client, query }) {
       Bugsnag.notify(new Error(e))
       console.error(e)
     }
+    saving()
   }, [createProjectInvoice])
 
   const update = useCallback(async expense => {
+    const saving = loadingAlert("Guardando", 0)
     try {
       const { id, index, ...newExpense } = expense
       await updateProjectInvoice({ variables: { data: newExpense, id } })
@@ -63,6 +66,7 @@ function FinancialMonitoringPage({ client, query }) {
       Bugsnag.notify(new Error(e))
       console.error(e)
     }
+    saving()
   }, [updateProjectInvoice])
 
   const injectActions = useMemo(() => ({
