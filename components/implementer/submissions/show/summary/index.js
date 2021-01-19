@@ -10,9 +10,9 @@ import SummaryBody from "../../../../shared/submission-summary-body"
 import "./style.sass"
 import { submissionStatusOptions } from "../../../../../helpers/selectOptions/shared/submission-status"
 import moment from "moment"
-import { requiredFields } from "./helpers"
+import { fieldsLabels, requiredFields } from "./helpers"
 
-export function SubmissionSummary() {
+export function SubmissionSummary({ setState }) {
   const router = useRouter()
   const {
     loading,
@@ -32,14 +32,17 @@ export function SubmissionSummary() {
       message.warning("La solicitud ya se encuentra en revisión")
     } else {
       let isFinished = true
+      const missingFields = []
       Object.keys(submission)?.forEach(key => {
         const value = submission[key]
         if (requiredFields.includes(key) && (!value || value.length === 0)) {
           isFinished = false
+          missingFields.push(fieldsLabels[key])
         }
       })
       if (!isFinished) {
-        message.warning("Faltan campos por llenar en la solicitud")
+        setState(missingFields)
+        message.warning(`Faltan campos por llenar en la solicitud`)
         return
       }
       save({ status: submissionStatusOptions[statusIndex + 1].value, statusChangedAt: moment().format() })

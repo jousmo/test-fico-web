@@ -1,4 +1,5 @@
-import { Layout } from "../../../../components/shared"
+import { Layout, Visibility } from "../../../../components/shared"
+import { Alert, Typography } from "antd"
 import {
   SubmissionSummary,
   AgreementDocuments
@@ -7,13 +8,15 @@ import {
   ImplementerSubmissionContext
 } from "../../../../contexts/implementer/submissions/show"
 import { submission } from "../../../../graphql/submission"
-import { useCallback, useMemo } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../helpers"
 import { PageContext } from "../../../../contexts/page"
 import { AuthCheck } from "../../../../helpers/auth/auth-check"
 
 function Submission({ client, query }) {
+  const [state, setState] = useState(undefined)
+
   const [ updateSubmission ] = useMutation(
     submission.mutations.updateById, {
       client: client,
@@ -61,7 +64,17 @@ function Submission({ client, query }) {
     <PageContext.Provider
       value={{ type: "implementer", submenu: "submissions" }}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
-        <Layout subheader={<SubmissionSummary />}>
+        <Layout subheader={<SubmissionSummary state={state} setState={setState} />}>
+          <Visibility visible={!!state}>
+            <Alert
+              message={
+                <>
+                  <Typography.Title level={4}>Campos faltantes:</Typography.Title>
+                  <Typography.Text>{state?.join(", ")}</Typography.Text>
+                </>
+              }
+              type="warning" />
+          </Visibility>
           <AgreementDocuments />
         </Layout>
       </ImplementerSubmissionContext.Provider>
