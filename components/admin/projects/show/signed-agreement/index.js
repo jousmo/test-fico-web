@@ -15,7 +15,7 @@ export function SignedAgreement() {
   return (
     <Section title="Convenio firmado">
       <ProjectAgreementForm
-        data={data?.Submission}
+        data={data?.SubmissionDetails}
         error={error}
         isLoading={loading} />
     </Section>

@@ -17,10 +17,11 @@ export function ProjectSummary({ type }) {
   } = useContext(AdminSubmissionContext)
 
   const view = type === "admin" ? "review" : "edit"
+  const submission = data?.SubmissionDetails
 
   const goToProject = (
     <Descriptions.Item>
-      <Link href={`/${type}/submissions/${data?.Submission.id}/${view}/general-information`}>
+      <Link href={`/${type}/submissions/${submission?.id}/${view}/general-information`}>
         <a><EyeOutlined /> Ver la solicitud</a>
       </Link>
     </Descriptions.Item>
@@ -32,12 +33,12 @@ export function ProjectSummary({ type }) {
         home={{ label: "Monitoreo", url: `/${type}/projects` }}
         itemsList={[
           {
-            label: data?.Submission?.name,
-            url: `/${type}/projects/${data?.Submission?.id}`
+            label: submission?.name,
+            url: `/${type}/projects/${submission?.id}`
           }
         ]} />
       <SummaryBody
-        data={data?.Submission}
+        data={submission}
         error={error}
         extra={goToProject}
         isLoading={loading} />

@@ -16,7 +16,7 @@ export function ProjectClosure() {
   return (
     <Section title="Cierre de proyecto">
       <ProjectClosureForm
-        data={data?.Submission}
+        data={data?.SubmissionDetails}
         error={error}
         save={save}
         isLoading={loading} />
