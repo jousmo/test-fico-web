@@ -5,6 +5,7 @@ export function ConfirmModal({ title, body, ...props }){
   return (
     <Modal
       width={350}
+      maskClosable={false}
       {...props}>
       <Row gutter={[10, 8]}>
         <Col><ExclamationCircleTwoTone twoToneColor="#F9BD55" /></Col>

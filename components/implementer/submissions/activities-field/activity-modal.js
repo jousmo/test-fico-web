@@ -62,7 +62,9 @@ export function ActivityModal({
       width={800}
       okText={`${edit ? "Guardar" : "Agregar"}`}
       cancelText={review ? "Cerrar" : "Cancelar"}
-      {...props}>
+      maskClosable={false}
+      {...props}
+    >
       <Form
         form={form}
         name="indicator-form"

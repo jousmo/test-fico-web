@@ -102,6 +102,7 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
       cancelText="Cerrar"
       width={800}
       className="comment-modal-form"
+      maskClosable={false}
       {...props}>
       <Form
         form={form}

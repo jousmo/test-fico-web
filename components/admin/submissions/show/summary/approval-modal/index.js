@@ -28,6 +28,7 @@ export function ApprovalModal({ onSave, onCancel, ...props }) {
       width={800}
       okText="Enviar"
       cancelText="Cancelar"
+      maskClosable={false}
       {...props}>
       <Form
         form={form}

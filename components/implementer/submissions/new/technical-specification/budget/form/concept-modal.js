@@ -109,6 +109,7 @@ export function ConceptModal({
       width={800}
       okText={`${edit ? "Guardar" : "Agregar"}`}
       cancelText={review ? "Cerrar" : "Cancelar"}
+      maskClosable={false}
       {...props}>
       <Form
         form={form}

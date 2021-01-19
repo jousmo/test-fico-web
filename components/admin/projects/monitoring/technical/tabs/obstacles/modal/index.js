@@ -38,6 +38,7 @@ export function ObstaclesModal({ edit, onCancel, onSave, ...props }){
       width={600}
       okText="Guardar actualización"
       cancelText="Cancelar"
+      maskClosable={false}
       {...props}>
       <Form
         form={form}

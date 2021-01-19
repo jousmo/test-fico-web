@@ -10,6 +10,7 @@ export function ParticipantsModal({ data, level, ...props }){
       footer={null}
       title={`Asistentes Intervención/Prevención-${level}`}
       width={700}
+      maskClosable={false}
       {...props}>
       <Row gutter={[10, 8]}>
         <HeaderColumns />

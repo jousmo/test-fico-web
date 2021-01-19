@@ -90,6 +90,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, ...props }) {
       onCancel={onClose}
       okText="Guardar"
       okButtonProps={{ disabled: !isAdmin && readOnly }}
+      maskClosable={false}
       {...props}>
       <Form
         form={form}
