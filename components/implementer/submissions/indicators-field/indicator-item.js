@@ -13,7 +13,7 @@ export function IndicatorItem({ data, onDelete, onEdit, readOnly, review }) {
     baseline = "N/A",
     goal = "N/A",
     formula = "N/A",
-    meansOfVerification = "N/A",
+    meansOfVerification = [],
     key
   } = data
 
@@ -44,7 +44,11 @@ export function IndicatorItem({ data, onDelete, onEdit, readOnly, review }) {
       <Typography.Text>{formula || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
-      <Typography.Text>{getReadableValue(verificationTypes, meansOfVerification) || "N/A"}</Typography.Text>
+      <Typography.Text>
+        {meansOfVerification.length ? (
+          meansOfVerification.map(method => getReadableValue(verificationTypes, method)).join(", ")
+        ) : "N/A"}
+      </Typography.Text>
       {!readOnly && (
         <>
           {!review &&
