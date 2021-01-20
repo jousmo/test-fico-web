@@ -1,3 +1,7 @@
+import { message } from "antd"
+import { submissionStatusOptions } from "../../../../../helpers/selectOptions/shared/submission-status"
+import moment from "moment"
+
 export const requiredFields = [
   "allies",
   "scope",
@@ -46,4 +50,52 @@ export const fieldsLabels = {
   region: "Región",
   responsible: "Responsable del proyecto",
   type: "Tipo de solicitud"
+}
+
+export const validate = (submission, index, save, setState) => {
+  let isFinished = true
+  const missingFields = []
+
+  Object.keys(submission)?.forEach(key => {
+    const value = submission[key]
+    if (requiredFields.includes(key) && (!value || value.length === 0)) {
+      isFinished = false
+      missingFields.push(fieldsLabels[key])
+    }
+
+    if (key === "consultants" && value.length !== 0) {
+      let missingDocuments = false
+      value.forEach(consultant => {
+        if (consultant.documents.length === 0) {
+          missingDocuments = true
+        }
+      })
+      if (missingDocuments) {
+        missingFields.push("Documentos de consultor")
+      }
+    }
+
+    if (key === "concepts") {
+      let missingDocuments = false
+      value.forEach(concept => {
+        if (!concept.humanResource.length) {
+          return
+        }
+
+        if (concept.humanResource[0].documents.length === 0) {
+          missingDocuments = true
+        }
+      })
+
+      if (missingDocuments) {
+        missingFields.push("Documentos de recursos humanos")
+      }
+    }
+  })
+  if (!isFinished) {
+    setState(missingFields)
+    message.warning(`Faltan campos por llenar en la solicitud`)
+    return
+  }
+  save({ status: submissionStatusOptions[index + 1].value, statusChangedAt: moment().format() })
 }

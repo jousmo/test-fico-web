@@ -35,6 +35,11 @@ function Submission({ client, query }) {
     variables: { id: query.id }
   })
 
+  const { data: validationData } = useQuery(submission.queries.getValidationFields, {
+    client: client,
+    variables: { id: query.id }
+  })
+
   const save = useCallback(async submissionData => {
     const saving = loadingAlert()
     try {
@@ -57,8 +62,9 @@ function Submission({ client, query }) {
     data,
     save,
     client,
-    refetch
-  }), [loading, data])
+    refetch,
+    validationData
+  }), [loading, data, validationData])
 
   return (
     <PageContext.Provider
