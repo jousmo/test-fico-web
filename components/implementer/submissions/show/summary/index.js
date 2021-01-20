@@ -70,7 +70,7 @@ export function SubmissionSummary() {
         </Button>
         {statusIndex < 9 && (
           <Popconfirm
-            title="¿Enviar solocitud a revisión?"
+            title="¿Enviar solicitud a revisión?"
             onConfirm={onReview}
             okText="Aceptar"
             cancelText="Cancelar">
