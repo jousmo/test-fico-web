@@ -22,7 +22,11 @@ export const RESET_XML_DATA = {
   rfc: undefined,
   receptor: undefined,
   amount: 0,
-  percentage: 0
+  percentage: 0,
+  ficosecPayment: 0,
+  investmentOnePayment: 0,
+  investmentTwoPayment: 0,
+  implementerPayment: 0
 }
 
 export const getConceptsSummaryPerTrimestre = (Submission, concepts, invoicesPerYearOrSearch, title) => {
@@ -285,7 +289,6 @@ export const readXmlFile = async (documents, budgeted) => {
     const { Nombre: receptor } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
     const amount = +xmlJson["cfdi:Comprobante"]["_attributes"]["Total"]
     const percentage = +((amount * 100) / budgeted).toFixed(2)
-
     return { uuid, issuedAt, issuer, rfc, receptor, amount, percentage }
   } catch (err) {
     throw new Error(err)
@@ -327,13 +330,9 @@ export const validateDocuments = (formData, { budgeted, evidenced, difference },
   if (!isXML) return { error: true, message: "Se requiere que subas tu archivo XML" }
   if (!isPDF) return { error: true, message: "Se requiere que subas tu archivo PDF" }
 
-  if (oldAmount) {
-    const isValidAmountXml = (amount - oldAmount) > difference
-    if (isValidAmountXml) return { error: true, message: "El monto de la factura sobrepasa a lo presupuestado" }
-  } else {
-    const isValidAmountXml = amount > (budgeted - evidenced)
-    if (isValidAmountXml) return { error: true, message: "El monto de la factura sobrepasa a lo presupuestado" }
-  }
+  const fullAmount = difference + oldAmount
+
+  if (amount > fullAmount) return { error: true, message: "El monto de la factura sobrepasa a lo presupuestado" }
 
   const totalDistribution = ficosecPayment + implementerPayment + investmentOnePayment + investmentTwoPayment
   if (totalDistribution > amount)

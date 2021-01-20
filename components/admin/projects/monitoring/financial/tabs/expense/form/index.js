@@ -100,7 +100,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     const documents = oldDocuments?.filter(document => document.url !== url)
 
     if (type === "XML" || type === "text/xml") {
-      await form.setFieldsValue(RESET_XML_DATA)
+      setState(INIT_STATE)
+      form.setFieldsValue(RESET_XML_DATA)
     } else {
       await form.setFieldsValue({ documents })
     }
