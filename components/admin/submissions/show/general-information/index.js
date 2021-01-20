@@ -15,7 +15,7 @@ export function GeneralInformation() {
   return (
     <Section title="Información general">
       <SubmissionObjectives
-        data={data?.Submission}
+        data={data?.SubmissionDetails}
         error={error}
         isLoading={loading} />
     </Section>

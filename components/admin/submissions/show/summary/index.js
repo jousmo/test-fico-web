@@ -27,9 +27,11 @@ export function SubmissionSummary() {
     data
   } = useContext(AdminSubmissionContext)
 
-  const status = data?.Submission?.status
+  const submission = data?.SubmissionDetails
+
+  const status = submission?.status
   const statusIndex = submissionStatusOptions?.findIndex(e => e.value === status)
-  const findDocument = data?.Submission?.documents?.filter(document => document.type === "AGREEMENT")
+  const findDocument = submission?.documents?.filter(document => document.type === "AGREEMENT")
 
   const [state, setState] = useState({
     isModalOpen: false
@@ -107,7 +109,7 @@ export function SubmissionSummary() {
 
   const goToSubmission = (
     <Descriptions.Item>
-      <Link href={`/admin/submissions/${data?.Submission.id}/review/general-information`}>
+      <Link href={`/admin/submissions/${submission?.id}/review/general-information`}>
         <a><EyeOutlined /> Ver la solicitud</a>
       </Link>
     </Descriptions.Item>
@@ -123,14 +125,14 @@ export function SubmissionSummary() {
         home={{ label: "Solicitudes", url: "/admin/submissions" }}
         itemsList={[
           {
-            label: data?.Submission?.name,
-            url: `/admin/submissions/${data?.Submission?.id}`
+            label: submission?.name,
+            url: `/admin/submissions/${submission?.id}`
           }
         ]}
         extra={headingButtons} />
       <SummaryBody
         admin
-        data={data?.Submission}
+        data={submission}
         error={error}
         extra={goToSubmission}
         isLoading={loading} />

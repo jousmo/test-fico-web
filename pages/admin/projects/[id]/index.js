@@ -35,7 +35,7 @@ function Project({ client, query }) {
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getDetails, {
     client: client,
     variables: { id: query.id }
   })

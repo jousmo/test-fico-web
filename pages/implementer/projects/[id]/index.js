@@ -21,7 +21,7 @@ import { AuthCheck } from "../../../../helpers/auth/auth-check"
 import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../helpers"
 
 function Project({ client, query }) {
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getDetails, {
     client: client,
     variables: { id: query.id }
   })

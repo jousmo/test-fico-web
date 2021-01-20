@@ -27,7 +27,7 @@ function Submission({ client, query }) {
     }
   )
 
-  const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
+  const { loading, error, data, refetch } = useQuery(submission.queries.getDetails, {
     client: client,
     variables: { id: query.id }
   })

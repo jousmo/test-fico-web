@@ -21,8 +21,10 @@ export function SubmissionSummary() {
     save
   } = useContext(ImplementerSubmissionContext)
 
-  const editRoute = `/implementer/submissions/${data?.Submission?.id}/edit/general-information`
-  const status = data?.Submission?.status
+  const submission = data?.SubmissionDetails
+
+  const editRoute = `/implementer/submissions/${submission?.id}/edit/general-information`
+  const status = submission?.status
   const statusIndex = submissionStatusOptions?.findIndex(e => e.value === status)
 
   const onReview = () => {
@@ -30,8 +32,8 @@ export function SubmissionSummary() {
       message.warning("La solicitud ya se encuentra en revisión")
     } else {
       let isFinished = true
-      Object.keys(data?.Submission)?.forEach(key => {
-        const value = data?.Submission[key]
+      Object.keys(submission)?.forEach(key => {
+        const value = submission[key]
         if (requiredFields.includes(key) && (!value || value.length === 0)) {
           isFinished = false
         }
@@ -50,12 +52,12 @@ export function SubmissionSummary() {
         home={{ label: "Solicitudes", url: "/implementer/submissions" }}
         itemsList={[
           {
-            label: data?.Submission?.name,
-            url: `/implementer/submissions/${data?.Submission?.id}`
+            label: submission?.name,
+            url: `/implementer/submissions/${submission?.id}`
           }
         ]} />
       <SummaryBody
-        data={data?.Submission}
+        data={submission}
         error={error}
         isLoading={loading} />
       <div className="btn-container">

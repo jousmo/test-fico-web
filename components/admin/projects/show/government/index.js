@@ -15,7 +15,7 @@ export function Government(){
   return (
     <Section title="Gobernanza de la implementadora">
       <GovernmentList
-        data={data?.Submission}
+        data={data?.SubmissionDetails}
         error={error}
         isLoading={loading} />
     </Section>

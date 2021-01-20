@@ -9,7 +9,7 @@ export function AgreementDocuments() {
   return (
     <Section title="Documentos de convenio">
       <AgreementDocumentsForm
-        data={data?.Submission}
+        data={data?.SubmissionDetails}
         {...props}/>
     </Section>
   )
