@@ -18,8 +18,8 @@ function ProjectDetailsForm({
 }) {
   const { user } = useAuth()
   const [state, setState] = useState({
-    startDate: data?.Submission?.startDate,
-    endDate: data?.Submission?.endDate
+    startDate: data?.startDate,
+    endDate: data?.endDate
   })
   const [form] = Form.useForm()
 
@@ -37,8 +37,8 @@ function ProjectDetailsForm({
     onChange(date)
   }
 
-  const readOnly = data?.Submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
+  const readOnly = data?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.status.includes("REVIEW"))
 
   return (
     <Form
@@ -62,7 +62,7 @@ function ProjectDetailsForm({
               name="type"
               disabled={readOnly}
               onChange={onChange}
-              defaultValue={data?.Submission?.type}
+              defaultValue={data?.type}
               options={implementer.submission.submissionTypes} />
           </Form.Item>
         </Col>
@@ -80,7 +80,7 @@ function ProjectDetailsForm({
             <Input
               id="applyingCall"
               name="applyingCall"
-              defaultValue={data?.Submission?.applyingCall}
+              defaultValue={data?.applyingCall}
               onChange={onChange}
               type="text"
               disabled={!isCall || readOnly} />
@@ -100,7 +100,7 @@ function ProjectDetailsForm({
             <Input
               id="name"
               name="name"
-              defaultValue={data?.Submission?.name}
+              defaultValue={data?.name}
               onChange={onChange}
               disabled={readOnly}
               type="text" />
@@ -118,7 +118,7 @@ function ProjectDetailsForm({
               </FieldLabel>
             }>
             <TownshipSelect
-              defaultValue={data?.Submission?.township || []}
+              defaultValue={data?.township || []}
               onChange={onChange}
               disabled={readOnly}
               setRegion={form.setFieldsValue} />
@@ -141,7 +141,7 @@ function ProjectDetailsForm({
               name="region"
               disabled
               onChange={onChange}
-              defaultValue={data?.Submission?.region}
+              defaultValue={data?.region}
               options={implementer.submission.regions} />
           </Form.Item>
         </Col>
@@ -159,7 +159,7 @@ function ProjectDetailsForm({
             <SelectField
               id="allies"
               name="allies"
-              defaultValue={data?.Submission?.allies || []}
+              defaultValue={data?.allies || []}
               maxTagCount={2}
               mode="tags"
               disabled={readOnly}
@@ -173,7 +173,7 @@ function ProjectDetailsForm({
             <Input
               id="implementationPlace"
               name="implementationPlace"
-              defaultValue={data?.Submission?.implementationPlace}
+              defaultValue={data?.implementationPlace}
               onChange={onChange}
               disabled={readOnly}
               type="text" />
@@ -186,7 +186,7 @@ function ProjectDetailsForm({
             <Input
               id="responsible"
               name="responsible"
-              defaultValue={data?.Submission?.responsible}
+              defaultValue={data?.responsible}
               onChange={onChange}
               disabled={readOnly}
               type="text" />
@@ -207,7 +207,7 @@ function ProjectDetailsForm({
               id="startDate"
               name="startDate"
               disabledDate={date => date && date > moment(state.endDate)}
-              defaultValue={data?.Submission?.startDate}
+              defaultValue={data?.startDate}
               onChange={date => onSetDate(date, "startDate")}
               disabled={readOnly}
               format="DD/MM/YYYY"
@@ -229,7 +229,7 @@ function ProjectDetailsForm({
               id="endDate"
               name="endDate"
               disabledDate={date => date && date < moment(state.startDate)}
-              defaultValue={data?.Submission?.endDate}
+              defaultValue={data?.endDate}
               onChange={date => onSetDate(date, "endDate")}
               disabled={readOnly}
               format="DD/MM/YYYY"
@@ -251,7 +251,7 @@ function ProjectDetailsForm({
               id="strategicAxis"
               name="strategicAxis"
               onChange={onChange}
-              defaultValue={data?.Submission?.strategicAxis}
+              defaultValue={data?.strategicAxis}
               disabled={readOnly}
               options={implementer.submission.strategicAxisTypes} />
           </Form.Item>
@@ -274,7 +274,7 @@ function ProjectDetailsForm({
               name="preventionLevel"
               onChange={onChange}
               mode="tags"
-              defaultValue={data?.Submission?.preventionLevel || []}
+              defaultValue={data?.preventionLevel || []}
               disabled={readOnly}
               options={implementer.submission.preventionLevelTypes} />
           </Form.Item>
@@ -297,7 +297,7 @@ function ProjectDetailsForm({
               name="scope"
               mode="tags"
               onChange={onChange}
-              defaultValue={data?.Submission?.scope || []}
+              defaultValue={data?.scope || []}
               disabled={readOnly}
               options={implementer.submission.scopeTypes} />
           </Form.Item>
@@ -316,7 +316,7 @@ function ProjectDetailsForm({
             <SelectField
               id="issueDescription"
               name="issueDescription"
-              defaultValue={data?.Submission?.issueDescription}
+              defaultValue={data?.issueDescription}
               onChange={onChange}
               filterOption={(value, option) =>
                 option.children.toLowerCase().includes(value.toLowerCase())
@@ -340,7 +340,7 @@ function ProjectDetailsForm({
             <Input.TextArea
               id="description"
               name="description"
-              defaultValue={data?.Submission?.description}
+              defaultValue={data?.description}
               onChange={onChange}
               disabled={readOnly}
               autoSize={{minRows: 3}} />
@@ -362,7 +362,7 @@ function ProjectDetailsForm({
             <Input.TextArea
               id="justification"
               name="justification"
-              defaultValue={data?.Submission?.justification}
+              defaultValue={data?.justification}
               onChange={onChange}
               disabled={readOnly}
               autoSize={{minRows: 3}} />

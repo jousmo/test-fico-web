@@ -25,7 +25,7 @@ export function DevelopmentObjectives() {
       <DevelopmentObjectivesForm
         isLoading={loading}
         error={error}
-        data={data}
+        data={data?.GeneralInformation}
         review={review}
         onChange={onChange}
         hiddenComments={hiddenComments} />

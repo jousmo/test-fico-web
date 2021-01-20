@@ -19,12 +19,12 @@ function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
     })
   }
 
-  const specificObjectives = data?.Submission?.specificObjectives?.sort((a, b) =>
+  const specificObjectives = data?.specificObjectives?.sort((a, b) =>
     a.orderIndex - b.orderIndex
   ) || []
 
-  const readOnly = data?.Submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
+  const readOnly = data?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.status.includes("REVIEW"))
 
   return (
     <Form
@@ -48,7 +48,7 @@ function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
             <Input.TextArea
               id="developmentObjective"
               name="developmentObjective"
-              defaultValue={data?.Submission?.developmentObjective}
+              defaultValue={data?.developmentObjective}
               onChange={onChange}
               disabled={readOnly}
               autoSize={{minRows: 3}} />
@@ -71,7 +71,7 @@ function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
             <Input.TextArea
               id="generalObjective"
               name="generalObjective"
-              defaultValue={data?.Submission?.generalObjective}
+              defaultValue={data?.generalObjective}
               onChange={onChange}
               disabled={readOnly}
               autoSize={{minRows: 3}} />

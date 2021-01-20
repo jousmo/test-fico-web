@@ -29,7 +29,7 @@ export function Consultant() {
   }
 
   useEffect(() => {
-    if (data?.Submission?.consultants.length) {
+    if (data?.GeneralInformation?.consultants.length) {
       setState(true)
     }
   }, [data])
@@ -43,7 +43,7 @@ export function Consultant() {
         <ConsultantForm
           isLoading={loading}
           error={error}
-          data={data}
+          data={data?.GeneralInformation}
           review={review}
           onChange={onChange}
           hiddenComments={hiddenComments} />

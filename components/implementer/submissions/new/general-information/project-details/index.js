@@ -34,7 +34,7 @@ export function ProjectDetails() {
       <ProjectDetailsForm
         isLoading={loading}
         error={error}
-        data={data}
+        data={data?.GeneralInformation}
         onChange={onChange}
         isCall={isCall()}
         hiddenComments={hiddenComments} />
