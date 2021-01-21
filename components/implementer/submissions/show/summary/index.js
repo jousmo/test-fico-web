@@ -9,12 +9,12 @@ import { BreadcrumbHeading } from "../../../../shared/breadcrum-heading"
 import SummaryBody from "../../../../shared/submission-summary-body"
 import "./style.sass"
 import { submissionStatusOptions } from "../../../../../helpers/selectOptions/shared/submission-status"
-import moment from "moment"
-import { requiredFields } from "./helpers"
+import { validate } from "./helpers"
 
-export function SubmissionSummary() {
+export function SubmissionSummary({ setState }) {
   const router = useRouter()
   const {
+    validationData,
     loading,
     error,
     data,
@@ -22,6 +22,7 @@ export function SubmissionSummary() {
   } = useContext(ImplementerSubmissionContext)
 
   const submission = data?.SubmissionDetails
+  const validation = validationData?.SubmissionValidation
 
   const editRoute = `/implementer/submissions/${submission?.id}/edit/general-information`
   const status = submission?.status
@@ -31,18 +32,8 @@ export function SubmissionSummary() {
     if (status.includes("REVIEW")){
       message.warning("La solicitud ya se encuentra en revisión")
     } else {
-      let isFinished = true
-      Object.keys(submission)?.forEach(key => {
-        const value = submission[key]
-        if (requiredFields.includes(key) && (!value || value.length === 0)) {
-          isFinished = false
-        }
-      })
-      if (!isFinished) {
-        message.warning("Faltan campos por llenar en la solicitud")
-        return
-      }
-      save({ status: submissionStatusOptions[statusIndex + 1].value, statusChangedAt: moment().format() })
+      const validationFields = { ...submission, ...validation }
+      validate(validationFields, statusIndex, save, setState)
     }
   }
 
