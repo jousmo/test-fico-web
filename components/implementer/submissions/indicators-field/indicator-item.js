@@ -45,7 +45,7 @@ export function IndicatorItem({ data, onDelete, onEdit, readOnly, review }) {
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
       <Typography.Text>
-        {meansOfVerification.length ? (
+        {meansOfVerification?.length ? (
           meansOfVerification.map(method => getReadableValue(verificationTypes, method)).join(", ")
         ) : "N/A"}
       </Typography.Text>

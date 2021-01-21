@@ -58,7 +58,7 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
       <Typography.Text>
-        {meansOfVerification.length ? (
+        {meansOfVerification?.length ? (
           meansOfVerification.map(method =>
             getReadableValue(verificationTypes, method)
           ).join(", ")
