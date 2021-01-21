@@ -38,6 +38,19 @@ export const getDetails = gql`
       }
       implementer {
         name
+        phone
+        email
+        vision
+        mission
+        history
+        director
+        alliances
+        fiscalAddress
+        previousSupports
+        incomesAndExpenses
+        legalRepresentative
+        institutionalExperience
+        proofOfCharitableContributions
         councilMembers {
           name
           charge
