@@ -4,8 +4,9 @@ export const getMinistrations = gql`
   query Ministrations($id: ID!) {
     Ministrations(id: $id) {
       id
-      startDate
+      allies
       endDate
+      startDate
       concepts {
         id
         name
