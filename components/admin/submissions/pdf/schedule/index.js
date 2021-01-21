@@ -12,10 +12,8 @@ import { columnDecorator } from "./helpers/columns-decorator"
 import "../style.sass"
 
 export function SchedulePDF(){
-  const {
-    submissionResult
-  } = useContext(AdminSubmissionContext)
-  const submission = submissionResult?.data?.Submission
+  const { data } = useContext(AdminSubmissionContext)
+  const submission = data?.SubmissionObjectives
 
   const activities = submission?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []

@@ -13,8 +13,8 @@ export const columnDecorator = activities => {
     }
 
     const ranges = []
-    activity?.months?.forEach((range, i) => {
-      ranges[i] = moment.range(range.months[0], range.months[1])
+    activity?.months?.forEach((months, i) => {
+      ranges[i] = moment.range(months[0], months[1])
     })
 
     ranges.forEach(range => {
