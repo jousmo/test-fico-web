@@ -19,13 +19,9 @@ import PDFHeading from "../heading"
 import "../style.sass"
 
 export function GeneralInformationPDF() {
-  const {
-    implementerResult,
-    submissionResult
-  } = useContext(AdminSubmissionContext)
+  const { data } = useContext(AdminSubmissionContext)
 
-  const implementer = implementerResult?.data?.Implementer
-  const submission = submissionResult?.data?.Submission
+  const submission = data?.SubmissionDetails
 
   return (
     <div className="fico pdf general-information">
@@ -37,43 +33,43 @@ export function GeneralInformationPDF() {
           {submission?.implementer?.name}
         </Descriptions.Item>
         <Descriptions.Item label="Domicilio">
-          {implementer?.fiscalAddress}
+          {submission?.implementer?.fiscalAddress}
         </Descriptions.Item>
         <Descriptions.Item label="Teléfono">
-          {implementer?.phone}
+          {submission?.implementer?.phone}
         </Descriptions.Item>
         <Descriptions.Item label="Correo electrónico">
-          {implementer?.email}
+          {submission?.implementer?.email}
         </Descriptions.Item>
         <Descriptions.Item label="Representante(s) legal(es)">
-          {implementer?.legalRepresentative}
+          {submission?.implementer?.legalRepresentative}
         </Descriptions.Item>
         <Descriptions.Item label="Director">
-          {implementer?.director}
+          {submission?.implementer?.director}
         </Descriptions.Item>
         <Descriptions.Item label="Oficio de donataria Autorizada">
-          {implementer?.proofOfCharitableContributions}
+          {submission?.implementer?.proofOfCharitableContributions}
         </Descriptions.Item>
         <Descriptions.Item label="Misión">
-          {implementer?.mission}
+          {submission?.implementer?.mission}
         </Descriptions.Item>
         <Descriptions.Item label="Visión">
-          {implementer?.vision}
+          {submission?.implementer?.vision}
         </Descriptions.Item>
         <Descriptions.Item label="Historia">
-          {implementer?.history}
+          {submission?.implementer?.history}
         </Descriptions.Item>
         <Descriptions.Item label="Experiencia institucional">
-          {implementer?.institutionalExperience}
+          {submission?.implementer?.institutionalExperience}
         </Descriptions.Item>
         <Descriptions.Item label="Apoyos anteriores">
-          {implementer?.previousSupports}
+          {submission?.implementer?.previousSupports}
         </Descriptions.Item>
         <Descriptions.Item label="Alianzas">
-          {implementer?.alliances}
+          {submission?.implementer?.alliances}
         </Descriptions.Item>
         <Descriptions.Item label="Ingresos / Egresos en los ultimos dos años">
-          {implementer?.incomesAndExpenses}
+          {submission?.implementer?.incomesAndExpenses}
         </Descriptions.Item>
       </Descriptions>
       <Typography.Title level={3}>Proyecto</Typography.Title>
@@ -147,15 +143,23 @@ export function GeneralInformationPDF() {
             <br />
             Número de beneficiarios: {beneficiary.number}
             <br />
-            Sexo: {getReadableValue(genderTypes, beneficiary.gender)}
+            Sexo:
+            &nbsp;
+            {beneficiary.gender?.map(el =>
+              getReadableValue(genderTypes, el)
+            ).join(", ")}
             <br />
             Nivel educativo:
             &nbsp;
-            {getReadableValue(educationLevelTypes, beneficiary.educationLevel)}
+            {beneficiary.educationLevel?.map(el =>
+              getReadableValue(educationLevelTypes, el)
+            ).join(", ")}
             <br />
             Edad:
             &nbsp;
-            {getReadableValue(ageRanges, beneficiary.age)}
+            {beneficiary.age?.map(el =>
+              getReadableValue(ageRanges, el)
+            ).join(", ")}
             <br />
             Nivel de prevención:
             &nbsp;
