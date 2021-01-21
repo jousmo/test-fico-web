@@ -23,7 +23,7 @@ export const renderSummary = (concepts, submission) => {
     const totalCost = concept.totalUnits * concept.unitCost
 
     const firstAllyPercentage = concept.investmentDistribution
-      ?.find(e => e.name === firstAlly)?.percentage
+      ?.find(e => e.name === firstAlly)?.percentage || 0
     const secondAllyPercentage = secondAlly ? concept.investmentDistribution
       ?.find(e => e.name === secondAlly)?.percentage : 0
     const ficosecPercentage = concept.investmentDistribution
@@ -55,17 +55,29 @@ export const renderSummary = (concepts, submission) => {
         {numeral(absoluteTotal).format("$0,0.00")}
       </Table.Summary.Cell>
       <Table.Summary.Cell>
-        {numeral(implementer).format("$0,0.00")}&nbsp;<Tag>{getPercentage(absoluteTotal, ficosec)}%</Tag>
+        {numeral(implementer).format("$0,0.00")}
+        <Tag style={{ display: 'block' }}>
+          {getPercentage(absoluteTotal, implementer)}%
+        </Tag>
       </Table.Summary.Cell>
       <Table.Summary.Cell>
-        {numeral(ficosec).format("$0,0.00")}&nbsp;<Tag>{getPercentage(absoluteTotal, implementer)}%</Tag>
+        {numeral(ficosec).format("$0,0.00")}
+        <Tag style={{ display: 'block' }}>
+          {getPercentage(absoluteTotal, ficosec)}%
+        </Tag>
       </Table.Summary.Cell>
       <Table.Summary.Cell>
-        {numeral(totalFirstAlly).format("$0,0.00")}&nbsp;<Tag>{getPercentage(absoluteTotal, totalFirstAlly)}%</Tag>
+        {numeral(totalFirstAlly).format("$0,0.00")}
+        <Tag style={{ display: 'block' }}>
+          {getPercentage(absoluteTotal, totalFirstAlly)}%
+        </Tag>
       </Table.Summary.Cell>
       {submission?.allies?.[1] && (
         <Table.Summary.Cell>
-          ${totalSecondAlly}&nbsp;<Tag>{getPercentage(absoluteTotal, totalSecondAlly)}%</Tag>
+          ${totalSecondAlly}
+          <Tag style={{ display: 'block' }}>
+            {getPercentage(absoluteTotal, totalSecondAlly)}%
+          </Tag>
         </Table.Summary.Cell>
       )}
       <Table.Summary.Cell>
