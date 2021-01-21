@@ -39,6 +39,7 @@ export function IndicatorModal({
 
       if(typeof edit?.index !== "undefined") {
         edit.products = null
+        edit.meansOfVerification = null
         values = merge(edit, values)
       }
 
