@@ -1,6 +1,7 @@
 export * from "./getById"
 export * from "./getAll"
 export * from "./getDetails"
+export * from "./getMinistrations"
 export * from "./getValidationFields"
 export * from "./getCommentsFinancial"
 export * from "./getCommentsTechnical"
