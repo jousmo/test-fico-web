@@ -32,12 +32,14 @@ function Submission({ client, query }) {
 
   const { loading, error, data, refetch } = useQuery(submission.queries.getDetails, {
     client: client,
-    variables: { id: query.id }
+    variables: { id: query.id },
+    fetchPolicy: "network-only"
   })
 
   const { data: validationData } = useQuery(submission.queries.getValidationFields, {
     client: client,
-    variables: { id: query.id }
+    variables: { id: query.id },
+    fetchPolicy: "network-only"
   })
 
   const save = useCallback(async submissionData => {
