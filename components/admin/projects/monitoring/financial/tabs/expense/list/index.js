@@ -100,10 +100,12 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
             target="_blank"
             type="primary" shape="circle"
             icon={<EyeOutlined />} />
-          <DeleteButton
-            type="primary"
-            shape="circle"
-            onClick={() => onDelete(record)}/>
+          {!record?.reviewed && (
+            <DeleteButton
+              type="primary"
+              shape="circle"
+              onClick={() => onDelete(record)}/>
+          )}
         </Space>} />
     </Table>
   )
