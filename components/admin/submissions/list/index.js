@@ -21,8 +21,11 @@ export function SubmissionsListing() {
     }
 
     const filter = data?.Submissions?.filter(submission =>
-      submission.name?.toLowerCase().includes(value.toLowerCase())
+      `${submission.name} ${submission.implementer?.name}`
+        ?.toLowerCase()
+        ?.includes(value.toLowerCase())
     )
+
     setState(filter)
   }
 
