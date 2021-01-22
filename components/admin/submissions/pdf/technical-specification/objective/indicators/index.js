@@ -1,13 +1,16 @@
 import { Descriptions, Card, List, Typography } from "antd"
+import { getReadableValue, implementer } from "../../../../../../../helpers/selectOptions"
 
 export default function ObjectiveIndicatorPDF({ indicator }){
+  const { submission: { verificationTypes }} = implementer
+
   return (
     <Card>
       <Typography.Title level={4}>
         {indicator.title}
       </Typography.Title>
       <Typography.Text>
-        {indicator.narrativeSummary}
+        {indicator.description}
       </Typography.Text>
       <Descriptions column={4}>
         <Descriptions.Item label="Metodología" span={4}>
@@ -22,33 +25,26 @@ export default function ObjectiveIndicatorPDF({ indicator }){
         <Descriptions.Item label="Formula">
           {indicator.formula}
         </Descriptions.Item>
-        <Descriptions.Item label="Insumos">
-          {indicator.inputs?.length}
-        </Descriptions.Item>
-        <Descriptions.Item label="Medio de verificación">
-          {indicator.meansOfVerification}
+        <Descriptions.Item label="Medios de verificación">
+          {!!indicator.meansOfVerification?.length ? (
+            indicator.meansOfVerification.map(method =>
+              getReadableValue(verificationTypes, method)
+            ).join(", ")
+          ) : "N/A"}
         </Descriptions.Item>
       </Descriptions>
-      <Typography.Text>
-        Insumos
-      </Typography.Text>
-      <List bordered>
-        {indicator?.inputs?.map((input, index) => (
-          <List.Item key={index}>
-            {input}
-          </List.Item>
-        ))}
-      </List>
-      <Typography.Text>
-        Productos
-      </Typography.Text>
-      <List bordered>
-        {indicator?.products?.map((product, index) => (
-          <List.Item key={index}>
-            {product}
-          </List.Item>
-        ))}
-      </List>
+      {!!indicator?.products?.length && (
+        <>
+          <Typography.Text>
+            Productos
+          </Typography.Text>
+          {indicator?.products?.map(product =>
+            <List.Item key={product}>
+              {product}
+            </List.Item>
+          )}
+        </>
+      )}
     </Card>
   )
 }
