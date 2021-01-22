@@ -72,13 +72,13 @@ function FinancialMonitoringPage({ client, query }) {
     const saving = loadingAlert("Eliminando", 0)
     try {
       await deleteProjectInvoice({ variables: { id } })
-      saving()
       success("Eliminado correctamente")
     } catch (e) {
       warning()
       Bugsnag.notify(new Error(e))
       console.error(e)
     }
+    saving()
   }, [deleteProjectInvoice])
 
   const update = useCallback(async expense => {
