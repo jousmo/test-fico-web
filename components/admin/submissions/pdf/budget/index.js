@@ -11,10 +11,8 @@ import PDFHeading from "../heading"
 import "../style.sass"
 
 export function BudgetPDF() {
-  const {
-    submissionResult
-  } = useContext(AdminSubmissionContext)
-  const submission = submissionResult?.data?.Submission
+  const { data } = useContext(AdminSubmissionContext)
+  const submission = data?.Ministrations
 
   const getAmount = (row, percentage) => {
     return (row.unitCost * row.totalUnits) * percentage / 100

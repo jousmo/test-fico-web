@@ -11,15 +11,13 @@ import PDFHeading from "../heading"
 import "../style.sass"
 
 export function ReportsPDF(){
-  const {
-    submissionResult
-  } = useContext(AdminSubmissionContext)
+  const { data } = useContext(AdminSubmissionContext)
 
   return (
     <div className="fico pdf reports">
       <PDFHeading title="Reportes mensuales" />
       <Table
-        dataSource={submissionResult?.data?.Submission?.reports}
+        dataSource={data?.SubmissionObjectives?.reports}
         pagination={false}
         rowKey={(row, index) => index}>
         <Table.Column

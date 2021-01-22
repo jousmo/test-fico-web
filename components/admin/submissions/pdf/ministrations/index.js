@@ -13,10 +13,8 @@ import { capitalize, chunk } from "lodash"
 import "../style.sass"
 
 export function MinistrationsPDF(){
-  const {
-    submissionResult
-  } = useContext(AdminSubmissionContext)
-  const submission = submissionResult?.data?.Submission
+  const { data } = useContext(AdminSubmissionContext)
+  const submission = data?.Ministrations
 
   const getPeriodTitle = (quarters, period) => {
     return (
