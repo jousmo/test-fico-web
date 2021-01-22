@@ -40,7 +40,7 @@ function GeneralInformation({ client, query }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.updateGeneralInfo, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
