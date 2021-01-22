@@ -10,7 +10,7 @@ import { AdminSubmissionContext } from "../../../../../../../contexts/admin/subm
 import { getConcept } from "../../helpers"
 
 export function Expense () {
-  const { data: { Submission }, save, update } = useContext(AdminSubmissionContext)
+  const { data: { Submission }, save, update, deleteInvoice } = useContext(AdminSubmissionContext)
   const [state, setState] = useState({
     isModalOpen: false,
     edit: false,
@@ -52,6 +52,10 @@ export function Expense () {
   const onEdit = (item, index) => {
     item.index = index
     setState({ ...state, isModalOpen: true, edit: item })
+  }
+
+  const onDelete = ({ id }) => {
+    deleteInvoice && deleteInvoice(id)
   }
 
   const onComment = row => {
@@ -127,6 +131,7 @@ export function Expense () {
               <ListExpense
                 dataSource={items}
                 concepts={Submission?.concepts}
+                onDelete={onDelete}
                 onEdit={onEdit}
                 onComment={onComment}/>
             </>

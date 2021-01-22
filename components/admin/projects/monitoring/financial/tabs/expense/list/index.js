@@ -1,12 +1,13 @@
 import { Table, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined, CommentOutlined } from "@ant-design/icons"
-import { DateField, SelectField } from "../../../../../../../shared"
+import { DateField, DeleteButton, SelectField } from "../../../../../../../shared"
 import { cellFormat } from "../../../../../../../../helpers"
 import { getUrlPdf, monthYearConvert, getConcept } from "../../../helpers"
 import moment from "moment"
+import React from "react"
 moment.locale("es")
 
-export function ListExpense ({ dataSource, concepts, onEdit, onComment }) {
+export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete }) {
   return (
     <Table
       rowKey={a => a.id}
@@ -99,6 +100,10 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment }) {
             target="_blank"
             type="primary" shape="circle"
             icon={<EyeOutlined />} />
+          <DeleteButton
+            type="primary"
+            shape="circle"
+            onClick={() => onDelete(record)}/>
         </Space>} />
     </Table>
   )
