@@ -137,7 +137,7 @@ export function ConceptModal({
               <SelectField
                 id="region"
                 name="region"
-                disabled={submission?.township !== "Zona centro sur" || readOnly}
+                disabled={!submission?.township?.includes("Zona centro sur") || readOnly}
                 defaultValue={edit?.region}
                 options={implementer.submission.regions} />
             </Form.Item>
