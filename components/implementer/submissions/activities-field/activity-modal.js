@@ -35,6 +35,7 @@ export function ActivityModal({
 
       if(typeof edit?.index !== "undefined") {
         edit.months = null
+        edit.meansOfVerification = null
         values = merge(edit, values)
       }
 
@@ -182,6 +183,7 @@ export function ActivityModal({
               <SelectField
                 id="meansOfVerification"
                 filterOption={(value, option) => option.children.toLowerCase().includes(value.toLowerCase())}
+                mode="tags"
                 showSearch
                 options={verificationTypes} />
             </Form.Item>
