@@ -55,6 +55,12 @@ export const getDetails = gql`
           name
           charge
         }
+        documents {
+          id
+          url
+          name
+          type
+        }
       }
       beneficiaries {
         description

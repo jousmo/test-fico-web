@@ -23,6 +23,8 @@ export function GeneralInformationPDF() {
 
   const submission = data?.SubmissionDetails
 
+  const donataryDocument = submission?.implementer?.documents?.find(doc => doc.type === "DONATARY")
+
   return (
     <div className="fico pdf general-information">
       <Descriptions
@@ -48,7 +50,9 @@ export function GeneralInformationPDF() {
           {submission?.implementer?.director}
         </Descriptions.Item>
         <Descriptions.Item label="Oficio de donataria Autorizada">
-          {submission?.implementer?.proofOfCharitableContributions}
+          {donataryDocument && (
+            <a href={donataryDocument.url} target="_blank">{donataryDocument.name}</a>
+          )}
         </Descriptions.Item>
         <Descriptions.Item label="Misión">
           {submission?.implementer?.mission}
