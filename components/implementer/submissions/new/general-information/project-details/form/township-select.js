@@ -22,7 +22,7 @@ export function TownshipSelect({
 
     if (region === "Otro"){
       setRegion({ region: null })
-      region = undefined
+      region = null
     } else {
       setRegion({ region: region })
     }
