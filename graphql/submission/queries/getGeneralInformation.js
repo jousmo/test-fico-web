@@ -83,6 +83,13 @@ export const getGeneralInfo = gql`
           type
         }
       }
+      comments {
+        id
+        fieldName
+        revision
+        comment
+        type
+      }
     }
   }
 `
