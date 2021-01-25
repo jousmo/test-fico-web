@@ -23,6 +23,8 @@ export function ConceptModal({
   review,
   ...props
 }) {
+  const hasRegion = !submission?.township?.includes("Zona centro sur")
+
   const [form] = Form.useForm()
   const [state, setState] = useState({})
   const [investmentState, setInvestmentState] = useState(!edit?.investmentDistribution)
@@ -33,6 +35,9 @@ export function ConceptModal({
 
   useEffect(() => {
     if(edit) {
+      if (hasRegion) {
+        edit.region = submission.region
+      }
       form.setFieldsValue(edit)
       setUnitsState({ overLimit: false, total: edit.totalUnits })
       setState(edit)
@@ -137,8 +142,7 @@ export function ConceptModal({
               <SelectField
                 id="region"
                 name="region"
-                disabled={!submission?.township?.includes("Zona centro sur") || readOnly}
-                defaultValue={edit?.region}
+                disabled={hasRegion || readOnly}
                 options={implementer.submission.regions} />
             </Form.Item>
           </Col>
