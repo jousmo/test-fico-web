@@ -33,19 +33,19 @@ function Budget({ client, query }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.updateBudget, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getBudget,
           variables: { id: query.id }
         },
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getBudget, {
     client: client,
     variables: { id: query.id },
     fetchPolicy: "network-only"
@@ -60,8 +60,8 @@ function Budget({ client, query }) {
     setState({ ...state, budget: {} })
   }, [state, updateSubmission])
 
-  const readOnly = data?.Submission?.state === "PROJECT"
-  const hiddenComments = data?.Submission?.status === "CREATED"
+  const readOnly = data?.Budget?.state === "PROJECT"
+  const hiddenComments = data?.Budget?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
     updateBudget,
@@ -75,7 +75,7 @@ function Budget({ client, query }) {
     <PageContext.Provider value={pageData({ save, step: 2 })}>
       <CommentsProvider
         readOnly
-        submission={data?.Submission}>
+        submission={data?.Budget}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />

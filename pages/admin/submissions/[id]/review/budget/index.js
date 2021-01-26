@@ -36,19 +36,19 @@ function Budget({ client, query }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.updateBudget, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getBudget,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getBudget, {
     client: client,
     variables: { id: query.id },
     fetchPolicy: "network-only"
@@ -71,12 +71,12 @@ function Budget({ client, query }) {
     review: true
   }), [state, loading, data])
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = data?.Budget?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 2 })}>
       <CommentsProvider
-        submission={data?.Submission}
+        submission={data?.Budget}
         update={updateBudget}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
