@@ -2,7 +2,7 @@ import { Col, Form, Input, Row } from "antd"
 import { CompositeField, DeleteButton, SelectField } from "../../../../../../shared"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 
-export function FinancingField({ total, ...props }) {
+export function FinancingField({ total, value, ...props }) {
   const onAddProject = addNew => {
     addNew({ type: undefined, institution: undefined, amount: undefined })
   }
@@ -16,6 +16,7 @@ export function FinancingField({ total, ...props }) {
     <CompositeField
       addLabel="Agregar financiamiento"
       onClickAdd={onAddProject}
+      value={value}
       {...props}>
       {({ items, updateItem, removeItem }) =>
         <Row
@@ -32,6 +33,7 @@ export function FinancingField({ total, ...props }) {
                   <SelectField
                     id="type"
                     name="type"
+                    value={item.type}
                     onChange={updateItem(index)}
                     options={implementer.profile.budgetTypes} />
                 </Form.Item>
@@ -41,6 +43,7 @@ export function FinancingField({ total, ...props }) {
                   <Input
                     id="institution"
                     name="institution"
+                    value={item.institution}
                     disabled={item.type === "OWN"}
                     onChange={updateItem(index)}
                     type="text" />
@@ -51,6 +54,7 @@ export function FinancingField({ total, ...props }) {
                   <Input
                     id="amount"
                     name="amount"
+                    value={item.amount}
                     onChange={updateItem(index)} />
                 </Form.Item>
               </Col>

@@ -7,18 +7,26 @@ import * as cellFormat from "../../../../../helpers/cellFormat";
 import { money } from "../../../../../helpers/valueFormat"
 
 function ProjectsForm({ data, onChange, disabled }) {
-  const [state, setState] = useState({ isModalOpen: false })
+  const [state, setState] = useState({
+    isModalOpen: false,
+    edit: undefined
+  })
 
   const onClickAdd = () => {
-    setState({ isModalOpen: true })
+    setState({ ...state, isModalOpen: true })
   }
 
   const onCancel = () => {
-    setState({ isModalOpen: false })
+    setState({ isModalOpen: false, edit: undefined })
   }
 
-  const onSave = (addNew) => (values) => {
-    addNew(values)
+  const onSave = (addNew, replaceItemAtIndex) => (values) => {
+    if(values.index !== undefined) {
+      const { index, ...project } = values
+      replaceItemAtIndex(index, project)
+    } else {
+      addNew(values)
+    }
     onCancel()
   }
 
@@ -36,6 +44,11 @@ function ProjectsForm({ data, onChange, disabled }) {
     return result
   }
 
+  const onEdit = (item, index) => {
+    item.index = index
+    setState({ isModalOpen: true, edit: item })
+  }
+
   return (
     <Form layout="vertical">
       <Form.Item
@@ -46,10 +59,11 @@ function ProjectsForm({ data, onChange, disabled }) {
           onClickAdd={onClickAdd}
           addLabel="Agregar proyecto"
           isAddDisabled={disabled}>
-          {({ items, addNew, removeItem }) =>
+          {({ items, addNew, removeItem, replaceItemAtIndex }) =>
             <div>
               <ProjectModal
-                onSave={onSave(addNew)}
+                edit={state.edit}
+                onSave={onSave(addNew, replaceItemAtIndex)}
                 visible={state.isModalOpen}
                 onCancel={onCancel} />
               <Table
@@ -82,7 +96,8 @@ function ProjectsForm({ data, onChange, disabled }) {
                   <Table.Column
                     title=""
                     key="actions"
-                    render={cellFormat.deleteAction(removeItem)} />
+                    dataIndex="name"
+                    render={cellFormat.actions(onEdit, removeItem, false)} />
                 )}
               </Table>
             </div>
