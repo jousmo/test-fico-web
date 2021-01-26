@@ -7,13 +7,11 @@ import { conceptTypes } from "../../../../../../../helpers/selectOptions/impleme
 import { renderInvestment, renderTotal, renderSummary } from "./helpers"
 import { CommentButton } from "../../../../../../admin/submissions/review"
 import { useAuth } from "../../../../../../../contexts/auth"
-import * as _ from "lodash"
 
 function BudgetForm({ data, onChange, hiddenComments, review }) {
   const { user } = useAuth()
   const [state, setState] = useState({ isModalOpen: false, edit: false })
-  const { Submission } = data || {}
-  const cleanData = concept => _.omit(concept, ['index', 'budgeted'])
+  const { Budget: Submission } = data || {}
 
   const onClickAdd = () => {
     setState({ ...state, isModalOpen: true })
@@ -23,12 +21,12 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
     setState({ ...state, isModalOpen: false, edit: false })
   }
 
-  const onSave = (addNew, replaceItemAtIndex) => (concept) => {
+  const onSave = (addNew, replaceItemAtIndex, items) => (concept) => {
     if(concept.index !== undefined) {
-      const index = concept.index
-      const cleanConcept = cleanData(concept)
-      replaceItemAtIndex(index, cleanConcept)
+      const { index } = concept
+      replaceItemAtIndex(index, concept)
     } else {
+      concept.index = items.length
       addNew(concept)
     }
 
@@ -58,7 +56,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
                 visible={state.isModalOpen}
                 submission={Submission}
                 onCancel={onCancel}
-                onSave={onSave(addNew, replaceItemAtIndex)}
+                onSave={onSave(addNew, replaceItemAtIndex, items)}
                 readOnly={readOnly}
                 review={readOnly}
                 edit={state.edit} />
@@ -69,8 +67,8 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
                 pagination={false}
                 locale={{emptyText: <Empty description="Agrega todos los conceptos
                 que serán utilizados durante el proyecto" />}}
-                rowKey={(r, i) => i}
-                summary={concepts => renderSummary(concepts, data?.Submission)}>
+                rowKey={r => r.id || `${r.name}-${r.unitCost}`}
+                summary={concepts => renderSummary(concepts, Submission)}>
                 <Table.Column
                   key="comments"
                   render={(text, row, index) => (
