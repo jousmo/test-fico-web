@@ -15,8 +15,9 @@ import {
 import { useEffect, useState, useCallback, useMemo } from "react"
 import { implementer } from "../../../graphql"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { Bugsnag, success, warning, loadingAlert, withApollo } from "../../../helpers"
+import { success, loadingAlert, withApollo } from "../../../helpers"
 import { AuthCheck } from "../../../helpers/auth/auth-check"
+import { apolloError } from "../../../helpers/bugsnag/notify"
 
 function Profile({ client }) {
   const [state, setState] = useState({ generalInformation: {} })
@@ -53,9 +54,7 @@ function Profile({ client }) {
       success()
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
   }, [state, updateProfile])
 

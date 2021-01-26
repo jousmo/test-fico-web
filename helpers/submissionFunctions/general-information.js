@@ -1,5 +1,5 @@
-import { success, loadingAlert, warning } from "../alert"
-import { Bugsnag } from "../bugsnag"
+import { success, loadingAlert } from "../alert"
+import { apolloError } from "../bugsnag/notify"
 
 export const setUpdateGeneralInformation = (generalInformation, state, setState) => {
   const newGeneralInformation = {
@@ -20,10 +20,8 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     saving()
     success()
   }
-  catch(e) {
-    warning()
-    Bugsnag.notify(new Error(e))
-    console.error(e)
+  catch(err) {
+    apolloError(err)
   }
   setState({ ...state, isSaving: false })
 }

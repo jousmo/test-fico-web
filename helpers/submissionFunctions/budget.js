@@ -1,6 +1,6 @@
-import { loadingAlert, success, warning } from "../alert"
+import { loadingAlert, success } from "../alert"
 import { omit } from "lodash"
-import { Bugsnag } from "../bugsnag"
+import { apolloError } from "../bugsnag/notify"
 
 export const setUpdateBudget = (budget, state, setState) => {
   budget.concepts = budget?.concepts?.map(concept => omit(concept, ["budgeted"])) || []
@@ -27,10 +27,8 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     saving()
     success()
   }
-  catch(e) {
-    warning()
-    Bugsnag.notify(new Error(e))
-    console.error(e)
+  catch(err) {
+    apolloError(err)
   }
   setState({ ...state, isSaving: false })
 }

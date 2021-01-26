@@ -7,8 +7,9 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
-import { Bugsnag, success, warning, loadingAlert, withApollo } from "../../../../../../helpers"
+import { success, loadingAlert, withApollo } from "../../../../../../helpers"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
+import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
 function FinancialMonitoringPage({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -62,9 +63,7 @@ function FinancialMonitoringPage({ client, query }) {
       saving()
       success()
     } catch (e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
   }, [createProjectInvoice])
 
@@ -89,9 +88,7 @@ function FinancialMonitoringPage({ client, query }) {
       saving()
       success()
     } catch (e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
   }, [updateProjectInvoice])
 
