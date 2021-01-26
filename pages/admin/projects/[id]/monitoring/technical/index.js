@@ -9,9 +9,10 @@ import {
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { Bugsnag, success, warning, loadingAlert, withApollo } from "../../../../../../helpers"
+import { success, loadingAlert, withApollo } from "../../../../../../helpers"
 import { cloneDeep } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
+import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
 function TechnicalMonitoringPage({ client, query }) {
   const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
@@ -44,9 +45,7 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [updateSub])
@@ -58,8 +57,7 @@ function TechnicalMonitoringPage({ client, query }) {
       })
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
+      apolloError(e)
     }
   }, [updateActivity])
 
@@ -73,9 +71,7 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [createMonitoring, refetch])
@@ -96,9 +92,7 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [updateMonitoring, refetch])

@@ -9,9 +9,10 @@ import {
 import { submission } from "../../../../../../graphql"
 import React, { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../../../helpers"
+import { loadingAlert, success, withApollo } from "../../../../../../helpers"
 import { cloneDeep, omit } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
+import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
 function TechnicalMonitoringPage({ client, query }) {
   const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
@@ -78,9 +79,7 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
       refetch()
     } catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [createProjectBeneficiaries, updateProjectAssistants, refetch])
@@ -97,9 +96,7 @@ function TechnicalMonitoringPage({ client, query }) {
       success("Actualizado correctamente")
       refetch()
     } catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [updateProjectBeneficiaries, updateProjectAssistants, refetch])
@@ -114,9 +111,7 @@ function TechnicalMonitoringPage({ client, query }) {
       success("Eliminado correctamente")
       refetch()
     } catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [deleteProjectBeneficiaries, updateProjectAssistants, refetch])
@@ -130,9 +125,7 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
       refetch()
     } catch(e) {
-      Bugsnag.notify(new Error(e.graphQLErrors[0].message))
-      warning(e.graphQLErrors[0].message)
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [createProjectAssistants, refetch])
@@ -145,9 +138,7 @@ function TechnicalMonitoringPage({ client, query }) {
       success("Actualizado correctamente")
       refetch()
     } catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [updateProjectAssistants, updateProjectBeneficiaries, refetch])
@@ -159,9 +150,7 @@ function TechnicalMonitoringPage({ client, query }) {
       success("Eliminado correctamente")
       refetch()
     } catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [deleteProjectAssistants, refetch])
@@ -174,9 +163,7 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
   }, [updateSub])
 
@@ -189,9 +176,7 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
   }, [createMonitoring, refetch])
 
@@ -210,9 +195,7 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
   }, [updateMonitoring, refetch])
 
@@ -223,8 +206,7 @@ function TechnicalMonitoringPage({ client, query }) {
       })
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
+      apolloError(e)
     }
   }, [updateActivity])
 

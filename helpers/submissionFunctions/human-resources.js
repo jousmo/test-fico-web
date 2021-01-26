@@ -1,5 +1,5 @@
-import { loadingAlert, success, warning } from "../alert"
-import { Bugsnag } from "../bugsnag"
+import { loadingAlert, success } from "../alert"
+import { apolloError } from "../bugsnag/notify"
 
 export const setUpdateHumanResources = (humanResource, state, setState) => {
   const newHumanResources = {
@@ -24,10 +24,8 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     saving()
     success()
   }
-  catch(e) {
-    warning()
-    Bugsnag.notify(new Error(e))
-    console.error(e)
+  catch(err) {
+    apolloError(err)
   }
   setState({ ...state, isSaving: false })
 }

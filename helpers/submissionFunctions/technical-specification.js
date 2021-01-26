@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash"
-import { success, loadingAlert, warning } from "../alert"
-import { Bugsnag } from "../bugsnag"
+import { success, loadingAlert } from "../alert"
+import { apolloError } from "../bugsnag/notify"
 
 export const setUpdateTechnicalSpecification = (technicalSpecification, state, setState) => {
   const newTechnicalSpecification = {
@@ -36,9 +36,7 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     success()
   }
   catch(e) {
-    warning()
-    Bugsnag.notify(new Error(e))
-    console.error(e)
+    apolloError(e)
   }
   setState({ ...state, isSaving: false })
 }

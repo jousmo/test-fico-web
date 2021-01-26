@@ -12,9 +12,10 @@ import { PageContext } from "../../../../../contexts/page"
 import { submission } from "../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { Bugsnag, success, loadingAlert, selectOptions, warning, withApollo } from "../../../../../helpers"
+import { success, loadingAlert, selectOptions, withApollo } from "../../../../../helpers"
 import moment from "moment"
 import { AuthCheck } from "../../../../../helpers/auth/auth-check"
+import { apolloError } from "../../../../../helpers/bugsnag/notify"
 
 function SubmissionsByStatus({ client, query }) {
   const status = query.status_name?.toUpperCase()
@@ -46,9 +47,7 @@ function SubmissionsByStatus({ client, query }) {
       success()
     }
     catch(e){
-      Bugsnag.notify(new Error(e))
-      console.error(e)
-      warning()
+      apolloError(e)
     }
     saving()
   }, [])

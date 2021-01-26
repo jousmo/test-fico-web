@@ -18,8 +18,9 @@ import { submission } from "../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { PageContext } from "../../../../contexts/page"
-import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../helpers"
+import { loadingAlert, success, withApollo } from "../../../../helpers"
 import { AuthCheck } from "../../../../helpers/auth/auth-check"
+import { apolloError } from "../../../../helpers/bugsnag/notify"
 
 function Project({ client, query }) {
   const [updateSubmission] = useMutation(
@@ -51,9 +52,7 @@ function Project({ client, query }) {
       saving()
     }
     catch(e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
   }, [updateSubmission])
 
