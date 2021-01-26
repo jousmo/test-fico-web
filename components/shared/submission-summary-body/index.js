@@ -21,12 +21,21 @@ function SummaryBody({ data, admin, extra }) {
     name,
     region,
     status,
-    budgeted,
     implementer,
     description,
     strategicAxis,
     preventionLevel,
+    concepts
   } = data
+
+  let ficosec = 0
+
+  concepts.forEach(concept => {
+    const ficosecPercentage = concept.investmentDistribution
+      ?.find(e => e.name === "FICOSEC")?.percentage
+
+    ficosec += ((concept?.unitCost * concept?.totalUnits) * ficosecPercentage) / 100
+  })
 
   return (
     <Descriptions
@@ -60,7 +69,7 @@ function SummaryBody({ data, admin, extra }) {
         label="Monto autorizado"
         span={2}
         style={{ paddingLeft: "50px" }}>
-        {numeral(budgeted).format("$0,0.00")}
+        {numeral(ficosec).format("$0,0.00")}
       </Descriptions.Item>
       <Descriptions.Item span={5}>
         {description}

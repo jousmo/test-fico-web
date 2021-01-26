@@ -33,6 +33,23 @@ export const getDetails = gql`
       evidenced
       difference
       createdAt
+      concepts {
+        id
+        name
+        region
+        type
+        measurementUnit
+        unitCost
+        totalUnits
+        monthlyDistribution,
+        budgeted
+        investmentDistribution {
+          id
+          name
+          type
+          percentage
+        }
+      }
       specificObjectives {
         description
       }
