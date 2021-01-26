@@ -16,7 +16,7 @@ export function Budget() {
     hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
-  const cleanData = concept => _.omit(concept, ["index", "budgeted"])
+  const cleanData = concept => _.omit(concept, ["budgeted"])
 
   const onChange = concepts => {
     const newConcepts = Array.from(concepts).map(cleanData)
