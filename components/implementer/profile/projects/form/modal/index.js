@@ -1,19 +1,31 @@
 import { Modal, Form, Row, Col, Input, Typography } from "antd"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { YearSelect } from "../../../../../shared"
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 import { FinancingField } from "./financing-field"
 import { money } from "../../../../../../helpers/valueFormat"
+import { merge } from "lodash"
 
-export function ProjectModal({ onSave, ...props }) {
+export function ProjectModal({ onSave, edit, ...props }) {
   const [form] = Form.useForm()
   const [state, setState] = useState({ total: 0 })
+
+  useEffect(() => {
+    if(edit) {
+      form.setFieldsValue(edit)
+    }
+  }, [edit])
 
   const onOk = async () => {
     try {
       await form.validateFields()
-      const values = await form.getFieldsValue()
+      let values = await form.getFieldsValue()
       values.financing = values?.financing?.map(el => ({ ...el, amount: +el.amount }))
+
+      if(typeof edit?.index !== "undefined") {
+        values.index = edit.index
+        values = merge(edit, values)
+      }
 
       onSave(values)
       form.resetFields()
@@ -88,7 +100,10 @@ export function ProjectModal({ onSave, ...props }) {
           </Col>
           <Col span={24}>
             <Form.Item name="financing">
-              <FinancingField onChange={onFinancingChange} total={state.total} />
+              <FinancingField
+                onChange={onFinancingChange}
+                total={state.total}
+                value={edit?.financing} />
             </Form.Item>
           </Col>
           <Col span={24}>

@@ -15,7 +15,7 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
     responsible = "N/A",
     baseline = "N/A",
     goal = "N/A",
-    meansOfVerification = "N/A",
+    meansOfVerification = [],
     place = "N/A",
     months = "N/A",
     title = "N/A",
@@ -57,7 +57,13 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
       <Typography.Text>{goal || "N/A"}</Typography.Text>
       &nbsp;
       <Typography.Text strong>Medio de verificación: </Typography.Text>
-      <Typography.Text>{getReadableValue(verificationTypes, meansOfVerification) || "N/A"}</Typography.Text>
+      <Typography.Text>
+        {!!meansOfVerification?.length ? (
+          meansOfVerification.map(method =>
+            getReadableValue(verificationTypes, method)
+          ).join(", ")
+        ) : "N/A"}
+      </Typography.Text>
       <br />
       <Typography.Text strong>Lugar de intervención: </Typography.Text>
       <Typography.Text>{place || "N/A"}</Typography.Text>

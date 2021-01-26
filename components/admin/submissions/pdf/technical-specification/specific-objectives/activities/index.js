@@ -1,11 +1,13 @@
 import { Card, Descriptions, Typography } from "antd"
 import Moment from "moment"
 import { extendMoment } from "moment-range"
+import { getReadableValue, implementer } from "../../../../../../../helpers/selectOptions"
 const moment = extendMoment(Moment)
 moment.locale("es")
 
 
 export default function ActivitiesPDF({ activity }){
+  const { submission: { verificationTypes }} = implementer
 
   let formattedMonths = activity.months
 
@@ -36,7 +38,11 @@ export default function ActivitiesPDF({ activity }){
           {activity.formula}
         </Descriptions.Item>
         <Descriptions.Item label="Medio de verificación">
-          {activity.meansOfVerification}
+          {!!activity.meansOfVerification?.length ? (
+            activity.meansOfVerification.map(method =>
+              getReadableValue(verificationTypes, method)
+            ).join(", ")
+          ) : "N/A"}
         </Descriptions.Item>
         <Descriptions.Item label="Lugar de intervención">
           {activity.place}

@@ -8,12 +8,10 @@ import SpecificObjectivePDF from "./specific-objectives"
 import "../style.sass"
 
 export function TechnicalSpecificationPDF(){
-  const {
-    submissionResult
-  } = useContext(AdminSubmissionContext)
+  const { data } = useContext(AdminSubmissionContext)
 
-  const submission = submissionResult?.data?.Submission
-  
+  const submission = data?.SubmissionObjectives
+
   return (
     <div className="fico pdf technical-specification">
       <PDFHeading title="Especificación técnica" />
