@@ -50,7 +50,8 @@ function Budget({ client, query }) {
 
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
-    variables: { id: query.id }
+    variables: { id: query.id },
+    fetchPolicy: "network-only"
   })
 
   const updateBudget = useCallback(budget => {

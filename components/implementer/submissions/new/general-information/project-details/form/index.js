@@ -81,7 +81,7 @@ function ProjectDetailsForm({
               id="applyingCall"
               name="applyingCall"
               defaultValue={data?.applyingCall}
-              onChange={onChange}
+              onBlur={onChange}
               type="text"
               disabled={!isCall || readOnly} />
           </Form.Item>
@@ -101,7 +101,7 @@ function ProjectDetailsForm({
               id="name"
               name="name"
               defaultValue={data?.name}
-              onChange={onChange}
+              onBlur={onChange}
               disabled={readOnly}
               type="text" />
           </Form.Item>
@@ -174,7 +174,7 @@ function ProjectDetailsForm({
               id="implementationPlace"
               name="implementationPlace"
               defaultValue={data?.implementationPlace}
-              onChange={onChange}
+              onBlur={onChange}
               disabled={readOnly}
               type="text" />
           </Form.Item>
@@ -187,7 +187,7 @@ function ProjectDetailsForm({
               id="responsible"
               name="responsible"
               defaultValue={data?.responsible}
-              onChange={onChange}
+              onBlur={onChange}
               disabled={readOnly}
               type="text" />
           </Form.Item>
@@ -341,7 +341,7 @@ function ProjectDetailsForm({
               id="description"
               name="description"
               defaultValue={data?.description}
-              onChange={onChange}
+              onBlur={onChange}
               disabled={readOnly}
               autoSize={{minRows: 3}} />
           </Form.Item>
@@ -363,7 +363,7 @@ function ProjectDetailsForm({
               id="justification"
               name="justification"
               defaultValue={data?.justification}
-              onChange={onChange}
+              onBlur={onChange}
               disabled={readOnly}
               autoSize={{minRows: 3}} />
           </Form.Item>
