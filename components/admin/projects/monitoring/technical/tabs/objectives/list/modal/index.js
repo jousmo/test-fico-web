@@ -53,8 +53,11 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, ...props }) {
     form.setFieldsValue({ verificationDocuments: documents })
   }
 
-  const onRemoveFile = () => {
-    form.setFieldsValue({ verificationDocuments: undefined })
+  const onRemoveFile = file => {
+    const verificationDocuments = files
+      ?.filter(el => el.url === file.url)
+      .map(({ uid, ...el}) => ({ id: uid, ...el }))
+    form.setFieldsValue({ verificationDocuments })
   }
 
   const getPercentage = () => {
