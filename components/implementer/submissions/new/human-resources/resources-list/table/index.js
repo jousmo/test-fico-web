@@ -20,7 +20,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
   const hrState = {}
   let hrCount = 0
   const concepts = data?.Submission?.concepts?.map(({ budgeted, ...concept }) => concept) || []
-  const humanResources = concepts?.map((concept, index) => {
+  const humanResources = concepts?.map(concept => {
     if (
       [
         "HUMAN_RESOURCE",
@@ -34,7 +34,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
         budgeted: concept.totalUnits * concept.unitCost,
       }
       const hr = {
-        conceptKey: index,
+        conceptId: concept.id,
         hrKey: hrCount,
         position: concept.name,
         ...concept.humanResource[0]
@@ -57,7 +57,8 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
 
     newHumanResources?.forEach(humanResource => {
       const formattedValues = formatValues(humanResource)
-      newConcepts[humanResource.conceptKey].humanResource[0] = formattedValues
+      const conceptIndex = newConcepts.findIndex(el => el.id === humanResource.conceptId)
+      newConcepts[conceptIndex].humanResource[0] = formattedValues
 
       const { taxes, salary } = formattedValues
       const total = !isNaN(taxes) ? salary + ((taxes * salary) / 100) : salary
@@ -71,7 +72,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
   }
 
   const formatValues = (hr) => {
-    const { conceptKey, hrKey, ...humanResource } = hr
+    const { conceptId, hrKey, ...humanResource } = hr
 
     humanResource.hours = Number(humanResource.hours)
     humanResource.salary = Number(humanResource.salary)
