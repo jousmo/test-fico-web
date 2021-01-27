@@ -135,6 +135,7 @@ export function ConceptModal({
           </Col>
           <Col span={12}>
             <Form.Item
+              initialValue={hasRegion ? submission.region : ""}
               name="region"
               style={{display: "inline"}}
               label="Región"
