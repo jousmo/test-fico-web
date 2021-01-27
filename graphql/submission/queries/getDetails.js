@@ -30,6 +30,7 @@ export const getDetails = gql`
       agreementNumber
       technicalOpinion
       budgeted
+      approved
       evidenced
       difference
       createdAt

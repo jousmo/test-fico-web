@@ -83,7 +83,7 @@ function SubmissionsListingTable({ data }) {
         }
         title="Eje" />
       <Table.Column
-        dataIndex="budgeted"
+        dataIndex="approved"
         render={text => format.money(text)}
         title="Aprobado" />
     </Table>

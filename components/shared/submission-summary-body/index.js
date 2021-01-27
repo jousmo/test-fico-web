@@ -10,10 +10,9 @@ import {
 } from "../../../helpers/selectOptions/shared/submission-status"
 import {
   getReadableValue
-} from "../../../helpers/selectOptions/getReadableValue"
+} from "../../../helpers/selectOptions/"
 import numeral from "numeral"
 import { StatusTag } from "../../admin/projects/list/table/status-tag"
-import { EyeOutlined } from "@ant-design/icons"
 import Link from "next/link"
 
 function SummaryBody({ data, admin, extra }) {
@@ -21,11 +20,11 @@ function SummaryBody({ data, admin, extra }) {
     name,
     region,
     status,
-    budgeted,
     implementer,
     description,
     strategicAxis,
     preventionLevel,
+    approved
   } = data
 
   return (
@@ -60,7 +59,7 @@ function SummaryBody({ data, admin, extra }) {
         label="Monto autorizado"
         span={2}
         style={{ paddingLeft: "50px" }}>
-        {numeral(budgeted).format("$0,0.00")}
+        {numeral(approved).format("$0,0.00")}
       </Descriptions.Item>
       <Descriptions.Item span={5}>
         {description}
