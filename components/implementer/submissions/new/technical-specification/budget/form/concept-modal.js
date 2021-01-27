@@ -149,6 +149,7 @@ export function ConceptModal({
           </Col>
           <Col span={12}>
             <Form.Item
+              initialValue={edit?.type}
               name="type"
               style={{display: "inline"}}
               label="Tipo de gasto"
@@ -157,45 +158,44 @@ export function ConceptModal({
                 id="type"
                 name="type"
                 disabled={readOnly}
-                defaultValue={edit?.type}
                 onChange={(value) => onTypeChange(value)}
                 options={implementer.submission.conceptTypes} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
+              initialValue={edit?.measurementUnit}
               name="measurementUnit"
               style={{display: "inline"}}
               label="Unidad de medida">
               <Input
                 id="measurementUnit"
                 disabled={state.isUnitDisabled || readOnly}
-                defaultValue={edit?.measurementUnit}
                 type="text" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
+              initialValue={edit?.unitCost}
               name="unitCost"
               style={{display: "inline"}}
               label="Costo unitario">
               <Input
                 id="unitCost"
                 disabled={readOnly}
-                defaultValue={edit?.unitCost}
                 type="number"
                 prefix="$" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
+              initialValue={edit?.totalUnits}
               name="totalUnits"
               style={{display: "inline"}}
               label="Total de unidades">
               <Input
                 id="totalUnits"
                 disabled={readOnly}
-                defaultValue={edit?.totalUnits}
                 type="number" />
             </Form.Item>
           </Col>

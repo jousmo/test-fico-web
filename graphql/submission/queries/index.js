@@ -1,5 +1,6 @@
 export * from "./getById"
 export * from "./getAll"
+export * from "./getBudget"
 export * from "./getDetails"
 export * from "./getObjectives"
 export * from "./getMinistrations"
