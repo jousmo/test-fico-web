@@ -89,7 +89,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
                 <Table.Column
                   title="Región"
                   key="region"
-                  render={value => Submission?.township.includes("Zona centro sur") ? value : Submission.region}
+                  render={value => Submission?.township?.includes("Zona centro sur") ? value : Submission.region}
                   dataIndex="region" />
                 <Table.Column
                   title="Tipo de gasto"
