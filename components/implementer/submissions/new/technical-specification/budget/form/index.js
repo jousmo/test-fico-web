@@ -38,9 +38,10 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
     setState({ ...state, isModalOpen: true, edit: item })
   }
 
-  const readOnly = data?.Submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
+  const readOnly = Submission?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && Submission?.status.includes("REVIEW"))
 
+  const concepts = Submission?.concepts?.sort((a, b) => a.index - b.index)
   return (
     <>
       <CompositeField
@@ -48,7 +49,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
         onChange={onChange}
         addLabel="Agregar concepto"
         isAddDisabled={readOnly}
-        value={Submission?.concepts}>
+        value={concepts}>
         {({ items, addNew, removeItem, replaceItemAtIndex }) =>
           <>
             {state.isModalOpen &&
