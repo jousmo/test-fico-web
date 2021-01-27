@@ -38,17 +38,16 @@ function SubmissionsListingTable({ data }) {
     <Table
       className="fico submissions list table"
       dataSource={data}
-      rowKey={(row, index) => index}
+      rowKey={row => row.id}
       onRow={record => handleClick(record)}
       size="small">
       <Table.Column
         width={1}
         title={<MinusSquareTwoTone />} />
       <Table.Column
-        dataIndex="createdAt"
-        render={text => (
-          Moment(text).format("DD/MM/YYYY")
-        )}
+        render={({ createdAt, statusChangedAt}) =>
+          Moment(statusChangedAt || createdAt).format("DD/MM/YYYY")
+        }
         title="Fecha de solicitud" />
       <Table.Column
         dataIndex="name"

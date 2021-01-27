@@ -4,6 +4,7 @@ import {
   AdminSubmissionContext
 } from "../../../../contexts/admin/submissions/show"
 import SubmissionsListingTable from "./table"
+import { shared } from "../../../../helpers/selectOptions/shared"
 
 export function SubmissionsListing() {
   const {
@@ -11,6 +12,11 @@ export function SubmissionsListing() {
     error,
     data
   } = useContext(AdminSubmissionContext)
+
+  const { submissionStatusOptions } = shared
+  const submissions = data?.Submissions?.filter(submission => {
+    return submissionStatusOptions?.findIndex(e => e.value === submission.status) < 9
+  })
 
   const [state, setState] = useState(false)
 
@@ -20,7 +26,7 @@ export function SubmissionsListing() {
       return
     }
 
-    const filter = data?.Submissions?.filter(submission =>
+    const filter = submissions?.filter(submission =>
       `${submission.name} ${submission.implementer?.name}`
         ?.toLowerCase()
         ?.includes(value.toLowerCase())
@@ -33,7 +39,7 @@ export function SubmissionsListing() {
     <Section style={{padding: 0}}>
       <SearchField onSearch={onSearch} />
       <SubmissionsListingTable
-        data={state ? state : data?.Submissions}
+        data={state ? state : submissions}
         error={error}
         isLoading={loading} />
     </Section>
