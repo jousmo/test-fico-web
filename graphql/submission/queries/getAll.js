@@ -26,6 +26,7 @@ export const getAll = gql`
       technicalOpinion
       createdAt
       budgeted
+      approved
     }
     
     Implementer {

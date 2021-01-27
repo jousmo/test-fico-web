@@ -3,14 +3,13 @@ import { Table } from "antd"
 import { useRouter } from "next/router"
 import Moment from "moment"
 Moment.locale("es")
-import { capitalize } from "lodash"
 import { MinusSquareTwoTone } from "@ant-design/icons"
 import {
   getReadableValue,
   implementer,
   shared
 } from "../../../../../helpers/selectOptions"
-import { Tooltip } from "../../../../shared/tooltip"
+import { Tooltip } from "../../../../shared"
 import "./styles.sass"
 
 function SubmissionsListingTable({ data }) {
@@ -81,7 +80,7 @@ function SubmissionsListingTable({ data }) {
         }
         title="Eje" />
       <Table.Column
-        dataIndex="budgeted"
+        dataIndex="approved"
         render={text => format.money(text)}
         title="Aprobado" />
     </Table>

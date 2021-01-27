@@ -10,10 +10,9 @@ import {
 } from "../../../helpers/selectOptions/shared/submission-status"
 import {
   getReadableValue
-} from "../../../helpers/selectOptions/getReadableValue"
+} from "../../../helpers/selectOptions/"
 import numeral from "numeral"
 import { StatusTag } from "../../admin/projects/list/table/status-tag"
-import { EyeOutlined } from "@ant-design/icons"
 import Link from "next/link"
 
 function SummaryBody({ data, admin, extra }) {
@@ -25,17 +24,8 @@ function SummaryBody({ data, admin, extra }) {
     description,
     strategicAxis,
     preventionLevel,
-    concepts
+    approved
   } = data
-
-  let ficosec = 0
-
-  concepts.forEach(concept => {
-    const ficosecPercentage = concept.investmentDistribution
-      ?.find(e => e.name === "FICOSEC")?.percentage
-
-    ficosec += ((concept?.unitCost * concept?.totalUnits) * ficosecPercentage) / 100
-  })
 
   return (
     <Descriptions
@@ -69,7 +59,7 @@ function SummaryBody({ data, admin, extra }) {
         label="Monto autorizado"
         span={2}
         style={{ paddingLeft: "50px" }}>
-        {numeral(ficosec).format("$0,0.00")}
+        {numeral(approved).format("$0,0.00")}
       </Descriptions.Item>
       <Descriptions.Item span={5}>
         {description}

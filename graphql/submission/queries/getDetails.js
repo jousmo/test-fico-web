@@ -30,26 +30,10 @@ export const getDetails = gql`
       agreementNumber
       technicalOpinion
       budgeted
+      approved
       evidenced
       difference
       createdAt
-      concepts {
-        id
-        name
-        region
-        type
-        measurementUnit
-        unitCost
-        totalUnits
-        monthlyDistribution,
-        budgeted
-        investmentDistribution {
-          id
-          name
-          type
-          percentage
-        }
-      }
       specificObjectives {
         description
       }

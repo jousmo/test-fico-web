@@ -267,7 +267,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           <Form.Item
             label="Coinversión 1:"
             name="investmentOnePayment"
-            rules={[{ required: true, message: "El campo es requerido" }]}>
+            initialValue={0}>
             <InputNumber
               name="investmentOnePayment"
               onChange={(value) => onChange("investmentOnePaymentPercentage", value)}
@@ -281,7 +281,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           <Form.Item
             label="Coinversión 2:"
             name="investmentTwoPayment"
-            rules={[{ required: true, message: "El campo es requerido" }]}>
+            initialValue={0}>
             <InputNumber
               name="investmentTwoPayment"
               onChange={(value) => onChange("investmentTwoPaymentPercentage", value)}
