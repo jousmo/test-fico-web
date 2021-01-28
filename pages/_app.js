@@ -1,4 +1,3 @@
-import Head from "next/head"
 import "antd/dist/antd.css"
 import { ConfigProvider } from "antd"
 import { antdConfig } from "../antd.config"
