@@ -6,7 +6,6 @@ export * from "./toFileList"
 export * from "./alert"
 export * from "./auth"
 export * from "./bugsnag"
-export * from "./getUserStorage"
 
 import * as cellFormat from "./cellFormat"
 import * as format from "./valueFormat"
