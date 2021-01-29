@@ -27,7 +27,7 @@ export function LoginForm({ onSubmit }){
       <small>
         ¿Olvidaste tu contraseña?
         &nbsp;
-        <Link href="/password-recovery">
+        <Link href="/recovery">
           <a>Click aqui</a>
         </Link>
       </small>
