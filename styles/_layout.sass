@@ -1,7 +1,9 @@
 .fico.layout
+  min-height: 100vh
   background-color: $background-color
 
   &> .ant-layout
+    min-height: 100vh
     &> .ant-layout
       &> .ant-layout-header
         height: auto
@@ -21,6 +23,10 @@
     &> .ant-layout-sider-dark
       background-color: $main-menu-background-color
 
+    &> .content
+      height: max-content
+      padding-bottom: 3.5rem
+
     .page-content
       background: $background-color
 
@@ -29,6 +35,10 @@
 
         &:first-child
           margin-top: 35px !important
+
+  &.submissions
+    .ant-layout
+      padding-bottom: 3.5rem
 
 .zsiq_floatmain
   @media print

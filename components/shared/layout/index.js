@@ -4,12 +4,12 @@ import { Toolbar } from "../toolbar"
 
 export function Layout({children, subheader}) {
   return (
-    <div className="fico layout full-height">
-      <ALayout className="full-height">
+    <div className="fico layout">
+      <ALayout>
         <ALayout.Sider>
           <MainMenu />
         </ALayout.Sider>
-        <ALayout>
+        <ALayout className="content">
           <ALayout.Header><Toolbar subheader={subheader} /></ALayout.Header>
           <ALayout.Content>
             <div className="full-height page-content">
