@@ -1,10 +1,10 @@
 import { Avatar, Divider, List, Typography, Skeleton, Empty } from "antd"
 import moment from "moment"
 import { UserOutlined } from "@ant-design/icons"
-import { getUserStorage } from "../../../helpers"
+import { useAuth } from "../../../contexts/auth"
 
 export function CommentMonitoringListing({ loading, comments = [] }){
-  const user = getUserStorage()
+  const { user: { claims: { role } } } = useAuth()
   return (
     loading
       ? <Skeleton avatar active paragraph={{ rows: 2 }} />
@@ -21,17 +21,17 @@ export function CommentMonitoringListing({ loading, comments = [] }){
               <List.Item key={index}>
                 <List.Item.Meta
                   avatar={
-                    userType === user?.claims?.role
+                    userType === role
                       ? <Avatar style={{ backgroundColor: "#87d068" }} icon={<UserOutlined />} />
-                      : user?.claims?.role === "ADMIN"
+                      : role === "ADMIN"
                         ? <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>I</Avatar>
                         : <Avatar style={{ color: "#f56a00", backgroundColor: "#fde3cf" }}>F</Avatar>
                   }
                   title={
                     <Typography.Text type="secondary">
-                      {userType === user?.claims?.role
+                      {userType === role
                         ? "Tú"
-                        : user?.claims?.role === "ADMIN"
+                        : role === "ADMIN"
                           ? "IMPLEMENTADORA"
                           : "FICOSEC"
                       }
