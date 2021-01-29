@@ -1,8 +1,10 @@
 import React from "react"
 import { Table, Empty, Tag } from "antd"
+import { CalendarOutlined } from "@ant-design/icons"
 import { translateGender, translateDate } from "../../../../helpers/assistantsBeneficiaries"
 import Link from "next/link"
-import { ScrollableView } from "../../../shared";
+import { ScrollableView, DateFilter } from "../../../shared"
+import moment from "moment"
 
 export function ListCensus ({ title, dataSource }) {
   const URI = title === "asistentes" ? '/admin/census/assistant/' : '/admin/census/beneficiary/'
@@ -15,6 +17,15 @@ export function ListCensus ({ title, dataSource }) {
       }
       return prev
     }, []).sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()))
+  }
+
+  const onDateChange = (date, clearFilters, confirm, setState) => {
+    if (date) {
+      setState([date])
+      confirm()
+    } else {
+      clearFilters()
+    }
   }
 
   const municipalityOptions = getOptions("municipality")
@@ -72,6 +83,11 @@ export function ListCensus ({ title, dataSource }) {
         <Table.Column
           width={1}
           dataIndex="birthdate"
+          filterDropdown={({ setSelectedKeys, confirm, clearFilters }) =>
+            <DateFilter onFilter={date => onDateChange(date, clearFilters, confirm, setSelectedKeys)} />
+          }
+          filterIcon={filtered => <CalendarOutlined style={{ color: filtered ? '#1890ff' : undefined }} />}
+          onFilter={(value, record) => moment(record.birthdate).isSame(value, 'month')}
           sorter={(a, b) => a.birthdate?.localeCompare(b.birthdate)}
           showSorterTooltip={false}
           render={text => translateDate(text, "DD/MM/YYYY")}
