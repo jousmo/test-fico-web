@@ -13,10 +13,15 @@ function UsersList({ data: accounts }) {
   const [state, setState] = useState({
     id: null,
     openConfirm: false,
-    openModal: false
+    openModal: false,
+    account: null
   })
 
   const onToggleModal = () => {
+    if (state.openModal) {
+      setState({ ...state, account: null, openModal: !state.openModal })
+      return
+    }
     setState({ ...state, openModal: !state.openModal })
   }
 
@@ -24,8 +29,14 @@ function UsersList({ data: accounts }) {
     setState({ ...state, openConfirm: !state.openConfirm })
   }
 
-  const onSave = account => {
-    save && save(account)
+  const onSave = data => {
+    if (state.account) {
+      const { account: { id }} = state
+      const { email, ...newData } = data
+      update && update(id, newData)
+    } else {
+      save && save(data)
+    }
     onToggleModal()
   }
 
@@ -37,13 +48,17 @@ function UsersList({ data: accounts }) {
     setState({ ...state, openConfirm: !state.openConfirm, id })
   }
 
+  const onChangeAlias = account => {
+    setState({ ...state, openModal: !state.openModal, account })
+  }
+
   const onDisabled = (id, status) => {
     disabled && disabled(id, status)
   }
 
   const onOk = () => {
     setState({ ...state, openConfirm: !state.openConfirm })
-    update && update(state?.id)
+    update && update(state?.id, { role: "IMPLEMENTER" })
   }
 
   return (
@@ -57,12 +72,20 @@ function UsersList({ data: accounts }) {
         {({ items }) =>
           <>
             <ModalInvitation
+              account={state?.account}
               visible={state?.openModal}
               onSave={onSave}
               onCancel={onToggleModal}/>
             <List
               className="fico users-list"
-              renderItem={i => <UserItem user={i} onRecovery={onRecovery} onEdit={onEdit} onDisabled={onDisabled}/>}
+              renderItem={i =>
+                <UserItem
+                  user={i}
+                  onAlias={() => onChangeAlias(i)}
+                  onRecovery={onRecovery}
+                  onEdit={onEdit}
+                  onDisabled={onDisabled}/>
+              }
               itemLayout="vertical"
               dataSource={items}
               pagination={{pageSize: 10}} />
