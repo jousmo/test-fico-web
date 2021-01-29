@@ -81,10 +81,10 @@ function AdminUsers({ client }) {
     saving()
   }, [recoveryAccountPassword])
 
-  const update = useCallback(async id => {
-    const saving = loadingAlert("Cambiando tu cuenta a implementadora", 0)
+  const update = useCallback(async (id, data) => {
+    const saving = loadingAlert("Actualizando...", 0)
     try {
-      await updateAccount({ variables: { id, role: "IMPLEMENTER" } })
+      await updateAccount({ variables: { id, data } })
       success("Cuenta actualizada")
     } catch (e) {
       warning()

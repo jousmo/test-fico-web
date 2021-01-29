@@ -4,7 +4,7 @@ import { Avatar, IconLabel } from "../../../shared"
 import { ActionButton } from "../../../shared/action-button"
 import Link from "next/link"
 
-export function UserItem ({ user, onRecovery, onEdit, onDisabled }) {
+export function UserItem ({ user, onAlias, onRecovery, onEdit, onDisabled }) {
   const ROLES = {
     "IMPLEMENTER": "Implementadora",
     "ADMIN": "Administrador"
@@ -41,6 +41,7 @@ export function UserItem ({ user, onRecovery, onEdit, onDisabled }) {
       <ActionButton
         role={user?.role}
         disabled={user?.disabled}
+        onAlias={onAlias}
         onRecovery={() => onRecovery(user?.email)}
         onEdit={() => onEdit(user?.id)}
         onDisabled={() => onDisabled(user?.id, !user?.disabled)}
