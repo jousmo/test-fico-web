@@ -76,8 +76,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
         revision={revision}
         readOnly={readOnly}
         getComments={getComments}
-        fieldSection={state.field.section}
-        fieldName={state.field.name} />
+        field={state.field} />
       { children }
     </CommentsContext.Provider>
   )

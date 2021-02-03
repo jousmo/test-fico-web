@@ -9,8 +9,7 @@ export function CommentModal({
   revision,
   readOnly,
   getComments,
-  fieldName,
-  fieldSection,
+  field,
   ...props
 }) {
   const [state, setState] = useState({ comments: [] })
@@ -40,7 +39,7 @@ export function CommentModal({
 
   useEffect(() => {
     setState({ comments: getComments() })
-  }, [fieldName])
+  }, [field])
 
   if (readOnly){
     return (
