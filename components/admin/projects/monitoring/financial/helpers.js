@@ -343,8 +343,4 @@ export const validateDocuments = (formData, { budgeted, evidenced, difference },
   return { error: false }
 }
 
-export const getUrlPdf = dataSource => {
-  return dataSource?.reduce((prev, current) => {
-    return current.documents?.find(el => el.type === "PDF")
-  }, {})?.url
-}
+export const getUrlPdf = documents => documents?.find(el => el.type === "PDF")?.url

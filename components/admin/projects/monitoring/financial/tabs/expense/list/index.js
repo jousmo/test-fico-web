@@ -96,7 +96,7 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
             icon={<EditOutlined />}
             onClick={() => onEdit(record, index)} />
           <Button
-            href={getUrlPdf(dataSource)}
+            href={getUrlPdf(record?.documents)}
             target="_blank"
             type="primary" shape="circle"
             icon={<EyeOutlined />} />
