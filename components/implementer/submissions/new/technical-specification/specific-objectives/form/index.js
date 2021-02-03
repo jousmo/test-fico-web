@@ -21,6 +21,8 @@ export default function SpecificObjectiveForm({
   review
 }) {
   const { user } = useAuth()
+  const submission = data?.TechnicalSpecification
+
   if(isLoading) {
     return <Section><Skeleton active /></Section>
   }
@@ -38,7 +40,7 @@ export default function SpecificObjectiveForm({
     )
   }
 
-  const specificObjectives = data?.Submission?.specificObjectives?.sort((a, b) =>
+  const specificObjectives = submission?.specificObjectives?.sort((a, b) =>
     a.orderIndex - b.orderIndex
   ) || []
 
@@ -50,8 +52,8 @@ export default function SpecificObjectiveForm({
     onChange && onChange(newSpecificObjectives)
   }
 
-  const readOnly = data?.Submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
+  const readOnly = submission?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && submission?.status.includes("REVIEW"))
 
   return (
     <>
@@ -84,7 +86,7 @@ export default function SpecificObjectiveForm({
                 onChange={onSpecificObjectiveItemsChange(index, "indicators")}
                 indicatorType="SPECIFIC_INDICATOR"
                 objectiveIndex={index}
-                limitDates={[data?.Submission?.startDate, data?.Submission?.endDate]}
+                limitDates={[submission?.startDate, submission?.endDate]}
                 readOnly={readOnly}
                 defaultValue={objective.indicators.sort((a, b) => a.orderIndex - b.orderIndex)}
                 hiddenComments={hiddenComments}/>
@@ -94,7 +96,7 @@ export default function SpecificObjectiveForm({
                 review={review}
                 activityType="SPECIFIC_ACTIVITY"
                 objectiveIndex={index}
-                limitDates={[data?.Submission?.startDate, data?.Submission?.endDate]}
+                limitDates={[submission?.startDate, submission?.endDate]}
                 onChange={onSpecificObjectiveItemsChange(index, "activities")}
                 readOnly={readOnly}
                 defaultValue={objective.activities.sort((a, b) => a.orderIndex - b.orderIndex)}
