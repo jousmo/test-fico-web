@@ -9,7 +9,7 @@ import {
 import { submission } from "../../../../../../graphql"
 import React, { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { loadingAlert, success, withApollo } from "../../../../../../helpers"
+import { loadingAlert, success, warning, withApollo } from "../../../../../../helpers"
 import { cloneDeep, omit } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
@@ -61,7 +61,7 @@ function TechnicalMonitoringPage({ client, query }) {
   )
 
   const createBeneficiaries = useCallback(async (beneficiaries, isConvert = true) => {
-    const saving = loadingAlert(isConvert ? "Creando beneficiarios" : "Guardando", 0)
+    const saving = loadingAlert(isConvert ? "Creando beneficiarios..." : "Guardando...", 0)
     try {
       if (isConvert) {
         for (const beneficiary of beneficiaries) {
@@ -79,13 +79,14 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
       refetch()
     } catch(e) {
+      warning()
       apolloError(e)
     }
     saving()
   }, [createProjectBeneficiaries, updateProjectAssistants, refetch])
 
   const updateBeneficiaries = useCallback(async beneficiary => {
-    const saving = loadingAlert("Actualizando", 0)
+    const saving = loadingAlert("Guardando...", 0)
     try {
       const { id, ...data } = beneficiary
       await updateProjectBeneficiaries({ variables: { data, id } })
@@ -96,13 +97,14 @@ function TechnicalMonitoringPage({ client, query }) {
       success("Actualizado correctamente")
       refetch()
     } catch(e) {
+      warning()
       apolloError(e)
     }
     saving()
   }, [updateProjectBeneficiaries, updateProjectAssistants, refetch])
 
   const deleteBeneficiaries = useCallback(async (id, projectAssistantId) => {
-    const saving = loadingAlert("Eliminando", 0)
+    const saving = loadingAlert("Eliminando...", 0)
     try {
       await deleteProjectBeneficiaries({ variables: { id } })
       if (projectAssistantId) {
@@ -111,13 +113,14 @@ function TechnicalMonitoringPage({ client, query }) {
       success("Eliminado correctamente")
       refetch()
     } catch(e) {
+      warning()
       apolloError(e)
     }
     saving()
   }, [deleteProjectBeneficiaries, updateProjectAssistants, refetch])
 
   const createAssistants = useCallback(async assistant => {
-    const saving = loadingAlert("Guardando", 0)
+    const saving = loadingAlert("Guardando...", 0)
     try {
       await createProjectAssistants({
         variables: { data: assistant, id: query.id }
@@ -125,37 +128,41 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
       refetch()
     } catch(e) {
+      warning()
       apolloError(e)
     }
     saving()
   }, [createProjectAssistants, refetch])
 
   const updateAssistants = useCallback(async assistant => {
-    const saving = loadingAlert("Actualizando", 0)
+    const saving = loadingAlert("Guardando...", 0)
     try {
       const { id, ...data } = assistant
       await updateProjectAssistants({ variables: { data, id } })
       success("Actualizado correctamente")
       refetch()
     } catch(e) {
+      warning()
       apolloError(e)
     }
     saving()
   }, [updateProjectAssistants, updateProjectBeneficiaries, refetch])
 
   const deleteAssistants = useCallback(async id => {
-    const saving = loadingAlert("Eliminando", 0)
+    const saving = loadingAlert("Eliminando...", 0)
     try {
       await deleteProjectAssistants({ variables: { id } })
       success("Eliminado correctamente")
       refetch()
     } catch(e) {
+      warning()
       apolloError(e)
     }
     saving()
   }, [deleteProjectAssistants, refetch])
 
   const updateSubmission = useCallback(async submission => {
+    const saving = loadingAlert("Guardando...", 0)
     try {
       await updateSub({
         variables: { data: submission, id: query.id }
@@ -163,11 +170,14 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
     }
     catch(e) {
+      warning()
       apolloError(e)
     }
+    saving()
   }, [updateSub])
 
   const save = useCallback(async monitoring => {
+    const saving = loadingAlert("Guardando...", 0)
     try {
       await createMonitoring({
         variables: { data: monitoring, id: query.id }
@@ -176,11 +186,14 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     }
     catch(e) {
+      warning()
       apolloError(e)
     }
+    saving()
   }, [createMonitoring, refetch])
 
   const update = useCallback(async monitoring => {
+    const saving = loadingAlert("Guardando...", 0)
     const newMonitoring = cloneDeep(monitoring)
     const { id, ...updatedMonitoring } = newMonitoring
 
@@ -195,19 +208,24 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     }
     catch(e) {
+      warning()
       apolloError(e)
     }
+    saving()
   }, [updateMonitoring, refetch])
 
   const saveActivity = useCallback(async activity => {
+    const saving = loadingAlert("Guardando...", 0)
     try {
       await updateActivity({
         variables: { data: activity }
       })
     }
     catch(e) {
+      warning()
       apolloError(e)
     }
+    saving()
   }, [updateActivity])
 
   const injectActions = useMemo(() => ({
