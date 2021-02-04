@@ -20,6 +20,7 @@ export function ListAssistants ({ dataSource, onEdit, onDelete, selectedRows, se
     getCheckboxProps: onSelectDisabled
   }
 
+  dataSource.sort((a, b) => a.folio - b.folio)
   return (
     <Table
       rowKey={a => a.id}
@@ -33,26 +34,41 @@ export function ListAssistants ({ dataSource, onEdit, onDelete, selectedRows, se
         width={1}
         render={text => <a>{text}</a>}
         dataIndex="folio"
+        sorter={(a, b) => a.folio - b.folio}
+        showSorterTooltip={false}
         title="Folio" />
       <Table.Column
         width={1}
         dataIndex="name"
+        sorter={(a, b) => a.name?.localeCompare(b.name)}
+        showSorterTooltip={false}
         title="Nombre" />
       <Table.Column
         width={1}
         dataIndex="times"
+        sorter={(a, b) => a.times - b.times}
+        showSorterTooltip={false}
         title="Veces" />
       <Table.Column
         width={1}
         dataIndex="lastName"
+        sorter={(a, b) => a.lastName?.localeCompare(b.lastName)}
+        showSorterTooltip={false}
         title="Apellido Paterno" />
       <Table.Column
         width={1}
         dataIndex="maidenName"
+        sorter={(a, b) => a.maidenName?.localeCompare(b.maidenName)}
+        showSorterTooltip={false}
         title="Apellido Materno" />
       <Table.Column
         width={1}
         dataIndex="gender"
+        filters={[
+          {text: "Masculino", value: "M"},
+          {text: "Femenino", value: "F"}
+        ]}
+        onFilter={(value, record) => record.gender?.indexOf(value) === 0}
         render={text => translateGender(text)?.label}
         title="Sexo" />
       <Table.Column
@@ -63,14 +79,20 @@ export function ListAssistants ({ dataSource, onEdit, onDelete, selectedRows, se
       <Table.Column
         width={1}
         dataIndex="age"
+        sorter={(a, b) => a.age - b.age}
+        showSorterTooltip={false}
         title="Edad" />
       <Table.Column
         width={1}
         dataIndex="municipality"
+        sorter={(a, b) => a.municipality?.localeCompare(b.municipality)}
+        showSorterTooltip={false}
         title="Municipio" />
       <Table.Column
         width={1}
         dataIndex="colony"
+        sorter={(a, b) => a.colony?.localeCompare(b.colony)}
+        showSorterTooltip={false}
         title="Colonia" />
       <Table.Column
         width={1}

@@ -32,6 +32,7 @@ export function ListCensus ({ title, dataSource }) {
   const colonyOptions = getOptions("colony")
   const problematicOptions = getOptions("problematic")
 
+  dataSource.sort((a, b) => a.folio - b.folio)
   return (
     <ScrollableView>
       <Table
