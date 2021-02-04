@@ -163,53 +163,47 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                       </Col>
                       <Col flex="150px">
                         <Input
-                          id="position"
                           name="position"
                           defaultValue={item.position}
-                          onChange={updateItem(item.hrKey)}
+                          onBlur={updateItem(item.hrKey)}
                           disabled={readOnly}
                           type="text" />
                       </Col>
                       <Col flex="150px">
                         <Input
-                          id="name"
                           name="name"
                           defaultValue={item.name}
-                          onChange={updateItem(item.hrKey)}
+                          onBlur={updateItem(item.hrKey)}
                           disabled={readOnly}
                           type="text" />
                       </Col>
                       <Col flex="180px">
                         <Input
-                          id="tasks"
                           name="tasks"
-                          onChange={updateItem(item.hrKey)}
+                          onBlur={updateItem(item.hrKey)}
                           defaultValue={item.tasks}
                           disabled={readOnly}
                           type="text" />
                       </Col>
                       <Col flex="150px">
                         <Input
-                          id="overseer"
                           name="overseer"
-                          onChange={updateItem(item.hrKey)}
+                          onBlur={updateItem(item.hrKey)}
                           defaultValue={item.overseer}
                           disabled={readOnly}
                           type="text" />
                       </Col>
                       <Col flex="80px">
                         <Input
-                          id="hours"
                           name="hours"
                           min={1}
-                          onChange={updateItem(item.hrKey)}
+                          onBlur={updateItem(item.hrKey)}
                           defaultValue={item.hours}
                           disabled={readOnly}
                           type="number" />
                       </Col>
                       <Col flex="150px">
                         <SelectField
-                          id="contractType"
                           name="contractType"
                           options={contractTypes}
                           onChange={event => onContracyTypeChange(event, updateItem, item.hrKey)}
@@ -219,7 +213,6 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                       <Col flex="150px">
                         <Input
                           addonBefore="$"
-                          id="salary"
                           name="salary"
                           min={0}
                           onBlur={event => onNumberChange(event, updateItem, item.hrKey, "salary")}
@@ -229,7 +222,6 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                       </Col>
                       <Col flex="130px">
                         <Radio.Group
-                          id="benefits"
                           name="benefits"
                           onChange={updateItem(item.hrKey)}
                           disabled={readOnly}
@@ -241,7 +233,6 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                       <Col flex="150px">
                         <Input
                           addonBefore="%"
-                          id="taxes"
                           disabled={readOnly || !state[item.hrKey]?.hasTax}
                           name="taxes"
                           onBlur={event => onNumberChange(event, updateItem, item.hrKey, "tax")}
@@ -251,10 +242,9 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
                       <Col flex="150px">
                         <Input
                           addonBefore="$"
-                          id="total"
                           name="total"
                           disabled
-                          onChange={updateItem(item.hrKey)}
+                          onBlur={updateItem(item.hrKey)}
                           defaultValue={item.total}
                           value={
                             state[item.hrKey].hasTax ? (
