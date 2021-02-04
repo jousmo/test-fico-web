@@ -36,19 +36,19 @@ function TechnicalSpecification({ client, query }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.updateTechnicalSpecification, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getTechnicalSpecification,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getTechnicalSpecification, {
     client: client,
     variables: { id: submissionId }
   })
@@ -62,8 +62,8 @@ function TechnicalSpecification({ client, query }) {
     setState({ ...state, technicalSpecification: {} })
   }, [state])
 
-  const readOnly = data?.Submission?.state === "PROJECT"
-  const hiddenComments = data?.Submission?.status === "CREATED"
+  const readOnly = data?.TechnicalSpecification?.state === "PROJECT"
+  const hiddenComments = data?.TechnicalSpecification?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
     updateTechnicalSpecification,
@@ -77,7 +77,7 @@ function TechnicalSpecification({ client, query }) {
     <PageContext.Provider value={pageData({ save, step: 1 })}>
       <CommentsProvider
         readOnly
-        submission={data?.Submission}>
+        submission={data?.TechnicalSpecification}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />

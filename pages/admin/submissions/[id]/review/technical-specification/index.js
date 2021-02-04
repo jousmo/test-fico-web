@@ -38,19 +38,19 @@ function TechnicalSpecification({ client, query }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.updateTechnicalSpecification, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getTechnicalSpecification,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getTechnicalSpecification, {
     client: client,
     variables: { id: query.id }
   })
@@ -72,12 +72,12 @@ function TechnicalSpecification({ client, query }) {
     review: true
   }), [state, loading, data])
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = data?.TechnicalSpecification?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 1 })}>
       <CommentsProvider
-        submission={data?.Submission}
+        submission={data?.TechnicalSpecification}
         update={updateTechnicalSpecification}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
