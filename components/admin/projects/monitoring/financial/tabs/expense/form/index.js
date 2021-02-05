@@ -9,7 +9,8 @@ import {
   Space,
   Typography,
   Switch,
-  Col
+  Col,
+  Checkbox
 } from "antd"
 import { DateField, SelectField, UploadButtonForm } from "../../../../../../../shared"
 import { cellFormat, getSelectValue, warning } from "../../../../../../../../helpers"
@@ -30,6 +31,7 @@ import { useAuth } from "../../../../../../../../contexts/auth"
 
 export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const [state, setState] = useState(INIT_STATE)
+  const [stateTypeRH, setStateTypeRH] = useState(false)
   const [stateOldAmount, setStateOldAmount] = useState(false)
   const [form] = Form.useForm()
 
@@ -41,6 +43,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       form.setFieldsValue(edit)
       loadPercentagePayment(edit)
       setStateOldAmount(edit.amount)
+      setStateTypeRH(edit?.typeRH)
     }
   }, [edit])
 
@@ -52,6 +55,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
   const onCancelModal = () => {
     form.resetFields()
     setState(INIT_STATE)
+    setStateTypeRH(false)
     onCancel && onCancel()
   }
 
@@ -115,12 +119,25 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     })
   }
 
+  const onChangeIsTypeRh = ({ target }) => {
+    const typeRH = target.checked
+    form.setFieldsValue({ typeRH })
+    setStateTypeRH(typeRH)
+  }
+
   const handleChangeListConcepts = ({currentTarget: { value }}) => {
     const { type } = submission?.concepts?.find(concept => concept.id === value)
     form.setFieldsValue({ category: type })
   }
 
+  const onChangeTotal = (value) => {
+    const percentage = +((value * 100) / submission?.budgeted).toFixed(2) || 0
+    form.setFieldsValue({ percentage })
+    setState({ ...state, percentage })
+  }
+
   const readOnly = edit?.reviewed
+  const typeRH = edit?.typeRH
 
   return (
     <Modal
@@ -133,10 +150,6 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
       onCancel={onCancelModal}
       maskClosable={false}
       {...props}>
-      <Alert
-        type="info"
-        showIcon
-        message="Llena la información de la factura y adjunta el archivo PDF para corroborar la información" />
       <Form
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 24 }}
@@ -153,6 +166,22 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
             </Form.Item>
           </Col>
         }
+
+        <Alert
+          type="info"
+          showIcon
+          message="Llena la información de la factura y adjunta el archivo PDF para corroborar la información" />
+
+        <Form.Item name='typeRH'>
+          <Checkbox
+            name='typeRH'
+            disabled={readOnly}
+            defaultChecked={typeRH}
+            onChange={onChangeIsTypeRh}
+            style={{ fontSize: '13px', fontWeight: 500 }}>
+            Si tu factura es para comprobar un gasto de tipo Recurso Humano marca la casilla.
+          </Checkbox>
+        </Form.Item>
 
         <Form.Item
           name="documents"
@@ -234,10 +263,27 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
             disabled/>
         </Form.Item>
         <Divider orientation="left">Importe</Divider>
+
+        <Form.Item
+          hidden={!stateTypeRH}
+          label="Importe de la factura:"
+          name="amount"
+          rules={[{ required: true, message: "El campo es requerido" }]}>
+          <InputNumber
+            name="amount"
+            onChange={onChangeTotal}
+            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={value => value.replace(/\$\s?|(,*)/g, '')}
+            disabled={readOnly}/>
+        </Form.Item>
+
         <Space>
-          <Statistic title="Importe de factura" value={cellFormat.money(state?.amount).children} />
+          {!stateTypeRH && (
+            <Statistic title="Importe de factura" value={cellFormat.money(state?.amount).children} />
+          )}
           <Statistic title="Uso del presupuesto" value={`${state?.percentage}%`} />
         </Space>
+
         <Form.Item
           label="Fecha de pago:"
           name="paymentAt"
@@ -305,12 +351,6 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
           </Form.Item>
           <Typography.Title level={4}>{`${state?.implementerPaymentPercentage}%`}</Typography.Title>
         </Space>
-        <Form.Item
-          hidden
-          label="Total:"
-          name="amount">
-          <InputNumber name="amount" readOnly />
-        </Form.Item>
         <Form.Item
           hidden
           label="Uso del presupuesto:"
