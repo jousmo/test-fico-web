@@ -79,7 +79,6 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
       refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -97,7 +96,6 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
       refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -113,7 +111,6 @@ function TechnicalMonitoringPage({ client, query }) {
       success("Eliminado correctamente")
       refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -128,7 +125,6 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
       refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -142,7 +138,6 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
       refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -155,7 +150,6 @@ function TechnicalMonitoringPage({ client, query }) {
       success("Eliminado correctamente")
       refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -170,7 +164,6 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
     }
     catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -186,7 +179,6 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     }
     catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -208,7 +200,6 @@ function TechnicalMonitoringPage({ client, query }) {
       refetch()
     }
     catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -222,7 +213,6 @@ function TechnicalMonitoringPage({ client, query }) {
       })
     }
     catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
