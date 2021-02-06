@@ -1,25 +1,20 @@
 import { loadingAlert, success } from "../alert"
 import { apolloError } from "../bugsnag/notify"
 
-export const setUpdateHumanResources = (humanResource, state, setState) => {
-  const newHumanResources = {
-    ...state.humanResources,
-    ...humanResource
-  }
-
+export const setUpdateHumanResources = (concepts, state, setState) => {
   setState({
     ...state,
     dirty: true,
-    humanResources: newHumanResources
+    concepts
   })
 }
 
-export const setSave = async (state, setState, updateSubmission, id) => {
+export const setSave = async (state, setState, updateSubmission) => {
   setState({ ...state, isSaving: true })
   const saving = loadingAlert()
   try {
     await updateSubmission({
-      variables: { data: state.humanResources, id: id }
+      variables: { data: state.concepts }
     })
     saving()
     success()
@@ -27,5 +22,6 @@ export const setSave = async (state, setState, updateSubmission, id) => {
   catch(err) {
     apolloError(err)
   }
+  saving()
   setState({ ...state, isSaving: false })
 }

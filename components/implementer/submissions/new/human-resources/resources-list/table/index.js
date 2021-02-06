@@ -19,30 +19,34 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
 
   const hrState = {}
   let hrCount = 0
-  const concepts = data?.Submission?.concepts?.map(({ budgeted, ...concept }) => concept) || []
-  const humanResources = concepts?.map(concept => {
+  const concepts = data?.Budget?.concepts?.reduce((prev, current) => {
     if (
       [
         "HUMAN_RESOURCE",
         "ADVERTISEMENT_HUMAN_RESOURCE",
         "ADMINISTRATIVE_HUMAN_RESOURCE",
-      ].includes(concept.type)) {
-      hrState[hrCount] = {
-        salary: concept.humanResource[0]?.salary || 0,
-        hasTax: concept.humanResource[0]?.contractType !== "EMPLOYEE",
-        tax: concept.humanResource[0]?.taxes,
-        budgeted: concept.totalUnits * concept.unitCost,
-      }
-      const hr = {
-        conceptId: concept.id,
-        hrKey: hrCount,
-        position: concept.name,
-        ...concept.humanResource[0]
-      }
-      hrCount++
-      return hr
+      ].includes(current.type)) {
+      const { budgeted, ...concept } = current
+      return [...prev, concept]
     }
-  })?.filter(e => e !== undefined) || []
+    return prev
+  }, []).sort((a, b) => a.index - b.index)
+  const humanResources = concepts?.map(concept => {
+    hrState[hrCount] = {
+      salary: concept.humanResource[0]?.salary || 0,
+      hasTax: concept.humanResource[0]?.contractType !== "EMPLOYEE",
+      tax: concept.humanResource[0]?.taxes,
+      budgeted: concept.totalUnits * concept.unitCost,
+    }
+    const hr = {
+      conceptId: concept.id,
+      hrKey: hrCount,
+      position: concept.name,
+      ...concept.humanResource[0]
+    }
+    hrCount++
+    return hr
+  })
 
   const [state, setState] = useState(hrState)
   const [totalState, setTotalState] = useState(false)
@@ -106,6 +110,7 @@ function HumanResourcesTable({ data, onChange, hiddenComments }) {
     } else {
       setState({ ...state, [index]: { ...state[index], hasTax: true } })
     }
+    event.currentTarget.id = "contractType"
     updateItem(index)(event)
   }
 

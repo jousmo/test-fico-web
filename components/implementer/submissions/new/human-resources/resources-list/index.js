@@ -14,8 +14,8 @@ export function ResourcesList() {
     hiddenComments
   } = useContext(ImplementerSubmissionContext)
 
-  const onChange = newConcepts => {
-    updateHumanResources({ concepts: newConcepts })
+  const onChange = concepts => {
+    updateHumanResources(concepts)
   }
 
   return (
