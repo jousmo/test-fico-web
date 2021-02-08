@@ -13,7 +13,7 @@ export function Attachments() {
   return (
     <Section title="Documentos del proyecto">
       <ProjectAttachments
-        data={data?.SubmissionDetails}
+        data={data?.Submission}
         error={error}
         isLoading={loading}
       />

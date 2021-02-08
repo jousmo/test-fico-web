@@ -17,7 +17,7 @@ export function ProjectSummary({ type }) {
   } = useContext(AdminSubmissionContext)
 
   const view = type === "admin" ? "review" : "edit"
-  const submission = data?.SubmissionDetails
+  const submission = data?.Submission
 
   const goToProject = (
     <Descriptions.Item>

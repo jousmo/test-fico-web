@@ -29,14 +29,14 @@ function Project({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getDetails,
+          query: submission.queries.getById,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getDetails, {
+  const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: query.id }
   })
