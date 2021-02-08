@@ -28,39 +28,37 @@ import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
 function HumanResources({ client, query }) {
-  const submissionId = query.id
-
   const [state, setState] = useState({
-    humanResources: {},
+    concepts: [],
     dirty: false,
     isSaving: false
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.updateHumanResources, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getBudget,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getBudget, {
     client: client,
     variables: { id: query.id }
   })
 
-  const updateHumanResources = useCallback(humanResource => {
-    setUpdateHumanResources(humanResource, state, setState)
+  const updateHumanResources = useCallback(concepts => {
+    setUpdateHumanResources(concepts, state, setState)
   }, [state])
 
   const save = useCallback(async () => {
-    await setSave(state, setState, updateSubmission, submissionId)
-    setState({ ...state, humanResources: {} })
+    await setSave(state, setState, updateSubmission)
+    setState({ ...state, concepts: [] })
   }, [state])
 
   const injectActions = useMemo(() => ({
@@ -70,12 +68,12 @@ function HumanResources({ client, query }) {
     data
   }), [state, loading, data])
 
-  const readOnly = data?.Submission?.state === "PROJECT"
+  const readOnly = data?.Budget?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
-        submission={data?.Submission}
+        submission={data?.Budget}
         update={updateHumanResources}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>

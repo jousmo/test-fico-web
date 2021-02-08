@@ -94,7 +94,7 @@ function TechnicalMonitoringPage({ client, query }) {
         const { projectAssistantId, ...newData } = data
         await updateProjectAssistants({ variables: { data: newData, id: data?.projectAssistantId } })
       }
-      success("Actualizado correctamente")
+      success()
       refetch()
     } catch(e) {
       warning()
@@ -139,7 +139,7 @@ function TechnicalMonitoringPage({ client, query }) {
     try {
       const { id, ...data } = assistant
       await updateProjectAssistants({ variables: { data, id } })
-      success("Actualizado correctamente")
+      success()
       refetch()
     } catch(e) {
       warning()

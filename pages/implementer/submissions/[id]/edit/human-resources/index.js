@@ -28,44 +28,43 @@ import { useAuth } from "../../../../../../contexts/auth"
 
 function HumanResources({ client, query }) {
   const { user } = useAuth()
-  const submissionId = query.id
 
   const [state, setState] = useState({
-    humanResources: {},
+    concepts: [],
     dirty: false,
     isSaving: false
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.updateHumanResources, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getBudget,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getBudget, {
     client: client,
     variables: { id: query.id }
   })
 
-  const updateHumanResources = useCallback(humanResource => {
-    setUpdateHumanResources(humanResource, state, setState)
+  const updateHumanResources = useCallback(concepts => {
+    setUpdateHumanResources(concepts, state, setState)
   }, [state])
 
   const save = useCallback(async () => {
-    await setSave(state, setState, updateSubmission, submissionId)
-    setState({ ...state, humanResources: {} })
+    await setSave(state, setState, updateSubmission)
+    setState({ ...state, concepts: [] })
   }, [state])
 
-  const readOnly = data?.Submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
-  const hiddenComments = data?.Submission?.status === "CREATED"
+  const readOnly = data?.Budget?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.Budget?.status.includes("REVIEW"))
+  const hiddenComments = data?.Budget?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
     updateHumanResources,
@@ -79,7 +78,7 @@ function HumanResources({ client, query }) {
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
         readOnly
-        submission={data?.Submission}>
+        submission={data?.Budget}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
