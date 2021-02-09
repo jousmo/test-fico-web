@@ -274,6 +274,7 @@ export const getById = gql`
         implementerPayment
         amount
         percentage
+        typeRH
         documents {
           id
           type
