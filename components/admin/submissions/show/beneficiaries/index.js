@@ -13,7 +13,7 @@ export function Beneficiaries() {
     data
   } = useContext(AdminSubmissionContext)
 
-  const beneficiaries = data?.SubmissionDetails?.beneficiaries
+  const beneficiaries = data?.Submission?.beneficiaries
 
   return (
     <Section title="Beneficiarios">

@@ -25,14 +25,14 @@ function Submission({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getDetails,
+          query: submission.queries.getById,
           variables: { id: submissionId }
         }
       ]
     }
   )
 
-  const { loading, error, data, refetch } = useQuery(submission.queries.getDetails, {
+  const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: submissionId }
   })

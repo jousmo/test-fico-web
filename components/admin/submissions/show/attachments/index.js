@@ -11,7 +11,7 @@ export function Attachments() {
   return (
     <Section title="Anexos">
       <SubmissionAttachments
-        data={data?.SubmissionDetails}
+        data={data?.Submission}
         error={error}
         isLoading={loading} />
     </Section>

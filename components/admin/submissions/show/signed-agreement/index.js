@@ -5,13 +5,13 @@ import SubmissionAgreementForm from "./form"
 
 export function SignedAgreement() {
   const { data, save, ...props } = useContext(AdminSubmissionContext)
-  const { signedContractAt, agreementNumber } = data?.SubmissionDetails || {}
+  const { signedContractAt, agreementNumber } = data?.Submission || {}
   const hasSignedContract = !!(signedContractAt && agreementNumber)
 
   return (
     <Section title="Convenio firmado">
       <SubmissionAgreementForm
-        data={data?.SubmissionDetails}
+        data={data?.Submission}
         hasContract={!hasSignedContract}
         onSave={save}
         {...props}
