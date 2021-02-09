@@ -14,7 +14,7 @@ export function BudgetPDF() {
   const { data } = useContext(AdminSubmissionContext)
   const submission = data?.Ministrations
 
-  const getAmount = (row, percentage) => {
+  const getAmount = (row, percentage = 0) => {
     return (row.unitCost * row.totalUnits) * percentage / 100
   }
 
@@ -35,7 +35,7 @@ export function BudgetPDF() {
       const totalCost = concept.totalUnits * concept.unitCost
 
       const firstAllyPercentage = concept.investmentDistribution
-        ?.find(e => e.name === firstAlly).percentage
+        ?.find(e => e.name === firstAlly)?.percentage || 0
       const secondAllyPercentage = secondAlly ? concept.investmentDistribution
         ?.find(e => e.name === secondAlly).percentage : 0
 
@@ -53,7 +53,8 @@ export function BudgetPDF() {
           <Table.Summary.Cell/>
           <Table.Summary.Cell/>
           <Table.Summary.Cell>
-            ${totalFirstAlly}&nbsp;<Tag>{getPercentage(totalAllies, totalFirstAlly)}%</Tag>
+            ${totalFirstAlly}&nbsp;
+            <Tag>{getPercentage(totalAllies > 0 ? totalAllies : 1, totalFirstAlly)}%</Tag>
           </Table.Summary.Cell>
           {submission?.allies?.[1] && (
             <Table.Summary.Cell>
@@ -93,9 +94,9 @@ export function BudgetPDF() {
             <Table.Column
               render={(text, row) => {
                 const percentage = row.investmentDistribution
-                  ?.find(e => e.name === ally).percentage
+                  ?.find(e => e.name === ally)?.percentage
                 const total = getAmount(row, percentage)
-                return <>${total}&nbsp;<Tag>{percentage}%</Tag></>
+                return <>${total}&nbsp;<Tag>{percentage || 0}%</Tag></>
               }}
               title={ally} />
           ))}
