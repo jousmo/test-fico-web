@@ -2,6 +2,7 @@ import { Card, Table } from "antd"
 import { useContext, useState } from "react"
 import { CompositeField } from "../../../../../../shared"
 import { ObstaclesModal } from "./modal"
+import { omit } from "lodash"
 import moment from "moment"
 import {
   AdminSubmissionContext
@@ -49,7 +50,8 @@ export function MonitoringObstacles({ data = {}, dateFilter }){
   }
 
   const onChange = items => {
-    updateSubmission({ technicalUpdates: items })
+    const technicalUpdates = Array.from(items).map(item => omit(item, ['createdAt']))
+    updateSubmission({ technicalUpdates })
   }
 
   return (
