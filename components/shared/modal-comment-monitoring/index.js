@@ -32,6 +32,19 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
       ? { monitoringTechnical: data?.id }
       : { monitoringTechnicalActivity: data?.id }
 
+  const [deleteMonitoringComment] = useMutation(
+    submission.mutations.deleteMonitoringComment, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query,
+          variables
+        }
+      ]
+    }
+  )
+
   const { loading, error, data: result  } = useQuery(query, {
     client: client,
     variables
@@ -92,6 +105,19 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
     saving()
   }, [createComment])
 
+  const onDeleteComment = useCallback(async id => {
+    const saving = loadingAlert("Eliminando", 0)
+    try {
+      await deleteMonitoringComment({ variables: { id } })
+      success("Eliminado correctamente")
+    } catch (e) {
+      warning()
+      Bugsnag.notify(new Error(e))
+      console.error(e)
+    }
+    saving()
+  }, [deleteMonitoringComment])
+
   return (
     <Modal
       destroyOnClose
@@ -115,7 +141,10 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
         </Form.Item>
       </Form>
 
-      <CommentMonitoringListing loading={state.loading} comments={state.comments} />
+      <CommentMonitoringListing
+        loading={state.loading}
+        comments={state.comments}
+        onDeleteComment={onDeleteComment} />
     </Modal>
   )
 }

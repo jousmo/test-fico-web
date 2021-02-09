@@ -2,9 +2,17 @@ import { Avatar, Divider, List, Typography, Skeleton, Empty } from "antd"
 import moment from "moment"
 import { UserOutlined } from "@ant-design/icons"
 import { useAuth } from "../../../contexts/auth"
+import { DeleteButton } from "../delete-button"
+import React from "react"
+import { Visibility } from "../visibility"
 
-export function CommentMonitoringListing({ loading, comments = [] }){
+export function CommentMonitoringListing({ loading, comments = [], onDeleteComment }){
   const { user: { claims: { role } } } = useAuth()
+
+  const onDelete = id => {
+    onDeleteComment && onDeleteComment(id)
+  }
+
   return (
     loading
       ? <Skeleton avatar active paragraph={{ rows: 2 }} />
@@ -16,10 +24,11 @@ export function CommentMonitoringListing({ loading, comments = [] }){
               : <Divider orientation="left">{`Comentarios ${comments.length}`}</Divider>
           }>
 
-          {comments?.map(({ userType, createdAt, comment }, index) => {
+          {comments?.map(({ id, userType, createdAt, comment }, index) => {
             return (
               <List.Item key={index}>
                 <List.Item.Meta
+                  style={{paddingRight: "1.5rem"}}
                   avatar={
                     userType === role
                       ? <Avatar style={{ backgroundColor: "#87d068" }} icon={<UserOutlined />} />
@@ -30,10 +39,10 @@ export function CommentMonitoringListing({ loading, comments = [] }){
                   title={
                     <Typography.Text type="secondary">
                       {userType === role
-                        ? "Tú"
+                        ? "Tú - "
                         : role === "ADMIN"
-                          ? "IMPLEMENTADORA"
-                          : "FICOSEC"
+                          ? "IMPLEMENTADORA - "
+                          : "FICOSEC - "
                       }
                       <Typography.Text disabled>
                         {moment(createdAt).format("DD MMMM YYYY").toUpperCase()}
@@ -45,6 +54,14 @@ export function CommentMonitoringListing({ loading, comments = [] }){
                       {comment}
                     </Typography.Text>
                   } />
+
+                <Visibility visible={userType === role}>
+                  <DeleteButton
+                    type="primary"
+                    shape="circle"
+                    onClick={() => onDelete(id)}/>
+                </Visibility>
+
               </List.Item>
             )
           })}
