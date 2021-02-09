@@ -22,7 +22,7 @@ import { loadingAlert, success, withApollo } from "../../../../helpers"
 import { apolloError } from "../../../../helpers/bugsnag/notify"
 
 function Project({ client, query }) {
-  const { loading, error, data } = useQuery(submission.queries.getDetails, {
+  const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: query.id }
   })
@@ -33,7 +33,7 @@ function Project({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getDetails,
+          query: submission.queries.getById,
           variables: { id: query.id }
         }
       ]
