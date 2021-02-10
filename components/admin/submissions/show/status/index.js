@@ -16,7 +16,7 @@ export function Status() {
   return (
     <Section title="Estatus de solicitud">
       <StatusForm
-        data={data?.SubmissionDetails}
+        data={data?.Submission}
         error={error}
         isLoading={loading}
         onSave={save} />

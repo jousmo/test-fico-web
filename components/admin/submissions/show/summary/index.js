@@ -27,7 +27,7 @@ export function SubmissionSummary() {
     data
   } = useContext(AdminSubmissionContext)
 
-  const submission = data?.SubmissionDetails
+  const submission = data?.Submission
 
   const status = submission?.status
   const statusIndex = submissionStatusOptions?.findIndex(e => e.value === status)
