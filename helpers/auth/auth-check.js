@@ -17,7 +17,7 @@ export const AuthCheck = async (ctx, role) => {
       return redirect(ctx, `/${userRole.toLowerCase()}/submissions`)
     }
 
-    return { props: { query: ctx.query } }
+    return { props: { query: ctx.query, token } }
   } catch (err) {
     return redirect(ctx, "/")
   }
