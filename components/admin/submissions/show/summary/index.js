@@ -73,6 +73,10 @@ export function SubmissionSummary() {
     }
   }
 
+  const onClickReject = () => {
+    save({ status: "REJECTED", statusChangedAt: moment().format() })
+  }
+
   let headingButtons = null
   if (statusIndex >= 0 && statusIndex <= 9) {
     headingButtons = (
@@ -85,6 +89,7 @@ export function SubmissionSummary() {
         )}
         <ConfirmButton
           icon={<CloseOutlined />}
+          onClick={onClickReject}
           confirmText="Rechazar solicitud" />
         <Button
           ghost
