@@ -19,16 +19,22 @@ import { success, loadingAlert, withApollo } from "../../../helpers"
 import { AuthCheck } from "../../../helpers/auth/auth-check"
 import { apolloError } from "../../../helpers/bugsnag/notify"
 
-function Profile({ client }) {
+function Profile({ client, token }) {
   const [state, setState] = useState({ generalInformation: {} })
   const [updateProfile] = useMutation(implementer.mutations.updateById, {
     client: client,
     awaitRefetchQueries: true,
-    refetchQueries: [{ query: implementer.queries.getById }]
+    refetchQueries: [
+      {
+        query: implementer.queries.getByUid,
+        variables: { uid: token.uid }
+      }
+    ]
   })
 
-  const { loading, error, data } = useQuery(implementer.queries.getById, {
-    client: client
+  const { loading, error, data } = useQuery(implementer.queries.getByUid, {
+    client: client,
+    variables: { uid: token.uid }
   })
 
   useEffect(() => {
@@ -48,7 +54,7 @@ function Profile({ client }) {
     const saving = loadingAlert("Guardando", 0)
     try {
       await updateProfile({
-        variables: { data: { ...state.generalInformation } }
+        variables: { uid: token.uid, data: { ...state.generalInformation } }
       })
       saving()
       success()

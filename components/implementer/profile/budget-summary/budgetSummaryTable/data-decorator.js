@@ -8,7 +8,7 @@ export const decoratedData = data => {
     }
   })
 
-  return Object.keys(projectsByYear)?.map(key => {
+  return projectsByYear ? Object.keys(projectsByYear)?.map(key => {
     const result = { year: key, PRIVATE: 0, PUBLIC: 0, OWN: 0, total: 0 }
     projectsByYear[key]?.forEach(project => {
       project.financing?.forEach(el => {
@@ -17,5 +17,5 @@ export const decoratedData = data => {
       })
     })
     return result
-  })
+  }) : []
 }
