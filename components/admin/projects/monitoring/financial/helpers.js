@@ -180,13 +180,15 @@ export const getConceptsPerMonths = (Submission, concepts, invoicesPerYearOrSear
   })
 }
 
-export const getInvoicesPerYearOrSearch = ({ invoices, concepts }, year, search) => {
+export const getInvoicesPerYearOrSearch = ({ startDate, endDate, invoices, concepts }, year, search) => {
   return invoices?.filter(invoice => {
     const yearInvoice = moment(invoice.monthAt, "MMYYYY").format("YYYY")
 
     if (search) {
       const nameConcept = getConcept(concepts, invoice.concept)
-      if (yearInvoice === year && nameConcept.toLowerCase() === search.toLowerCase()) return invoice
+      if (yearInvoice === year && nameConcept.toLowerCase() === search.toLowerCase()) {
+
+      }
     } else {
       if (yearInvoice === year) return invoice
     }
