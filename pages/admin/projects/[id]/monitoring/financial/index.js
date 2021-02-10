@@ -73,9 +73,7 @@ function FinancialMonitoringPage({ client, query }) {
       await deleteProjectInvoice({ variables: { id } })
       success("Eliminado correctamente")
     } catch (e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [deleteProjectInvoice])
