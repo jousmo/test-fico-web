@@ -1,10 +1,10 @@
 import { Modal, Form, Input } from "antd"
 import { CommentMonitoringListing } from "../comment-monitoring-listing"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { submission } from "../../../graphql/submission"
-import { Bugsnag, withApollo } from "../../../helpers"
+import { submission } from "../../../graphql"
 import { useCallback, useEffect, useState } from "react"
-import { loadingAlert, success, warning } from "../../../helpers/alert"
+import { loadingAlert, success, warning, withApollo } from "../../../helpers"
+import { apolloError } from "../../../helpers/bugsnag/notify"
 import "./style.sass"
 
 function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
@@ -31,6 +31,19 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
     : data?.type === "OBJECTIVE"
       ? { monitoringTechnical: data?.id }
       : { monitoringTechnicalActivity: data?.id }
+
+  const [deleteMonitoringComment] = useMutation(
+    submission.mutations.deleteMonitoringComment, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query,
+          variables
+        }
+      ]
+    }
+  )
 
   const { loading, error, data: result  } = useQuery(query, {
     client: client,
@@ -86,11 +99,24 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
       form.resetFields()
     } catch (e) {
       warning()
-      Bugsnag.notify(new Error(e))
+      apolloError(e)
       console.error(e)
     }
     saving()
   }, [createComment])
+
+  const onDeleteComment = useCallback(async id => {
+    const saving = loadingAlert("Eliminando", 0)
+    try {
+      await deleteMonitoringComment({ variables: { id } })
+      success("Eliminado correctamente")
+    } catch (e) {
+      warning()
+      apolloError(e)
+      console.error(e)
+    }
+    saving()
+  }, [deleteMonitoringComment])
 
   return (
     <Modal
@@ -115,7 +141,10 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
         </Form.Item>
       </Form>
 
-      <CommentMonitoringListing loading={state.loading} comments={state.comments} />
+      <CommentMonitoringListing
+        loading={state.loading}
+        comments={state.comments}
+        onDeleteComment={onDeleteComment} />
     </Modal>
   )
 }
