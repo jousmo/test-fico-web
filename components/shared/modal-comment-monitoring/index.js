@@ -1,10 +1,10 @@
 import { Modal, Form, Input } from "antd"
 import { CommentMonitoringListing } from "../comment-monitoring-listing"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { submission } from "../../../graphql/submission"
-import { Bugsnag, withApollo } from "../../../helpers"
+import { submission } from "../../../graphql"
 import { useCallback, useEffect, useState } from "react"
-import { loadingAlert, success, warning } from "../../../helpers/alert"
+import { loadingAlert, success, warning, withApollo } from "../../../helpers"
+import { apolloError } from "../../../helpers/bugsnag/notify"
 import "./style.sass"
 
 function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
@@ -99,7 +99,7 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
       form.resetFields()
     } catch (e) {
       warning()
-      Bugsnag.notify(new Error(e))
+      apolloError(e)
       console.error(e)
     }
     saving()
@@ -112,7 +112,7 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
       success("Eliminado correctamente")
     } catch (e) {
       warning()
-      Bugsnag.notify(new Error(e))
+      apolloError(e)
       console.error(e)
     }
     saving()

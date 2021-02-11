@@ -1,13 +1,13 @@
 import { Layout } from "../../../../../../components/shared"
-import { PageContext } from "../../../../../../contexts/page"
+import { PageContext } from "../../../../../../contexts"
 import {
   MonitoringFinancial
 } from "../../../../../../components/admin/projects/monitoring"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { submission } from "../../../../../../graphql/submission"
+import { submission } from "../../../../../../graphql"
 import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
-import { success, loadingAlert, withApollo } from "../../../../../../helpers"
+import { success, warning, loadingAlert, withApollo } from "../../../../../../helpers"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
@@ -63,6 +63,7 @@ function FinancialMonitoringPage({ client, query }) {
       saving()
       success()
     } catch (e) {
+      warning()
       apolloError(e)
     }
   }, [createProjectInvoice])
@@ -73,7 +74,9 @@ function FinancialMonitoringPage({ client, query }) {
       await deleteProjectInvoice({ variables: { id } })
       success("Eliminado correctamente")
     } catch (e) {
+      warning()
       apolloError(e)
+      console.error(e)
     }
     saving()
   }, [deleteProjectInvoice])
@@ -86,6 +89,7 @@ function FinancialMonitoringPage({ client, query }) {
       saving()
       success()
     } catch (e) {
+      warning()
       apolloError(e)
     }
   }, [updateProjectInvoice])
