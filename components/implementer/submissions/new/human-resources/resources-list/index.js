@@ -7,16 +7,12 @@ import HumanResourcesTable from "./table"
 
 export function ResourcesList() {
   const {
-    updateHumanResources,
     loading,
     error,
     data,
+    form,
     hiddenComments
   } = useContext(ImplementerSubmissionContext)
-
-  const onChange = concepts => {
-    updateHumanResources(concepts)
-  }
 
   return (
     <Section fullWidth>
@@ -24,7 +20,7 @@ export function ResourcesList() {
         isLoading={loading}
         error={error}
         data={data}
-        onChange={onChange}
+        form={form}
         hiddenComments={hiddenComments} />
     </Section>
   )
