@@ -20,15 +20,11 @@ export const setSave = async (state, setState, updateSubmission, id) => {
   const saving = loadingAlert()
   try {
     const data = cloneDeep(state.technicalSpecification)
+    data.developmentObjectiveIndicators = data.developmentObjectiveIndicators?.map(({ index, ...el }) => el)
+    data.generalObjectiveIndicators = data.generalObjectiveIndicators?.map(({ index, ...el }) => el)
     data.specificObjectives = data.specificObjectives?.map(objective => {
-      objective.activities = objective.activities?.map(({uuid, index, ...activity}) =>
-        activity
-      )
-
-      objective.indicators = objective.indicators?.map(({uuid, index, ...indicator}) =>
-        indicator
-      )
-
+      objective.activities = objective.activities?.map(({uuid, index, ...activity}) => activity)
+      objective.indicators = objective.indicators?.map(({uuid, index, ...indicator}) => indicator)
       return objective
     })
     await updateSubmission({ variables: { data: data, id: id } })

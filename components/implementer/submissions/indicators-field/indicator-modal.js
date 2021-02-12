@@ -171,7 +171,7 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <SelectField
                 id="meansOfVerification"
-                filterOption={(value, option) => option.children.toLowerCase().includes(value.toLowerCase())}
+                filterOption={(value, option) => option?.children?.toLowerCase().includes(value?.toLowerCase())}
                 mode="tags"
                 showSearch
                 options={verificationTypes} />
