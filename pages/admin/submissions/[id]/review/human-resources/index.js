@@ -1,3 +1,4 @@
+import { Form } from "antd"
 import {
   Layout,
   SaveHeader
@@ -12,7 +13,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../../helpers/withApollo"
+import { withApollo } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -22,15 +23,14 @@ import {
 } from "../../../../../../components/implementer/submissions/new/human-resources"
 import {
   setSave,
-  setUpdateHumanResources
 } from "../../../../../../helpers/submissionFunctions/human-resources"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
 function HumanResources({ client, query }) {
+  const [form] = Form.useForm()
   const [state, setState] = useState({
-    concepts: [],
-    dirty: false,
+    humanResources: [],
     isSaving: false
   })
 
@@ -40,40 +40,42 @@ function HumanResources({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getBudget,
+          query: submission.queries.getConcepts,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getBudget, {
+  const { loading, error, data } = useQuery(submission.queries.getConcepts, {
     client: client,
     variables: { id: query.id }
   })
 
-  const updateHumanResources = useCallback(concepts => {
-    setUpdateHumanResources(concepts, state, setState)
+  const updateHumanResources = useCallback(humanResources => {
+    setState({ ...state, humanResources })
   }, [state])
 
   const save = useCallback(async () => {
-    await setSave(state, setState, updateSubmission)
-    setState({ ...state, concepts: [] })
+    const { humanResources } = state
+    await setSave(humanResources, setState, updateSubmission)
   }, [state])
 
   const injectActions = useMemo(() => ({
     updateHumanResources,
     loading,
     error,
+    form,
     data
   }), [state, loading, data])
 
-  const readOnly = data?.Budget?.state === "PROJECT"
+  const readOnly = data?.SubmissionSimple?.state === "PROJECT"
+  const commentSubmission = { concepts: data?.Concepts, status: data?.SubmissionSimple?.status }
 
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
-        submission={data?.Budget}
+        submission={commentSubmission}
         update={updateHumanResources}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
