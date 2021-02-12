@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Alert, Space, DatePicker } from "antd"
 import { Section, SearchFieldPrimary, CompositeField, StatisticHeader } from "../../../../../../shared"
 import ModalCommentMonitoring from "../../../../../../shared/modal-comment-monitoring"
@@ -18,6 +18,10 @@ export function Expense () {
     isModalCommentOpen: false,
     projectInvoice: { id: "", type: "INVOICE" }
   })
+
+  useEffect(() => {
+    setState({ ...state, filterInvoice: false })
+  }, [Submission])
 
   const dataStatistics = [
     { title: "Presupuesto a FICOSEC", value: cellFormat.money(Submission?.budgeted).children },
