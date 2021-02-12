@@ -79,12 +79,9 @@ export const onSaveHelper = (
       break
     }
     case "HUMAN_RESOURCE": {
-      const concepts = addHRComment(submission, comment, index)
-      newSubmission = {
-        ...submission,
-        concepts: concepts
-      }
-      update({ concepts: concepts })
+      const { concepts, humanResources } = addHRComment(submission, comment, index)
+      newSubmission = { ...submission, concepts }
+      update(humanResources)
       break
     }
     case "SPECIFIC_OBJECTIVE": {
