@@ -69,6 +69,15 @@ export function ConceptModal({
       values.unitCost = Number(values.unitCost)
       values.totalUnits = Number(values.totalUnits)
 
+      if (
+        [
+          "HUMAN_RESOURCE",
+          "ADVERTISEMENT_HUMAN_RESOURCE",
+          "ADMINISTRATIVE_HUMAN_RESOURCE",
+        ].includes(values.type) && !edit) {
+        values.humanResource = [{ position: values.name }]
+      }
+
       onSave(values)
       form.resetFields()
       setState({})
