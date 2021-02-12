@@ -1,9 +1,8 @@
-import { withForm, toFileList } from "../../../../../../../helpers"
+import { withForm, toFileList, getSelectValue } from "../../../../../../../helpers"
 import { Alert, Col, Form, Input, Row, Radio } from "antd"
 import { UserOutlined } from "@ant-design/icons"
 import { useState } from "react"
 import {
-  CompositeField,
   SelectField,
   UploadTooltip
 } from "../../../../../../shared"
@@ -14,278 +13,225 @@ import {
 import { HumanResourcesColumns } from "./form-columns"
 import { useAuth } from "../../../../../../../contexts/auth"
 
-function HumanResourcesTable({ data, onChange, hiddenComments }) {
+function HumanResourcesTable({ data, form, hiddenComments }) {
   const { user } = useAuth()
 
   const hrState = {}
   let hrCount = 0
-  const concepts = data?.Budget?.concepts?.reduce((prev, current) => {
-    if (
-      [
-        "HUMAN_RESOURCE",
-        "ADVERTISEMENT_HUMAN_RESOURCE",
-        "ADMINISTRATIVE_HUMAN_RESOURCE",
-      ].includes(current.type)) {
-      const { budgeted, ...concept } = current
-      return [...prev, concept]
+  const humanResources = data?.Concepts?.reduce((prev, current) => {
+    const humanResource = current.humanResource[0]
+    if (humanResource) {
+      hrState[hrCount] = {
+        salary: humanResource.salary || 0,
+        hasTax: humanResource.contractType !== "EMPLOYEE",
+        tax: humanResource.taxes,
+        budgeted: current.budgeted
+      }
+      hrCount++
+      return [...prev, current.humanResource[0]]
     }
     return prev
-  }, []).sort((a, b) => a.index - b.index)
-  const humanResources = concepts?.map(concept => {
-    hrState[hrCount] = {
-      salary: concept.humanResource[0]?.salary || 0,
-      hasTax: concept.humanResource[0]?.contractType !== "EMPLOYEE",
-      tax: concept.humanResource[0]?.taxes,
-      budgeted: concept.totalUnits * concept.unitCost,
-    }
-    const hr = {
-      conceptId: concept.id,
-      hrKey: hrCount,
-      position: concept.name,
-      ...concept.humanResource[0]
-    }
-    hrCount++
-    return hr
-  })
+  }, [])
 
   const [state, setState] = useState(hrState)
   const [totalState, setTotalState] = useState(false)
 
-  const hasDuplicates = humanResources
-    ?.map(r => r.position)
-    .some((p, i, a) => a.indexOf(p) !== i)
+  const readOnly = data?.SubmissionSimple?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
 
-  const onConceptsChange = newHumanResources => {
-    const newConcepts = [...concepts]
+  const updateValue = (index, data) => {
+    const { humanResources } = form.getFieldsValue()
+    Object.assign(humanResources[index], data)
+    form.setFieldsValue({ humanResources })
+  }
+
+  const onDoneFile = (files, index) => {
+    const documents = files?.map(el => ({ name: el.name, url: el.url }))
+    updateValue(index, { documents })
+  }
+
+  const onRemoveFile = (file, oldDocuments, index) => {
+    const documents = oldDocuments?.filter(document => document.url !== file.url)
+    updateValue(index, { documents })
+  }
+
+  const onContracyTypeChange = (event, index) => {
+    const { currentTarget: { value } } = event
+    if (value === "EMPLOYEE"){
+      setState({ ...state, [index]: { ...state[index], hasTax: false, tax: 0 } })
+    } else {
+      setState({ ...state, [index]: { ...state[index], hasTax: true } })
+    }
+    return value
+  }
+
+  const checkBudgeted = (humanResources) => {
     let correctlyBudgeted = true
-
-    newHumanResources?.forEach(humanResource => {
-      const formattedValues = formatValues(humanResource)
-      const conceptIndex = newConcepts.findIndex(el => el.id === humanResource.conceptId)
-      newConcepts[conceptIndex].humanResource[0] = formattedValues
-
-      const { taxes, salary } = formattedValues
+    humanResources?.forEach((humanResource, index) => {
+      const { taxes, salary } = humanResource
       const total = !isNaN(taxes) ? salary + ((taxes * salary) / 100) : salary
-      if (total !== state[humanResource.hrKey].budgeted) {
+      if (total !== state[index].budgeted) {
         correctlyBudgeted = false
       }
     })
     setTotalState(!correctlyBudgeted)
-
-    onChange && onChange(newConcepts)
   }
 
-  const formatValues = (hr) => {
-    const { conceptId, hrKey, ...humanResource } = hr
+  const totalFactors = { tax: "salary", salary: "taxes" }
 
-    humanResource.hours = Number(humanResource.hours)
-    humanResource.salary = Number(humanResource.salary)
-    humanResource.taxes = Number(humanResource.taxes)
-    humanResource.total = Number(humanResource.total)
-
-    return humanResource
-  }
-
-  const readOnly = data?.Submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.Submission?.status.includes("REVIEW"))
-
-  const onDoneFile = (index, files, onFilesChange) => {
-    const documents = files?.map(el => {
-      return { name: el.name, url: el.url }
-    })
-
-    onFilesChange(index, documents, "documents")
-  }
-
-  const onRemoveFile = (file, oldDocuments, index, onFilesChange) => {
-    const documents = oldDocuments?.filter(document => document.url !== file.url)
-    onFilesChange(index, documents, "documents")
-  }
-
-  const onContracyTypeChange = (event, updateItem, index) => {
-    const { currentTarget: { value } } = event
-    if (value === "EMPLOYEE"){
-      setState({ ...state, [index]: { ...state[index], hasTax: false, tax: 0 } })
-      updateItem(index)({ currentTarget: { id: "taxes", value: null }})
-    } else {
-      setState({ ...state, [index]: { ...state[index], hasTax: true } })
-    }
-    event.currentTarget.id = "contractType"
-    updateItem(index)(event)
-  }
-
-  const onNumberChange = (event, updateItem, index, type) => {
+  const onNumberChange = (event, index, type) => {
     const { currentTarget: { value } } = event
     setState({ ...state, [index]: { ...state[index], [type]: Number(value) } })
-    updateItem(index)(event)
+
+    const { humanResources } = form.getFieldsValue()
+    checkBudgeted(humanResources)
+    const total = state[index].hasTax
+      ? Number(value) * (humanResources[index][totalFactors[type]] || 0)
+      : Number(value)
+    updateValue(index, { total })
   }
 
   return (
-    <Form
-      name="human-resources"
-      layout="vertical">
-      {hasDuplicates && (
-        <Alert
-          banner
-          message='El campo "Puesto" no debe repetirse.'
-          type="error" />
-      )}
+    <Col>
       {totalState && (
         <Alert
           banner
           message='Los totales deben concordar con lo presupuestado.'
           type="error" />
       )}
-      <Col>
-        <Form.Item>
-          <CompositeField
-            onChange={onConceptsChange}
-            isAddDisabled
-            value={humanResources}>
-            {({items, updateItem, onFilesChange}) =>
-              <div style={{overflowX: "auto"}}>
-                <div style={{width: "1650px"}}>
-                  <HumanResourcesColumns />
-                  {items?.map(item =>
-                    <Row
-                      align="middle"
-                      gutter={[10, 8]}
-                      justify="start"
-                      key={item.hrKey}>
-                      <Col flex="50px">
-                        {!hiddenComments &&
+      <div style={{ overflowX: "auto" }}>
+        <div style={{ width: "1650px" }}>
+          <Form form={form} initialValues={{ humanResources }}>
+            <HumanResourcesColumns />
+            <Form.List name="humanResources">
+              {humanResources => {
+                return (
+                  <>
+                    {humanResources.map((humanResource, index) => (
+                      <Row
+                        align="middle"
+                        gutter={[10, 8]}
+                        justify="start"
+                        key={humanResource.key}>
+                        <Col flex="50px">
+                          {!hiddenComments &&
                           <CommentButton
-                            index={item.hrKey}
-                            name={item.hrKey.toString()}
+                            index={index}
+                            name={index.toString()}
                             small
                             section="HUMAN_RESOURCE" />
-                        }
-                      </Col>
-                      <Col flex="30px">
-                        <span key={`userIcon-${item.hrKey}`}>
-                          &nbsp;<UserOutlined />
-                        </span>
-                      </Col>
-                      <Col flex="150px">
-                        <Input
-                          name="position"
-                          defaultValue={item.position}
-                          onBlur={updateItem(item.hrKey)}
-                          disabled={readOnly}
-                          type="text" />
-                      </Col>
-                      <Col flex="150px">
-                        <Input
-                          name="name"
-                          defaultValue={item.name}
-                          onBlur={updateItem(item.hrKey)}
-                          disabled={readOnly}
-                          type="text" />
-                      </Col>
-                      <Col flex="180px">
-                        <Input
-                          name="tasks"
-                          onBlur={updateItem(item.hrKey)}
-                          defaultValue={item.tasks}
-                          disabled={readOnly}
-                          type="text" />
-                      </Col>
-                      <Col flex="150px">
-                        <Input
-                          name="overseer"
-                          onBlur={updateItem(item.hrKey)}
-                          defaultValue={item.overseer}
-                          disabled={readOnly}
-                          type="text" />
-                      </Col>
-                      <Col flex="80px">
-                        <Input
-                          name="hours"
-                          min={1}
-                          onBlur={updateItem(item.hrKey)}
-                          defaultValue={item.hours}
-                          disabled={readOnly}
-                          type="number" />
-                      </Col>
-                      <Col flex="150px">
-                        <SelectField
-                          name="contractType"
-                          options={contractTypes}
-                          onChange={event => onContracyTypeChange(event, updateItem, item.hrKey)}
-                          disabled={readOnly}
-                          defaultValue={item.contractType} />
-                      </Col>
-                      <Col flex="150px">
-                        <Input
-                          addonBefore="$"
-                          name="salary"
-                          min={0}
-                          onBlur={event => onNumberChange(event, updateItem, item.hrKey, "salary")}
-                          defaultValue={item.salary}
-                          disabled={readOnly}
-                          type="number" />
-                      </Col>
-                      <Col flex="130px">
-                        <Radio.Group
-                          name="benefits"
-                          onChange={updateItem(item.hrKey)}
-                          disabled={readOnly}
-                          defaultValue={item.benefits}>
-                          <Radio value={true}>Si</Radio>
-                          <Radio value={false}>No</Radio>
-                        </Radio.Group>
-                      </Col>
-                      <Col flex="150px">
-                        <Input
-                          addonBefore="%"
-                          disabled={readOnly || !state[item.hrKey]?.hasTax}
-                          name="taxes"
-                          onBlur={event => onNumberChange(event, updateItem, item.hrKey, "tax")}
-                          defaultValue={item.taxes}
-                          type="number" />
-                      </Col>
-                      <Col flex="150px">
-                        <Input
-                          addonBefore="$"
-                          name="total"
-                          disabled
-                          onBlur={updateItem(item.hrKey)}
-                          defaultValue={item.total}
-                          value={
-                            state[item.hrKey].hasTax ? (
-                              state[item.hrKey].salary + ((state[item.hrKey].tax * state[item.hrKey].salary) / 100)
-                            ) : (
-                              state[item.hrKey].salary
-                            )
                           }
-                          type="number" />
-                      </Col>
-                      <Col flex="80px">
-                        <UploadTooltip
-                          readOnly={readOnly}
-                          body="Adjunta el CV y el documento que certifica los
-                          estudios de esta persona"
-                          title="Experiencia y profesión"
-                          small
-                          fileList={toFileList(item.documents) || []}
-                          onRemoveFile={file =>
-                            onRemoveFile(file, item.documents, item.hrKey, onFilesChange)
-                          }
-                          onChange={files =>
-                            onDoneFile(item.hrKey, files, onFilesChange)
-                          }
-                          maxFile={2}
-                          accept={"application/pdf"} />
-                      </Col>
-                    </Row>
-                  )}
-                </div>
-              </div>
-            }
-          </CompositeField>
-        </Form.Item>
-      </Col>
-    </Form>
+                        </Col>
+                        <Col flex="30px">
+                          <span key={`userIcon-${humanResource.key}`}>
+                            &nbsp;<UserOutlined />
+                          </span>
+                        </Col>
+                        <Col flex="150px">
+                          <Form.Item name={[index, "position"]} style={{ margin: 0 }}>
+                            <Input disabled={readOnly} />
+                          </Form.Item>
+                        </Col>
+                        <Col flex="150px">
+                          <Form.Item name={[index, "name"]} style={{ margin: 0 }}>
+                            <Input disabled={readOnly} />
+                          </Form.Item>
+                        </Col>
+                        <Col flex="180px">
+                          <Form.Item name={[index, "tasks"]} style={{ margin: 0 }}>
+                            <Input disabled={readOnly} />
+                          </Form.Item>
+                        </Col>
+                        <Col flex="150px">
+                          <Form.Item name={[index, "overseer"]} style={{ margin: 0 }}>
+                            <Input disabled={readOnly} />
+                          </Form.Item>
+                        </Col>
+                        <Col flex="80px">
+                          <Form.Item
+                            getValueFromEvent={event => Number(getSelectValue(event))}
+                            name={[index, "hours"]}
+                            style={{ margin: 0 }}>
+                            <Input min={1} disabled={readOnly} type="number" />
+                          </Form.Item>
+                        </Col>
+                        <Col flex="150px">
+                          <Form.Item
+                            getValueFromEvent={event => onContracyTypeChange(event, index)}
+                            name={[index, "contractType"]}
+                            style={{ margin: 0 }}>
+                            <SelectField disabled={readOnly} options={contractTypes} />
+                          </Form.Item>
+                        </Col>
+                        <Col flex="150px">
+                          <Form.Item
+                            getValueFromEvent={event => Number(getSelectValue(event))}
+                            name={[index, "salary"]}
+                            style={{ margin: 0 }}>
+                            <Input
+                              addonBefore="$"
+                              disabled={readOnly}
+                              onBlur={event => onNumberChange(event, index, "salary")}
+                              type="number" />
+                          </Form.Item>
+                        </Col>
+                        <Col flex="130px">
+                          <Form.Item name={[index, "benefits"]} style={{ margin: 0 }}>
+                            <Radio.Group disabled={readOnly}>
+                              <Radio value={true}>Si</Radio>
+                              <Radio value={false}>No</Radio>
+                            </Radio.Group>
+                          </Form.Item>
+                        </Col>
+                        <Col flex="150px">
+                          <Form.Item
+                            getValueFromEvent={event => Number(getSelectValue(event))}
+                            name={[index, "taxes"]}
+                            style={{ margin: 0 }}>
+                            <Input
+                              addonBefore="$"
+                              disabled={readOnly || !state[index]?.hasTax}
+                              onBlur={event => onNumberChange(event, index, "tax")}
+                              type="number" />
+                          </Form.Item>
+                        </Col>
+                        <Col flex="150px">
+                          <Form.Item name={[index, "total"]} style={{ margin: 0 }}>
+                            <Input
+                              addonBefore="$"
+                              disabled
+                              type="number" />
+                          </Form.Item>
+                        </Col>
+                        <Col flex="80px">
+                          <Form.Item name={[index, "documents"]} style={{ margin: 0 }}>
+                            <UploadTooltip
+                              readOnly={readOnly}
+                              body="Adjunta el CV y el documento que certifica los
+                              estudios de esta persona"
+                              title="Experiencia y profesión"
+                              small
+                              fileList={toFileList(humanResource.documents) || []}
+                              onRemoveFile={file =>
+                                onRemoveFile(file, humanResource.documents, index)
+                              }
+                              onChange={files =>
+                                onDoneFile(files, index)
+                              }
+                              maxFile={2}
+                              accept={"application/pdf"} />
+                          </Form.Item>
+                        </Col>
+                      </Row>
+                    ))}
+                  </>
+                )
+              }}
+            </Form.List>
+          </Form>
+        </div>
+      </div>
+    </Col>
   )
 }
 

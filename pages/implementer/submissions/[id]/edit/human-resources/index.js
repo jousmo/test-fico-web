@@ -1,3 +1,4 @@
+import { Form } from "antd"
 import {
   Layout,
   SaveHeader
@@ -10,7 +11,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../../helpers/withApollo"
+import { withApollo, warning } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -20,20 +21,16 @@ import {
 } from "../../../../../../components/implementer/submissions/new/human-resources"
 import {
   setSave,
-  setUpdateHumanResources
 } from "../../../../../../helpers/submissionFunctions/human-resources"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { useAuth } from "../../../../../../contexts/auth"
 
 
 function HumanResources({ client, query }) {
+  const [form] = Form.useForm()
   const { user } = useAuth()
 
-  const [state, setState] = useState({
-    concepts: [],
-    dirty: false,
-    isSaving: false
-  })
+  const [state, setState] = useState({ isSaving: false })
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateHumanResources, {
@@ -41,44 +38,51 @@ function HumanResources({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getBudget,
+          query: submission.queries.getConcepts,
           variables: { id: query.id }
         }
       ]
     }
   )
 
-  const { loading, error, data } = useQuery(submission.queries.getBudget, {
+  const { loading, error, data } = useQuery(submission.queries.getConcepts, {
     client: client,
     variables: { id: query.id }
   })
 
-  const updateHumanResources = useCallback(concepts => {
-    setUpdateHumanResources(concepts, state, setState)
-  }, [state])
-
   const save = useCallback(async () => {
-    await setSave(state, setState, updateSubmission)
-    setState({ ...state, concepts: [] })
+    const { humanResources } = form.getFieldsValue()
+
+    const hasDuplicates = humanResources
+      ?.map(r => r.position)
+      .some((p, i, a) => a.indexOf(p) !== i)
+
+    if (hasDuplicates) {
+      warning('El campo "Puesto" no debe repetirse')
+      return
+    }
+    await setSave(humanResources, setState, updateSubmission)
   }, [state])
 
-  const readOnly = data?.Budget?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.Budget?.status.includes("REVIEW"))
-  const hiddenComments = data?.Budget?.status === "CREATED"
+  const readOnly = data?.SubmissionSimple?.state === "PROJECT" ||
+    (user?.claims?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
+  const hiddenComments = data?.SubmissionSimple?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
-    updateHumanResources,
     loading,
     error,
     data,
+    form,
     hiddenComments
   }), [state, loading, data])
+
+  const commentSubmission = { concepts: data?.Concepts, status: data?.SubmissionSimple?.status }
 
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
         readOnly
-        submission={data?.Budget}>
+        submission={commentSubmission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />

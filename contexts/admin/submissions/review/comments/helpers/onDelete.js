@@ -80,13 +80,10 @@ export const onDeleteHelper = (comment, state, setState, update) => {
       break
     }
     case "HUMAN_RESOURCE": {
-      const concepts = deleteHRComments(submission, comment, index)
-      newComments = concepts[index]?.humanResource?.comments
-      newSubmission = {
-        ...submission,
-        concepts: concepts
-      }
-      update({ concepts: concepts })
+      const { concepts, humanResources } = deleteHRComments(submission, comment, index)
+      newComments = humanResources[index]?.comments
+      newSubmission = { ...submission, concepts }
+      update(humanResources)
       break
     }
     case "SPECIFIC_OBJECTIVE": {
