@@ -186,9 +186,7 @@ export const getInvoicesPerYearOrSearch = ({ startDate, endDate, invoices, conce
 
     if (search) {
       const nameConcept = getConcept(concepts, invoice.concept)
-      if (yearInvoice === year && nameConcept.toLowerCase() === search.toLowerCase()) {
-
-      }
+      if (yearInvoice === year && nameConcept?.toLowerCase() === search?.toLowerCase()) return invoice
     } else {
       if (yearInvoice === year) return invoice
     }
