@@ -21,7 +21,7 @@ export function SubmissionSummary({ setState }) {
     save
   } = useContext(ImplementerSubmissionContext)
 
-  const submission = data?.SubmissionDetails
+  const submission = data?.Submission
   const validation = validationData?.SubmissionValidation
 
   const editRoute = `/implementer/submissions/${submission?.id}/edit/general-information`
