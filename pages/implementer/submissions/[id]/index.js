@@ -7,10 +7,11 @@ import {
 import {
   ImplementerSubmissionContext
 } from "../../../../contexts/implementer/submissions/show"
-import { submission } from "../../../../graphql/submission"
+import { submission } from "../../../../graphql"
 import { useCallback, useMemo, useState } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../helpers"
+import { loadingAlert, success, withApollo } from "../../../../helpers"
+import { apolloError } from "../../../../helpers/bugsnag/notify"
 import { PageContext } from "../../../../contexts/page"
 import { AuthCheck } from "../../../../helpers/auth/auth-check"
 
@@ -51,9 +52,7 @@ function Submission({ client, query }) {
       success()
     }
     catch (e) {
-      Bugsnag.notify(new Error(e))
-      console.error(e)
-      warning()
+      apolloError(e)
     }
     saving()
   }, [query.id])
