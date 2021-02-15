@@ -180,7 +180,7 @@ export const getConceptsPerMonths = (Submission, concepts, invoicesPerYearOrSear
   })
 }
 
-export const getInvoicesPerYearOrSearch = ({ startDate, endDate, invoices, concepts }, year, search) => {
+export const getInvoicesPerYearOrSearch = ({ invoices, concepts }, year, search) => {
   return invoices?.filter(invoice => {
     const yearInvoice = moment(invoice.monthAt, "MMYYYY").format("YYYY")
 
