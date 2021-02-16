@@ -19,7 +19,7 @@ export function ListSummary({ view, year, search }) {
   const [state, setState] = useState({ showModal: false, title: "", summaryConcepts: [], totalsSummaryConcepts: {} })
 
   const invoicesPerYearOrSearch = getInvoicesPerYearOrSearch(Submission, year, search)
-  const onlyConcepts = _.intersection(invoicesPerYearOrSearch?.map(invoice => invoice.concept))
+  const onlyConcepts = Submission?.concepts?.map(concept => concept.id)
   const conceptsPerMonths = getConceptsPerMonths(Submission, onlyConcepts, invoicesPerYearOrSearch)
   const conceptsPerTrimestre = getConceptsPerTrimestre(Submission, onlyConcepts, invoicesPerYearOrSearch)
 
