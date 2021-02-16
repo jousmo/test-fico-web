@@ -6,7 +6,7 @@ import {
 import { useCallback, useEffect, useState } from "react"
 import { getCommentsHelper, onDeleteHelper, onSaveHelper } from "./helpers"
 
-export function CommentsProvider({ children, submission, readOnly, update }) {
+export function CommentsProvider({ children, onCommentsReview, submission, readOnly, update }) {
   const revision = submission?.status
   const [state, setState] = useState({
     isModalOpen: false, field: {}, comments: [], submission: submission
@@ -72,6 +72,7 @@ export function CommentsProvider({ children, submission, readOnly, update }) {
         onSave={onSave}
         onCancel={onCancel}
         onDelete={onDelete}
+        onCommentsReview={onCommentsReview}
         visible={state.isModalOpen}
         revision={revision}
         readOnly={readOnly}
