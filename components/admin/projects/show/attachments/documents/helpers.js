@@ -652,6 +652,7 @@ export const financialMonitoringExport = async data => {
     id,
     reviewed,
     documents,
+    typeRH,
     ...el
   }) => {
     el.concept = findNameConcept(data?.concepts, el?.concept)
