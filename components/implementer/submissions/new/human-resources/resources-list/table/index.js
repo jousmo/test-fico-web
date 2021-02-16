@@ -50,7 +50,9 @@ function HumanResourcesTable({ data, form, hiddenComments }) {
     updateValue(index, { documents })
   }
 
-  const onRemoveFile = (file, oldDocuments, index) => {
+  const onRemoveFile = (file, index) => {
+    const { humanResources } = form.getFieldsValue()
+    const { documents: oldDocuments } = humanResources[index]
     const documents = oldDocuments?.filter(document => document.url !== file.url)
     updateValue(index, { documents })
   }
@@ -211,9 +213,8 @@ function HumanResourcesTable({ data, form, hiddenComments }) {
                               estudios de esta persona"
                               title="Experiencia y profesión"
                               small
-                              fileList={toFileList(humanResource.documents) || []}
                               onRemoveFile={file =>
-                                onRemoveFile(file, humanResource.documents, index)
+                                onRemoveFile(file, index)
                               }
                               onChange={files =>
                                 onDoneFile(files, index)

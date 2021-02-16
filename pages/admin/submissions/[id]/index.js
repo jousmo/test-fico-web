@@ -1,5 +1,6 @@
 import { Layout } from "../../../../components/shared"
-import { Bugsnag, success, warning, loadingAlert, withApollo } from "../../../../helpers"
+import { success, loadingAlert, withApollo } from "../../../../helpers"
+import { apolloError } from "../../../../helpers/bugsnag/notify"
 import {
   AgreementDocuments,
   Attachments,
@@ -10,7 +11,7 @@ import {
   Status
 } from "../../../../components/admin/submissions/show"
 import { AdminSubmissionContext } from "../../../../contexts/admin/submissions/show"
-import { submission } from "../../../../graphql/submission"
+import { submission } from "../../../../graphql"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { PageContext } from "../../../../contexts/page"
@@ -46,9 +47,7 @@ function Submission({ client, query }) {
       success()
     }
     catch (e) {
-      Bugsnag.notify(new Error(e))
-      console.error(e)
-      warning()
+      apolloError(e)
     }
     saving()
   }, [submissionId])

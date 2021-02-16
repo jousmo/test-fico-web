@@ -1,4 +1,5 @@
-import { List, Typography } from "antd"
+import { Button, List, Tooltip, Typography } from "antd"
+import { CheckOutlined, CheckSquareTwoTone } from "@ant-design/icons"
 import moment from "moment"
 import {
   submissionStatusOptions
@@ -6,9 +7,10 @@ import {
 import {
   getReadableValue
 } from "../../../../../../helpers/selectOptions/getReadableValue"
-import { DeleteButton } from "../../../../../shared/delete-button"
+import { DeleteButton } from "../../../../../shared"
 
-export function CommentListing({ comments, onDelete, revision }){
+export function CommentListing({ comments, onDelete, onReview, readOnly, revision, reviewed }){
+  const reviewedIds = reviewed?.map(el => el.id)
   return (
     <List
       header={
@@ -34,6 +36,21 @@ export function CommentListing({ comments, onDelete, revision }){
                   {moment(element.createdAt).format("DD/MM/YYYY")}
                 </Typography.Text>
               } />
+            {element.reviewed ? (
+              <Tooltip title="Solucionado">
+                <CheckSquareTwoTone style={{ fontSize: 22 }} />
+              </Tooltip>
+            ) : (
+              readOnly && (
+                <Tooltip title="¿Marcar como solucionado?">
+                  <Button
+                    disabled={element.reviewed || reviewedIds.includes(element.id)}
+                    icon={<CheckOutlined />}
+                    onClick={() => onReview({ id: element.id, reviewed: true })}
+                    size="small" />
+                </Tooltip>
+              )
+            )}
           </List.Item>
         )
       })}

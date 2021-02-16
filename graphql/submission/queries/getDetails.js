@@ -2,7 +2,7 @@ import { gql } from "apollo-boost"
 
 export const getDetails = gql`
   query Submission($id: ID!) {
-    SubmissionDetails(id: $id) {
+    Submission:SubmissionDetails(id: $id) {
       id
       name
       type
@@ -36,32 +36,6 @@ export const getDetails = gql`
       createdAt
       specificObjectives {
         description
-      }
-      implementer {
-        name
-        phone
-        email
-        vision
-        mission
-        history
-        director
-        alliances
-        fiscalAddress
-        previousSupports
-        incomesAndExpenses
-        legalRepresentative
-        institutionalExperience
-        proofOfCharitableContributions
-        councilMembers {
-          name
-          charge
-        }
-        documents {
-          id
-          url
-          name
-          type
-        }
       }
       beneficiaries {
         description

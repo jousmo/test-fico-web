@@ -1,9 +1,7 @@
 export const deleteGeneralIComments = (submission, toDelete, i) => {
   const indicators = [...submission?.generalObjectiveIndicators]
   const { index, ...indicator } = indicators[i]
-  const newComments = indicator?.comments?.filter(e =>
-    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
-  )
+  const newComments = indicator?.comments?.filter(e => e.id !== toDelete.id)
   indicators[i] = {
     ...indicator,
     comments: newComments

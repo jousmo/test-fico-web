@@ -17,6 +17,7 @@ export const getTechnicalSpecification = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
@@ -39,6 +40,7 @@ export const getTechnicalSpecification = gql`
           comments {
             id
             fieldName
+            reviewed
             revision
             comment
             type
@@ -68,6 +70,7 @@ export const getTechnicalSpecification = gql`
           comments {
             id
             fieldName
+            reviewed
             revision
             comment
             type
@@ -91,6 +94,7 @@ export const getTechnicalSpecification = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
@@ -113,6 +117,7 @@ export const getTechnicalSpecification = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
@@ -121,6 +126,7 @@ export const getTechnicalSpecification = gql`
       comments {
         id
         fieldName
+        reviewed
         revision
         comment
         type

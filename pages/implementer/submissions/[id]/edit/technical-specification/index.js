@@ -19,6 +19,9 @@ import {
   setUpdateTechnicalSpecification
 } from "../../../../../../helpers/submissionFunctions/technical-specification"
 import {
+  setReviewedComments
+} from "../../../../../../helpers/submissionFunctions/comments"
+import {
   DevelopmentObjective,
   GeneralObjective,
   SpecificObjectives
@@ -48,6 +51,19 @@ function TechnicalSpecification({ client, query }) {
     }
   )
 
+  const [updateComments] = useMutation(
+    submission.mutations.reviewComments, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getGeneralInfo,
+          variables: { id: query.id }
+        }
+      ]
+    }
+  )
+
   const { loading, error, data } = useQuery(submission.queries.getTechnicalSpecification, {
     client: client,
     variables: { id: submissionId }
@@ -60,6 +76,10 @@ function TechnicalSpecification({ client, query }) {
   const save = useCallback(async () => {
     await setSave(state, setState, updateSubmission, submissionId)
     setState({ ...state, technicalSpecification: {} })
+  }, [state])
+
+  const onCommentsReview = useCallback(async comments => {
+    await setReviewedComments(comments, setState, updateComments)
   }, [state])
 
   const readOnly = data?.TechnicalSpecification?.state === "PROJECT"
@@ -76,6 +96,7 @@ function TechnicalSpecification({ client, query }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 1 })}>
       <CommentsProvider
+        onCommentsReview={onCommentsReview}
         readOnly
         submission={data?.TechnicalSpecification}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
