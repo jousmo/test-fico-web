@@ -16,7 +16,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useMemo, useCallback } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../../helpers/withApollo"
+import { withApollo } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -25,6 +25,9 @@ import {
   setSave,
   setUpdateGeneralInformation
 } from "../../../../../../helpers/submissionFunctions/general-information"
+import {
+  setReviewedComments
+} from "../../../../../../helpers/submissionFunctions/comments"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function GeneralInformation({ client, query }) {
@@ -36,6 +39,19 @@ function GeneralInformation({ client, query }) {
 
   const [updateSubmission] = useMutation(
     submission.mutations.updateGeneralInfo, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getGeneralInfo,
+          variables: { id: query.id }
+        }
+      ]
+    }
+  )
+
+  const [updateComments] = useMutation(
+    submission.mutations.reviewComments, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -61,6 +77,10 @@ function GeneralInformation({ client, query }) {
     setState({ ...state, generalInformation: {} })
   }, [state])
 
+  const onCommentsReview = useCallback(async comments => {
+    await setReviewedComments(comments, setState, updateComments)
+  }, [state])
+
   const isCall = useCallback(() => {
     return getIsCall(data, state)
   }, [data, state])
@@ -80,6 +100,7 @@ function GeneralInformation({ client, query }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
       <CommentsProvider
+        onCommentsReview={onCommentsReview}
         readOnly
         submission={data?.GeneralInformation}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
