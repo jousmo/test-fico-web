@@ -9,10 +9,12 @@ export function CommentModal({
   revision,
   readOnly,
   getComments,
+  onCommentsReview,
   field,
   ...props
 }) {
   const [state, setState] = useState({ comments: [] })
+  const [reviewed, setReviewed] = useState([])
   const [form] = Form.useForm()
 
   const onOk = async () => {
@@ -41,16 +43,34 @@ export function CommentModal({
     setState({ comments: getComments() })
   }, [field])
 
+  const onReview = () => {
+    onCommentsReview && onCommentsReview(reviewed)
+    closeModal()
+  }
+
+  const closeModal = () => {
+    setReviewed([])
+    onCancel()
+  }
+
   if (readOnly){
     return (
       <Modal
         title="Comentarios para revisión"
-        onCancel={onCancel}
-        footer={false}
+        onCancel={closeModal}
+        okText="Guardar"
+        onOk={onReview}
+        cancelText="Cerrar"
         width={800}
         maskClosable={false}
         {...props}>
-        <CommentListing comments={state.comments} />
+        <CommentListing
+          comments={state.comments}
+          onReview={comment =>
+            setReviewed(reviewed => [...reviewed, comment])
+          }
+          readOnly={readOnly}
+          reviewed={reviewed} />
       </Modal>
     )
   }
@@ -60,7 +80,7 @@ export function CommentModal({
       title="Comentarios para revisión"
       onOk={onOk}
       okText="Agregar"
-      onCancel={onCancel}
+      onCancel={closeModal}
       cancelText="Cerrar"
       width={800}
       zIndex={1020}
@@ -81,6 +101,7 @@ export function CommentModal({
       <CommentListing
         comments={state.comments}
         onDelete={onDeleteComment}
+        readOnly={readOnly}
         revision={revision} />
     </Modal>
   )
