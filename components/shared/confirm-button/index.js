@@ -1,10 +1,11 @@
-import { Popconfirm, Button } from "antd";
+import { Popconfirm, Button } from "antd"
 
 export function ConfirmButton({
   icon,
   onClick,
   confirmText,
-  style
+  style,
+  ...props
 }) {
   return (
     <Popconfirm
@@ -14,8 +15,8 @@ export function ConfirmButton({
       cancelText="Cancelar">
       <Button
         style={{...style}}
-        shape="circle"
-        icon={icon} />
+        icon={icon}
+        {...props} />
     </Popconfirm>
   )
 }
