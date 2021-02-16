@@ -16,7 +16,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useMemo, useCallback } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../../helpers"
+import { withApollo, selectOptions } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -30,7 +30,7 @@ import {
 } from "../../../../../../helpers/submissionFunctions/comments"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
-function GeneralInformation({ client, query }) {
+function GeneralInformation({ client, query, token }) {
   const [state, setState] = useState({
     generalInformation: {},
     dirty: false,
@@ -85,13 +85,17 @@ function GeneralInformation({ client, query }) {
     return getIsCall(data, state)
   }, [data, state])
 
-  const readOnly = data?.GeneralInformation?.state === "PROJECT"
+  const { shared: { submissionStatusOptions: status }} = selectOptions
+  const readOnly = data?.GeneralInformation?.state === "PROJECT" ||
+    status.findIndex(el => el.value === data?.GeneralInformation?.status) > 8 ||
+    (token?.role === "IMPLEMENTER" && data?.GeneralInformation?.status.includes("REVIEW"))
   const hiddenComments = data?.GeneralInformation?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
     isCall,
     loading,
+    readOnly,
     error,
     data,
     hiddenComments

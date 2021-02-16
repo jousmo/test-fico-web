@@ -6,6 +6,7 @@ import { Section } from "../../../../../shared"
 export function DevelopmentObjectives() {
   const {
     updateGeneralInformation,
+    readOnly,
     loading,
     review,
     error,
@@ -25,6 +26,7 @@ export function DevelopmentObjectives() {
       <DevelopmentObjectivesForm
         isLoading={loading}
         error={error}
+        readOnly={readOnly}
         data={data?.GeneralInformation}
         review={review}
         onChange={onChange}
