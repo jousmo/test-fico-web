@@ -1,4 +1,4 @@
-import { withForm, toFileList, getSelectValue } from "../../../../../../../helpers"
+import { withForm, getSelectValue } from "../../../../../../../helpers"
 import { Alert, Col, Form, Input, Row, Radio } from "antd"
 import { UserOutlined } from "@ant-design/icons"
 import { useState } from "react"
@@ -11,10 +11,8 @@ import {
   contractTypes
 } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { HumanResourcesColumns } from "./form-columns"
-import { useAuth } from "../../../../../../../contexts/auth"
 
-function HumanResourcesTable({ data, form, hiddenComments }) {
-  const { user } = useAuth()
+function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
 
   const hrState = {}
   let hrCount = 0
@@ -35,9 +33,6 @@ function HumanResourcesTable({ data, form, hiddenComments }) {
 
   const [state, setState] = useState(hrState)
   const [totalState, setTotalState] = useState(false)
-
-  const readOnly = data?.SubmissionSimple?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
 
   const updateValue = (index, data) => {
     const { humanResources } = form.getFieldsValue()

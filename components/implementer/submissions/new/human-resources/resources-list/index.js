@@ -7,6 +7,7 @@ import HumanResourcesTable from "./table"
 
 export function ResourcesList() {
   const {
+    readOnly,
     loading,
     error,
     data,
@@ -18,6 +19,7 @@ export function ResourcesList() {
     <Section fullWidth>
       <HumanResourcesTable
         isLoading={loading}
+        readOnly={readOnly}
         error={error}
         data={data}
         form={form}
