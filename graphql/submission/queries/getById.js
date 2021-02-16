@@ -37,6 +37,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
@@ -59,6 +60,7 @@ export const getById = gql`
           comments {
             id
             fieldName
+            reviewed
             revision
             comment
             type
@@ -88,6 +90,7 @@ export const getById = gql`
           comments {
             id
             fieldName
+            reviewed
             revision
             comment
             type
@@ -105,6 +108,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
@@ -135,6 +139,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
@@ -157,6 +162,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
@@ -179,6 +185,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
@@ -220,6 +227,7 @@ export const getById = gql`
           comments {
             id
             fieldName
+            reviewed
             revision
             comment
             type
@@ -228,6 +236,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
@@ -243,6 +252,7 @@ export const getById = gql`
       comments {
         id
         fieldName
+        reviewed
         revision
         comment
         type

@@ -30,6 +30,7 @@ export const getConcepts = gql`
         comments {
           id
           fieldName
+          reviewed
           revision
           comment
           type
