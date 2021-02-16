@@ -24,7 +24,7 @@ export function MultipleDateRangeField({
       addLabel={addLabel}
       defaultValue={defaultValue?.map(transformDefaultValue)}
       value={value?.map(transformDefaultValue)}
-      onClickAdd={addNew => addNew({ value: undefined })}
+      onClickAdd={addNew => addNew({ value: [] })}
       {...props}>
       {({items, removeItem, updateItem}) =>
         <div>
