@@ -9,6 +9,7 @@ import * as _ from "lodash"
 export function Budget() {
   const {
     updateBudget,
+    readOnly,
     loading,
     review,
     error,
@@ -28,6 +29,7 @@ export function Budget() {
       title="Presupuesto"
       fullWidth>
       <BudgetForm
+        readOnly={readOnly}
         isLoading={loading}
         error={error}
         data={data}

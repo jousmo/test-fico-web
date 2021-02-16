@@ -7,6 +7,7 @@ import SpecificObjectiveForm from "./form"
 export function SpecificObjectives() {
   const {
     updateTechnicalSpecification,
+    readOnly,
     loading,
     review,
     error,
@@ -24,6 +25,7 @@ export function SpecificObjectives() {
   return (
     <SpecificObjectiveForm
       isLoading={loading}
+      readOnly={readOnly}
       error={error}
       data={data}
       review={review}

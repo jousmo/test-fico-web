@@ -10,17 +10,16 @@ import { FieldLabel } from "../../../../../../shared"
 import {
   SpecificObjectiveText
 } from "../../../general-information/development-objectives/form/specific-objective-text"
-import { useAuth } from "../../../../../../../contexts/auth"
 
 export default function SpecificObjectiveForm({
   data,
   onChange,
+  readOnly,
   error,
   isLoading,
   hiddenComments,
   review
 }) {
-  const { user } = useAuth()
   const submission = data?.TechnicalSpecification
 
   if(isLoading) {
@@ -51,9 +50,6 @@ export default function SpecificObjectiveForm({
 
     onChange && onChange(newSpecificObjectives)
   }
-
-  const readOnly = submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && submission?.status.includes("REVIEW"))
 
   return (
     <>
