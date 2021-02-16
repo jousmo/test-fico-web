@@ -6,10 +6,8 @@ import { ConceptModal } from "./concept-modal"
 import { conceptTypes } from "../../../../../../../helpers/selectOptions/implementer/submission"
 import { renderInvestment, renderTotal, renderSummary } from "./helpers"
 import { CommentButton } from "../../../../../../admin/submissions/review"
-import { useAuth } from "../../../../../../../contexts/auth"
 
-function BudgetForm({ data, onChange, hiddenComments, review }) {
-  const { user } = useAuth()
+function BudgetForm({ data, onChange, hiddenComments, readOnly, review }) {
   const [state, setState] = useState({ isModalOpen: false, edit: false })
   const { Budget: Submission } = data || {}
 
@@ -38,9 +36,6 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
     setState({ ...state, isModalOpen: true, edit: item })
   }
 
-  const readOnly = Submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && Submission?.status.includes("REVIEW"))
-
   const concepts = Submission?.concepts?.sort((a, b) => a.index - b.index)
   return (
     <>
@@ -58,8 +53,7 @@ function BudgetForm({ data, onChange, hiddenComments, review }) {
                 submission={Submission}
                 onCancel={onCancel}
                 onSave={onSave(addNew, replaceItemAtIndex, items)}
-                readOnly={readOnly}
-                review={readOnly}
+                readOnly={review || readOnly}
                 edit={state.edit} />
             }
             <ScrollableView contentWidth="1600px">
