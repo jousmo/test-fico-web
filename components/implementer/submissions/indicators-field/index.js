@@ -53,6 +53,7 @@ export function IndicatorsField({
             indicatorType={indicatorType}
             objectiveIndex={objectiveIndex}
             review={review}
+            readOnly={readOnly}
             onCancel={onCancel}
             onSave={onSave(addNew, replaceItemAtIndex)}
             limitDates={limitDates}

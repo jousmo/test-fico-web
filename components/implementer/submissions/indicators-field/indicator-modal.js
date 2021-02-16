@@ -20,6 +20,7 @@ export function IndicatorModal({
   onSave,
   onCancel,
   limitDates,
+  readOnly,
   edit,
   hiddenComments,
   review,
@@ -68,10 +69,10 @@ export function IndicatorModal({
       title={`${edit ? "Editar" : "Agregar"} indicador`}
       onOk={onOk}
       onCancel={onCancelModal}
-      okButtonProps={{ disabled: review }}
+      okButtonProps={{ disabled: review || readOnly }}
       width={800}
       okText={`${edit ? "Guardar" : "Agregar"}`}
-      cancelText={review ? "Cerrar" : "Cancelar"}
+      cancelText={(review || readOnly) ? "Cerrar" : "Cancelar"}
       maskClosable={false}
       {...props}>
       <Form
@@ -94,6 +95,7 @@ export function IndicatorModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="title"
                 type="text" />
             </Form.Item>
@@ -113,6 +115,7 @@ export function IndicatorModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="description"
                 type="text" />
             </Form.Item>
@@ -132,6 +135,7 @@ export function IndicatorModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="methodology"
                 type="text" />
             </Form.Item>
@@ -151,6 +155,7 @@ export function IndicatorModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="formula"
                 type="text" />
             </Form.Item>
@@ -171,6 +176,7 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <SelectField
                 id="meansOfVerification"
+                disabled={readOnly}
                 filterOption={(value, option) => option?.children?.toLowerCase().includes(value?.toLowerCase())}
                 mode="tags"
                 showSearch
@@ -192,6 +198,7 @@ export function IndicatorModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="baseline"
                 type="text" />
             </Form.Item>
@@ -211,6 +218,7 @@ export function IndicatorModal({
               }>
               <Input
                 autoSize
+                disabled={readOnly}
                 id="goal"
                 type="number" />
             </Form.Item>
@@ -223,6 +231,7 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="startDate"
+                disabled={readOnly}
                 disabledDate={date => date && (date < moment(limitDates[0]) || date > moment(limitDates[1]))}
                 fullWidth
                 format="DD/MM/YYYY" />
@@ -236,6 +245,7 @@ export function IndicatorModal({
               getValueFromEvent={getSelectValue}>
               <DateField
                 id="endDate"
+                disabled={readOnly}
                 disabledDate={date => date && (date < moment(limitDates[0]) || date > moment(limitDates[1]))}
                 fullWidth
                 format="DD/MM/YYYY" />
@@ -248,6 +258,7 @@ export function IndicatorModal({
               label="Periodicidad de medición"
               getValueFromEvent={getSelectValue}>
               <SelectField
+                disabled={readOnly}
                 id="measurementPeriodicity"
                 options={measurementPeriodicityTypes} />
             </Form.Item>
@@ -258,6 +269,8 @@ export function IndicatorModal({
               style={{display: "inline"}}
               label="Productos">
               <MultipleTextField
+                isAddDisabled={review || readOnly}
+                review={review || readOnly}
                 addLabel="Agregar producto" />
             </Form.Item>
           </Col>

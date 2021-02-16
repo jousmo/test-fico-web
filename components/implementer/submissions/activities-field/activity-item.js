@@ -70,16 +70,12 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
       &nbsp;
       <Typography.Text strong>Mes de implementación: </Typography.Text>
       <Typography.Text>{formattedMonths || "N/A"}</Typography.Text>
-      {!readOnly && (
-        <>
-          {!review &&
-            <DeleteButton
-              onClick={onDelete}
-              style={{marginLeft: "8px"}} />
-          }
-          <EditButton onClick={onEdit} />
-        </>
-      )}
+      {(!readOnly && !review) &&
+        <DeleteButton
+          onClick={onDelete}
+          style={{marginLeft: "8px"}} />
+      }
+      <EditButton onClick={onEdit} />
     </Card>
   )
 }
