@@ -1,9 +1,7 @@
 export const deleteConsultantComments = (submission, toDelete, i) => {
   const consultants = [...submission?.consultants]
   const { index, ...consultant } = consultants[i]
-  const newComments = consultant?.comments?.filter(e =>
-    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
-  )
+  const newComments = consultant?.comments?.filter(e => e.id !== toDelete.id)
   consultants[i] = {
     ...consultant,
     comments: newComments

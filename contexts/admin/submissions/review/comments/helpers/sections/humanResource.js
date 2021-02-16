@@ -13,9 +13,7 @@ export const deleteHRComments = (submission, toDelete, index) => {
   const { concepts, humanResources } = getHumanResources(submission)
   const conceptIndex = concepts.findIndex(el => el.humanResource[0].id === humanResources[index].id)
 
-  const newComments = humanResources[index]?.comments?.filter(e =>
-    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
-  )
+  const newComments = humanResources[index]?.comments?.filter(e => e.id !== toDelete.id)
   const newHR = { ...humanResources[index], comments: newComments }
 
   humanResources[index] = newHR

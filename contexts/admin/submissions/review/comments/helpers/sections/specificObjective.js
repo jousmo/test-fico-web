@@ -1,9 +1,7 @@
 export const deleteSpecificOComments = (submission, toDelete, i) => {
   const objectives = [...submission?.specificObjectives]
   const { index, ...objective } = objectives[i]
-  const newComments = objective?.comments?.filter(e =>
-    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
-  )
+  const newComments = objective?.comments?.filter(e => e.id !== toDelete.id)
   objectives[i] = {
     ...objective,
     comments: newComments

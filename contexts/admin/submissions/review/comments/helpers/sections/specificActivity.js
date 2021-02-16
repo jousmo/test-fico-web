@@ -11,9 +11,7 @@ export const deleteSpecificAComments = (submission, toDelete, index) => {
   const activity = activities[indices[1]]
   delete activity.index
 
-  const newComments = activity?.comments?.filter(e =>
-    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
-  )
+  const newComments = activity?.comments?.filter(e => e.id !== toDelete.id)
   activities[indices[1]] = {
     ...activity,
     comments: newComments

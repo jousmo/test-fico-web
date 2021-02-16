@@ -11,9 +11,7 @@ export const deleteSpecificIComments = (submission, toDelete, i) => {
   const indicator = indicators[indices[1]]
   delete indicator.index
 
-  const newComments = indicator?.comments?.filter(e =>
-    (e.comment !== toDelete.comment && e.createdAt !== toDelete.createdAt)
-  )
+  const newComments = indicator?.comments?.filter(e => e.id !== toDelete.id)
   indicators[indices[1]] = {
     ...indicator,
     comments: newComments
