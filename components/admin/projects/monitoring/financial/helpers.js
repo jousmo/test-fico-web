@@ -330,11 +330,12 @@ export const validateDocuments = (formData, { budgeted, evidenced, difference },
   if (!isXML) return { error: true, message: "Se requiere que subas tu archivo XML" }
   if (!isPDF) return { error: true, message: "Se requiere que subas tu archivo PDF" }
 
-  const fullAmount = difference + oldAmount
+  const fullAmount = +(difference + oldAmount).toFixed(2)
 
   if (amount > fullAmount) return { error: true, message: "El monto de la factura sobrepasa a lo presupuestado" }
 
-  const totalDistribution = ficosecPayment + implementerPayment + investmentOnePayment + investmentTwoPayment
+  const totalDistribution = +(ficosecPayment + implementerPayment + investmentOnePayment + investmentTwoPayment).toFixed(2)
+
   if (totalDistribution > amount)
     return { error: true, message: "La distribucción de las coinversiones sobrepasa el monto de la factura" }
   if (totalDistribution < amount)
