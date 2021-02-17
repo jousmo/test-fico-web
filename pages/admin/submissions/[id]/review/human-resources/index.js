@@ -13,7 +13,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../../helpers"
+import { withApollo, selectOptions } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -27,7 +27,7 @@ import {
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
-function HumanResources({ client, query }) {
+function HumanResources({ client, query, token }) {
   const [form] = Form.useForm()
   const [state, setState] = useState({
     humanResources: [],
@@ -61,15 +61,20 @@ function HumanResources({ client, query }) {
     await setSave(humanResources, setState, updateSubmission)
   }, [state])
 
+  const { shared: { submissionStatusOptions: status }} = selectOptions
+  const readOnly = data?.SubmissionSimple?.state === "PROJECT" ||
+    status.findIndex(el => el.value === data?.SubmissionSimple?.status) > 8 ||
+    (token?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
+
   const injectActions = useMemo(() => ({
     updateHumanResources,
+    readOnly,
     loading,
     error,
     form,
     data
   }), [state, loading, data])
 
-  const readOnly = data?.SubmissionSimple?.state === "PROJECT"
   const commentSubmission = { concepts: data?.Concepts, status: data?.SubmissionSimple?.status }
 
   return (
