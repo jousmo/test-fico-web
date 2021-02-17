@@ -14,7 +14,7 @@ import "./styles.sass"
 
 function SubmissionsListingTable({ data }) {
   const router = useRouter()
-  const { submissionStatusOptions } = shared
+  const { submissionStatusOptions, getFilterOptions } = shared
   const {
     submission: {
       strategicAxisTypes,
@@ -22,17 +22,10 @@ function SubmissionsListingTable({ data }) {
     }
   } = implementer
 
-  const statusFilterOptions = submissionStatusOptions?.map(option => (
-    {text: option.label, value: option.value}
-  ))
-
-  const axisFilterOptions = strategicAxisTypes?.map(option => (
-    {text: option.label, value: option.value}
-  ))
-
-  const regionFilterOptions = regions?.map(option => (
-    {text: option.label, value: option.value}
-  ))
+  submissionStatusOptions.length = 9
+  const statusFilterOptions = getFilterOptions(submissionStatusOptions)
+  const axisFilterOptions = getFilterOptions(strategicAxisTypes)
+  const regionFilterOptions = getFilterOptions(regions)
 
   const handleClick = record => {
     return {
