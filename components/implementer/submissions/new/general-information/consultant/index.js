@@ -10,6 +10,7 @@ export function Consultant() {
 
   const {
     updateGeneralInformation,
+    readOnly,
     review,
     loading,
     error,
@@ -43,6 +44,7 @@ export function Consultant() {
         <ConsultantForm
           isLoading={loading}
           error={error}
+          readOnly={readOnly}
           data={data?.GeneralInformation}
           review={review}
           onChange={onChange}

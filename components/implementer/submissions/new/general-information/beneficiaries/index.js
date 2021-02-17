@@ -8,6 +8,7 @@ import { Section } from "../../../../../shared"
 export function Beneficiaries() {
   const {
     updateGeneralInformation,
+    readOnly,
     loading,
     review,
     error,
@@ -24,6 +25,7 @@ export function Beneficiaries() {
       <BeneficiaryForm
         data={data?.GeneralInformation}
         review={review}
+        readOnly={readOnly}
         isLoading={loading}
         error={error}
         onChange={onChange}

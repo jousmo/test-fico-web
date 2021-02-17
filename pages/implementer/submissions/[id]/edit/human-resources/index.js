@@ -11,7 +11,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo, warning } from "../../../../../../helpers"
+import { withApollo, warning, selectOptions } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -29,7 +29,7 @@ import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { useAuth } from "../../../../../../contexts/auth"
 
 
-function HumanResources({ client, query }) {
+function HumanResources({ client, query, token }) {
   const [form] = Form.useForm()
   const { user } = useAuth()
 
@@ -84,11 +84,14 @@ function HumanResources({ client, query }) {
     await setReviewedComments(comments, setState, updateComments)
   }, [state])
 
+  const { shared: { submissionStatusOptions: status }} = selectOptions
   const readOnly = data?.SubmissionSimple?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
+    status.findIndex(el => el.value === data?.SubmissionSimple?.status) > 8 ||
+    (token?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
   const hiddenComments = data?.SubmissionSimple?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
+    readOnly,
     loading,
     error,
     data,

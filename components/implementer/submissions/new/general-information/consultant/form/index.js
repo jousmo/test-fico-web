@@ -4,10 +4,8 @@ import { CompositeField } from "../../../../../../shared"
 import { ConsultantModal } from "./consultant-modal"
 import { ConsultantItem } from "./consultant-item"
 import { useState } from "react"
-import { useAuth } from "../../../../../../../contexts/auth"
 
-function ConsultantForm({ data, onChange, hiddenComments, review }) {
-  const { user } = useAuth()
+function ConsultantForm({ data, onChange, hiddenComments, readOnly, review }) {
   const [state, setState] = useState({
     isModalOpen: false,
     edit: undefined
@@ -40,9 +38,6 @@ function ConsultantForm({ data, onChange, hiddenComments, review }) {
   }
 
   const consultants = data?.consultants || []
-
-  const readOnly = data?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.status.includes("REVIEW"))
 
   return (
     <Form layout="vertical">

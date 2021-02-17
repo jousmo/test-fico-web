@@ -20,7 +20,6 @@ export function ConceptModal({
   edit,
   submission,
   readOnly,
-  review,
   ...props
 }) {
   const hasRegion = !submission?.township?.includes("Zona centro sur")
@@ -119,10 +118,10 @@ export function ConceptModal({
       title={`${edit ? "Editar" : "Agregar"} concepto`}
       onOk={onOk}
       onCancel={onCancelModal}
-      okButtonProps={{ disabled: review }}
+      okButtonProps={{ disabled: readOnly }}
       width={800}
       okText={`${edit ? "Guardar" : "Agregar"}`}
-      cancelText={review ? "Cerrar" : "Cancelar"}
+      cancelText={readOnly ? "Cerrar" : "Cancelar"}
       maskClosable={false}
       {...props}>
       <Form

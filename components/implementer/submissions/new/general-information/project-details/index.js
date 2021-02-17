@@ -8,6 +8,7 @@ import {
 export function ProjectDetails() {
   const {
     updateGeneralInformation,
+    readOnly,
     loading,
     error,
     data,
@@ -34,6 +35,7 @@ export function ProjectDetails() {
       <ProjectDetailsForm
         isLoading={loading}
         error={error}
+        readOnly={readOnly}
         data={data?.GeneralInformation}
         onChange={onChange}
         isCall={isCall()}

@@ -12,6 +12,7 @@ import {
 export function DevelopmentObjective() {
   const {
     updateTechnicalSpecification,
+    readOnly,
     loading,
     review,
     error,
@@ -36,6 +37,7 @@ export function DevelopmentObjective() {
       }>
       <DevelopmentObjectiveForm
         isLoading={loading}
+        readOnly={readOnly}
         error={error}
         data={data}
         review={review}

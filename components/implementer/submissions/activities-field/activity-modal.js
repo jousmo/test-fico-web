@@ -15,6 +15,7 @@ export function ActivityModal({
   objectiveIndex,
   onSave,
   onCancel,
+  readOnly,
   limitDates,
   edit,
   hiddenComments,
@@ -59,10 +60,10 @@ export function ActivityModal({
       title={`${edit ? "Editar" : "Agregar"} actividad`}
       onOk={onOk}
       onCancel={onCancelModal}
-      okButtonProps={{ disabled: review }}
+      okButtonProps={{ disabled: review || readOnly }}
       width={800}
       okText={`${edit ? "Guardar" : "Agregar"}`}
-      cancelText={review ? "Cerrar" : "Cancelar"}
+      cancelText={(review || readOnly) ? "Cerrar" : "Cancelar"}
       maskClosable={false}
       {...props}
     >
@@ -86,6 +87,7 @@ export function ActivityModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="title"
                 type="text" />
             </Form.Item>
@@ -105,6 +107,7 @@ export function ActivityModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="description"
                 type="text" />
             </Form.Item>
@@ -124,6 +127,7 @@ export function ActivityModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="responsible"
                 type="text" />
             </Form.Item>
@@ -143,6 +147,7 @@ export function ActivityModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="methodology"
                 type="text" />
             </Form.Item>
@@ -162,6 +167,7 @@ export function ActivityModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="formula"
                 type="text" />
             </Form.Item>
@@ -182,6 +188,7 @@ export function ActivityModal({
               getValueFromEvent={getSelectValue}>
               <SelectField
                 id="meansOfVerification"
+                disabled={readOnly}
                 filterOption={(value, option) => option.children.toLowerCase().includes(value.toLowerCase())}
                 mode="tags"
                 showSearch
@@ -203,6 +210,7 @@ export function ActivityModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="baseline"
                 type="text" />
             </Form.Item>
@@ -222,6 +230,7 @@ export function ActivityModal({
               }>
               <Input
                 autoSize
+                disabled={readOnly}
                 id="goal"
                 type="number" />
             </Form.Item>
@@ -241,6 +250,7 @@ export function ActivityModal({
               }>
               <Input.TextArea
                 autoSize
+                disabled={readOnly}
                 id="place"
                 type="text" />
             </Form.Item>
@@ -259,9 +269,9 @@ export function ActivityModal({
                 </FieldLabel>
               }>
               <MultipleDateRangeField
-                isAddDisabled={review}
+                isAddDisabled={review || readOnly}
                 limitDates={limitDates}
-                review={review} />
+                review={review || readOnly} />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -278,9 +288,9 @@ export function ActivityModal({
                 </FieldLabel>
               }>
               <MultipleTextField
-                isAddDisabled={review}
+                isAddDisabled={review || readOnly}
                 addLabel="Agregar insumo"
-                review={review} />
+                review={review || readOnly} />
             </Form.Item>
           </Col>
           <Col span={24}>
@@ -297,9 +307,9 @@ export function ActivityModal({
                 </FieldLabel>
               }>
               <MultipleTextField
-                isAddDisabled={review}
+                isAddDisabled={review || readOnly}
                 addLabel="Agregar producto"
-                review={review} />
+                review={review || readOnly} />
             </Form.Item>
           </Col>
         </Row>

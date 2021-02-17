@@ -18,7 +18,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../../helpers/withApollo"
+import { withApollo, selectOptions } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -30,7 +30,7 @@ import {
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
-function GeneralInformation({ client, query }) {
+function GeneralInformation({ client, query, token }) {
   const submissionId = query.id
 
   const [state, setState] = useState({
@@ -70,16 +70,20 @@ function GeneralInformation({ client, query }) {
     return getIsCall(data, state)
   }, [data, state])
 
+  const { shared: { submissionStatusOptions: status }} = selectOptions
+  const readOnly = data?.GeneralInformation?.state === "PROJECT" ||
+    status.findIndex(el => el.value === data?.GeneralInformation?.status) > 8 ||
+    (token?.role === "IMPLEMENTER" && data?.GeneralInformation?.status.includes("REVIEW"))
+
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
     isCall,
+    readOnly,
     loading,
     error,
     data,
     review: true
   }), [state, loading, data])
-
-  const readOnly = data?.GeneralInformation?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>

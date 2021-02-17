@@ -49,16 +49,12 @@ export function IndicatorItem({ data, onDelete, onEdit, readOnly, review }) {
           meansOfVerification.map(method => getReadableValue(verificationTypes, method)).join(", ")
         ) : "N/A"}
       </Typography.Text>
-      {!readOnly && (
-        <>
-          {!review &&
-            <DeleteButton
-              onClick={onDelete}
-              style={{marginLeft: "8px"}} />
-          }
-          <EditButton onClick={onEdit} />
-        </>
-      )}
+      {(!readOnly && !review) &&
+        <DeleteButton
+          onClick={onDelete}
+          style={{marginLeft: "8px"}} />
+      }
+      <EditButton onClick={onEdit} />
     </Card>
   )
 }

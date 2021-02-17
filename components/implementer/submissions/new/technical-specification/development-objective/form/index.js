@@ -1,10 +1,8 @@
 import { withForm } from "../../../../../../../helpers/withForm"
 import { Form } from "antd"
 import { IndicatorsField } from "../../../../indicators-field"
-import { useAuth } from "../../../../../../../contexts/auth"
 
-function DevelopmentObjectiveForm({ data, onChange, hiddenComments, review }) {
-  const { user } = useAuth()
+function DevelopmentObjectiveForm({ data, onChange, readOnly, hiddenComments, review }) {
   const submission = data?.TechnicalSpecification
 
   const onIndicatorsChange = newIndicators => {
@@ -15,9 +13,6 @@ function DevelopmentObjectiveForm({ data, onChange, hiddenComments, review }) {
       }
     })
   }
-
-  const readOnly = submission?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && submission?.status.includes("REVIEW"))
 
   return (
     <Form

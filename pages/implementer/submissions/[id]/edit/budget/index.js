@@ -25,8 +25,9 @@ import {
   setReviewedComments
 } from "../../../../../../helpers/submissionFunctions/comments"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
+import {selectOptions} from "../../../../../../helpers"
 
-function Budget({ client, query }) {
+function Budget({ client, query, token }) {
   const submissionId = query.id
 
   const [state, setState] = useState({
@@ -80,11 +81,15 @@ function Budget({ client, query }) {
     await setReviewedComments(comments, setState, updateComments)
   }, [state])
 
-  const readOnly = data?.Budget?.state === "PROJECT"
+  const { shared: { submissionStatusOptions: status }} = selectOptions
+  const readOnly = data?.Budget?.state === "PROJECT" ||
+    status.findIndex(el => el.value === data?.Budget?.status) > 8 ||
+    (token?.role === "IMPLEMENTER" && data?.Budget?.status.includes("REVIEW"))
   const hiddenComments = data?.Budget?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
     updateBudget,
+    readOnly,
     loading,
     error,
     data,

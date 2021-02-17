@@ -4,11 +4,8 @@ import { CompositeField, DeleteButton, FieldLabel } from "../../../../../../shar
 import { GeneralObjectiveText } from "./general-objective-text"
 import { DevelopmentObjectiveText } from "./development-objective-text"
 import { SpecificObjectiveText } from "./specific-objective-text"
-import { useAuth } from "../../../../../../../contexts/auth"
 
-function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
-  const { user } = useAuth()
-
+function DevelopmentObjectivesForm({ data, onChange, hiddenComments, readOnly, review }) {
   const onSpecificObjectivesChange = newObjectives => {
     const objectives = newObjectives?.map((el, index) => ({ ...el, orderIndex: index + 1 }))
     onChange && onChange({
@@ -22,9 +19,6 @@ function DevelopmentObjectivesForm({ data, onChange, hiddenComments, review }) {
   const specificObjectives = data?.specificObjectives?.sort((a, b) =>
     a.orderIndex - b.orderIndex
   ) || []
-
-  const readOnly = data?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.status.includes("REVIEW"))
 
   return (
     <Form

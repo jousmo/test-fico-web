@@ -12,6 +12,7 @@ import {
 export function GeneralObjective() {
   const {
     updateTechnicalSpecification,
+    readOnly,
     loading,
     review,
     error,
@@ -36,6 +37,7 @@ export function GeneralObjective() {
       }>
       <GeneralObjectiveForm
         isLoading={loading}
+        readOnly={readOnly}
         error={error}
         data={data}
         review={review}

@@ -8,15 +8,14 @@ import { ScopeText } from "./scope-text"
 import { JustificationText } from "./justification-text"
 import { TownshipSelect } from "./township-select"
 import moment from "moment"
-import { useAuth } from "../../../../../../../contexts/auth"
 
 function ProjectDetailsForm({
   data,
   onChange,
   isCall,
-  hiddenComments
+  hiddenComments,
+  readOnly
 }) {
-  const { user } = useAuth()
   const [state, setState] = useState({
     startDate: data?.startDate,
     endDate: data?.endDate
@@ -36,9 +35,6 @@ function ProjectDetailsForm({
     setState({ ...state, [type]: value })
     onChange(date)
   }
-
-  const readOnly = data?.state === "PROJECT" ||
-    (user?.claims?.role === "IMPLEMENTER" && data?.status.includes("REVIEW"))
 
   return (
     <Form

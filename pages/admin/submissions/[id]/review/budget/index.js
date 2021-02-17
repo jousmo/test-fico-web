@@ -12,7 +12,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo } from "../../../../../../helpers/withApollo"
+import { withApollo, selectOptions } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -26,7 +26,7 @@ import {
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
-function Budget({ client, query }) {
+function Budget({ client, query, token }) {
   const submissionId = query.id
 
   const [state, setState] = useState({
@@ -63,15 +63,19 @@ function Budget({ client, query }) {
     setState({ ...state, budget: {} })
   }, [state, updateSubmission])
 
+  const { shared: { submissionStatusOptions: status }} = selectOptions
+  const readOnly = data?.Budget?.state === "PROJECT" ||
+    status.findIndex(el => el.value === data?.Budget?.status) > 8 ||
+    (token?.role === "IMPLEMENTER" && data?.Budget?.status.includes("REVIEW"))
+
   const injectActions = useMemo(() => ({
     updateBudget,
+    readOnly,
     loading,
     error,
     data,
     review: true
   }), [state, loading, data])
-
-  const readOnly = data?.Budget?.state === "PROJECT"
 
   return (
     <PageContext.Provider value={pageData({ save, step: 2 })}>
