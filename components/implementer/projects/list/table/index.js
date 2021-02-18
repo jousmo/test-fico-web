@@ -19,8 +19,9 @@ function ProjectListingTable({ data }) {
     }
   } = implementer
 
-  projectStatusOptions.length = 6
-  const statusFilterOptions = getFilterOptions(projectStatusOptions)
+  const statusOptions = Array.from(projectStatusOptions)
+  statusOptions.length = 6
+  const statusFilterOptions = getFilterOptions(statusOptions)
   const axisFilterOptions = getFilterOptions(strategicAxisTypes)
   const regionFilterOptions = getFilterOptions(regions)
 
