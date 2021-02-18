@@ -14,9 +14,12 @@ import {
   fiscalPersonTypes,
   educationLevelTypes,
   measurementPeriodicityTypes,
-  conceptTypes
+  conceptTypes,
+  verificationTypes,
+  contractTypes
 } from "../../../../../../helpers/selectOptions/implementer/submission"
 import { capitalize } from "lodash"
+import { getReadableValue } from "../../../../../../helpers/selectOptions"
 
 const projectMonths = ({ startDate,  endDate }) => Array
   .from(
@@ -244,6 +247,9 @@ export const technicalSpecificationExport = async data => {
     el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
     el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
     el.products = el?.products?.join(' | ')
+    el.meansOfVerification = el?.meansOfVerification
+      ?.map(mean => getReadableValue(verificationTypes, mean))
+      .join(' | ')
     el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
     return Object.values(el)
   })
@@ -294,6 +300,9 @@ export const technicalSpecificationExport = async data => {
     el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
     el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
     el.products = el?.products?.join(' | ')
+    el.meansOfVerification = el?.meansOfVerification
+      ?.map(mean => getReadableValue(verificationTypes, mean))
+      .join(' | ')
     el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
     return Object.values(el)
   })
@@ -347,6 +356,9 @@ export const technicalSpecificationExport = async data => {
       el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
       el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
       el.products = el?.products?.join(' | ')
+      el.meansOfVerification = el?.meansOfVerification
+        ?.map(mean => getReadableValue(verificationTypes, mean))
+        .join(' | ')
       el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
       return Object.values(el)
     })
@@ -550,7 +562,8 @@ export const humanResourcesExport = async data => {
     }) => {
       el.benefits = typeBooleans(el?.benefits)
       el.total = numeral(((el?.taxes / 100) * el?.salary) + el?.salary).format("$0,0.00")
-      el.taxes = `${el?.taxes} %`
+      el.contractType = getReadableValue(contractTypes, el?.contractType)
+      el.taxes = `${el?.taxes || 0} %`
       return Object.values(el)
     })
 
