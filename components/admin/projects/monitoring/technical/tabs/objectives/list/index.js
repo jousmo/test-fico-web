@@ -79,6 +79,8 @@ export function ObjectivesList({ data, dateFilter }) {
         onCancel={onCancel}
         onSave={onSave}
         range={[data?.startDate, data?.endDate]}
+        save={save}
+        update={update}
         visible={state.isModalOpen} />
       <Table
         className="table-list"

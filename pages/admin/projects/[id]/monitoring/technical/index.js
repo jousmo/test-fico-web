@@ -63,8 +63,8 @@ function TechnicalMonitoringPage({ client, query }) {
       await saveMonitoring({
         variables: { data: { ...monitoring, submission: query.id } }
       })
-      success()
       await refetch()
+      success()
     }
     catch(e) {
       apolloError(e)
@@ -76,15 +76,17 @@ function TechnicalMonitoringPage({ client, query }) {
     const saving = loadingAlert()
     const newMonitoring = cloneDeep(monitoring)
 
-    newMonitoring.participants = [...newMonitoring.participants]
-      ?.map(({uuid, ...p}) => p)
+    if (newMonitoring.participants) {
+      newMonitoring.participants = [...newMonitoring.participants]
+        ?.map(({uuid, ...p}) => p)
+    }
 
     try {
       await saveMonitoring({
         variables: { data: newMonitoring }
       })
-      success()
       await refetch()
+      success()
     }
     catch(e) {
       apolloError(e)

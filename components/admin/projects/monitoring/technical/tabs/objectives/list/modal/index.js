@@ -11,7 +11,7 @@ import { useAuth } from "../../../../../../../../../contexts/auth"
 import { quarterReadOnly } from "../helpers"
 import moment from "moment"
 
-export function ObjectivesModal({ edit, onCancel, onSave, range, ...props }) {
+export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, ...props }) {
   const { user } = useAuth()
   const isAdmin = user?.claims?.role === "ADMIN"
 
@@ -82,6 +82,14 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, ...props }) {
     return { uid, ...document }
   }) || []
 
+  const onLock = value => {
+    const { reportId: id, key } = edit
+    const reviewedAt = value ? moment().format() : null
+    if (id) update({ id, reviewedAt })
+    else save({ key, reviewedAt })
+    onCancel()
+  }
+
   const readOnly = quarterReadOnly(range, edit?.reviewedAt)
 
   return (
@@ -105,14 +113,9 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, ...props }) {
           </Col>
           {isAdmin &&
             <Col span={8}>
-              <Form.Item
-                label="Bloquear revisión"
-                id="reviewedAt"
-                name="reviewedAt"
-                getValueFromEvent={value => value && moment().format()}
-                style={{ marginBottom: "0" }}>
-                <Switch size="small" defaultChecked={readOnly} />
-              </Form.Item>
+              Bloquear revisión:
+              &nbsp;
+              <Switch onChange={value => onLock(value)} size="small" defaultChecked={readOnly} />
             </Col>
           }
           <Col span={24}>
