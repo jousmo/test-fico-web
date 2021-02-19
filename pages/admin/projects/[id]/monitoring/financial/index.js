@@ -7,7 +7,7 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../../../../graphql"
 import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
-import { success, warning, loadingAlert, withApollo } from "../../../../../../helpers"
+import { success, loadingAlert, withApollo } from "../../../../../../helpers"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
@@ -17,21 +17,8 @@ function FinancialMonitoringPage({ client, query }) {
     variables: { id: query.id }
   })
 
-  const [createProjectInvoice] = useMutation(
-    submission.mutations.createProjectInvoice, {
-      client: client,
-      awaitRefetchQueries: true,
-      refetchQueries: [
-        {
-          query: submission.queries.getById,
-          variables: { id: query.id }
-        }
-      ]
-    }
-  )
-
-  const [updateProjectInvoice] = useMutation(
-    submission.mutations.updateProjectInvoice, {
+  const [saveProjectInvoice] = useMutation(
+    submission.mutations.mutateProjectInvoice, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -59,14 +46,13 @@ function FinancialMonitoringPage({ client, query }) {
   const save = useCallback(async expense => {
     const saving = loadingAlert("Guardando", 0)
     try {
-      await createProjectInvoice({ variables: { data: expense, id: query.id } })
+      await saveProjectInvoice({ variables: { data: { ...expense, submission: query.id } } })
       saving()
       success()
     } catch (e) {
-      warning()
       apolloError(e)
     }
-  }, [createProjectInvoice])
+  }, [saveProjectInvoice])
 
   const deleteInvoice = useCallback(async id => {
     const saving = loadingAlert("Eliminando", 0)
@@ -74,9 +60,7 @@ function FinancialMonitoringPage({ client, query }) {
       await deleteProjectInvoice({ variables: { id } })
       success("Eliminado correctamente")
     } catch (e) {
-      warning()
       apolloError(e)
-      console.error(e)
     }
     saving()
   }, [deleteProjectInvoice])
@@ -84,15 +68,14 @@ function FinancialMonitoringPage({ client, query }) {
   const update = useCallback(async expense => {
     const saving = loadingAlert("Actualizando", 0)
     try {
-      const { id, index, ...newExpense } = expense
-      await updateProjectInvoice({ variables: { data: newExpense, id } })
+      const { index, ...newExpense } = expense
+      await saveProjectInvoice({ variables: { data: newExpense } })
       saving()
       success()
     } catch (e) {
-      warning()
       apolloError(e)
     }
-  }, [updateProjectInvoice])
+  }, [saveProjectInvoice])
 
   const injectActions = useMemo(() => ({
     loading,

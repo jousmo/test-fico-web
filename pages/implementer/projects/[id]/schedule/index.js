@@ -56,7 +56,7 @@ function ProjectSchedulePage({ client, query }) {
 
   return (
     <PageContext.Provider
-      value={{ type: "admin", step: "active", submenu: "projects" }}>
+      value={{ type: "implementer", step: "active", submenu: "projects" }}>
       <AdminSubmissionContext.Provider value={injectActions}>
         <Layout subheader={false}>
           <ProjectSchedule />

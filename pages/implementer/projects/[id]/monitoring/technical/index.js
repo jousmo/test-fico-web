@@ -9,7 +9,7 @@ import {
 import { submission } from "../../../../../../graphql"
 import React, { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { loadingAlert, success, warning, withApollo } from "../../../../../../helpers"
+import { loadingAlert, success, withApollo } from "../../../../../../helpers"
 import { cloneDeep, omit } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
@@ -20,12 +20,8 @@ function TechnicalMonitoringPage({ client, query }) {
     variables: { id: query?.id }
   })
 
-  const [createMonitoring] = useMutation(
-    submission.mutations.createMonitoring, { client: client }
-  )
-
-  const [updateMonitoring] = useMutation(
-    submission.mutations.updateMonitoring, { client: client }
+  const [saveMonitoring] = useMutation(
+    submission.mutations.mutateMonitoring, { client: client }
   )
 
   const [updateSub] = useMutation(
@@ -77,9 +73,8 @@ function TechnicalMonitoringPage({ client, query }) {
         })
       }
       success()
-      refetch()
+      await refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -95,9 +90,8 @@ function TechnicalMonitoringPage({ client, query }) {
         await updateProjectAssistants({ variables: { data: newData, id: data?.projectAssistantId } })
       }
       success()
-      refetch()
+      await refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -111,9 +105,8 @@ function TechnicalMonitoringPage({ client, query }) {
         await updateProjectAssistants({ variables: { data: { beneficiary: false }, id: projectAssistantId } })
       }
       success("Eliminado correctamente")
-      refetch()
+      await refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -126,9 +119,8 @@ function TechnicalMonitoringPage({ client, query }) {
         variables: { data: assistant, id: query.id }
       })
       success()
-      refetch()
+      await refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -140,9 +132,8 @@ function TechnicalMonitoringPage({ client, query }) {
       const { id, ...data } = assistant
       await updateProjectAssistants({ variables: { data, id } })
       success()
-      refetch()
+      await refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -153,9 +144,8 @@ function TechnicalMonitoringPage({ client, query }) {
     try {
       await deleteProjectAssistants({ variables: { id } })
       success("Eliminado correctamente")
-      refetch()
+      await refetch()
     } catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -170,7 +160,6 @@ function TechnicalMonitoringPage({ client, query }) {
       success()
     }
     catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
@@ -179,40 +168,37 @@ function TechnicalMonitoringPage({ client, query }) {
   const save = useCallback(async monitoring => {
     const saving = loadingAlert("Guardando...", 0)
     try {
-      await createMonitoring({
-        variables: { data: monitoring, id: query.id }
+      await saveMonitoring({
+        variables: { data: { ...monitoring, submission: query.id } }
       })
       success()
-      refetch()
+      await refetch()
     }
     catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
-  }, [createMonitoring, refetch])
+  }, [saveMonitoring, refetch])
 
   const update = useCallback(async monitoring => {
     const saving = loadingAlert("Guardando...", 0)
     const newMonitoring = cloneDeep(monitoring)
-    const { id, ...updatedMonitoring } = newMonitoring
 
-    updatedMonitoring.participants = [...updatedMonitoring.participants]
+    newMonitoring.participants = [...newMonitoring.participants]
       ?.map(({uuid, ...p}) => p)
 
     try {
-      await updateMonitoring({
-        variables: { data: updatedMonitoring, id: id }
+      await saveMonitoring({
+        variables: { data: newMonitoring }
       })
       success()
-      refetch()
+      await refetch()
     }
     catch(e) {
-      warning()
       apolloError(e)
     }
     saving()
-  }, [updateMonitoring, refetch])
+  }, [saveMonitoring, refetch])
 
   const saveActivity = useCallback(async activity => {
     const saving = loadingAlert("Guardando...", 0)
@@ -222,7 +208,6 @@ function TechnicalMonitoringPage({ client, query }) {
       })
     }
     catch(e) {
-      warning()
       apolloError(e)
     }
     saving()

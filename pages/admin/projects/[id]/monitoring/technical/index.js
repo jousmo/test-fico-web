@@ -20,12 +20,8 @@ function TechnicalMonitoringPage({ client, query }) {
     variables: { id: query.id }
   })
 
-  const [createMonitoring] = useMutation(
-    submission.mutations.createMonitoring, { client: client }
-  )
-
-  const [updateMonitoring] = useMutation(
-    submission.mutations.updateMonitoring, { client: client }
+  const [saveMonitoring] = useMutation(
+    submission.mutations.mutateMonitoring, { client: client }
   )
 
   const [updateSub] = useMutation(
@@ -64,38 +60,39 @@ function TechnicalMonitoringPage({ client, query }) {
   const save = useCallback(async monitoring => {
     const saving = loadingAlert()
     try {
-      await createMonitoring({
-        variables: { data: monitoring, id: query.id }
+      await saveMonitoring({
+        variables: { data: { ...monitoring, submission: query.id } }
       })
+      await refetch()
       success()
-      refetch()
     }
     catch(e) {
       apolloError(e)
     }
     saving()
-  }, [createMonitoring, refetch])
+  }, [saveMonitoring, refetch])
 
   const update = useCallback(async monitoring => {
     const saving = loadingAlert()
     const newMonitoring = cloneDeep(monitoring)
-    const { id, ...updatedMonitoring } = newMonitoring
 
-    updatedMonitoring.participants = [...updatedMonitoring.participants]
-      ?.map(({uuid, ...p}) => p)
+    if (newMonitoring.participants) {
+      newMonitoring.participants = [...newMonitoring.participants]
+        ?.map(({uuid, ...p}) => p)
+    }
 
     try {
-      await updateMonitoring({
-        variables: { data: updatedMonitoring, id: id }
+      await saveMonitoring({
+        variables: { data: newMonitoring }
       })
+      await refetch()
       success()
-      refetch()
     }
     catch(e) {
       apolloError(e)
     }
     saving()
-  }, [updateMonitoring, refetch])
+  }, [saveMonitoring, refetch])
 
   const injectActions = useMemo(() => ({
     updateSubmission,

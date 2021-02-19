@@ -7,8 +7,9 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../../../../graphql/submission"
 import { useCallback, useMemo } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
-import { Bugsnag, loadingAlert, success, warning, withApollo } from "../../../../../../helpers"
+import { loadingAlert, success, withApollo } from "../../../../../../helpers"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
+import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
 function FinancialMonitoringPage({ client, query }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
@@ -16,21 +17,8 @@ function FinancialMonitoringPage({ client, query }) {
     variables: { id: query.id }
   })
 
-  const [createProjectInvoice] = useMutation(
-    submission.mutations.createProjectInvoice, {
-      client: client,
-      awaitRefetchQueries: true,
-      refetchQueries: [
-        {
-          query: submission.queries.getById,
-          variables: { id: query.id }
-        }
-      ]
-    }
-  )
-
-  const [updateProjectInvoice] = useMutation(
-    submission.mutations.updateProjectInvoice, {
+  const [saveProjectInvoice] = useMutation(
+    submission.mutations.mutateProjectInvoice, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -58,15 +46,13 @@ function FinancialMonitoringPage({ client, query }) {
   const save = useCallback(async expense => {
     const saving = loadingAlert("Guardando", 0)
     try {
-      await createProjectInvoice({ variables: { data: expense, id: query.id } })
+      await saveProjectInvoice({ variables: { data: { ...expense, submission: query.id } } })
       success()
     } catch (e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
-  }, [createProjectInvoice])
+  }, [saveProjectInvoice])
 
   const deleteInvoice = useCallback(async id => {
     const saving = loadingAlert("Eliminando", 0)
@@ -74,9 +60,7 @@ function FinancialMonitoringPage({ client, query }) {
       await deleteProjectInvoice({ variables: { id } })
       success("Eliminado correctamente")
     } catch (e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
   }, [deleteProjectInvoice])
@@ -84,16 +68,14 @@ function FinancialMonitoringPage({ client, query }) {
   const update = useCallback(async expense => {
     const saving = loadingAlert("Guardando", 0)
     try {
-      const { id, index, ...newExpense } = expense
-      await updateProjectInvoice({ variables: { data: newExpense, id } })
+      const { index, ...newExpense } = expense
+      await saveProjectInvoice({ variables: { data: newExpense } })
       success()
     } catch (e) {
-      warning()
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
     saving()
-  }, [updateProjectInvoice])
+  }, [saveProjectInvoice])
 
   const injectActions = useMemo(() => ({
     loading,
@@ -106,7 +88,7 @@ function FinancialMonitoringPage({ client, query }) {
 
   return (
     <PageContext.Provider
-      value={{ type: "admin", step: "active", submenu: "projects" }}>
+      value={{ type: "implementer", step: "active", submenu: "projects" }}>
       <AdminSubmissionContext.Provider value={injectActions}>
         <Layout subheader={false}>
           <MonitoringFinancial />

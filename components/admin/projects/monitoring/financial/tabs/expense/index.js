@@ -131,6 +131,7 @@ export function Expense () {
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 onCancel={onCancel}
                 edit={state.edit}
+                update={update}
                 className="fico expense-modal-form"/>
               <ListExpense
                 dataSource={items}
