@@ -29,7 +29,7 @@ import {
 } from "../../../helpers"
 import { useAuth } from "../../../../../../../../contexts/auth"
 
-export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
+export function ModalExpense({ onSave, onCancel, edit, submission, update, ...props }) {
   const [state, setState] = useState(INIT_STATE)
   const [stateTypeRH, setStateTypeRH] = useState(false)
   const [stateOldAmount, setStateOldAmount] = useState(false)
@@ -136,6 +136,12 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
     setState({ ...state, percentage })
   }
 
+  const onLock = reviewed => {
+    const { id } = edit
+    update({ id, reviewed })
+    onCancel()
+  }
+
   const readOnly = edit?.reviewed
   const typeRH = edit?.typeRH
 
@@ -157,13 +163,9 @@ export function ModalExpense({ onSave, onCancel, edit, submission, ...props }) {
 
         {isAdmin &&
           <Col span={20}>
-            <Form.Item
-              label="Bloquear revisión"
-              id="reviewed"
-              name="reviewed"
-              style={{ marginBottom: "0" }}>
-              <Switch size="small" defaultChecked={readOnly} />
-            </Form.Item>
+            Bloquear revisión:
+            &nbsp;
+            <Switch onChange={value => onLock(value)} size="small" defaultChecked={readOnly} />
           </Col>
         }
 
