@@ -6,7 +6,7 @@ import { FinancingField } from "./financing-field"
 import { money } from "../../../../../../helpers/valueFormat"
 import { merge } from "lodash"
 
-export function ProjectModal({ onSave, edit, ...props }) {
+export function ProjectModal({ onCancel, onSave, edit, ...props }) {
   const [form] = Form.useForm()
   const [state, setState] = useState({ total: 0 })
 
@@ -42,11 +42,17 @@ export function ProjectModal({ onSave, edit, ...props }) {
     setState({ total })
   }
 
+  const onCancelModal = () => {
+    form.resetFields()
+    onCancel()
+  }
+
   return (
     <Modal
-      title="Agregar proyecto"
+      title={`${edit ? "Editar" : "Agregar"} proyecto`}
       onOk={onOk}
-      okText="Agregar"
+      onCancel={onCancelModal}
+      okText={edit ? "Guardar" : "Agregar"}
       cancelText="Cancelar"
       width={650}
       destroyOnClose
