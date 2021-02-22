@@ -65,6 +65,7 @@ export const getGeneralInfo = gql`
         }
       }
       specificObjectives {
+        id
         description
         orderIndex
       }
