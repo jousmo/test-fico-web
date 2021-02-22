@@ -1,21 +1,21 @@
 export const decoratedData = data => {
   const projectsByYear = {}
   data?.Implementer?.projects?.forEach(project => {
-    if (!projectsByYear[project.year]) {
+    if (!(project.year in projectsByYear)) {
       projectsByYear[project.year] = [project]
     } else {
-      projectsByYear[project.year].concat(project)
+      projectsByYear[project.year].push(project)
     }
   })
 
-  return projectsByYear ? Object.keys(projectsByYear)?.map(key => {
+  return Object.keys(projectsByYear)?.map(key => {
     const result = { year: key, PRIVATE: 0, PUBLIC: 0, OWN: 0, total: 0 }
     projectsByYear[key]?.forEach(project => {
       project.financing?.forEach(el => {
-        result[el.type] = result[el.type] + el.amount
-        result.total = result.total + el.amount
+        result[el.type] += el.amount
+        result.total += el.amount
       })
     })
     return result
-  }) : []
+  })
 }

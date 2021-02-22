@@ -108,7 +108,7 @@ function Profile({ client, token }) {
     error,
     save,
     data
-  }), [data, state, loading])
+  }), [data, loading])
 
   return (
     <ImplementerProfileContext.Provider value={injectActions}>
