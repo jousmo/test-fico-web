@@ -86,6 +86,7 @@ function TechnicalSpecification({ client, query, token }) {
   const readOnly = data?.TechnicalSpecification?.state === "PROJECT" ||
     status.findIndex(el => el.value === data?.TechnicalSpecification?.status) > 8 ||
     (token?.role === "IMPLEMENTER" && data?.TechnicalSpecification?.status.includes("REVIEW"))
+
   const hiddenComments = data?.TechnicalSpecification?.status === "CREATED"
 
   const injectActions = useMemo(() => ({
