@@ -11,11 +11,11 @@ export const setReviewedComments = async (data, setState, updateComments) => {
   const saving = loadingAlert()
   try {
     await updateComments({ variables: { data } })
-    saving()
     success()
   }
   catch(err) {
     apolloError(err)
   }
+  saving()
   setState(state => ({ ...state, isSaving: false }))
 }

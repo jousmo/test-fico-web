@@ -23,6 +23,11 @@ export function ConceptModal({
   ...props
 }) {
   const hasRegion = !submission?.township?.includes("Zona centro sur")
+  const humanResources = [
+    "HUMAN_RESOURCE",
+    "ADVERTISEMENT_HUMAN_RESOURCE",
+    "ADMINISTRATIVE_HUMAN_RESOURCE",
+  ]
 
   const [form] = Form.useForm()
   const [state, setState] = useState({})
@@ -68,13 +73,12 @@ export function ConceptModal({
       values.unitCost = Number(values.unitCost)
       values.totalUnits = Number(values.totalUnits)
 
-      if (
-        [
-          "HUMAN_RESOURCE",
-          "ADVERTISEMENT_HUMAN_RESOURCE",
-          "ADMINISTRATIVE_HUMAN_RESOURCE",
-        ].includes(values.type) && !edit) {
-        values.humanResource = [{ position: values.name }]
+      if (humanResources.includes(values.type)) {
+        if (edit) {
+          values.humanResource[0].position = values.name
+        } else {
+          values.humanResource = [{ position: values.name }]
+        }
       }
 
       onSave(values)
@@ -101,7 +105,7 @@ export function ConceptModal({
   }
 
   const onTypeChange = value => {
-    if (getSelectValue(value) === "HUMAN_RESOURCE"){
+    if (humanResources.includes(getSelectValue(value))){
       form.setFieldsValue({ measurementUnit: "Mes" })
       setState(state => ({ isUnitDisabled: true, ...state }))
     } else if (getSelectValue(value) === "EQUIPMENT"){

@@ -32,8 +32,7 @@ function BudgetForm({ data, onChange, hiddenComments, readOnly, review }) {
   }
 
   const onEdit = (item, index) => {
-    item.index = index
-    setState({ ...state, isModalOpen: true, edit: item })
+    setState({ ...state, isModalOpen: true, edit: { ...item, index } })
   }
 
   const concepts = Submission?.concepts?.sort((a, b) => a.index - b.index)
