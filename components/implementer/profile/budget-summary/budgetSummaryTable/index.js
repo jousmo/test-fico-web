@@ -26,13 +26,13 @@ function BudgetSummaryTable({ data }) {
           key="year"
           dataIndex="year" />
         <Table.Column
-          title="Presupuesto público"
-          dataIndex="PUBLIC"
-          render={(t, row) => getValue(row, "PUBLIC")} />
-        <Table.Column
           title="Presupuesto propio"
           dataIndex="OWN"
           render={(t, row) => getValue(row, "OWN")} />
+        <Table.Column
+          title="Presupuesto público"
+          dataIndex="PUBLIC"
+          render={(t, row) => getValue(row, "PUBLIC")} />
         <Table.Column
           title="Presupuesto privado"
           dataIndex="PRIVATE"

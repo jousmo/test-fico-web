@@ -44,9 +44,8 @@ function ProjectsForm({ data, onChange, disabled }) {
     return result
   }
 
-  const onEdit = (item, index) => {
-    item.index = index
-    setState({ isModalOpen: true, edit: item })
+  const onEdit = (row, index) => {
+    setState({ isModalOpen: true, edit: { ...row, index } })
   }
 
   return (

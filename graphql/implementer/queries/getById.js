@@ -38,6 +38,7 @@ export const getById = gql`
         objective
         year
         financing {
+          id
           type
           institution
           amount

@@ -26,49 +26,51 @@ export function FinancingField({ total, value, ...props }) {
           <Col span={8}>Aportador</Col>
           <Col span={6}>Monto ($)</Col>
           { items?.map((item, index) =>
-            <>
-              <Col span={6}>
-                <Form.Item
-                  style={{ marginBottom: 0 }}>
-                  <SelectField
-                    id="type"
-                    name="type"
-                    value={item.type}
-                    onChange={updateItem(index)}
-                    options={implementer.profile.budgetTypes} />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item style={{ marginBottom: 0 }}>
-                  <Input
-                    id="institution"
-                    name="institution"
-                    value={item.institution}
-                    disabled={item.type === "OWN"}
-                    onChange={updateItem(index)}
-                    type="text" />
-                </Form.Item>
-              </Col>
-              <Col span={6}>
-                <Form.Item style={{ marginBottom: 0 }}>
-                  <Input
-                    id="amount"
-                    name="amount"
-                    value={item.amount}
-                    onChange={updateItem(index)} />
-                </Form.Item>
-              </Col>
-              <Col span={3}>
-                <Form.Item style={{ marginBottom: 0 }}>
-                  {getPercentage(item.amount)}%
-                </Form.Item>
-              </Col>
-              <Col span={1}>
-                <Form.Item style={{ marginBottom: 0 }}>
-                  <DeleteButton onClick={removeItem(index)} />
-                </Form.Item>
-              </Col>
-            </>
+            <Col span={24} key={item.id}>
+              <Row gutter={[10, 8]}>
+                <Col span={6}>
+                  <Form.Item
+                    style={{ marginBottom: 0 }}>
+                    <SelectField
+                      id="type"
+                      name="type"
+                      value={item.type}
+                      onChange={updateItem(index)}
+                      options={implementer.profile.budgetTypes} />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item style={{ marginBottom: 0 }}>
+                    <Input
+                      id="institution"
+                      name="institution"
+                      value={item.institution}
+                      disabled={item.type === "OWN"}
+                      onChange={updateItem(index)}
+                      type="text" />
+                  </Form.Item>
+                </Col>
+                <Col span={6}>
+                  <Form.Item style={{ marginBottom: 0 }}>
+                    <Input
+                      id="amount"
+                      name="amount"
+                      value={item.amount}
+                      onChange={updateItem(index)} />
+                  </Form.Item>
+                </Col>
+                <Col span={3}>
+                  <Form.Item style={{ marginBottom: 0 }}>
+                    {getPercentage(item.amount)}%
+                  </Form.Item>
+                </Col>
+                <Col span={1}>
+                  <Form.Item style={{ marginBottom: 0 }}>
+                    <DeleteButton onClick={removeItem(index)} />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
           ) }
         </Row>
       }
