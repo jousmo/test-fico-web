@@ -25,7 +25,7 @@ import {
   setReviewedComments
 } from "../../../../../../helpers/submissionFunctions/comments"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
-import {selectOptions} from "../../../../../../helpers"
+import { selectOptions } from "../../../../../../helpers"
 
 function Budget({ client, query, token }) {
   const submissionId = query.id
@@ -37,7 +37,7 @@ function Budget({ client, query, token }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateBudget, {
+    submission.mutations.upsertSubmission, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -74,7 +74,6 @@ function Budget({ client, query, token }) {
 
   const save = useCallback(async () => {
     await setSave(state, setState, updateSubmission, submissionId)
-    setState({ ...state, budget: {} })
   }, [state, updateSubmission])
 
   const onCommentsReview = useCallback(async comments => {
