@@ -45,8 +45,7 @@ function ProjectsForm({ data, onChange, disabled }) {
   }
 
   const onEdit = (row, index) => {
-    const edit = { index, ...data.Implementer.projects[index] }
-    setState({ isModalOpen: true, edit })
+    setState({ isModalOpen: true, edit: { ...row, index } })
   }
 
   return (
