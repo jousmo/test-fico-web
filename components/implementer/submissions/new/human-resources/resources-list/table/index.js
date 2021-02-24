@@ -16,9 +16,11 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
 
   const hrState = {}
   let hrCount = 0
-  const humanResources = data?.Concepts?.reduce((prev, current) => {
+  const conceptIndices = {}
+  const humanResources = data?.Concepts?.reduce((prev, current, index) => {
     const humanResource = current.humanResource[0]
     if (humanResource) {
+      conceptIndices[hrCount] = index
       hrState[hrCount] = {
         salary: humanResource.salary || 0,
         hasTax: humanResource.contractType !== "EMPLOYEE",
@@ -114,7 +116,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                           {!hiddenComments &&
                           <CommentButton
                             index={index}
-                            name={index.toString()}
+                            name={conceptIndices[index].toString()}
                             small
                             section="HUMAN_RESOURCE" />
                           }
