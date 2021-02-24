@@ -1,7 +1,9 @@
 import { loadingAlert, success } from "../alert"
+import { omit } from "lodash"
 import { apolloError } from "../bugsnag/notify"
 
 export const setUpdateBudget = (data, state, setState) => {
+  data.concepts = data?.concepts?.map(concept => omit(concept, ["budgeted"])) || []
   const budget = { ...state.budget, ...data }
   setState({ ...state, dirty: true, budget })
 }
