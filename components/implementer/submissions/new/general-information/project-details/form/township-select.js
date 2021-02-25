@@ -42,10 +42,9 @@ export function TownshipSelect({
       id="township"
       name="township"
       onChange={onSelectChange}
-      mode="tags"
+      mode="multiple"
       placeholder="Selecciona..."
       defaultValue={defaultValue}
-      showSearch
       {...props}>
       { options?.map((o, i) => (
         <Select.OptGroup
