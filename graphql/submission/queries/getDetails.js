@@ -34,6 +34,10 @@ export const getDetails = gql`
       evidenced
       difference
       createdAt
+      implementer {
+        id
+        name
+      }
       specificObjectives {
         description
       }
