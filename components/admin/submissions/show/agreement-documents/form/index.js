@@ -8,6 +8,16 @@ import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
 
 function AgreementDocumentsForm({ data, client, refetch }) {
+  if (data?.status !== "ON_AGREEMENT"){
+    return (
+      <Alert
+        message="Cuando se apruebe el proyecto de la implementadora se podrán
+        descargar los documentos de la solicitud."
+        type="warning"
+      />
+    )
+  }
+
   const documents = data?.documents
 
   const [deleteDocumentSubmission] = useMutation(
@@ -37,16 +47,6 @@ function AgreementDocumentsForm({ data, client, refetch }) {
       console.error(e)
     }
   }, [documents])
-
-  if (data?.status !== "ON_AGREEMENT"){
-    return (
-      <Alert
-        message="Cuando se apruebe el proyecto de la implementadora se podrán
-        descargar los documentos de la solicitud."
-        type="warning"
-      />
-    )
-  }
 
   return (
     <Form

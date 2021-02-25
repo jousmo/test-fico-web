@@ -53,12 +53,12 @@ function Beneficiary({ data }){
       </Typography.Text>
       <br />
       <Typography.Text type="secondary">
-        {number} beneficiarios
+        {number || 0} beneficiarios
       </Typography.Text>
       <br />
       <Typography.Text strong>Nivel Educativo: </Typography.Text>
       <Typography.Text>
-        {`${readableEdLevel} - ${readableGender}`}
+        {`${readableEdLevel || "N/A"} - ${readableGender || "N/A"}`}
       </Typography.Text>
       <br />
       <Typography.Text strong>Edad: </Typography.Text>
