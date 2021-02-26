@@ -6,6 +6,8 @@ export const getBudget = gql`
       allies
       status
       endDate
+      region
+      township
       startDate
       concepts {
         id
