@@ -38,7 +38,7 @@ function TechnicalSpecification({ client, query, token }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateTechnicalSpecification, {
+    submission.mutations.upsertSubmission, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -61,7 +61,6 @@ function TechnicalSpecification({ client, query, token }) {
 
   const save = useCallback(async () => {
     await setSave(state, setState, updateSubmission, submissionId)
-    setState({ ...state, technicalSpecification: {} })
   }, [state])
 
   const { shared: { submissionStatusOptions: status }} = selectOptions
