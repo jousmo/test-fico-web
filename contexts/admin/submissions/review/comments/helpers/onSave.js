@@ -25,57 +25,39 @@ export const onSaveHelper = (
 
   switch (section){
     case "SUBMISSION": {
-      const newComments = addSubmissionComment(submission, comment)
-      newSubmission = {
-        ...submission,
-        comments: newComments
-      }
-      update({ comments: newComments })
+      const comments = addSubmissionComment(submission, comment)
+      newSubmission = { ...submission, comments }
+      update({ comments })
       break
     }
     case "CONSULTANT": {
       const consultants = addConsultantComment(submission, comment, index)
-      newSubmission = {
-        ...submission,
-        consultants: consultants
-      }
-      update({ consultants: consultants })
+      newSubmission = {...submission, consultants }
+      update({ consultants })
       break
     }
     case "BENEFICIARY": {
       const beneficiaries = addBeneficiaryComment(submission, comment, index)
-      newSubmission = {
-        ...submission,
-        beneficiaries: beneficiaries
-      }
-      update({ beneficiaries: beneficiaries })
+      newSubmission = { ...submission, beneficiaries }
+      update({ beneficiaries })
       break
     }
     case "GENERAL_INDICATOR": {
-      const indicators = addGeneralIComment(submission, comment, index)
-      newSubmission = {
-        ...submission,
-        generalObjectiveIndicators: indicators
-      }
-      update({ generalObjectiveIndicators: indicators })
+      const generalObjectiveIndicators = addGeneralIComment(submission, comment, index)
+      newSubmission = { ...submission, generalObjectiveIndicators }
+      update({ generalObjectiveIndicators })
       break
     }
     case "DEVELOPMENT_INDICATOR": {
-      const indicators = addDevelopmentIComment(submission, comment, index)
-      newSubmission = {
-        ...submission,
-        developmentObjectiveIndicators: indicators
-      }
-      update({ developmentObjectiveIndicators: indicators })
+      const developmentObjectiveIndicators = addDevelopmentIComment(submission, comment, index)
+      newSubmission = { ...submission, developmentObjectiveIndicators }
+      update({ developmentObjectiveIndicators })
       break
     }
     case "BUDGET": {
       const concepts = addBudgetComment(submission, comment, index)
-      newSubmission = {
-        ...submission,
-        concepts: concepts
-      }
-      update({ concepts: concepts })
+      newSubmission = { ...submission, concepts }
+      update({ concepts })
       break
     }
     case "HUMAN_RESOURCE": {
@@ -85,40 +67,31 @@ export const onSaveHelper = (
       break
     }
     case "SPECIFIC_OBJECTIVE": {
-      const objectives = addSpecificOComment(submission, comment, index)
-      newSubmission = {
-        ...submission,
-        specificObjectives: objectives
-      }
-      update({ specificObjectives: objectives })
+      const specificObjectives = addSpecificOComment(submission, comment, index)
+      newSubmission = { ...submission, specificObjectives }
+      update({ specificObjectives })
       break
     }
     case "SPECIFIC_INDICATOR": {
-      const objectives = addSpecificIComment(submission, comment, index)
-      if (objectives === false) {
+      const specificObjectives = addSpecificIComment(submission, comment, index)
+      if (specificObjectives === false) {
         newSubmission = { ...submission }
         break
       }
 
-      newSubmission = {
-        ...submission,
-        specificObjectives: objectives
-      }
-      update({ specificObjectives: objectives })
+      newSubmission = { ...submission, specificObjectives }
+      update({ specificObjectives })
       break
     }
     case "SPECIFIC_ACTIVITY": {
-      const objectives = addSpecificAComment(submission, comment, index)
-      if (objectives === false) {
+      const specificObjectives = addSpecificAComment(submission, comment, index)
+      if (specificObjectives === false) {
         newSubmission = { ...submission }
         break
       }
-      newSubmission = {
-        ...submission,
-        specificObjectives: objectives
-      }
-      update({ specificObjectives: objectives })
 
+      newSubmission = { ...submission, specificObjectives }
+      update({ specificObjectives })
       break
     }
     default:
