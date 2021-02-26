@@ -49,7 +49,8 @@ function HumanResources({ client, query, token }) {
 
   const { loading, error, data } = useQuery(submission.queries.getConcepts, {
     client: client,
-    variables: { id: query.id }
+    variables: { id: query.id },
+    fetchPolicy: "network-only"
   })
 
   const updateHumanResources = useCallback(humanResources => {
