@@ -22,7 +22,8 @@ export function ConceptModal({
   readOnly,
   ...props
 }) {
-  const hasRegion = !submission?.township?.includes("Zona centro sur")
+  const township = submission?.township?.join(" ")
+  const hasRegion = !township?.includes("Zona centro sur" || "Estatal")
   const humanResources = [
     "HUMAN_RESOURCE",
     "ADVERTISEMENT_HUMAN_RESOURCE",
@@ -147,7 +148,6 @@ export function ConceptModal({
           </Col>
           <Col span={12}>
             <Form.Item
-              initialValue={hasRegion ? submission.region : ""}
               name="region"
               style={{display: "inline"}}
               label="Región"
