@@ -27,12 +27,12 @@ export const setSave = async (state, setState, updateSubmission, id) => {
       objective.indicators = objective.indicators?.map(({uuid, index, ...indicator}) => indicator)
       return objective
     })
-    await updateSubmission({ variables: { data: data, id: id } })
+    await updateSubmission({ variables: { data: { ...data, id } } })
     saving()
     success()
   }
   catch(e) {
     apolloError(e)
   }
-  setState({ ...state, isSaving: false })
+  setState({ ...state, isSaving: false, technicalSpecification: {} })
 }
