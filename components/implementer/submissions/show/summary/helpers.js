@@ -21,7 +21,6 @@ export const requiredFields = [
   "generalObjective",
   "specificObjectives",
   "issueDescription",
-  "region",
   "responsible",
   "type"
 ]
@@ -45,7 +44,6 @@ export const fieldsLabels = {
   generalObjective: "Objetivo general",
   specificObjectives: "Objetivos específicos",
   issueDescription: "Problemática a tratar",
-  region: "Región",
   responsible: "Responsable del proyecto",
   type: "Tipo de solicitud"
 }
