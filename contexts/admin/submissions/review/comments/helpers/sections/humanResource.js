@@ -1,7 +1,9 @@
+import { cloneDeep } from "lodash"
+
 const getHumanResources = submission => {
   const humanResources = []
-  const concepts = submission?.concepts?.map(({ budgeted, ...concept }) => {
-    if (concept.humanResource[0]) {
+  const concepts = cloneDeep(submission?.concepts)?.map(({ budgeted, ...concept }) => {
+    if (concept.humanResource?.[0]) {
       humanResources.push(concept.humanResource[0])
     }
     return concept
@@ -11,7 +13,7 @@ const getHumanResources = submission => {
 
 export const deleteHRComments = (submission, toDelete, index) => {
   const { concepts, humanResources } = getHumanResources(submission)
-  const conceptIndex = concepts.findIndex(el => el.humanResource[0].id === humanResources[index].id)
+  const conceptIndex = concepts.findIndex(el => el.humanResource[0]?.id === humanResources[index].id)
 
   const newComments = humanResources[index]?.comments?.filter(e => e.id !== toDelete.id)
   const newHR = { ...humanResources[index], comments: newComments }
