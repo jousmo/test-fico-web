@@ -76,10 +76,13 @@ function Budget({ client, query, token }) {
     review: true
   }), [state, loading, data])
 
+  const disabledComments = data?.Budget?.status.includes("REVISION")
+
   return (
     <PageContext.Provider value={pageData({ save, step: 2 })}>
       <CommentsProvider
         submission={data?.Budget}
+        readOnly={disabledComments}
         update={updateBudget}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
