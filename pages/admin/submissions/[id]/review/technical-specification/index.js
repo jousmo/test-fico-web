@@ -77,10 +77,13 @@ function TechnicalSpecification({ client, query, token }) {
     review: true
   }), [state, loading, data])
 
+  const disabledComments = data?.TechnicalSpecification?.status.includes("REVISION")
+
   return (
     <PageContext.Provider value={pageData({ save, step: 1 })}>
       <CommentsProvider
         submission={data?.TechnicalSpecification}
+        readOnly={disabledComments}
         update={updateTechnicalSpecification}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
