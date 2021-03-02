@@ -68,21 +68,21 @@ function HumanResources({ client, query, token }) {
     (token?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
 
   const injectActions = useMemo(() => ({
+    commentSubmission: { concepts: data?.Concepts, status: data?.SubmissionSimple?.status },
     updateHumanResources,
     readOnly,
     loading,
     error,
     form,
     data
-  }), [state, loading, data])
+  }), [loading, data])
 
-  const commentSubmission = { concepts: data?.Concepts, status: data?.SubmissionSimple?.status }
   const disabledComments = data?.SubmissionSimple?.status.includes("REVISION")
 
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
-        submission={commentSubmission}
+        submission={injectActions.commentSubmission}
         readOnly={disabledComments}
         update={updateHumanResources}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
