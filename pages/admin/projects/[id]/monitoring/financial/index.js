@@ -12,7 +12,7 @@ import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
 function FinancialMonitoringPage({ client, query }) {
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getInvoices, {
     client: client,
     variables: { id: query.id }
   })
@@ -23,7 +23,7 @@ function FinancialMonitoringPage({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getInvoices,
           variables: { id: query.id }
         }
       ]
@@ -36,7 +36,7 @@ function FinancialMonitoringPage({ client, query }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getById,
+          query: submission.queries.getInvoices,
           variables: { id: query.id }
         }
       ]
