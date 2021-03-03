@@ -22,6 +22,7 @@ export const getById = gql`
       previousSupports
       alliances
       incomesAndExpenses
+      socialObject
       councilMembers {
         name
         charge
