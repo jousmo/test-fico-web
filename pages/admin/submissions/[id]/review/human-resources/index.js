@@ -76,11 +76,13 @@ function HumanResources({ client, query, token }) {
   }), [state, loading, data])
 
   const commentSubmission = { concepts: data?.Concepts, status: data?.SubmissionSimple?.status }
+  const disabledComments = data?.SubmissionSimple?.status.includes("REVISION")
 
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
         submission={commentSubmission}
+        readOnly={disabledComments}
         update={updateHumanResources}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>

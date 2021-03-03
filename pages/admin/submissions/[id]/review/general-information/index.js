@@ -85,10 +85,13 @@ function GeneralInformation({ client, query, token }) {
     review: true
   }), [state, loading, data])
 
+  const disabledComments = data?.GeneralInformation?.status.includes("REVISION")
+
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
       <CommentsProvider
         submission={data?.GeneralInformation}
+        readOnly={disabledComments}
         update={updateGeneralInformation}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
