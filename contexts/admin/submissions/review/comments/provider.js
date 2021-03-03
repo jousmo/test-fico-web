@@ -3,6 +3,7 @@ import moment from "moment"
 import {
   CommentModal
 } from "../../../../../components/admin/submissions/review"
+import { Visibility } from "../../../../../components/shared"
 import { useCallback, useEffect, useState } from "react"
 import { getCommentsHelper, onDeleteHelper, onSaveHelper } from "./helpers"
 
@@ -68,16 +69,18 @@ export function CommentsProvider({ children, onCommentsReview, submission, readO
         getCommentsNumber,
         readOnly
       }}>
-      <CommentModal
-        onSave={onSave}
-        onCancel={onCancel}
-        onDelete={onDelete}
-        onCommentsReview={onCommentsReview}
-        visible={state.isModalOpen}
-        revision={revision}
-        readOnly={readOnly}
-        getComments={getComments}
-        field={state.field} />
+      <Visibility visible={state.isModalOpen}>
+        <CommentModal
+          onSave={onSave}
+          onCancel={onCancel}
+          onDelete={onDelete}
+          onCommentsReview={onCommentsReview}
+          visible={state.isModalOpen}
+          revision={revision}
+          readOnly={readOnly}
+          getComments={getComments}
+          field={state.field} />
+      </Visibility>
       { children }
     </CommentsContext.Provider>
   )
