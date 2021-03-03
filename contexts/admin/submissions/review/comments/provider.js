@@ -10,15 +10,15 @@ import { getCommentsHelper, onDeleteHelper, onSaveHelper } from "./helpers"
 export function CommentsProvider({ children, onCommentsReview, submission, readOnly, update }) {
   const revision = submission?.status
   const [state, setState] = useState({
-    isModalOpen: false, field: {}, comments: [], submission: submission
+    isModalOpen: false, field: {}, comments: [], submission
   })
 
   useEffect(() => {
-    setState({ ...state, submission: submission })
+    setState({ ...state, submission })
   }, [submission])
 
   const openCommentsModal = useCallback((field) => {
-    setState({ ...state, field: field, isModalOpen: true})
+    setState({ ...state, field, isModalOpen: true})
   }, [state])
 
   const getCommentsNumber = (field) => {
@@ -30,7 +30,7 @@ export function CommentsProvider({ children, onCommentsReview, submission, readO
     const { field, submission } = state
     const comments =
       getCommentsHelper(field.index, field.name, field.section, submission)
-    setState({ ...state, comments: comments })
+    setState({ ...state, comments })
     return comments
   }, [state])
 
@@ -39,7 +39,7 @@ export function CommentsProvider({ children, onCommentsReview, submission, readO
   }, [state])
 
   const onSave = useCallback(values => {
-    const { field } = state
+    const { field, comments } = state
     const newComment = {
       fieldName: field.name,
       revision: revision,
@@ -48,7 +48,7 @@ export function CommentsProvider({ children, onCommentsReview, submission, readO
       createdAt: moment().format()
     }
 
-    const fieldComments = state.comments || []
+    const fieldComments = comments || []
     const newFieldComments = [
       ...fieldComments,
       newComment

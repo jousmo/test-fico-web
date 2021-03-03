@@ -8,12 +8,11 @@ export const setSave = async (humanResources, setState, updateSubmission) => {
     await updateSubmission({
       variables: { data: humanResources }
     })
-    saving()
     success()
   }
   catch(err) {
     apolloError(err)
   }
   saving()
-  setState({ humanResources: [], isSaving: false })
+  setState(state => ({ ...state, humanResources: [], isSaving: false }))
 }
