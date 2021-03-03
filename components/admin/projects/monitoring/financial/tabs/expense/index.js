@@ -81,9 +81,9 @@ export function Expense () {
     })
 
     if (!first || !end) {
-      setState({ ...state, filterInvoice: false})
+      setState({ ...state, filterInvoice: false })
     } else {
-      setState({ ...state, filterInvoice: filter})
+      setState({ ...state, filterInvoice: filter })
     }
   }
 
@@ -98,9 +98,9 @@ export function Expense () {
     })
 
     if (!value) {
-      setState({ ...state, filterInvoice: false})
+      setState({ ...state, filterInvoice: false })
     } else {
-      setState({ ...state, filterInvoice: filter})
+      setState({ ...state, filterInvoice: filter })
     }
   }
 
@@ -111,9 +111,9 @@ export function Expense () {
         showIcon
         message="Adjunta tu conjunto de facturas y selecciona el concepto al que pertenecen, solo se admiten
         facturas emitidas a tu organización" />
-      <SearchFieldPrimary style={{marginTop: "1rem"}} onSearch={onSearch}/>
-      <StatisticHeader statistics={dataStatistics} styles={{padding: 0}} />
-      <Section style={{padding: 0, margin: "1rem 0"}} title="Gastos">
+      <SearchFieldPrimary style={{ marginTop: "1rem" }} onSearch={onSearch}/>
+      <StatisticHeader statistics={dataStatistics} styles={{ padding: 0 }} />
+      <Section style={{ padding: 0, margin: "1rem 0" }} title="Gastos">
         <Space>
           <DatePicker.RangePicker format="DD/MM/YYYY" onChange={onChangeRageDate} />
         </Space>
@@ -123,7 +123,7 @@ export function Expense () {
           value={state.filterInvoice ? state.filterInvoice : Submission?.invoices}
           addLabel="Subir factura"
           orientation="TOP">
-          {({ items, addNew, removeItem, replaceItemAtIndex }) =>
+          {({ items, addNew, replaceItemAtIndex }) =>
             <>
               <ModalExpense
                 visible={state.isModalOpen}
