@@ -90,7 +90,7 @@ export function GeneralInformationForm({
               id="name"
               name="name"
               defaultValue={data?.Implementer?.name}
-              onChange={onChange}
+              onBlur={onChange}
               type="text"
               disabled={disabled}/>
           </Form.Item>
@@ -103,7 +103,7 @@ export function GeneralInformationForm({
               id="director"
               name="director"
               defaultValue={data?.Implementer?.director}
-              onChange={onChange}
+              onBlur={onChange}
               type="text"
               disabled={disabled}/>
           </Form.Item>
@@ -116,7 +116,7 @@ export function GeneralInformationForm({
               id="rfc"
               name="rfc"
               defaultValue={data?.Implementer?.rfc}
-              onChange={onChange}
+              onBlur={onChange}
               type="text"
               disabled={disabled}/>
           </Form.Item>
@@ -130,7 +130,7 @@ export function GeneralInformationForm({
                 id="commercialName"
                 name="commercialName"
                 defaultValue={data?.Implementer?.commercialName}
-                onChange={onChange}
+                onBlur={onChange}
                 type="text"
                 disabled={disabled}/>
             </Form.Item>
@@ -144,7 +144,7 @@ export function GeneralInformationForm({
               id="commercialAddress"
               name="commercialAddress"
               defaultValue={data?.Implementer?.commercialAddress}
-              onChange={onChange}
+              onBlur={onChange}
               type="text"
               disabled={disabled}/>
           </Form.Item>
@@ -157,7 +157,7 @@ export function GeneralInformationForm({
               id="fiscalAddress"
               name="fiscalAddress"
               defaultValue={data?.Implementer?.fiscalAddress}
-              onChange={onChange}
+              onBlur={onChange}
               type="text"
               disabled={disabled}/>
           </Form.Item>
@@ -170,7 +170,7 @@ export function GeneralInformationForm({
               id="phone"
               name="phone"
               defaultValue={data?.Implementer?.phone}
-              onChange={onChange}
+              onBlur={onChange}
               type="tel"
               disabled={disabled}/>
           </Form.Item>
@@ -183,7 +183,7 @@ export function GeneralInformationForm({
               id="legalRepresentative"
               name="legalRepresentative"
               defaultValue={data?.Implementer?.legalRepresentative}
-              onChange={onChange}
+              onBlur={onChange}
               type="text"
               disabled={disabled}/>
           </Form.Item>
@@ -196,7 +196,7 @@ export function GeneralInformationForm({
               id="email"
               name="email"
               defaultValue={data?.Implementer?.email}
-              onChange={onChange}
+              onBlur={onChange}
               type="text"
               disabled={disabled}/>
           </Form.Item>
@@ -225,8 +225,8 @@ export function GeneralInformationForm({
               id="mission"
               name="mission"
               defaultValue={data?.Implementer?.mission}
-              onChange={onChange}
-              autoSize={{minRows: 3}}
+              onBlur={onChange}
+              autoSize={{ minRows: 3 }}
               disabled={disabled}/>
           </Form.Item>
         </Col>
@@ -238,8 +238,8 @@ export function GeneralInformationForm({
               id="vision"
               name="vision"
               defaultValue={data?.Implementer?.vision}
-              onChange={onChange}
-              autoSize={{minRows: 3}}
+              onBlur={onChange}
+              autoSize={{ minRows: 3 }}
               disabled={disabled}/>
           </Form.Item>
         </Col>
@@ -252,8 +252,8 @@ export function GeneralInformationForm({
                 id="history"
                 name="history"
                 defaultValue={data?.Implementer?.history}
-                onChange={onChange}
-                autoSize={{minRows: 3}}
+                onBlur={onChange}
+                autoSize={{ minRows: 3 }}
                 disabled={disabled}/>
             </Form.Item>
           </Col>
@@ -266,8 +266,8 @@ export function GeneralInformationForm({
               id="institutionalExperience"
               name="institutionalExperience"
               defaultValue={data?.Implementer?.institutionalExperience}
-              onChange={onChange}
-              autoSize={{minRows: 3}}
+              onBlur={onChange}
+              autoSize={{ minRows: 3 }}
               disabled={disabled}/>
           </Form.Item>
         </Col>
@@ -279,8 +279,8 @@ export function GeneralInformationForm({
               id="previousSupports"
               name="previousSupports"
               defaultValue={data?.Implementer?.previousSupports}
-              onChange={onChange}
-              autoSize={{minRows: 3}}
+              onBlur={onChange}
+              autoSize={{ minRows: 3 }}
               disabled={disabled}/>
           </Form.Item>
         </Col>
@@ -292,8 +292,8 @@ export function GeneralInformationForm({
               id="alliances"
               name="alliances"
               defaultValue={data?.Implementer?.alliances}
-              onChange={onChange}
-              autoSize={{minRows: 3}}
+              onBlur={onChange}
+              autoSize={{ minRows: 3 }}
               disabled={disabled}/>
           </Form.Item>
         </Col>
@@ -305,8 +305,21 @@ export function GeneralInformationForm({
               id="incomesAndExpenses"
               name="incomesAndExpenses"
               defaultValue={data?.Implementer?.incomesAndExpenses}
-              onChange={onChange}
-              autoSize={{minRows: 3}}
+              onBlur={onChange}
+              autoSize={{ minRows: 3 }}
+              disabled={disabled}/>
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item
+            style={{display: "inline"}}
+            label="Objeto social">
+            <Input.TextArea
+              id="socialObject"
+              name="socialObject"
+              defaultValue={data?.Implementer?.socialObject}
+              onBlur={onChange}
+              autoSize={{ minRows: 3}}
               disabled={disabled}/>
           </Form.Item>
         </Col>
