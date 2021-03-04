@@ -21,7 +21,7 @@ import "../style.sass"
 export function GeneralInformationPDF() {
   const { data } = useContext(AdminSubmissionContext)
 
-  const submission = data?.SubmissionDetails
+  const submission = data?.Submission
 
   const donataryDocument = submission?.implementer?.documents?.find(doc => doc.type === "DONATARY")
 
