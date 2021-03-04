@@ -36,7 +36,31 @@ export const getDetails = gql`
       createdAt
       implementer {
         id
+        rfc
+        type
         name
+        email
+        phone
+        vision
+        history
+        mission
+        director
+        alliances
+        socialObject
+        fiscalAddress
+        commercialName
+        previousSupports
+        commercialAddress
+        incomesAndExpenses
+        legalRepresentative
+        institutionalExperience
+        proofOfCharitableContributions
+        documents {
+          id
+          url
+          name
+          type
+        }
       }
       specificObjectives {
         description
