@@ -17,13 +17,13 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     await updateSubmission({
       variables: { data: { ...state.generalInformation }, id: id }
     })
-    saving()
     success()
   }
   catch(err) {
     apolloError(err)
   }
-  setState({ ...state, isSaving: false })
+  saving()
+  setState({ ...state, isSaving: false, generalInformation: {} })
 }
 
 export const getIsCall = (data, state) => {

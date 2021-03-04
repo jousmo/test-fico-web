@@ -74,7 +74,6 @@ function GeneralInformation({ client, query, token }) {
 
   const save = useCallback(async () => {
     await setSave(state, setState, updateSubmission, query.id)
-    setState({ ...state, generalInformation: {} })
   }, [state])
 
   const onCommentsReview = useCallback(async comments => {

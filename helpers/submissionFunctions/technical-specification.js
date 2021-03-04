@@ -28,11 +28,11 @@ export const setSave = async (state, setState, updateSubmission, id) => {
       return objective
     })
     await updateSubmission({ variables: { data: { ...data, id } } })
-    saving()
     success()
   }
   catch(e) {
     apolloError(e)
   }
+  saving()
   setState({ ...state, isSaving: false, technicalSpecification: {} })
 }
