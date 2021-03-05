@@ -3,6 +3,7 @@ import { gql } from "apollo-boost"
 export const getBudget = gql`
   query Budget($id: ID!) {
     Budget(id: $id) {
+      state
       allies
       status
       endDate
