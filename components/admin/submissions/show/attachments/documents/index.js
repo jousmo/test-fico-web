@@ -41,7 +41,7 @@ function SubmissionAttachments({ data }) {
       </Typography.Text>
       <br />
       <Popover
-        content={statusIndex > 10 && attachments}
+        content={statusIndex > 0 && attachments}
         title="Anexos"
         trigger="click">
         <DownloadButton outlined style={{margin: "5px"}}>
