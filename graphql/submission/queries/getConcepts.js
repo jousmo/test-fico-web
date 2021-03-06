@@ -38,6 +38,7 @@ export const getConcepts = gql`
       }
     }
     SubmissionSimple(id: $id) {
+      state
       allies
       status
       endDate
