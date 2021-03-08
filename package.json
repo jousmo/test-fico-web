@@ -22,6 +22,7 @@
   "homepage": "https://github.com/jaxitanku/ficosec-centro-sur-web#readme",
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
+    "@apollo/react-hooks": "^4.0.0",
     "@bugsnag/js": "^7.8.0",
     "@bugsnag/plugin-react": "^7.7.0",
     "@types/react": "^17.0.1",

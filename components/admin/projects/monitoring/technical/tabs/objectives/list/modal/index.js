@@ -10,6 +10,7 @@ import { SchedulesField } from "./schedules-field"
 import { useAuth } from "../../../../../../../../../contexts/auth"
 import { quarterReadOnly } from "../helpers"
 import moment from "moment"
+import { getReadableValue, implementer } from "../../../../../../../../../helpers/selectOptions"
 
 export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, ...props }) {
   const { user } = useAuth()
@@ -89,6 +90,8 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
     else save({ key, reviewedAt })
     onCancel()
   }
+
+  const { submission: { verificationTypes } } = implementer
 
   const readOnly = quarterReadOnly(range, edit?.reviewedAt)
 
@@ -178,7 +181,9 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
               label="Medio de verificación"
               style={{ marginBottom: "0" }}>
               <Typography.Text strong>
-                {edit?.meansOfVerification}
+                {edit?.meansOfVerification
+                  ?.map(mean => getReadableValue(verificationTypes, mean))
+                  .join(', ')}
               </Typography.Text>
             </Form.Item>
           </Col>
