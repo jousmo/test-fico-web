@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { capitalize } from "lodash"
 import { ScheduleField } from "./schedule-field"
 import moment from "moment"
+import { getReadableValue, implementer } from "../../../../../../helpers/selectOptions"
 moment.locale("es")
 
 export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
@@ -35,6 +36,8 @@ export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
     return capitalize(moment(date).format("MMMM YYYY"))
   }
 
+  const { submission: { verificationTypes } } = implementer
+
   return (
     <Modal
       className="project schedule modal"
@@ -58,7 +61,11 @@ export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
         </Col>
         <Col span={24}>
           <Typography.Text strong>Medio de verificación: </Typography.Text>
-          <Typography.Text>{edit?.meansOfVerification}</Typography.Text>
+          <Typography.Text>
+            {edit?.meansOfVerification
+              ?.map(mean => getReadableValue(verificationTypes, mean))
+              .join(', ')}
+          </Typography.Text>
         </Col>
         <Col span={12}>
           <Typography.Text strong>Linea base: </Typography.Text>
