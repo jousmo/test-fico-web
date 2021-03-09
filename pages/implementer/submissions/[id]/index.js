@@ -19,7 +19,7 @@ function Submission({ client, query }) {
   const [state, setState] = useState(undefined)
 
   const [ updateSubmission ] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.upsertSubmission, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -47,7 +47,7 @@ function Submission({ client, query }) {
     const saving = loadingAlert()
     try {
       await updateSubmission({
-        variables: { data: submissionData, id: query.id }
+        variables: { data: { ...submissionData, id: query.id } }
       })
       success()
     }
