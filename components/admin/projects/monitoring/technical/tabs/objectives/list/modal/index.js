@@ -1,5 +1,5 @@
 import {
-  Col, Divider, Form, InputNumber,
+  Alert, Col, Divider, Form, InputNumber,
   Modal, Row, Tag, Typography, Switch
 } from "antd"
 import { useEffect, useState } from "react"
@@ -108,6 +108,11 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
         className="fico technical-monitoring objectives-form"
         name="indicator-form">
         <Row gutter={[10, 8]} justify="start">
+          {readOnly && (
+            <Col span={24}>
+              <Alert message="Indicador bloqueado por el administrador..." showIcon type="info" />
+            </Col>
+          )}
           <Col span={isAdmin ? 16 : 24}>
             <Tag color="gold">{indicatorType}</Tag>
           </Col>
