@@ -82,7 +82,7 @@ export function ActivityModal({
                   name: `title-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
-                  Título de la actividad
+                  Actividad
                 </FieldLabel>
               }>
               <Input.TextArea
@@ -102,7 +102,7 @@ export function ActivityModal({
                   name: `description-${objectiveIndex}`,
                   section: activityType,
                   index: commentIndex}}>
-                  Descripción de indicador
+                  Indicador
                 </FieldLabel>
               }>
               <Input.TextArea
