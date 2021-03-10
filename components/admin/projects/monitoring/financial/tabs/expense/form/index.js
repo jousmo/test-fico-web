@@ -192,7 +192,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, update, ...pr
             fileList={toFileList(edit?.documents)}
             onRemoveFile={onRemoveFile}
             maxFile={2}
-            accept={"application/pdf,application/xml"}
+            accept={"application/pdf,application/xml,.xml,.pdf"}
             readOnly>
             Subir factura
           </UploadButtonForm>
