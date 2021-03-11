@@ -15,7 +15,7 @@ export function SubmissionsListing() {
 
   const { submissionStatusOptions } = shared
   const submissions = data?.Submissions?.filter(submission => {
-    return submissionStatusOptions?.findIndex(e => e.value === submission.status) < 9
+    return submissionStatusOptions?.findIndex(e => e.value === submission.status) < 10
   })
 
   const [state, setState] = useState(false)
