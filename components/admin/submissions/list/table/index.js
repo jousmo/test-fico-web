@@ -23,7 +23,7 @@ function SubmissionsListingTable({ data }) {
   } = implementer
 
   const statusOptions = Array.from(submissionStatusOptions)
-  statusOptions.length = 9
+  statusOptions.length = 10
   const statusFilterOptions = getFilterOptions(statusOptions)
   const axisFilterOptions = getFilterOptions(strategicAxisTypes)
   const regionFilterOptions = getFilterOptions(regions)
