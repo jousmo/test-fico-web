@@ -57,7 +57,7 @@ function TechnicalSpecification({ client, query, token }) {
       awaitRefetchQueries: true,
       refetchQueries: [
         {
-          query: submission.queries.getGeneralInfo,
+          query: submission.queries.getTechnicalSpecification,
           variables: { id: query.id }
         }
       ]
