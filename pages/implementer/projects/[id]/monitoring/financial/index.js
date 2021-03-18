@@ -17,6 +17,19 @@ function FinancialMonitoringPage({ client, query }) {
     variables: { id: query.id }
   })
 
+  const [createDocuments] = useMutation(
+    submission.mutations.createDocuments, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getInvoices,
+          variables: { id: query.id }
+        }
+      ]
+    }
+  )
+
   const [saveProjectInvoice] = useMutation(
     submission.mutations.mutateProjectInvoice, {
       client: client,
@@ -42,6 +55,18 @@ function FinancialMonitoringPage({ client, query }) {
       ]
     }
   )
+
+  const addBankStatements = useCallback(async ({ documents }) => {
+    const saving = loadingAlert("Guardando", 0)
+    try {
+      const data = documents.map(({ name, url }) => ({ name, url, type: "BANK_STATEMENT", submission: query.id }))
+      await createDocuments({ variables: { data } })
+      success()
+    } catch (e) {
+      apolloError(e)
+    }
+    saving()
+  }, [createDocuments])
 
   const save = useCallback(async expense => {
     const saving = loadingAlert("Guardando", 0)
@@ -83,7 +108,8 @@ function FinancialMonitoringPage({ client, query }) {
     data,
     save,
     update,
-    deleteInvoice
+    deleteInvoice,
+    addBankStatements
   }), [loading, data])
 
   return (
