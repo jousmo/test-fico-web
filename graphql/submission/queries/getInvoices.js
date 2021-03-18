@@ -53,6 +53,12 @@ export const getInvoices = gql`
           url
         }
       }
+      documents {
+        id
+        type
+        name
+        url
+      }
     }
   }
 `

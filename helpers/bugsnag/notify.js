@@ -6,7 +6,7 @@ export const apolloError = err => {
   let messages = []
 
   warning()
-  if (!!graphQLErrors.length) {
+  if (!!graphQLErrors?.length) {
     messages = graphQLErrors?.reduce((prev, current) => [...prev, current.message], [])
   } else {
     const { result: { errors } = {} } = networkError

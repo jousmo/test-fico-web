@@ -1,6 +1,7 @@
 import { Tabs } from "antd"
 import { Expense } from "./expense"
 import { SummaryConcept } from "./summary"
+import { BankStatements } from "./statements"
 import { withForm } from "../../../../../../helpers"
 import "./style.sass"
 
@@ -12,6 +13,9 @@ function MonitoringFinancialTabs() {
       </Tabs.TabPane>
       <Tabs.TabPane tab="Resumen conceptos" key="2">
         <SummaryConcept />
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Estados de cuenta" key="3">
+        <BankStatements />
       </Tabs.TabPane>
     </Tabs>
   )
