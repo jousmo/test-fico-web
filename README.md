@@ -95,6 +95,5 @@ It also automatically deploys new changes pushed to `dev` and `master` to their 
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [product-screenshot]: public/assets/screenshot.png
 [product-logo]: public/assets/logo-fico.png
