@@ -15,7 +15,7 @@ import {
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function Schedule({ client, query }) {
-  const { loading, error, data } = useQuery(submission.queries.getById, {
+  const { loading, error, data } = useQuery(submission.queries.getTechnicalSpecification, {
     client: client,
     variables: { id: query.id }
   })
