@@ -16,7 +16,7 @@ function SubmissionAttachments({ data }) {
         <a target="_blank">Información general</a>
       </Link>
       <Link href={`${url}/technical-specification`}>
-        <a target="_blank">Especificación técnica</a>
+        <a target="_blank">Ficha técnica</a>
       </Link>
       <Link href={`${url}/budget`}>
         <a target="_blank">Presupuesto</a>

@@ -14,7 +14,7 @@ export function TechnicalSpecificationPDF(){
 
   return (
     <div className="fico pdf technical-specification">
-      <PDFHeading title="Especificación técnica" />
+      <PDFHeading title="Ficha técnica" />
       <ObjectivePDF
         description={submission?.developmentObjective}
         indicators={submission?.developmentObjectiveIndicators}

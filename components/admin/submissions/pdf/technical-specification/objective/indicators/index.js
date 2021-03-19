@@ -12,7 +12,7 @@ export default function ObjectiveIndicatorPDF({ indicator }){
       <Typography.Text>
         {indicator.description}
       </Typography.Text>
-      <Descriptions column={4}>
+      <Descriptions column={3} labelStyle={{ fontWeight: "bold" }} layout="vertical">
         <Descriptions.Item label="Metodología" span={4}>
           {indicator.methodology}
         </Descriptions.Item>
@@ -36,7 +36,7 @@ export default function ObjectiveIndicatorPDF({ indicator }){
       {!!indicator?.products?.length && (
         <>
           <Typography.Text>
-            Productos
+            <b>Productos:</b>
           </Typography.Text>
           {indicator?.products?.map(product =>
             <List.Item key={product}>

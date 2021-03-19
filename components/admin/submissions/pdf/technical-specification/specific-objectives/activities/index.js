@@ -27,7 +27,7 @@ export default function ActivitiesPDF({ activity }){
       <Typography.Text>
         {activity.responsible}
       </Typography.Text>
-      <Descriptions column={4}>
+      <Descriptions column={3} labelStyle={{ fontWeight: "bold" }} layout="vertical">
         <Descriptions.Item label="Línea base">
           {activity.baseline}
         </Descriptions.Item>
