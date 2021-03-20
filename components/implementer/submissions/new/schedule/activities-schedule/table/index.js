@@ -9,7 +9,7 @@ import ActivityBox from "./activityBox"
 import { capitalize } from "lodash"
 
 function ActivitiesTable({ data }) {
-  const activities = data?.Submission?.specificObjectives?.reduce(
+  const activities = data?.TechnicalSpecification?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []
   ) || []
 
