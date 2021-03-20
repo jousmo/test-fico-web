@@ -31,7 +31,7 @@ function Submission({ client, query }) {
     }
   )
 
-  const { loading, error, data, refetch } = useQuery(submission.queries.getDetails, {
+  const { loading, error, data } = useQuery(submission.queries.getDetails, {
     client: client,
     variables: { id: query.id },
     fetchPolicy: "network-only"
@@ -63,7 +63,6 @@ function Submission({ client, query }) {
     data,
     save,
     client,
-    refetch,
     validationData
   }), [loading, data, validationData])
 
