@@ -1,23 +1,42 @@
-import { Bugsnag, withForm } from "../../../../../../helpers"
+import { loadingAlert, success, withForm } from "../../../../../../helpers"
 import { Button, Form, Input } from "antd"
 import { DateField, UploadButton, Visibility } from "../../../../../shared"
 import { useCallback, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
+import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
-function SubmissionAgreementForm({ data, client, onSave, hasContract, refetch }) {
+function SubmissionAgreementForm({ data, client, onSave, hasContract }) {
   const [state, setState] = useState({})
 
   const { id: submissionId, status, documents } = data || {}
   const onAgreement = status === "ON_AGREEMENT"
-  const files = documents?.filter(document => document.type === "AGREEMENT")?.map(item => ({...item, uid: item.id}))
+  const files = documents?.filter(document => document.type === "AGREEMENT")?.map(item => ({ ...item, uid: item.id }))
 
   const [createDocumentSubmission] = useMutation(
-    submission.mutations.createDocumentSubmission, { client: client }
+    submission.mutations.createDocuments, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getDetails,
+          variables: { id: submissionId }
+        }
+      ]
+    }
   )
 
   const [deleteDocumentSubmission] = useMutation(
-    submission.mutations.deleteDocumentSubmission, { client: client }
+    submission.mutations.deleteDocumentSubmission, {
+      client: client,
+      awaitRefetchQueries: true,
+      refetchQueries: [
+        {
+          query: submission.queries.getDetails,
+          variables: { id: submissionId }
+        }
+      ]
+    }
   )
 
   const onDateChange = ({ currentTarget }) => {
@@ -31,31 +50,33 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract, refetch })
   }
 
   const onDoneFile = useCallback(async (info, cb) => {
+    const saving = loadingAlert()
     const { typeFile: type, file: { name, response } } = info
     const url = response?.imageUrl
-    const newDocument = { type, name, url }
+    const newDocument = { type, name, url, submission: submissionId }
 
     try {
-      await createDocumentSubmission({ variables: { data: newDocument, id: submissionId } })
-      cb(null, refetch)
+      await createDocumentSubmission({ variables: { data: [newDocument] } })
+      success()
     } catch (e) {
       cb(e)
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
-  }, [submissionId, refetch])
+    saving()
+  }, [submissionId])
 
   const onRemoveFile = useCallback(async (file, cb) => {
+    const saving = loadingAlert("Eliminando...")
     const { id } = file
     try {
       await deleteDocumentSubmission({ variables: { id }})
-      cb(null, refetch)
+      success("Eliminado correctamente...")
     } catch (e) {
       cb(e)
-      Bugsnag.notify(new Error(e))
-      console.error(e)
+      apolloError(e)
     }
-  }, [refetch])
+    saving()
+  }, [])
 
   return (
     <Form
