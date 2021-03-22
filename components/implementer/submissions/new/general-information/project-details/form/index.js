@@ -389,7 +389,7 @@ function ProjectDetailsForm({
               </FieldLabel>
             }>
             <UploadButtonForm
-              fileList={toFileList([donataryDocument])}
+              fileList={donataryDocument ? toFileList([donataryDocument]) : []}
               onRemoveFile={onRemoveFile}
               onChange={onDoneFile}
               maxFile={1}

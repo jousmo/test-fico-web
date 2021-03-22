@@ -15,7 +15,7 @@ export const setSave = async (state, setState, updateSubmission, id) => {
   const saving = loadingAlert()
   try {
     await updateSubmission({
-      variables: { data: { ...state.generalInformation }, id: id }
+      variables: { data: { ...state.generalInformation, id } }
     })
     success()
   }

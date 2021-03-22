@@ -38,7 +38,7 @@ function GeneralInformation({ client, query, token }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateGeneralInfo, {
+    submission.mutations.upsertSubmission, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [

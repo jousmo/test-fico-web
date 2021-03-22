@@ -40,7 +40,7 @@ function GeneralInformation({ client, query, token }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateGeneralInfo, {
+    submission.mutations.upsertSubmission, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -63,7 +63,6 @@ function GeneralInformation({ client, query, token }) {
 
   const save = useCallback(async () => {
     await setSave(state, setState, updateSubmission, submissionId)
-    setState({ ...state, generalInformation: {} })
   }, [state])
 
   const isCall = useCallback(() => {
