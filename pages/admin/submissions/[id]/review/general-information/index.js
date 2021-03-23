@@ -6,7 +6,8 @@ import {
   ProjectDetails,
   DevelopmentObjectives,
   Beneficiaries,
-  Consultant
+  Consultant,
+  Documents
 } from "../../../../../../components/implementer/submissions/new/general-information"
 import {
   data as pageData
@@ -99,6 +100,7 @@ function GeneralInformation({ client, query, token }) {
             <Consultant />
             <DevelopmentObjectives />
             <Beneficiaries />
+            <Documents />
           </Layout>
         </ImplementerSubmissionContext.Provider>
       </CommentsProvider>
