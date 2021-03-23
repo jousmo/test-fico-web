@@ -38,7 +38,7 @@ function ProjectDetailsForm({
 
   const onDoneFile = files => {
     const { name, url } = files[0]
-    const documents = [...data?.documents, { name, url, type: "DONATARY" }]
+    const documents = [...data?.documents, { name, url, type: "INTENTION_LETTER" }]
     onChange({ currentTarget: { id: "documents", value: documents }})
   }
 
@@ -47,7 +47,7 @@ function ProjectDetailsForm({
     onChange({ currentTarget: { id: "documents", value: documents }})
   }
 
-  const donataryDocument = data?.documents?.find(doc => doc.type === "DONATARY")
+  const intentionLetter = data?.documents?.find(doc => doc.type === "INTENTION_LETTER")
 
   return (
     <Form
@@ -383,13 +383,13 @@ function ProjectDetailsForm({
               <FieldLabel
                 comentable={{
                   hidden: hiddenComments,
-                  name: "donatary",
+                  name: "INTENTION_LETTER",
                   section: "SUBMISSION"}}>
-                Oficio de donataria
+                Carta de intención
               </FieldLabel>
             }>
             <UploadButtonForm
-              fileList={donataryDocument ? toFileList([donataryDocument]) : []}
+              fileList={intentionLetter ? toFileList([intentionLetter]) : []}
               onRemoveFile={onRemoveFile}
               onChange={onDoneFile}
               maxFile={1}
