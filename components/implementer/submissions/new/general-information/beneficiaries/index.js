@@ -17,7 +17,7 @@ export function Beneficiaries() {
   } = useContext(ImplementerSubmissionContext)
 
   const onChange = data => {
-    updateGeneralInformation({ beneficiaries: data })
+    updateGeneralInformation(data)
   }
 
   return (

@@ -1,8 +1,8 @@
 import { Row, Form, Col, Input } from "antd"
 import { useState } from "react"
 import { implementer } from "../../../../../../../helpers/selectOptions"
-import { SelectField, DateField, FieldLabel } from "../../../../../../shared"
-import { withForm } from "../../../../../../../helpers/withForm"
+import { SelectField, DateField, FieldLabel, UploadButtonForm } from "../../../../../../shared"
+import { withForm, toFileList } from "../../../../../../../helpers"
 import { PreventionLevelsText } from "./prevention-levels-text"
 import { ScopeText } from "./scope-text"
 import { JustificationText } from "./justification-text"
@@ -35,6 +35,19 @@ function ProjectDetailsForm({
     setState({ ...state, [type]: value })
     onChange(date)
   }
+
+  const onDoneFile = files => {
+    const { name, url } = files[0]
+    const documents = [...data?.documents, { name, url, type: "INTENTION_LETTER" }]
+    onChange({ currentTarget: { id: "documents", value: documents }})
+  }
+
+  const onRemoveFile = ({ url }) => {
+    const documents = data?.documents.filter(doc => doc.url !== url)
+    onChange({ currentTarget: { id: "documents", value: documents }})
+  }
+
+  const intentionLetter = data?.documents?.find(doc => doc.type === "INTENTION_LETTER")
 
   return (
     <Form
@@ -362,6 +375,28 @@ function ProjectDetailsForm({
               onBlur={onChange}
               disabled={readOnly}
               autoSize={{minRows: 3}} />
+          </Form.Item>
+        </Col>
+        <Col span={24}>
+          <Form.Item
+            label={
+              <FieldLabel
+                comentable={{
+                  hidden: hiddenComments,
+                  name: "INTENTION_LETTER",
+                  section: "SUBMISSION"}}>
+                Carta de intención
+              </FieldLabel>
+            }>
+            <UploadButtonForm
+              fileList={intentionLetter ? toFileList([intentionLetter]) : []}
+              onRemoveFile={onRemoveFile}
+              onChange={onDoneFile}
+              maxFile={1}
+              accept={"application/pdf"}
+              disabled={readOnly}>
+              Adjuntar
+            </UploadButtonForm>
           </Form.Item>
         </Col>
       </Row>

@@ -6,7 +6,8 @@ import {
   ProjectDetails,
   DevelopmentObjectives,
   Beneficiaries,
-  Consultant
+  Consultant,
+  Documents
 } from "../../../../../../components/implementer/submissions/new/general-information"
 import {
   editData as pageData,
@@ -38,7 +39,7 @@ function GeneralInformation({ client, query, token }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateGeneralInfo, {
+    submission.mutations.upsertSubmission, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -113,6 +114,7 @@ function GeneralInformation({ client, query, token }) {
             <Consultant />
             <DevelopmentObjectives />
             <Beneficiaries />
+            <Documents />
           </Layout>
         </ImplementerSubmissionContext.Provider>
       </CommentsProvider>

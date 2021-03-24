@@ -1,6 +1,6 @@
-import { withForm } from "../../../../../../../helpers/withForm"
-import { Form } from "antd"
-import { CompositeField } from "../../../../../../shared"
+import { withForm, toFileList } from "../../../../../../../helpers"
+import { Col, Form } from "antd"
+import { CompositeField, FieldLabel, UploadButtonForm } from "../../../../../../shared"
 import { BeneficiaryModal } from "./beneficiaryModal"
 import { BeneficiaryItem } from "./beneficiaryItem"
 import { useState } from "react"
@@ -37,12 +37,25 @@ function BeneficiariesForm({ data, onChange, hiddenComments, readOnly, review })
     setState({ isModalOpen: true, edit: data })
   }
 
+  const onDoneFile = files => {
+    const { name, url } = files[0]
+    const documents = [...data?.documents, { name, url, type: "BENEFICIARIES" }]
+    onChange({ documents })
+  }
+
+  const onRemoveFile = ({ url }) => {
+    const documents = data?.documents.filter(doc => doc.url !== url)
+    onChange({ documents })
+  }
+
+  const beneficiaryDocument = data?.documents?.find(doc => doc.type === "BENEFICIARIES")
+
   return (
     <Form layout="vertical">
       <Form.Item
         style={{display: "inline"}}>
         <CompositeField
-          onChange={onChange}
+          onChange={beneficiaries => onChange({ beneficiaries })}
           defaultValue={data?.beneficiaries}
           onClickAdd={onClickAdd}
           isAddDisabled={readOnly || review}
@@ -70,6 +83,28 @@ function BeneficiariesForm({ data, onChange, hiddenComments, readOnly, review })
           }
         </CompositeField>
       </Form.Item>
+      <Col span={24}>
+        <Form.Item
+          label={
+            <FieldLabel
+              comentable={{
+                hidden: hiddenComments,
+                name: "beneficiariesDoc",
+                section: "SUBMISSION"}}>
+              Documento F21
+            </FieldLabel>
+          }>
+          <UploadButtonForm
+            fileList={beneficiaryDocument ? toFileList([beneficiaryDocument]) : []}
+            onRemoveFile={onRemoveFile}
+            onChange={onDoneFile}
+            maxFile={1}
+            accept={"application/pdf"}
+            disabled={readOnly}>
+            Adjuntar
+          </UploadButtonForm>
+        </Form.Item>
+      </Col>
     </Form>
   )
 }

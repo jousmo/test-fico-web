@@ -94,6 +94,12 @@ export const getGeneralInfo = gql`
         comment
         type
       }
+      documents {
+        id
+        name
+        url
+        type
+      }
     }
   }
 `
