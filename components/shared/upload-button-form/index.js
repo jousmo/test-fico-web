@@ -38,7 +38,7 @@ export function UploadButtonForm({
   return (
     <Upload
       fileList={state.fileList}
-      action={`${process.env.NEXT_PUBLIC_S3_URI}/asset-upload`}
+      action={process.env.NEXT_PUBLIC_S3_URI}
       onChange={onUploadChange}
       onRemove={onRemoveFile}
       accept={accept}
