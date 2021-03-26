@@ -16,11 +16,6 @@ export const getAllProjectBeneficiaries = gql`
       municipality
       colony
       projectAssistantId
-      assistance{
-        id
-        activity
-        assistanceAt
-      }
     }
   }
 `
