@@ -15,7 +15,7 @@ import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
 function TechnicalMonitoringPage({ client, query }) {
-  const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
+  const { loading, error, data, refetch } = useQuery(submission.queries.getTechnicalMonitoring, {
     client: client,
     variables: { id: query?.id }
   })
@@ -26,6 +26,10 @@ function TechnicalMonitoringPage({ client, query }) {
 
   const [updateSub] = useMutation(
     submission.mutations.updateById, { client: client }
+  )
+
+  const [createActivityAssistance] = useMutation(
+    submission.mutations.createAssistance, { client: client }
   )
 
   const [createProjectAssistants] = useMutation(
@@ -126,6 +130,18 @@ function TechnicalMonitoringPage({ client, query }) {
     saving()
   }, [createProjectAssistants, refetch])
 
+  const createAssistance = useCallback(async assistance => {
+    const saving = loadingAlert("Guardando...", 0)
+    try {
+      await createActivityAssistance({ variables: { data: assistance } })
+      success()
+      await refetch()
+    } catch(e) {
+      apolloError(e)
+    }
+    saving()
+  }, [createActivityAssistance, refetch])
+
   const updateAssistants = useCallback(async assistant => {
     const saving = loadingAlert("Guardando...", 0)
     try {
@@ -221,6 +237,7 @@ function TechnicalMonitoringPage({ client, query }) {
     updateAssistants,
     deleteAssistants,
     updateSubmission,
+    createAssistance,
     saveActivity,
     loading,
     update,

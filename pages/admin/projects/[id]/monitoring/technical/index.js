@@ -15,7 +15,7 @@ import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
 function TechnicalMonitoringPage({ client, query }) {
-  const { loading, error, data, refetch } = useQuery(submission.queries.getById, {
+  const { loading, error, data, refetch } = useQuery(submission.queries.getTechnicalMonitoring, {
     client: client,
     variables: { id: query.id }
   })
