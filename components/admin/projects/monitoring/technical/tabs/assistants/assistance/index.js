@@ -1,8 +1,7 @@
-import { Col, Modal, Form, Row, Select, TimePicker } from "antd"
+import { Col, Modal, Form, Row, Select } from "antd"
 import { DateField } from "../../../../../../../shared"
 import { getSelectValue, warning } from "../../../../../../../../helpers"
 import { getActivities } from "./helpers"
-import Moment from "moment"
 
 export function AssistanceModal({ onSave, onCancel, submission, ...props }) {
   const [form] = Form.useForm()
@@ -17,7 +16,6 @@ export function AssistanceModal({ onSave, onCancel, submission, ...props }) {
     try {
       await form.validateFields()
       const values = await form.getFieldsValue()
-      values.time = Moment(values.time).format()
 
       form.resetFields()
       onSave && onSave(values)
@@ -31,7 +29,7 @@ export function AssistanceModal({ onSave, onCancel, submission, ...props }) {
     <Modal
       destroyOnClose
       title="Agregar asistencia"
-      width={600}
+      width={500}
       okText="Guardar"
       cancelText="Cancelar"
       onOk={onSubmit}
@@ -47,28 +45,23 @@ export function AssistanceModal({ onSave, onCancel, submission, ...props }) {
               rules={[{ required: true, message: "El campo es requerido" }]}>
               <Select mode="multiple">
                 {activities?.map(activity =>
-                  <Select.Option id={activity.id} value={activity.id}>
+                  <Select.Option key={activity.id} value={activity.id}>
                     {activity.description}
                   </Select.Option>
                 )}
               </Select>
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col span={24}>
             <Form.Item
-              label="Fecha"
-              name="date"
+              label="Fecha y hora"
+              name="assistanceAt"
               rules={[{ required: true, message: "El campo es requerido" }]}
               getValueFromEvent={getSelectValue}>
-              <DateField fullWidth format="DD/MM/YYYY" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              label="Hora"
-              name="time"
-              rules={[{ required: true, message: "El campo es requerido" }]}>
-              <TimePicker format="HH:mm" style={{ width: "100%" }} />
+              <DateField
+                fullWidth
+                format="DD/MM/YYYY"
+                showTime={{ format: 'HH:mm' }} />
             </Form.Item>
           </Col>
         </Row>
