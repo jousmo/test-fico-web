@@ -92,7 +92,6 @@ export function MonitoringSchedule({ data, dateFilter }) {
             render={(t, row) =>
               <Button
                 icon={<CommentOutlined />}
-                onClick={null}
                 shape="circle"
                 onClick={() => onComment(row)}/>
             } />
