@@ -60,7 +60,7 @@ export function AssistanceModal({ onSave, onCancel, submission, ...props }) {
               getValueFromEvent={getSelectValue}>
               <DateField
                 fullWidth
-                format="DD/MM/YYYY"
+                format="DD/MM/YYYY HH:mm"
                 showTime={{ format: 'HH:mm' }} />
             </Form.Item>
           </Col>

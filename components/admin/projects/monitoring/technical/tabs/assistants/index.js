@@ -81,7 +81,8 @@ export function MonitoringAssistants({ data, dateFilter }) {
 
   const onRegisterAssistance = values => {
     createAssistance && createAssistance(getAssistance(values, selectedRows))
-    onCancel()
+    setAssistance(false)
+    setSelectedRows([])
   }
 
   return (
@@ -110,7 +111,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
                 edit={state.edit}
                 className="fico modal-assistants"/>
               <ListAssistants
-                selectedRows={selectedRows}
+                selectedRowKeys={selectedRows}
                 setSelectedRows={setSelectedRows}
                 dataSource={items}
                 onEdit={onEdit}
