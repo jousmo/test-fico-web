@@ -2,10 +2,11 @@ import React from "react"
 import { Table, Empty } from "antd"
 import { CheckCircleTwoTone, CloseCircleOutlined } from "@ant-design/icons"
 import Moment from "moment"
+import { getRows } from "../helpers"
 
-export function AssistanceList ({ activity, dataSource }) {
+export function AssistanceList ({ activity, dataSource, search }) {
   const columns = Array.from(dataSource[activity]?.columns || [])
-  const rows = Object.values(dataSource[activity]?.participants || {})
+  const rows = getRows(Object.values(dataSource[activity]?.participants || {}), search)
 
   const iconStyle = { fontSize: "20px" }
   return (

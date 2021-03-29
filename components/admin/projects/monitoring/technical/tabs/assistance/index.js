@@ -2,20 +2,20 @@ import React, { useState } from "react"
 import { Card, Button, Select, Space } from "antd"
 import { SearchFieldPrimary } from "../../../../../../shared"
 import { AssistanceList } from "./list"
-import { assistanceDecorator, onSearch } from "./helpers"
+import { assistanceDecorator } from "./helpers"
 
 export function MonitoringAssistance({ data, dateFilter }) {
   const { Submission: { assistants } } = data || {}
-  const decoratedData = assistanceDecorator(assistants)
+  const decoratedData = assistanceDecorator(assistants, dateFilter)
   const activities = Object.keys(decoratedData)
 
   const [activity, setActivity] = useState(activities[0])
-  const [assistantsState, setAssistants] = useState(undefined)
+  const [search, setSearch] = useState(undefined)
 
   return (
     <>
       <SearchFieldPrimary
-        onSearch={value => onSearch(assistants, setAssistants, value)}
+        onSearch={value => setSearch(value)}
         style={{ marginBottom: "1rem" }}  />
       <Card className="assistance">
         <Space size="middle">
@@ -33,7 +33,8 @@ export function MonitoringAssistance({ data, dateFilter }) {
         </Space>
         <AssistanceList
           activity={activity}
-          dataSource={assistantsState || decoratedData} />
+          dataSource={decoratedData}
+          search={search} />
       </Card>
     </>
   )

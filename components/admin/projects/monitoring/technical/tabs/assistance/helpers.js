@@ -1,3 +1,5 @@
+import moment from "moment"
+
 const addColumn = (activity, result, assistanceAt) => {
   if (!result[activity.id]) {
     result[activity.id] = { columns: new Set(), participants: {}, name: activity.title }
@@ -14,11 +16,15 @@ const addParticipant = (activity, assistanceAt, assistantId, fullName, result) =
 
 const getFullName = ({ lastName, name, maidenName }) => `${name} ${lastName} ${maidenName}`
 
-export const assistanceDecorator = assistants => {
+export const assistanceDecorator = (assistants, dateFilter) => {
   const result = {}
   assistants.forEach(participant => {
     const fullName = getFullName(participant)
     participant.assistance.forEach(({ assistanceAt, activity }) => {
+      if (dateFilter?.length > 0) {
+        const isBetween = moment(assistanceAt).isBetween(dateFilter[0], dateFilter[1])
+        if (!isBetween) return
+      }
       addColumn(activity, result, assistanceAt)
       addParticipant(activity.id, assistanceAt, participant.id, fullName, result)
     })
@@ -27,6 +33,9 @@ export const assistanceDecorator = assistants => {
   return result
 }
 
-export const onSearch = (assistance, setAssistants, value) => {
-
+export const getRows = (participants, search) => {
+  if (!search || search === "") {
+    return participants
+  }
+  return participants.filter(el => el.fullName.toUpperCase().includes(search.toUpperCase()))
 }
