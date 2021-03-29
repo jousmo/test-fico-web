@@ -344,8 +344,11 @@ export const getById = gql`
         beneficiary
         assistance{
           id
-          activity
           assistanceAt
+          activity {
+            id
+            description
+          }
         }
       }
       projectBeneficiaries{
@@ -362,11 +365,6 @@ export const getById = gql`
         municipality
         colony
         projectAssistantId
-        assistance{
-          id
-          activity
-          assistanceAt
-        }
       }
     }
   }

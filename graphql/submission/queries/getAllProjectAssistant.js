@@ -15,11 +15,6 @@ export const getAllProjectAssistant = gql`
       state
       municipality
       colony
-      assistance{
-        id
-        activity
-        assistanceAt
-      }
     }
   }
 `

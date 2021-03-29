@@ -1,12 +1,15 @@
 import { Card, Button, Space } from "antd"
-import { CompositeField, ConfirmModal, SearchFieldPrimary } from "../../../../../../shared"
+import { CompositeField, ConfirmModal, SearchFieldPrimary, Visibility } from "../../../../../../shared"
 import { ListAssistants } from "./list"
 import { decoratedData } from "../../../../../../../helpers/assistantsBeneficiaries"
 import { ModalAssistants } from "./modal"
+import { AssistanceModal } from "./assistance"
 import React, { useContext, useState } from "react"
 import { omit } from "lodash"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 import { onSearch } from "../../../../../census/tabs/card/helpers"
+import { warning } from "../../../../../../../helpers"
+import { getAssistance } from "./assistance/helpers"
 
 export function MonitoringAssistants({ data, dateFilter }) {
   const { Submission } = data || {}
@@ -15,6 +18,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     createAssistants,
     updateAssistants,
     deleteAssistants,
+    createAssistance,
     createBeneficiaries
   } = useContext(AdminSubmissionContext)
   const [selectedRows, setSelectedRows] = useState([])
@@ -25,6 +29,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     edit: false
   })
   const [assistants, setAssistants] = useState(undefined)
+  const [assistance, setAssistance] = useState(undefined)
 
   const onToggleConfirm = () => {
     setState({ ...state, openConfirm: !state.openConfirm })
@@ -66,14 +71,28 @@ export function MonitoringAssistants({ data, dateFilter }) {
     deleteAssistants && deleteAssistants(id)
   }
 
+  const onAssistance = () => {
+    if (!selectedRows.length) {
+      warning("Es necesario elegir al menos un asistente...")
+      return
+    }
+    setAssistance(true)
+  }
+
+  const onRegisterAssistance = values => {
+    createAssistance && createAssistance(getAssistance(values, selectedRows))
+    setAssistance(false)
+    setSelectedRows([])
+  }
+
   return (
     <>
       <SearchFieldPrimary
         onSearch={value => onSearch(dataSource, setAssistants, value)}
-        style={{marginBottom: "1rem"}}  />
+        style={{ marginBottom: "1rem" }}  />
       <Card className="assistants">
-        <Space size="middle" style={{marginBottom: "1rem"}}>
-          <Button>Agregar asistencia</Button>
+        <Space size="middle" style={{ marginBottom: "1rem" }}>
+          <Button onClick={onAssistance}>Agregar asistencia</Button>
           <Button onClick={onToggleConfirm}>Convertir a beneficiario</Button>
           <Button type="primary">Descargar</Button>
         </Space>
@@ -92,7 +111,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
                 edit={state.edit}
                 className="fico modal-assistants"/>
               <ListAssistants
-                selectedRows={selectedRows}
+                selectedRowKeys={selectedRows}
                 setSelectedRows={setSelectedRows}
                 dataSource={items}
                 onEdit={onEdit}
@@ -108,6 +127,13 @@ export function MonitoringAssistants({ data, dateFilter }) {
           okText="Crear beneficiarios"
           title="¿Estas seguro de convertir estos asistentes a beneficiarios?"
           visible={state?.openConfirm}/>
+        <Visibility visible={assistance}>
+          <AssistanceModal
+            visible={assistance}
+            onSave={onRegisterAssistance}
+            onCancel={() => setAssistance(undefined)}
+            submission={data?.Submission} />
+        </Visibility>
       </Card>
     </>
   )
