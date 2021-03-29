@@ -110,6 +110,7 @@ export const getTechnicalMonitoring = gql`
           activity {
             id
             description
+            title
           }
         }
       }
