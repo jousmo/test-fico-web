@@ -8,6 +8,7 @@ import { MonitoringSchedule } from "./schedule"
 import "./style.sass"
 import { MonitoringAssistants } from "./assistants"
 import { MonitoringBeneficiaries } from "./beneficiaries"
+import { MonitoringAssistance } from "./assistance"
 import { useAuth } from "../../../../../../contexts/auth"
 
 function TechnicalMonitoringTabs({ data }) {
@@ -38,16 +39,19 @@ function TechnicalMonitoringTabs({ data }) {
           </Tabs.TabPane>
         </>
       )}
-      <Tabs.TabPane tab="Objetivos y actividades" key="3">
+      <Tabs.TabPane tab="Asistencias" key="3">
+        <MonitoringAssistance data={data} dateFilter={filterState} />
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Objetivos y actividades" key="4">
         <MonitoringObjectives data={data} dateFilter={filterState} />
       </Tabs.TabPane>
-      <Tabs.TabPane tab="Participantes" key="4">
+      <Tabs.TabPane tab="Participantes" key="5">
         <MonitoringParticipants data={data} dateFilter={filterState} />
       </Tabs.TabPane>
-      <Tabs.TabPane tab="Retos y obstáculos" key="5">
+      <Tabs.TabPane tab="Retos y obstáculos" key="6">
         <MonitoringObstacles data={data} dateFilter={filterState} />
       </Tabs.TabPane>
-      <Tabs.TabPane tab="Cronograma" key="6">
+      <Tabs.TabPane tab="Cronograma" key="7">
         <MonitoringSchedule data={data} dateFilter={filterState}/>
       </Tabs.TabPane>
     </Tabs>
