@@ -134,8 +134,8 @@ function TechnicalMonitoringPage({ client, query }) {
     const saving = loadingAlert("Guardando...", 0)
     try {
       await createActivityAssistance({ variables: { data: assistance } })
-      success()
       await refetch()
+      success()
     } catch(e) {
       apolloError(e)
     }
