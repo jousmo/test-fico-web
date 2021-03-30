@@ -46,9 +46,9 @@ export function AssistanceModal({ onSave, onCancel, submission, ...props }) {
               <Select mode="multiple">
                 {activities?.map(activity =>
                   <Select.Option key={activity.id} value={activity.id}>
-                    {activity.description}
+                    {activity.title}
                   </Select.Option>
-                )}
+                ).reverse()}
               </Select>
             </Form.Item>
           </Col>
