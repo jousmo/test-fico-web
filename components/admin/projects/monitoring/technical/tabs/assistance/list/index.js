@@ -6,6 +6,7 @@ import { getRows } from "../helpers"
 
 export function AssistanceList ({ activity, dataSource, search }) {
   const columns = Array.from(dataSource[activity]?.columns || [])
+    .sort((a, b) => a.localeCompare(b))
   const rows = getRows(Object.values(dataSource[activity]?.participants || {}), search)
 
   const iconStyle = { fontSize: "20px" }
