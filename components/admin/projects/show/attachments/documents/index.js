@@ -14,7 +14,7 @@ function ProjectAttachments({ data }) {
   const attachments = (
     <Space direction="vertical">
       <a onClick={() => generalInformationExport(data)}>Información general</a>
-      <a onClick={() => technicalSpecificationExport(data)}>Ficha Tecnica</a>
+      <a onClick={() => technicalSpecificationExport(data)}>Ficha Técnica</a>
       <a onClick={() => budgetExport(data)}>Presupuesto</a>
       <a onClick={() => scheduleExport(data)}>Cronograma</a>
       <a onClick={() => humanResourcesExport(data)}>Recursos humanos</a>
