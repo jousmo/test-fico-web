@@ -263,7 +263,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
                 fileList={files}
                 onRemoveFile={onRemoveFile}
                 onChange={onUploadFile}
-                maxFile={100}>
+                maxFile={500}>
                 Subir medio de verificación
               </UploadButtonForm>
             </Form.Item>
