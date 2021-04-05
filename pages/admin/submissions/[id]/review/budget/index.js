@@ -87,7 +87,7 @@ function Budget({ client, query, token }) {
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
-            <BudgetTable />
+            <BudgetTable admin={true} />
           </Layout>
         </ImplementerSubmissionContext.Provider>
       </CommentsProvider>
