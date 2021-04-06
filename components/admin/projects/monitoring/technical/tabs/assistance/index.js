@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Card, Button, Select, Space } from "antd"
+import { Card, Select, Space } from "antd"
 import { SearchFieldPrimary } from "../../../../../../shared"
 import { AssistanceList } from "./list"
 import { assistanceDecorator } from "./helpers"
@@ -29,7 +29,6 @@ export function MonitoringAssistance({ data, dateFilter }) {
               <Select.Option key={key} value={key}>{decoratedData[key].name}</Select.Option>
             )}
           </Select>
-          <Button type="primary">Descargar</Button>
         </Space>
         <AssistanceList
           activity={activity}

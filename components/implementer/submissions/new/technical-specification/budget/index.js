@@ -1,3 +1,4 @@
+import { Button } from "antd"
 import {
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer"
@@ -5,8 +6,9 @@ import { useContext } from "react"
 import { Section } from "../../../../../shared"
 import BudgetForm from "./form"
 import * as _ from "lodash"
+import { exportBudget } from "./helpers"
 
-export function Budget() {
+export function Budget({ admin }) {
   const {
     updateBudget,
     readOnly,
@@ -26,6 +28,7 @@ export function Budget() {
 
   return (
     <Section
+      extra={admin && <Button onClick={() => exportBudget(data?.Budget)}>Exportar</Button>}
       title="Presupuesto"
       fullWidth>
       <BudgetForm
