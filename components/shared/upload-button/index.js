@@ -17,7 +17,7 @@ export function UploadButton({
 }) {
   const isDisabled = files?.length >= maxFile
   const [fileList, setFileList] = useState(files)
-  const [filesUrls, setFilesUrls] = useState([])
+  const [filesUrls, setFilesUrls] = useState(files)
 
   useEffect(() => {
     setFileList(files)

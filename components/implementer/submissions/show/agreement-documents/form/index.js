@@ -39,7 +39,7 @@ function AgreementDocumentsForm({ data, client }) {
   const onDoneFile = useCallback(async (info, cb) => {
     const saving = loadingAlert()
     const { typeFile: type, file: { name, uid }, urls } = info
-    const url = urls.find(el => el.uid === uid).url
+    const url = urls.find(el => el.uid === uid)?.url
     const newDocument = { type, name, url, submission: submissionId }
 
     try {

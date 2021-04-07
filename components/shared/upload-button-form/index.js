@@ -15,14 +15,14 @@ export function UploadButtonForm({
 }) {
   const isDisabled = disabled || fileList?.length >= maxFile
   const [state, setState] = useState({ fileList, disabled: isDisabled })
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState(fileList)
 
   const onUploadChange = async info => {
     let fileList = [...info.fileList]
     fileList = fileList.slice(-maxFile)
 
     fileList = fileList?.map(file => {
-      file.url = files.find(el => el.uid === file.uid).url
+      file.url = files.find(el => el.uid === file.uid)?.url
       return file
     })
 
