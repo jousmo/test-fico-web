@@ -51,8 +51,8 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract }) {
 
   const onDoneFile = useCallback(async (info, cb) => {
     const saving = loadingAlert()
-    const { typeFile: type, file: { name, response } } = info
-    const url = response?.imageUrl
+    const { typeFile: type, file: { name, uid }, urls } = info
+    const url = urls.find(el => el.uid === uid)?.url
     const newDocument = { type, name, url, submission: submissionId }
 
     try {
