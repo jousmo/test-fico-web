@@ -1,3 +1,4 @@
+import axios from "axios"
 import { Upload, Button } from "antd"
 import { UploadOutlined } from "@ant-design/icons"
 import { useEffect, useState } from "react"
@@ -16,6 +17,7 @@ export function UploadButton({
 }) {
   const isDisabled = files?.length >= maxFile
   const [fileList, setFileList] = useState(files)
+  const [filesUrls, setFilesUrls] = useState([])
 
   useEffect(() => {
     setFileList(files)
@@ -36,6 +38,7 @@ export function UploadButton({
       setFileList(info.fileList.slice())
 
       if (info.file.status === "done") {
+        info.urls = filesUrls
         onDoneFile({ typeFile, ...info }, (err, refetch = () => null) => {
           if (err) {
             warning("Hubo un error al guardar el documento")
@@ -62,9 +65,18 @@ export function UploadButton({
     }
   }
 
+  const getDataParams = async file => {
+    const {
+      data: { fields, upload: url }
+    } = await axios.get(`${process.env.NEXT_PUBLIC_ASSETS_URI}?file=${file.name}`)
+    setFilesUrls(files => ([...files, { url, ...file }]))
+    return fields
+  }
+
   return (
     <Upload
       className={className}
+      data={getDataParams}
       {...uploadProps}>
       <Button disabled={disabled || isDisabled }>
         <UploadOutlined /> {children}
