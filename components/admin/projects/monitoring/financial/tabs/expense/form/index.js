@@ -70,7 +70,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, update, ...pr
         values = merge(edit, values)
       }
 
-      const { error, message } = validateDocuments(values, submission, stateOldAmount)
+      const { error, message } = await validateDocuments(values, submission, stateOldAmount)
       if (error) {
         return warning(message)
       }
@@ -216,6 +216,11 @@ export function ModalExpense({ onSave, onCancel, edit, submission, update, ...pr
           name="rfc"
           rules={[{ required: true, message: "El campo es requerido" }]}>
           <Input name="rfc" readOnly />
+        </Form.Item>
+        <Form.Item
+          hidden
+          name="rfcRec">
+          <Input name="rfcRec" readOnly />
         </Form.Item>
         <Form.Item
           label="Emisión:"

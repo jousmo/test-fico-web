@@ -4,6 +4,7 @@ import { extendMoment } from "moment-range"
 const moment = extendMoment(Moment)
 moment.locale("es")
 import * as _ from "lodash"
+import axios from "axios"
 
 export const INIT_STATE = {
   amount: 0,
@@ -286,10 +287,10 @@ export const readXmlFile = async (documents, budgeted) => {
     const xmlJson = convert.xml2js(xml, { compact: true, ignoreComment: true, alwaysChildren: true })
     const { UUID: uuid, FechaTimbrado: issuedAt } = xmlJson["cfdi:Comprobante"]["cfdi:Complemento"]["tfd:TimbreFiscalDigital"]["_attributes"]
     const { Nombre: issuer, Rfc: rfc } = xmlJson["cfdi:Comprobante"]["cfdi:Emisor"]["_attributes"]
-    const { Nombre: receptor } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
+    const { Nombre: receptor, Rfc: rfcRec } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
     const amount = +xmlJson["cfdi:Comprobante"]["_attributes"]["Total"]
     const percentage = +((amount * 100) / budgeted).toFixed(2)
-    return { uuid, issuedAt, issuer, rfc, receptor, amount, percentage }
+    return { uuid, issuedAt, issuer, rfc, rfcRec, receptor, amount, percentage }
   } catch (err) {
     throw new Error(err)
   }
@@ -319,29 +320,40 @@ export const getPercentagePayment = formData => {
   }
 }
 
-export const validateDocuments = (formData, { budgeted, evidenced, difference }, oldAmount) => {
-  const { amount, documents, ficosecPayment, implementerPayment, investmentOnePayment, investmentTwoPayment } = formData
+export const validateDocuments = async (formData, { budgeted, evidenced, difference }, oldAmount) => {
+  try {
+    const { data: { status, statusCode } } = await axios.post('/api/cfdi', formData)
 
-  const isLength = documents.length < 2
-  if (isLength) return { error: true, message: "Se requiere que subas tu factura XML y PDF" }
+    if (statusCode === 500) return { error: true, message: "No se puede validar el estatus vigente de la factura" }
+    if (statusCode === 200 && status?.toUpperCase() !== 'VIGENTE')
+      return { error: true, message: `Tu factura esta en un estatus ${status} y no puede ser admitida` }
 
-  const isXML = documents?.some(document => document.type === "XML")
-  const isPDF = documents?.some(document => document.type === "PDF")
-  if (!isXML) return { error: true, message: "Se requiere que subas tu archivo XML" }
-  if (!isPDF) return { error: true, message: "Se requiere que subas tu archivo PDF" }
+    const { amount, documents, ficosecPayment, implementerPayment, investmentOnePayment, investmentTwoPayment } = formData
 
-  const fullAmount = +(difference + oldAmount).toFixed(2)
+    const isLength = documents.length < 2
+    if (isLength) return { error: true, message: "Se requiere que subas tu factura XML y PDF" }
 
-  if (amount > fullAmount) return { error: true, message: "El monto de la factura sobrepasa a lo presupuestado" }
+    const isXML = documents?.some(document => document.type === "XML")
+    const isPDF = documents?.some(document => document.type === "PDF")
+    if (!isXML) return { error: true, message: "Se requiere que subas tu archivo XML" }
+    if (!isPDF) return { error: true, message: "Se requiere que subas tu archivo PDF" }
 
-  const totalDistribution = +(ficosecPayment + implementerPayment + investmentOnePayment + investmentTwoPayment).toFixed(2)
+    const fullAmount = +(difference + oldAmount).toFixed(2)
 
-  if (totalDistribution > amount)
-    return { error: true, message: "La distribucción de las coinversiones sobrepasa el monto de la factura" }
-  if (totalDistribution < amount)
-    return { error: true, message: "La distribucción de las coinversiones es menor que el monto de la factura" }
+    if (amount > fullAmount) return { error: true, message: "El monto de la factura sobrepasa a lo presupuestado" }
 
-  return { error: false }
+    const totalDistribution = +(ficosecPayment + implementerPayment + investmentOnePayment + investmentTwoPayment).toFixed(2)
+
+    if (totalDistribution > amount)
+      return { error: true, message: "La distribucción de las coinversiones sobrepasa el monto de la factura" }
+    if (totalDistribution < amount)
+      return { error: true, message: "La distribucción de las coinversiones es menor que el monto de la factura" }
+
+    return { error: false }
+  } catch (error) {
+    return { error: true, message: error.message }
+  }
+
 }
 
 export const getUrlPdf = documents => documents?.find(el => el.type === "PDF")?.url
