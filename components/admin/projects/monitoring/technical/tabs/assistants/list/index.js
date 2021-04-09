@@ -4,9 +4,9 @@ import { EditOutlined } from "@ant-design/icons"
 import { translateGender, translateDate } from "../../../../../../../../helpers/assistantsBeneficiaries"
 import { DeleteButton } from "../../../../../../../shared"
 
-export function ListAssistants ({ dataSource, onEdit, onDelete, selectedRowKeys, setSelectedRows }) {
-  const onSelectChange = selectedRowKeys => {
-    setSelectedRows(selectedRowKeys)
+export function ListAssistants ({ dataSource, onEdit, onDelete, selected, setSelected }) {
+  const onSelectChange = (selectedRowKeys, selectedRows) => {
+    setSelected({ rows: selectedRows, keys: selectedRowKeys })
   }
 
   const onSelectDisabled = record => ({
@@ -15,7 +15,8 @@ export function ListAssistants ({ dataSource, onEdit, onDelete, selectedRowKeys,
   })
 
   const rowSelection = {
-    selectedRowKeys,
+    selectedRowKeys: selected.keys,
+    selectedRows: selected.rows,
     onChange: onSelectChange,
     getCheckboxProps: onSelectDisabled
   }
