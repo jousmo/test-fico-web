@@ -25,7 +25,7 @@ function TechnicalMonitoringPage({ client, query }) {
   )
 
   const [updateSub] = useMutation(
-    submission.mutations.updateById, { client: client }
+    submission.mutations.upsertSubmission, { client: client }
   )
 
   const [updateActivity] = useMutation(
@@ -36,7 +36,7 @@ function TechnicalMonitoringPage({ client, query }) {
     const saving = loadingAlert()
     try {
       await updateSub({
-        variables: { data: submission, id: query.id }
+        variables: { data: { ...submission, id: query.id } }
       })
       success()
     }
