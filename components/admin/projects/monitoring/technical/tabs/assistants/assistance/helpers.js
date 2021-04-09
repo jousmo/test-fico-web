@@ -9,7 +9,7 @@ export const getAssistance = (assistance, assistants) => {
   const { activities, assistanceAt } = assistance
   const result = []
   activities.forEach(activity => {
-    assistants.forEach(projectAssistant => {
+    assistants.forEach(({ id: projectAssistant }) => {
       result.push({ activity, projectAssistant, assistanceAt })
     })
   })

@@ -24,7 +24,7 @@ const translateDate = (date, format, currentFormat = "YYYY/MM/DD") => {
 }
 
 const totalActivities = assistance => {
-  return uniq(assistance?.map(el => el?.activity)).length
+  return uniq(assistance?.map(el => el?.activity.id)).length
 }
 
 const decoratedData = (assistants, dateFilter) => {

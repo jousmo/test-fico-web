@@ -66,7 +66,7 @@ function TechnicalMonitoringPage({ client, query }) {
       if (isConvert) {
         for (const beneficiary of beneficiaries) {
           const { id } = beneficiary
-          const data = omit(beneficiary, ['id', 'folio', 'age', 'activities', 'times', 'beneficiary'])
+          const data = omit(beneficiary, ['id', 'assistance', 'folio', 'age', 'activities', 'times', 'beneficiary'])
           data.projectAssistantId = id
           await createProjectBeneficiaries({ variables: { data, id: query.id } })
           await updateProjectAssistants({ variables: { data: { beneficiary: true }, id } })

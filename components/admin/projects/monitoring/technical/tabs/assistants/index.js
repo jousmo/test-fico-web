@@ -21,7 +21,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     createAssistance,
     createBeneficiaries
   } = useContext(AdminSubmissionContext)
-  const [selectedRows, setSelectedRows] = useState([])
+  const [selected, setSelected] = useState({ rows: [], keys: [] })
 
   const [state, setState] = useState({
     openConfirm: false,
@@ -36,8 +36,8 @@ export function MonitoringAssistants({ data, dateFilter }) {
   }
 
   const onOk = () => {
-    setSelectedRows([])
-    createBeneficiaries && createBeneficiaries(selectedRows)
+    createBeneficiaries && createBeneficiaries(selected.rows)
+    setSelected({ rows: [], keys: [] })
     onToggleConfirm()
   }
 
@@ -72,7 +72,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
   }
 
   const onAssistance = () => {
-    if (!selectedRows.length) {
+    if (!selected.rows.length) {
       warning("Es necesario elegir al menos un asistente...")
       return
     }
@@ -80,9 +80,9 @@ export function MonitoringAssistants({ data, dateFilter }) {
   }
 
   const onRegisterAssistance = values => {
-    createAssistance && createAssistance(getAssistance(values, selectedRows))
+    createAssistance && createAssistance(getAssistance(values, selected.rows))
     setAssistance(false)
-    setSelectedRows([])
+    setSelected({ rows: [], keys: [] })
   }
 
   return (
@@ -111,8 +111,8 @@ export function MonitoringAssistants({ data, dateFilter }) {
                 edit={state.edit}
                 className="fico modal-assistants"/>
               <ListAssistants
-                selectedRowKeys={selectedRows}
-                setSelectedRows={setSelectedRows}
+                selected={selected}
+                setSelected={setSelected}
                 dataSource={items}
                 onEdit={onEdit}
                 onDelete={onDelete}/>
@@ -123,7 +123,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
           cancelText="Cancelar"
           onCancel={onToggleConfirm}
           onOk={onOk}
-          okButtonProps={{ disabled: !selectedRows.length }}
+          okButtonProps={{ disabled: !selected.rows.length }}
           okText="Crear beneficiarios"
           title="¿Estas seguro de convertir estos asistentes a beneficiarios?"
           visible={state?.openConfirm}/>
