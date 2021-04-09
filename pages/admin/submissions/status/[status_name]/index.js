@@ -21,7 +21,7 @@ function SubmissionsByStatus({ client, query }) {
   const status = query.status_name?.toUpperCase()
 
   const [updateSubmissionStatus] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.upsertSubmission, {
       client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -42,7 +42,7 @@ function SubmissionsByStatus({ client, query }) {
     const saving = loadingAlert()
     try {
       await updateSubmissionStatus({
-        variables: { data: { status, statusChangedAt: moment().format() }, id: id }
+        variables: { data: { status, statusChangedAt: moment().format(), id } }
       })
       success()
     }

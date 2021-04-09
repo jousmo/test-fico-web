@@ -20,7 +20,7 @@ function ProjectSchedulePage({ client, query }) {
   })
 
   const [updateSubmission] = useMutation(
-    submission.mutations.updateById, {
+    submission.mutations.upsertSubmission, {
       client: client,
       awaitRefetchQueries: true,
       refetchQueries: [
@@ -37,7 +37,7 @@ function ProjectSchedulePage({ client, query }) {
 
     try {
       await updateSubmission({
-        variables: { data: submission, id: query.id }
+        variables: { data: { ...submission, id: query.id } }
       })
       success()
       saving()
