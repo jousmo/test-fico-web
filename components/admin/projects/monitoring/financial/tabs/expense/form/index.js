@@ -75,6 +75,8 @@ export function ModalExpense({ onSave, onCancel, edit, submission, update, ...pr
         return warning(message)
       }
 
+      delete values.rfcRec
+
       form.resetFields()
       setState(INIT_STATE)
       onSave && onSave(values)
