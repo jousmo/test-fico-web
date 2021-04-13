@@ -290,7 +290,7 @@ export const readXmlFile = async (documents, budgeted) => {
     const { Nombre: receptor, Rfc: rfcRec } = xmlJson["cfdi:Comprobante"]["cfdi:Receptor"]["_attributes"]
     const amount = +xmlJson["cfdi:Comprobante"]["_attributes"]["Total"]
     const percentage = +((amount * 100) / budgeted).toFixed(2)
-    return { uuid, issuedAt, issuer, rfc, rfcRec, receptor, amount, percentage }
+    return { uuid, issuedAt, issuer, rfc, rfcRec, receptor, amount, percentage, total: amount }
   } catch (err) {
     throw new Error(err)
   }
@@ -353,7 +353,6 @@ export const validateDocuments = async (formData, { budgeted, evidenced, differe
   } catch (error) {
     return { error: true, message: error.message }
   }
-
 }
 
 export const getUrlPdf = documents => documents?.find(el => el.type === "PDF")?.url

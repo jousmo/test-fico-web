@@ -1,7 +1,7 @@
 import soapRequest from "easy-soap-request"
 import convert from "xml-js"
 
-const validateCfdi = async ({ rfc, rfcRec, amount, uuid }) => {
+const validateCfdi = async ({ rfc, rfcRec, total, uuid }) => {
   const { response: { body, statusCode } } = await soapRequest({
     url: "https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl",
     headers: {
@@ -14,7 +14,7 @@ const validateCfdi = async ({ rfc, rfcRec, amount, uuid }) => {
         <soapenv:Body>
           <tem:Consulta>
             <tem:expresionImpresa>
-              <![CDATA[?re=${rfc}&rr=${rfcRec}&tt=${amount}&id=${uuid}]]>
+              <![CDATA[?re=${rfc}&rr=${rfcRec}&tt=${total}&id=${uuid}]]>
             </tem:expresionImpresa>
           </tem:Consulta>
         </soapenv:Body>
