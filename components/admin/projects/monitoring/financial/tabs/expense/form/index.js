@@ -76,6 +76,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, update, ...pr
       }
 
       delete values.rfcRec
+      delete values.total
 
       form.resetFields()
       setState(INIT_STATE)
@@ -281,6 +282,16 @@ export function ModalExpense({ onSave, onCancel, edit, submission, update, ...pr
           <InputNumber
             name="amount"
             onChange={onChangeTotal}
+            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={value => value.replace(/\$\s?|(,*)/g, '')}
+            disabled={readOnly}/>
+        </Form.Item>
+
+        <Form.Item
+          hidden
+          name="total">
+          <InputNumber
+            name="total"
             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
             parser={value => value.replace(/\$\s?|(,*)/g, '')}
             disabled={readOnly}/>

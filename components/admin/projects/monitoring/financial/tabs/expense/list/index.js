@@ -2,17 +2,41 @@ import { Table, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined, CommentOutlined } from "@ant-design/icons"
 import { DateField, DeleteButton, SelectField } from "../../../../../../../shared"
 import { cellFormat } from "../../../../../../../../helpers"
-import { getUrlPdf, monthYearConvert, getConcept } from "../../../helpers"
+import { getUrlPdf, monthYearConvert, getConcept, readXmlFile } from "../../../helpers"
 import moment from "moment"
-import React from "react"
+import React, { useState, useEffect } from "react"
 moment.locale("es")
+import axios from "axios"
 
 export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete }) {
+  const [state, setState] = useState({
+    loading: false,
+    dataSource
+  })
+
+  const list = async () => {
+    setState({ ...state, loading: true })
+    const result = await Promise.all(dataSource?.map(async element => {
+      const { rfc, rfcRec, amount, uuid } = await readXmlFile(element?.documents, 0)
+      const { data: { status }} = await axios.post('/api/cfdi', { rfc, rfcRec, total: amount, uuid })
+      element.status = status || "No encontrado"
+      return element
+    }))
+    setState({ loading: false, dataSource: result })
+  }
+
+  useEffect(() => {
+    if (dataSource.length) {
+      list()
+    }
+  }, [dataSource])
+
   return (
     <Table
+      loading={state?.loading}
       rowKey={a => a.id}
       style={{marginTop: "1.5rem"}}
-      dataSource={dataSource}
+      dataSource={state?.dataSource}
       size="small"
       locale={{emptyText: <Empty description="Agrega todas las facturas" />}}
       scroll={{ x: true }}
@@ -83,6 +107,11 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
         sorter={(a, b) => a.percentage - b.percentage}
         showSorterTooltip={false}
         title="Uso presupuestal" />
+      <Table.Column
+        width={1}
+        dataIndex="status"
+        showSorterTooltip={false}
+        title="Estatus" />
       <Table.Column
         width={1}
         title=""
