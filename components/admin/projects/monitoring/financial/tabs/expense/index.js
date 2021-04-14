@@ -7,7 +7,7 @@ import { ListExpense } from "./list"
 import { ModalExpense } from "./form"
 import moment from "moment"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
-import { getConcept } from "../../helpers"
+import { getConcept, readXmlFile } from "../../helpers"
 
 export function Expense () {
   const { data: { Submission }, save, update, deleteInvoice } = useContext(AdminSubmissionContext)
@@ -53,8 +53,10 @@ export function Expense () {
     onCancel()
   }
 
-  const onEdit = (item, index) => {
+  const onEdit = async (item, index) => {
     item.index = index
+    const { rfcRec, total } = await readXmlFile(item.documents, 0)
+    item = { ...item, rfcRec, total }
     setState({ ...state, isModalOpen: true, edit: item })
   }
 
