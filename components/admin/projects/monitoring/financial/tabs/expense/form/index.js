@@ -16,7 +16,7 @@ import { DateField, SelectField, UploadButtonForm } from "../../../../../../../s
 import { cellFormat, getSelectValue, warning } from "../../../../../../../../helpers"
 import { conceptTypes }from "../../../../../../../../helpers/selectOptions/implementer/submission"
 import { useEffect, useState } from "react"
-import { merge } from "lodash"
+import { merge, omit } from "lodash"
 import {
   INIT_STATE,
   RESET_XML_DATA,
@@ -75,12 +75,11 @@ export function ModalExpense({ onSave, onCancel, edit, submission, update, ...pr
         return warning(message)
       }
 
-      delete values.rfcRec
-      delete values.total
+      const newValues = omit(values, ["rfcRec", "total", "status"])
 
       form.resetFields()
       setState(INIT_STATE)
-      onSave && onSave(values)
+      onSave && onSave(newValues)
     } catch (e) {
       warning("Llena los campos requeridos")
       console.error(e)
