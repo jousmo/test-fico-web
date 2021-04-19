@@ -63,16 +63,9 @@ function TechnicalSpecification({ client, query, token }) {
     await setSave(state, setState, updateSubmission, submissionId)
   }, [state])
 
-  // const { shared: { submissionStatusOptions: status }} = selectOptions
-  // const readOnly = data?.TechnicalSpecification?.state === "PROJECT" ||
-  //   status.findIndex(el => el.value === data?.TechnicalSpecification?.status) > 8 ||
-  //   (token?.role === "IMPLEMENTER" && data?.TechnicalSpecification?.status.includes("REVIEW"))
-
-  const readOnly = token?.role === "IMPLEMENTER" && data?.TechnicalSpecification?.status.includes("REVIEW")
-
   const injectActions = useMemo(() => ({
     updateTechnicalSpecification,
-    readOnly,
+    readOnly: false,
     loading,
     error,
     data,
@@ -89,7 +82,7 @@ function TechnicalSpecification({ client, query, token }) {
         update={updateTechnicalSpecification}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
+            <SaveHeader isSaving={state.isSaving} save={save} disabled={false} />
             <DevelopmentObjective />
             <GeneralObjective />
             <SpecificObjectives />
