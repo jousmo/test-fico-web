@@ -62,10 +62,12 @@ function Budget({ client, query, token }) {
     await setSave(state, setState, updateSubmission, submissionId)
   }, [state, updateSubmission])
 
-  const { shared: { submissionStatusOptions: status }} = selectOptions
-  const readOnly = data?.Budget?.state === "PROJECT" ||
-    status.findIndex(el => el.value === data?.Budget?.status) > 8 ||
-    (token?.role === "IMPLEMENTER" && data?.Budget?.status.includes("REVIEW"))
+  // const { shared: { submissionStatusOptions: status }} = selectOptions
+  // const readOnly = data?.Budget?.state === "PROJECT" ||
+  //   status.findIndex(el => el.value === data?.Budget?.status) > 8 ||
+  //   (token?.role === "IMPLEMENTER" && data?.Budget?.status.includes("REVIEW"))
+
+  const readOnly = token?.role === "IMPLEMENTER" && data?.Budget?.status.includes("REVIEW")
 
   const injectActions = useMemo(() => ({
     updateBudget,
@@ -73,7 +75,7 @@ function Budget({ client, query, token }) {
     loading,
     error,
     data,
-    review: true
+    review: false
   }), [state, loading, data])
 
   const disabledComments = data?.Budget?.status.includes("REVISION")

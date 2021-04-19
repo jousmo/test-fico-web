@@ -62,10 +62,12 @@ function HumanResources({ client, query, token }) {
     await setSave(humanResources, setState, updateSubmission)
   }, [state])
 
-  const { shared: { submissionStatusOptions: status }} = selectOptions
-  const readOnly = data?.SubmissionSimple?.state === "PROJECT" ||
-    status.findIndex(el => el.value === data?.SubmissionSimple?.status) > 8 ||
-    (token?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
+  // const { shared: { submissionStatusOptions: status }} = selectOptions
+  // const readOnly = data?.SubmissionSimple?.state === "PROJECT" ||
+  //   status.findIndex(el => el.value === data?.SubmissionSimple?.status) > 8 ||
+  //   (token?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
+
+  const readOnly = token?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW")
 
   const injectActions = useMemo(() => ({
     commentSubmission: { concepts: data?.Concepts, status: data?.SubmissionSimple?.status },

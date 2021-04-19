@@ -63,10 +63,12 @@ function TechnicalSpecification({ client, query, token }) {
     await setSave(state, setState, updateSubmission, submissionId)
   }, [state])
 
-  const { shared: { submissionStatusOptions: status }} = selectOptions
-  const readOnly = data?.TechnicalSpecification?.state === "PROJECT" ||
-    status.findIndex(el => el.value === data?.TechnicalSpecification?.status) > 8 ||
-    (token?.role === "IMPLEMENTER" && data?.TechnicalSpecification?.status.includes("REVIEW"))
+  // const { shared: { submissionStatusOptions: status }} = selectOptions
+  // const readOnly = data?.TechnicalSpecification?.state === "PROJECT" ||
+  //   status.findIndex(el => el.value === data?.TechnicalSpecification?.status) > 8 ||
+  //   (token?.role === "IMPLEMENTER" && data?.TechnicalSpecification?.status.includes("REVIEW"))
+
+  const readOnly = token?.role === "IMPLEMENTER" && data?.TechnicalSpecification?.status.includes("REVIEW")
 
   const injectActions = useMemo(() => ({
     updateTechnicalSpecification,
@@ -74,7 +76,7 @@ function TechnicalSpecification({ client, query, token }) {
     loading,
     error,
     data,
-    review: true
+    review: false
   }), [state, loading, data])
 
   const disabledComments = data?.TechnicalSpecification?.status.includes("REVISION")

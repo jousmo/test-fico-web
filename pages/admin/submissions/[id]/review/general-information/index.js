@@ -70,10 +70,12 @@ function GeneralInformation({ client, query, token }) {
     return getIsCall(data, state)
   }, [data, state])
 
-  const { shared: { submissionStatusOptions: status }} = selectOptions
-  const readOnly = data?.GeneralInformation?.state === "PROJECT" ||
-    status.findIndex(el => el.value === data?.GeneralInformation?.status) > 8 ||
-    (token?.role === "IMPLEMENTER" && data?.GeneralInformation?.status.includes("REVIEW"))
+  // const { shared: { submissionStatusOptions: status }} = selectOptions
+  // const readOnly = data?.GeneralInformation?.state === "PROJECT" ||
+  //   status.findIndex(el => el.value === data?.GeneralInformation?.status) > 8 ||
+  //   (token?.role === "IMPLEMENTER" && data?.GeneralInformation?.status.includes("REVIEW"))
+
+  const readOnly = token?.role === "IMPLEMENTER" && data?.GeneralInformation?.status.includes("REVIEW")
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
@@ -82,7 +84,7 @@ function GeneralInformation({ client, query, token }) {
     loading,
     error,
     data,
-    review: true
+    review: false
   }), [state, loading, data])
 
   const disabledComments = data?.GeneralInformation?.status.includes("REVISION")
