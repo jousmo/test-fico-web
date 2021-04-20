@@ -87,8 +87,7 @@ function TechnicalMonitoringPage({ client, query }) {
       })
       await refetch()
       success()
-    }
-    catch(e) {
+    } catch(e) {
       apolloError(e)
     }
     saving()
