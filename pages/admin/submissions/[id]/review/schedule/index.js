@@ -30,7 +30,7 @@ function Schedule({ client, query }) {
     <PageContext.Provider value={pageData({ step: 3 })}>
       <ImplementerSubmissionContext.Provider value={injectActions}>
         <Layout>
-          <Heading />
+          <Heading admin />
           <ActivitiesSchedule />
         </Layout>
       </ImplementerSubmissionContext.Provider>
