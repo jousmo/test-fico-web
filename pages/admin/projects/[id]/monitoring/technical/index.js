@@ -1,12 +1,12 @@
 import { Layout } from "../../../../../../components/shared"
-import { PageContext } from "../../../../../../contexts/page"
+import { PageContext } from "../../../../../../contexts"
 import {
   AdminSubmissionContext
 } from "../../../../../../contexts/admin/submissions/show"
 import {
   TechnicalMonitoring
 } from "../../../../../../components/admin/projects/monitoring"
-import { submission } from "../../../../../../graphql/submission"
+import { submission } from "../../../../../../graphql"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { success, loadingAlert, withApollo } from "../../../../../../helpers"
@@ -39,8 +39,7 @@ function TechnicalMonitoringPage({ client, query }) {
         variables: { data: { ...submission, id: query.id } }
       })
       success()
-    }
-    catch(e) {
+    } catch(e) {
       apolloError(e)
     }
     saving()
@@ -51,8 +50,7 @@ function TechnicalMonitoringPage({ client, query }) {
       await updateActivity({
         variables: { data: activity }
       })
-    }
-    catch(e) {
+    } catch(e) {
       apolloError(e)
     }
   }, [updateActivity])
@@ -65,8 +63,7 @@ function TechnicalMonitoringPage({ client, query }) {
       })
       await refetch()
       success()
-    }
-    catch(e) {
+    } catch(e) {
       apolloError(e)
     }
     saving()
