@@ -4,8 +4,10 @@ import { useContext } from "react"
 import {
   ImplementerSubmissionContext
 } from "../../../../../../contexts/implementer/submissions/new/context"
+import { Button } from "antd"
+import { generalInformationExport } from "../../../../../admin/projects/show/attachments/documents/helpers"
 
-export function ProjectDetails() {
+export function ProjectDetails({ admin }) {
   const {
     updateGeneralInformation,
     readOnly,
@@ -31,7 +33,9 @@ export function ProjectDetails() {
   }
 
   return (
-    <Section title="1. Detalles del proyecto">
+    <Section
+      extra={admin && <Button onClick={() => generalInformationExport(data?.GeneralInformation)}>Exportar</Button>}
+      title="1. Detalles del proyecto">
       <ProjectDetailsForm
         isLoading={loading}
         error={error}
