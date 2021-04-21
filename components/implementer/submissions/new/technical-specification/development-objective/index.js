@@ -8,8 +8,10 @@ import { FieldLabel } from "../../../../../shared"
 import {
   DevelopmentObjectiveText
 } from "../../general-information/development-objectives/form/development-objective-text"
+import { Button } from "antd"
+import { technicalSpecificationExport } from "../../../../../admin/projects/show/attachments/documents/helpers"
 
-export function DevelopmentObjective() {
+export function DevelopmentObjective({ admin }) {
   const {
     updateTechnicalSpecification,
     readOnly,
@@ -29,6 +31,7 @@ export function DevelopmentObjective() {
 
   return (
     <Section
+      extra={admin && <Button onClick={() => technicalSpecificationExport(data.TechnicalSpecification)}>Exportar</Button>}
       title={
         <FieldLabel
           helpText={<DevelopmentObjectiveText />}>

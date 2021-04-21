@@ -28,7 +28,7 @@ import {
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
-function TechnicalSpecification({ client, query, token }) {
+function TechnicalSpecification({ client, query }) {
   const submissionId = query.id
 
   const [state, setState] = useState({
@@ -83,7 +83,7 @@ function TechnicalSpecification({ client, query, token }) {
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <SaveHeader isSaving={state.isSaving} save={save} disabled={false} />
-            <DevelopmentObjective />
+            <DevelopmentObjective admin />
             <GeneralObjective />
             <SpecificObjectives />
           </Layout>
