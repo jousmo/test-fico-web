@@ -108,11 +108,11 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                   <>
                     {humanResources.map((humanResource, index) => (
                       <Row
-                        align="middle"
+                        align="top"
                         gutter={[10, 8]}
                         justify="start"
                         key={humanResource.key}>
-                        <Col flex="50px">
+                        <Col flex="50px" style={{marginTop: "5px"}}>
                           {!hiddenComments &&
                           <CommentButton
                             index={index}
@@ -121,7 +121,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                             section="HUMAN_RESOURCE" />
                           }
                         </Col>
-                        <Col flex="30px">
+                        <Col flex="30px" style={{marginTop: "5px"}}>
                           <span key={`userIcon-${humanResource.key}`}>
                             &nbsp;<UserOutlined />
                           </span>

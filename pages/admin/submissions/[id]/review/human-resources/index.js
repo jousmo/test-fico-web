@@ -62,15 +62,10 @@ function HumanResources({ client, query, token }) {
     await setSave(humanResources, setState, updateSubmission)
   }, [state])
 
-  const { shared: { submissionStatusOptions: status }} = selectOptions
-  const readOnly = data?.SubmissionSimple?.state === "PROJECT" ||
-    status.findIndex(el => el.value === data?.SubmissionSimple?.status) > 8 ||
-    (token?.role === "IMPLEMENTER" && data?.SubmissionSimple?.status.includes("REVIEW"))
-
   const injectActions = useMemo(() => ({
     commentSubmission: { concepts: data?.Concepts, status: data?.SubmissionSimple?.status },
     updateHumanResources,
-    readOnly,
+    readOnly: false,
     loading,
     error,
     form,
@@ -87,7 +82,7 @@ function HumanResources({ client, query, token }) {
         update={updateHumanResources}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
+            <SaveHeader isSaving={state.isSaving} save={save} disabled={false} />
             <Heading />
             <ResourcesList />
           </Layout>

@@ -62,18 +62,13 @@ function Budget({ client, query, token }) {
     await setSave(state, setState, updateSubmission, submissionId)
   }, [state, updateSubmission])
 
-  const { shared: { submissionStatusOptions: status }} = selectOptions
-  const readOnly = data?.Budget?.state === "PROJECT" ||
-    status.findIndex(el => el.value === data?.Budget?.status) > 8 ||
-    (token?.role === "IMPLEMENTER" && data?.Budget?.status.includes("REVIEW"))
-
   const injectActions = useMemo(() => ({
     updateBudget,
-    readOnly,
+    readOnly: false,
     loading,
     error,
     data,
-    review: true
+    review: false
   }), [state, loading, data])
 
   const disabledComments = data?.Budget?.status.includes("REVISION")
@@ -86,7 +81,7 @@ function Budget({ client, query, token }) {
         update={updateBudget}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
+            <SaveHeader isSaving={state.isSaving} save={save} disabled={false} />
             <BudgetTable admin={true} />
           </Layout>
         </ImplementerSubmissionContext.Provider>

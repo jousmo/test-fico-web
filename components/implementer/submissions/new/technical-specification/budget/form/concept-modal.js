@@ -212,20 +212,16 @@ export function ConceptModal({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Row gutter={[10, 8]}>
-              <Col span={24}>Costo total</Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <Input
-                  disabled
-                  prefix="$"
-                  value={
-                    numeral((state.unitCost * state.totalUnits) || 0)
-                      .format("0,0.00")
-                  }/>
-              </Col>
-            </Row>
+            <Form.Item
+              label="Costo total">
+              <Input
+                disabled
+                prefix="$"
+                value={
+                  numeral((state.unitCost * state.totalUnits) || 0)
+                    .format("0,0.00")
+                }/>
+            </Form.Item>
           </Col>
           <Col span={24}>
             <Form.Item
