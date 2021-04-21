@@ -91,7 +91,7 @@ function GeneralInformation({ client, query, token }) {
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
             <SaveHeader isSaving={state.isSaving} save={save} disabled={false} />
-            <ProjectDetails />
+            <ProjectDetails admin />
             <Consultant />
             <DevelopmentObjectives />
             <Beneficiaries />
