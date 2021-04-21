@@ -38,8 +38,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
       }
 
       onSave(values, edit?.id)
-    }
-    catch(e) {
+    } catch(e) {
       console.error(e)
     }
   }
@@ -55,9 +54,11 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
   }
 
   const onRemoveFile = file => {
-    const verificationDocuments = files
+    const listFiles = form.getFieldValue('verificationDocuments')
+    const verificationDocuments = listFiles
       ?.filter(el => el.url !== file.url)
       .map(({ uid, ...el}) => ({ id: uid, ...el }))
+
     form.setFieldsValue({ verificationDocuments })
   }
 
