@@ -98,8 +98,8 @@ export const generalInformationExport = async data => {
     rows: [
       [
         typeSubmission(data?.type)?.label,
-        data?.name,
         data?.applyingCall,
+        data?.name,
         data?.township,
         data?.region,
         data?.allies?.join(','),
