@@ -35,11 +35,7 @@ export const exportBudget = async submission => {
 
   const months = projectMonths(submission)
   const monthColumns = monthsColumns(months)
-  const investors = [
-    { name: "Implementadora" },
-    { name: "FICOSEC" }
-  ]
-  submission?.allies.forEach(ally => investors.push({ name: ally }))
+  let investors = new Set()
 
   const conceptsInfo = []
   submission?.concepts?.forEach(concept => {
@@ -59,6 +55,7 @@ export const exportBudget = async submission => {
     const result = Array.from(Object.values(el))
 
     investmentDistribution?.forEach(el => {
+      investors.add(el?.name)
       result?.push(`${el?.percentage}%`)
     })
 
@@ -71,6 +68,8 @@ export const exportBudget = async submission => {
 
     conceptsInfo.push(result)
   })
+
+  investors = Array.from(investors).map(el => ({ name: el }))
 
   worksheet.addTable({
     name: "Presupuesto",

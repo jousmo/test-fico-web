@@ -4,6 +4,7 @@ import { useLazyQuery } from "@apollo/react-hooks"
 import { useContext, useEffect } from "react"
 import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
 import { useRouter } from "next/router"
+import { exportBudget  } from "../../../../../implementer/submissions/new/technical-specification/budget/helpers"
 import {
   scheduleExport,
   generalInformationExport
@@ -23,6 +24,10 @@ export function AttachmentsXLSContent() {
     client, variables: { id }
   })
 
+  const [getBudget, { data: budget = {} }] = useLazyQuery(submission.queries.getBudget,  {
+    client, variables: { id }
+  })
+
   useEffect(async () => {
     if (generalInfo.GeneralInformation) {
       await generalInformationExport(generalInfo.GeneralInformation)
@@ -35,11 +40,17 @@ export function AttachmentsXLSContent() {
     }
   }, [schedule])
 
+  useEffect(async () => {
+    if (budget.Budget) {
+      await exportBudget(budget.Budget)
+    }
+  }, [budget])
+
   return (
     <Space direction="vertical">
       <a onClick={() => getGeneralInfo()}>Información general</a>
       {/*<a onClick={() => {}}>Ficha técnica</a>*/}
-      {/*<a onClick={() => {}}>Presupuesto</a>*/}
+      <a onClick={() => getBudget()}>Presupuesto</a>
       <a onClick={() => getSchedule()}>Cronograma</a>
       {/*<a onClick={() => {}}>Reportes</a>*/}
       {/*<a onClick={() => {}}>Ministraciones</a>*/}
