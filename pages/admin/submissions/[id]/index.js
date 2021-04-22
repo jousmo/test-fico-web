@@ -14,7 +14,7 @@ import { AdminSubmissionContext } from "../../../../contexts/admin/submissions/s
 import { submission } from "../../../../graphql"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { PageContext } from "../../../../contexts/page"
+import { PageContext } from "../../../../contexts"
 import { AuthCheck } from "../../../../helpers/auth/auth-check"
 
 function Submission({ client, query }) {

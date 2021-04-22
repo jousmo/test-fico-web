@@ -12,6 +12,7 @@ export const getAll = gql`
       id
       implementer {
         name
+        commercialName
       }
       name
       type
