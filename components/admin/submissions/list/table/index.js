@@ -52,6 +52,9 @@ function SubmissionsListingTable({ data }) {
         }
         title="Fecha de solicitud" />
       <Table.Column
+        render={({ implementer }) => implementer?.commercialName }
+        title="Alias" />
+      <Table.Column
         dataIndex="name"
         title="Nombre de proyecto" />
       <Table.Column
