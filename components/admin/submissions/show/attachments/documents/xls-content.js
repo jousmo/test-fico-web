@@ -7,7 +7,8 @@ import { useRouter } from "next/router"
 import { exportBudget  } from "../../../../../implementer/submissions/new/technical-specification/budget/helpers"
 import {
   scheduleExport,
-  generalInformationExport
+  generalInformationExport,
+  technicalSpecificationExport
 } from "../../../../projects/show/attachments/documents/helpers"
 
 export function AttachmentsXLSContent() {
@@ -16,6 +17,11 @@ export function AttachmentsXLSContent() {
   const { query: { id } } = router || {}
 
   const [getGeneralInfo, { data: generalInfo = {} }] = useLazyQuery(submission.queries.getGeneralInfo, {
+    client,
+    variables: { id }
+  })
+
+  const [getTechnicalSpec, { data: technicalSpec = {} }] = useLazyQuery(submission.queries.getTechnicalSpecification, {
     client,
     variables: { id }
   })
@@ -35,6 +41,12 @@ export function AttachmentsXLSContent() {
   }, [generalInfo])
 
   useEffect(async () => {
+    if (technicalSpec.TechnicalSpecification) {
+      await technicalSpecificationExport(technicalSpec.TechnicalSpecification)
+    }
+  }, [technicalSpec])
+
+  useEffect(async () => {
     if (schedule.TechnicalSpecification) {
       await scheduleExport(schedule.TechnicalSpecification)
     }
@@ -49,7 +61,7 @@ export function AttachmentsXLSContent() {
   return (
     <Space direction="vertical">
       <a onClick={() => getGeneralInfo()}>Información general</a>
-      {/*<a onClick={() => {}}>Ficha técnica</a>*/}
+      <a onClick={() => getTechnicalSpec()}>Ficha técnica</a>
       <a onClick={() => getBudget()}>Presupuesto</a>
       <a onClick={() => getSchedule()}>Cronograma</a>
       {/*<a onClick={() => {}}>Reportes</a>*/}
