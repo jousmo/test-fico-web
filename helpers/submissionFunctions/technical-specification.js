@@ -4,8 +4,8 @@ import { apolloError } from "../bugsnag/notify"
 
 export const setUpdateTechnicalSpecification = (technicalSpecification, state, setState) => {
   const newTechnicalSpecification = {
-    ...state.technicalSpecification,
-    ...technicalSpecification
+    ...technicalSpecification,
+    ...state.technicalSpecification
   }
 
   setState({
