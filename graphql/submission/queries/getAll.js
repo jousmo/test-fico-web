@@ -13,6 +13,9 @@ export const getAll = gql`
       implementer {
         name
         commercialName
+        account {
+          displayName
+        }
       }
       name
       type
