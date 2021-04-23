@@ -32,10 +32,17 @@ export const exportBudget = async submission => {
   titleInfo.value = "Presupuesto"
   titleInfo.font = { size: 20, bold: true }
 
-
   const months = projectMonths(submission)
   const monthColumns = monthsColumns(months)
-  let investors = new Set()
+  const investorsColumns = [
+    { name: "Implementadora" },
+    { name: "FICOSEC" }
+  ]
+  const investors = ["Implementadora", "FICOSEC"]
+  submission?.allies.forEach(ally => {
+    investorsColumns.push({ name: ally })
+    investors.push(ally)
+  })
 
   const conceptsInfo = []
   submission?.concepts?.forEach(concept => {
@@ -54,10 +61,18 @@ export const exportBudget = async submission => {
     el.type = typeConcept(el?.type)?.label
     const result = Array.from(Object.values(el))
 
-    investmentDistribution?.forEach(el => {
-      investors.add(el?.name)
-      result?.push(`${el?.percentage}%`)
-    })
+    investmentDistribution
+      .sort((a, b) => investors.indexOf(a.name) - investors.indexOf(b.name))
+      .forEach(el => {
+        result?.push(`${el?.percentage}%`)
+      })
+
+    const investorDifference = investorsColumns.length - investmentDistribution.length
+    if (investorDifference > 0) {
+      Array.from([investorDifference]).forEach(el => {
+        result?.push("0%")
+      })
+    }
 
     months.forEach((month, index) => {
       result.push(...[
@@ -68,8 +83,6 @@ export const exportBudget = async submission => {
 
     conceptsInfo.push(result)
   })
-
-  investors = Array.from(investors).map(el => ({ name: el }))
 
   worksheet.addTable({
     name: "Presupuesto",
@@ -86,7 +99,7 @@ export const exportBudget = async submission => {
       { name: "Costo unitario" },
       { name: "Total de unidades" },
       { name: "Costo total" },
-      ...investors,
+      ...investorsColumns,
       ...monthColumns
     ],
     rows: conceptsInfo
