@@ -9,7 +9,8 @@ export const getRoute = (router, step) => {
     1: "technical-specification",
     2: "budget",
     3: "schedule",
-    4: "human-resources"
+    4: "human-resources",
+    5: "comments"
   }
   if (route.includes("implementer")) {
     return `/implementer/submissions/${id}/edit/${routes[step]}`
