@@ -29,11 +29,12 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
     if (dataSource.length) {
       list()
     }
-  }, [concepts])
+  }, [dataSource.length > 0])
 
   return (
     <>
       <Button
+        disabled={state?.loading}
         onClick={list}
         type="primary"
         style={{float: "right", margin: "1rem 0"}}>
