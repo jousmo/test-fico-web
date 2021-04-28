@@ -58,6 +58,7 @@ export const getGeneralInfo = gql`
         comments {
           id
           fieldName
+          createdAt
           reviewed
           revision
           comment
@@ -80,6 +81,7 @@ export const getGeneralInfo = gql`
         comments {
           id
           fieldName
+          createdAt
           reviewed
           revision
           comment
@@ -89,6 +91,7 @@ export const getGeneralInfo = gql`
       comments {
         id
         fieldName
+        createdAt
         reviewed
         revision
         comment

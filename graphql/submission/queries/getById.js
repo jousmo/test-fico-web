@@ -37,6 +37,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          createdAt
           reviewed
           revision
           comment
@@ -60,6 +61,7 @@ export const getById = gql`
           comments {
             id
             fieldName
+            createdAt
             reviewed
             revision
             comment
@@ -90,6 +92,7 @@ export const getById = gql`
           comments {
             id
             fieldName
+            createdAt
             reviewed
             revision
             comment
@@ -108,6 +111,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          createdAt
           reviewed
           revision
           comment
@@ -139,6 +143,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          createdAt
           reviewed
           revision
           comment
@@ -162,6 +167,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          createdAt
           reviewed
           revision
           comment
@@ -185,6 +191,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          createdAt
           reviewed
           revision
           comment
@@ -227,6 +234,7 @@ export const getById = gql`
           comments {
             id
             fieldName
+            createdAt
             reviewed
             revision
             comment
@@ -236,6 +244,7 @@ export const getById = gql`
         comments {
           id
           fieldName
+          createdAt
           reviewed
           revision
           comment
@@ -252,6 +261,7 @@ export const getById = gql`
       comments {
         id
         fieldName
+        createdAt
         reviewed
         revision
         comment
