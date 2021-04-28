@@ -34,6 +34,10 @@ export function Steps({current = 0}) {
         key="human-resources"
         title="Recursos humanos"
         status="wait" />
+      <ASteps.Step
+        key="comments"
+        title="Comentarios"
+        status="wait" />
     </ASteps>
   )
 }
