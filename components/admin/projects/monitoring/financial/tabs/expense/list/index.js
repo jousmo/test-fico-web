@@ -2,49 +2,31 @@ import { Table, Button, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined, CommentOutlined } from "@ant-design/icons"
 import { DateField, DeleteButton, SelectField } from "../../../../../../../shared"
 import { cellFormat } from "../../../../../../../../helpers"
-import { getUrlPdf, monthYearConvert, getConcept, readXmlFile } from "../../../helpers"
+import { getUrlPdf, monthYearConvert, getConcept, invoicesExport } from "../../../helpers"
 import moment from "moment"
-import React, { useState, useEffect } from "react"
 moment.locale("es")
-import axios from "axios"
 
-export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete }) {
-  const [state, setState] = useState({
-    loading: false,
-    dataSource: undefined
-  })
-
-  const list = async () => {
-    setState({ ...state, loading: true })
-    const result = await Promise.all(dataSource?.map(async element => {
-      const { rfc, rfcRec, amount, uuid } = await readXmlFile(element?.documents, 0)
-      const { data: { status }} = await axios.post('/api/cfdi', { rfc, rfcRec, total: amount, uuid })
-      element.status = status || "No encontrado"
-      return element
-    }))
-    setState({ loading: false, dataSource: result })
-  }
-
-  useEffect(() => {
-    if (dataSource.length) {
-      list()
-    }
-  }, [dataSource.length > 0])
-
+export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete, getStatus, loading }) {
   return (
     <>
-      <Button
-        disabled={state?.loading}
-        onClick={list}
-        type="primary"
-        style={{float: "right", margin: "1rem 0"}}>
-        Revisar estatus CFDI
-      </Button>
+      <Space style={{margin: "1rem 0"}}>
+        <Button
+          disabled={loading}
+          onClick={() => invoicesExport(dataSource, concepts)}>
+          Descargar reporte
+        </Button>
+        <Button
+          disabled={loading}
+          onClick={getStatus}
+          type="primary">
+          Revisar estatus CFDI
+        </Button>
+      </Space>
       <Table
-        loading={state?.loading}
+        loading={loading}
         rowKey={a => a.id}
         style={{marginTop: "1.5rem"}}
-        dataSource={state?.dataSource}
+        dataSource={dataSource}
         size="small"
         locale={{emptyText: <Empty description="Agrega todas las facturas" />}}
         scroll={{ x: true }}
@@ -118,6 +100,7 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
         <Table.Column
           width={1}
           dataIndex="status"
+          render={text => text || "- - -"}
           showSorterTooltip={false}
           title="Estatus" />
         <Table.Column
