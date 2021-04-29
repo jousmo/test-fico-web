@@ -47,6 +47,7 @@ export const getBudget = gql`
           comments {
             id
             fieldName
+            createdAt
             reviewed
             revision
             comment
@@ -56,6 +57,7 @@ export const getBudget = gql`
         comments {
           id
           fieldName
+          createdAt
           reviewed
           revision
           comment
