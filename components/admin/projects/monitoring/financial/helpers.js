@@ -7,9 +7,7 @@ import * as _ from "lodash"
 import axios from "axios"
 import * as ExcelJS from "exceljs"
 import { saveAs } from "file-saver"
-import numeral from "numeral"
-import { getReadableValue } from "../../../../../helpers/selectOptions"
-import { conceptTypes, contractTypes } from "../../../../../helpers/selectOptions/implementer/submission"
+import { conceptTypes } from "../../../../../helpers/selectOptions/implementer/submission"
 import { cellFormat } from "../../../../../helpers"
 
 const typeConcept = type => conceptTypes?.find(el => el.value === type)
