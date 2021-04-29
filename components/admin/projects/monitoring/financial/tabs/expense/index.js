@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Alert, Space, DatePicker } from "antd"
 import { Section, SearchFieldPrimary, CompositeField, StatisticHeader } from "../../../../../../shared"
 import ModalCommentMonitoring from "../../../../../../shared/modal-comment-monitoring"
@@ -8,6 +8,7 @@ import { ModalExpense } from "./form"
 import moment from "moment"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 import { getConcept, readXmlFile } from "../../helpers"
+import axios from "axios"
 
 export function Expense () {
   const { data: { Submission }, save, update, deleteInvoice } = useContext(AdminSubmissionContext)
@@ -16,7 +17,8 @@ export function Expense () {
     edit: false,
     filterInvoice: false,
     isModalCommentOpen: false,
-    projectInvoice: { id: "", type: "INVOICE" }
+    projectInvoice: { id: "", type: "INVOICE" },
+    loading: false
   })
 
   useEffect(() => {
@@ -91,10 +93,10 @@ export function Expense () {
 
   const onSearch = (value) => {
     const filter = Submission?.invoices?.filter(invoice => {
-      const { uuid, issuer, receptor, rfc, amount } = invoice
+      const { uuid, issuer, receptor, rfc, amount, status } = invoice
       const nameConcept = getConcept(Submission?.concepts, invoice.concept)
       const nameMonth = moment(invoice.monthAt, "MMYYYY").format("MMMM")
-      return `${uuid} ${issuer} ${receptor} ${rfc} ${amount} ${nameConcept} ${nameConcept} ${nameMonth}`
+      return `${uuid} ${issuer} ${receptor} ${rfc} ${amount} ${nameConcept} ${nameConcept} ${nameMonth} ${status}`
         .toLowerCase()
         .includes(value.toLowerCase())
     })
@@ -104,6 +106,17 @@ export function Expense () {
     } else {
       setState({ ...state, filterInvoice: filter })
     }
+  }
+
+  const getStatus = async () => {
+    setState({ ...state, loading: true })
+    const result = await Promise.all(Submission?.invoices?.map(async element => {
+      const { rfc, rfcRec, amount, uuid } = await readXmlFile(element?.documents, 0)
+      const { data: { status }} = await axios.post('/api/cfdi', { rfc, rfcRec, total: amount, uuid })
+      element.status = status || "No encontrado"
+      return element
+    }))
+    setState({ loading: false, filterInvoice: result })
   }
 
   return (
@@ -120,6 +133,7 @@ export function Expense () {
           <DatePicker.RangePicker format="DD/MM/YYYY" onChange={onChangeRageDate} />
         </Space>
         <CompositeField
+          isAddDisabled={state?.loading}
           onClickAdd={onClickAdd}
           onChange={onChange}
           value={state.filterInvoice ? state.filterInvoice : Submission?.invoices}
@@ -140,7 +154,10 @@ export function Expense () {
                 concepts={Submission?.concepts}
                 onDelete={onDelete}
                 onEdit={onEdit}
-                onComment={onComment}/>
+                onComment={onComment}
+                getStatus={getStatus}
+                loading={state?.loading}
+              />
             </>
           }
         </CompositeField>

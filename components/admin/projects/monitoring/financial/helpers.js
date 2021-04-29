@@ -5,6 +5,12 @@ const moment = extendMoment(Moment)
 moment.locale("es")
 import * as _ from "lodash"
 import axios from "axios"
+import * as ExcelJS from "exceljs"
+import { saveAs } from "file-saver"
+import { conceptTypes } from "../../../../../helpers/selectOptions/implementer/submission"
+import { cellFormat } from "../../../../../helpers"
+
+const typeConcept = type => conceptTypes?.find(el => el.value === type)
 
 export const INIT_STATE = {
   amount: 0,
@@ -356,3 +362,60 @@ export const validateDocuments = async (formData, { budgeted, evidenced, differe
 }
 
 export const getUrlPdf = documents => documents?.find(el => el.type === "PDF")?.url
+
+export const invoicesExport = async (invoices, concepts) => {
+  const workbook = new ExcelJS.Workbook()
+  let worksheet = workbook.addWorksheet("Monitoreo Financiero")
+
+  let titleInfo = worksheet.getCell("A1")
+  titleInfo.value = `Monitoreo financiero`
+  titleInfo.font = { size: 20, bold: true }
+
+  let data = invoices.map(({ id, documents, reviewed, typeRH, ...el}) => {
+    el.category = typeConcept(el?.category)?.label
+    el.monthAt = monthYearConvert(el?.monthAt)
+    el.concept = getConcept(concepts, el.concept)
+    el.issuedAt = moment(el?.issuedAt).format("DD/MMMM/YYYY").toUpperCase()
+    el.paymentAt = moment(el?.paymentAt).format("DD/MMMM/YYYY").toUpperCase()
+    el.amount = cellFormat.money(el?.amount)?.children
+    el.ficosecPayment = cellFormat.money(el?.ficosecPayment)?.children
+    el.implementerPayment = cellFormat.money(el?.implementerPayment)?.children
+    el.investmentOnePayment = cellFormat.money(el?.investmentOnePayment)?.children
+    el.investmentTwoPayment = cellFormat.money(el?.investmentTwoPayment)?.children
+    el.percentage = `${el?.percentage} %`
+    return Object.values(el)
+  })
+
+  data = data?.length ? data : [[]]
+
+  worksheet.addTable({
+    name: "Facturas",
+    ref: `A${worksheet?.lastRow?._number + 2}`,
+    headerRow: true,
+    style: {
+      showRowStripes: true,
+    },
+    columns: [
+      { name: "Folio SAT" },
+      { name: "Emisor" },
+      { name: "RFC" },
+      { name: "Emisión" },
+      { name: "Receptor" },
+      { name: "Mes/Año" },
+      { name: "Concepto" },
+      { name: "Categoría" },
+      { name: "Fecha de pago" },
+      { name: "Ficosec" },
+      { name: "Inversionista 1" },
+      { name: "Inversionista 2" },
+      { name: "Implementadora" },
+      { name: "Total" },
+      { name: "Porcentaje" },
+      { name: "Estatus CFDI" }
+    ],
+    rows: data
+  })
+
+  const buf = await workbook.xlsx.writeBuffer()
+  saveAs(new Blob([buf]), "MF.xlsx")
+}
