@@ -417,5 +417,5 @@ export const invoicesExport = async (invoices, concepts) => {
   })
 
   const buf = await workbook.xlsx.writeBuffer()
-  saveAs(new Blob([buf]), "MF.xlsx")
+  saveAs(new Blob([buf]), "MonitoreoFinanciero.xlsx")
 }
