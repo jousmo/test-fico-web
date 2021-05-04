@@ -102,6 +102,7 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
           dataIndex="status"
           render={text => text || "- - -"}
           showSorterTooltip={false}
+          sorter={(a, b) => a.status.localeCompare(b.status)}
           title="Estatus" />
         <Table.Column
           width={1}

@@ -1,20 +1,30 @@
 import { withForm, toFileList } from "../../../../../../../helpers"
 import { Form, Row, Col } from "antd"
 import { FieldLabel, UploadButtonForm } from "../../../../../../shared"
+import { useEffect, useState } from "react"
 
 function DocumentsForm({ data, onChange, hiddenComments, readOnly }) {
+  const [documents, setDocuments] = useState([])
+
+  useEffect(() => {
+    if (data?.documents.length) {
+      setDocuments(data?.documents?.filter(doc => doc.type === "EXTRA_DOCUMENTS") || [])
+    }
+  }, [data])
+
   const onDoneFile = files => {
-    const newDocuments = files?.map(({ name, url }) => ({ name, url, type: "EXTRA_DOCUMENTS" }))
-    const documents = [...data?.documents, ...newDocuments]
-    onChange({ documents })
+    const addDocuments = files?.map(({ name, url }) => ({ name, url, type: "EXTRA_DOCUMENTS" }))
+    setDocuments(addDocuments)
+    onChange({ documents: addDocuments })
   }
 
   const onRemoveFile = ({ url }) => {
-    const documents = data?.documents.filter(doc => doc.url !== url)
-    onChange({ documents })
+    const newDocuments = documents?.filter(doc => doc.url !== url)
+    setDocuments(newDocuments)
+    onChange({ documents: newDocuments })
   }
 
-  const documents = data?.documents?.filter(doc => doc.type === "EXTRA_DOCUMENTS") || []
+  const dataSourceFiles = data?.documents?.filter(doc => doc.type === "EXTRA_DOCUMENTS") || []
 
   return (
     <Form
@@ -33,7 +43,7 @@ function DocumentsForm({ data, onChange, hiddenComments, readOnly }) {
               </FieldLabel>
             }>
             <UploadButtonForm
-              fileList={toFileList(documents)}
+              fileList={toFileList(dataSourceFiles)}
               onRemoveFile={onRemoveFile}
               onChange={onDoneFile}
               maxFile={10}

@@ -19,7 +19,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo, selectOptions } from "../../../../../../helpers"
+import { withApollo } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
