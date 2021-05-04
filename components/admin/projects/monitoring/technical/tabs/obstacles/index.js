@@ -36,21 +36,17 @@ export function MonitoringObstacles({ data = {}, dateFilter }){
       addNew(values)
     }
     else {
-      const index = values.index
-      delete values.index
-
-      replaceItemAtIndex(index, values)
+      replaceItemAtIndex(values.index, values)
     }
     onCancel()
   }
 
   const onEdit = (data, index) => () => {
-    data.index = index
-    setState({ isModalOpen: true, edit: data })
+    setState({ isModalOpen: true, edit: { ...data, index } })
   }
 
   const onChange = items => {
-    const technicalUpdates = Array.from(items).map(item => omit(item, ['createdAt']))
+    const technicalUpdates = Array.from(items).map(item => omit(item, ['index', 'createdAt']))
     updateSubmission({ technicalUpdates })
   }
 
@@ -69,7 +65,7 @@ export function MonitoringObstacles({ data = {}, dateFilter }){
               onSave={onSave(addNew, replaceItemAtIndex)}
               visible={state.isModalOpen}
               edit={state.edit} />
-            <Table dataSource={items} pagination={false}>
+            <Table dataSource={items} pagination={false} rowKey={el => el.id}>
               <Table.Column
                 render={(t, {createdAt}) =>
                   `Actualizado el ${moment(createdAt).format("DD/MM/YYYY")}`

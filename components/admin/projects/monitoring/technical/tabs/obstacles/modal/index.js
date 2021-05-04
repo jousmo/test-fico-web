@@ -15,9 +15,10 @@ export function ObstaclesModal({ edit, onCancel, onSave, ...props }){
       const values = await form.getFieldsValue()
 
       if(edit){
-        values.index = edit.index
+        onSave({ ...edit, ...values })
+      } else {
+        onSave(values)
       }
-      onSave(values)
       form.resetFields()
     }
     catch(e) {
