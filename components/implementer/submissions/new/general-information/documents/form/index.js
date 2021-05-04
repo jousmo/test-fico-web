@@ -14,9 +14,8 @@ function DocumentsForm({ data, onChange, hiddenComments, readOnly }) {
 
   const onDoneFile = files => {
     const addDocuments = files?.map(({ name, url }) => ({ name, url, type: "EXTRA_DOCUMENTS" }))
-    const newDocuments = [...documents, ...addDocuments]
-    setDocuments(newDocuments)
-    onChange({ documents: newDocuments })
+    setDocuments(addDocuments)
+    onChange({ documents: addDocuments })
   }
 
   const onRemoveFile = ({ url }) => {
