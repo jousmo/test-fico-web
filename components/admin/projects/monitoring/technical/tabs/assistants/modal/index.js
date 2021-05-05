@@ -28,8 +28,7 @@ export function ModalAssistants({ onSave, onCancel, edit, ...props }) {
         values = merge(edit, values)
       }
 
-      form.resetFields()
-      onSave && onSave(values)
+      onSave && onSave(values, form)
     } catch (e) {
       warning("Llena los campos requeridos")
       console.error(e)

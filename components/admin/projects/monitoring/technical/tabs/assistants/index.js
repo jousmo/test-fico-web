@@ -49,17 +49,21 @@ export function MonitoringAssistants({ data, dateFilter }) {
     setState({ ...state, isModalOpen: false, edit: false })
   }
 
-  const onSave = assistant => {
+  const onSave = async (assistant, form) => {
+    let saved = null
     if(assistant.index !== undefined) {
       const updateAssistant = omit(assistant,
-        ['index', 'folio', 'age', 'activities', 'times']
+        ['index', 'folio', 'age', 'assistance', 'activities', 'times']
       )
-      updateAssistants && updateAssistants(updateAssistant)
+      saved = await updateAssistants(updateAssistant)
     } else {
-      createAssistants && createAssistants(assistant)
+      saved = await createAssistants(assistant)
     }
 
-    onCancel()
+    if (saved) {
+      form.resetFields()
+      onCancel()
+    }
   }
 
   const onEdit = (item, index) => {
