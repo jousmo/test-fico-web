@@ -37,6 +37,8 @@ export function ActivityModal({
       if(typeof edit?.index !== "undefined") {
         edit.months = null
         edit.meansOfVerification = null
+        delete edit.products
+        delete edit.inputs
         values = merge(edit, values)
       }
 
