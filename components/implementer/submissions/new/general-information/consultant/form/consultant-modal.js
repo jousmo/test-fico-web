@@ -355,7 +355,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
                         <Row
                           gutter={[10, 8]}
                           justify="start"
-                          key={`support_${index}`}>
+                          key={`support_${item.name}_${index}`}>
                           <Col span={8}>
                             <Form.Item
                               style={{display: "inline"}}
