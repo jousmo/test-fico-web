@@ -27,7 +27,7 @@ export function MultipleTextField({
       {({items, removeItem, updateItem}) =>
         <div>
           {items?.map((item, index) =>
-            <Form.Item key={index}>
+            <Form.Item key={`${item.value}-${index}`}>
               <Row>
                 <Col flex="auto">
                   <Input
