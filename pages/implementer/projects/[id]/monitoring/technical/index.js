@@ -9,7 +9,7 @@ import {
 import { submission } from "../../../../../../graphql"
 import React, { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { loadingAlert, success, withApollo } from "../../../../../../helpers"
+import { loadingAlert, success, warning, withApollo } from "../../../../../../helpers"
 import { cloneDeep, omit } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
@@ -69,7 +69,7 @@ function TechnicalMonitoringPage({ client, query }) {
           const data = omit(beneficiary, ['id', 'assistance', 'folio', 'age', 'activities', 'times', 'beneficiary'])
           data.projectAssistantId = id
           await createProjectBeneficiaries({ variables: { data, id: query.id } })
-          await updateProjectAssistants({ variables: { data: { beneficiary: true }, id } })
+          await updateProjectAssistants({ variables: { data: { beneficiary: true }, submissionId: query?.id, id } })
         }
       } else {
         await createProjectBeneficiaries({
@@ -91,7 +91,9 @@ function TechnicalMonitoringPage({ client, query }) {
       await updateProjectBeneficiaries({ variables: { data, id } })
       if (data?.projectAssistantId) {
         const { projectAssistantId, ...newData } = data
-        await updateProjectAssistants({ variables: { data: newData, id: data?.projectAssistantId } })
+        await updateProjectAssistants({ variables: {
+          data: newData, submissionId: query?.id, id: data?.projectAssistantId
+        } })
       }
       success()
       await refetch()
@@ -106,7 +108,9 @@ function TechnicalMonitoringPage({ client, query }) {
     try {
       await deleteProjectBeneficiaries({ variables: { id } })
       if (projectAssistantId) {
-        await updateProjectAssistants({ variables: { data: { beneficiary: false }, id: projectAssistantId } })
+        await updateProjectAssistants({ variables: {
+          data: { beneficiary: false }, submissionId: query?.id, id: projectAssistantId
+        } })
       }
       success("Eliminado correctamente")
       await refetch()
@@ -124,10 +128,17 @@ function TechnicalMonitoringPage({ client, query }) {
       })
       success()
       await refetch()
+      saving()
+      return true
     } catch(e) {
-      apolloError(e)
+      saving()
+      if (e.graphQLErrors[0].message.includes("CURP")) {
+        warning("El CURP ya existe")
+        return false
+      } else {
+        apolloError(e)
+      }
     }
-    saving()
   }, [createProjectAssistants, refetch])
 
   const createAssistance = useCallback(async assistance => {
@@ -146,13 +157,20 @@ function TechnicalMonitoringPage({ client, query }) {
     const saving = loadingAlert("Guardando...", 0)
     try {
       const { id, ...data } = assistant
-      await updateProjectAssistants({ variables: { data, id } })
+      await updateProjectAssistants({ variables: { data, submissionId: query?.id, id } })
       success()
       await refetch()
+      saving()
+      return true
     } catch(e) {
-      apolloError(e)
+      saving()
+      if (e.graphQLErrors[0].message.includes("CURP")) {
+        warning("El CURP ya existe")
+        return false
+      } else {
+        apolloError(e)
+      }
     }
-    saving()
   }, [updateProjectAssistants, updateProjectBeneficiaries, refetch])
 
   const deleteAssistants = useCallback(async id => {
