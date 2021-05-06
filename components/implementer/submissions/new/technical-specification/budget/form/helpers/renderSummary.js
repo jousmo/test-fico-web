@@ -1,5 +1,6 @@
 import { Table, Tag } from "antd"
 import numeral from "numeral"
+import { Visibility } from "../../../../../../../shared"
 
 const getAmount = (row, percentage) => {
   return (row.unitCost * row.totalUnits) * percentage / 100
@@ -66,20 +67,22 @@ export const renderSummary = (concepts, submission) => {
           {getPercentage(absoluteTotal, ficosec)}%
         </Tag>
       </Table.Summary.Cell>
-      <Table.Summary.Cell>
-        {numeral(totalFirstAlly).format("$0,0.00")}
-        <Tag style={{ display: 'block' }}>
-          {getPercentage(absoluteTotal, totalFirstAlly)}%
-        </Tag>
-      </Table.Summary.Cell>
-      {submission?.allies?.[1] && (
+      <Visibility visible={!!firstAlly}>
         <Table.Summary.Cell>
-          ${totalSecondAlly}
+          {numeral(totalFirstAlly).format("$0,0.00")}
+          <Tag style={{ display: 'block' }}>
+            {getPercentage(absoluteTotal, totalFirstAlly)}%
+          </Tag>
+        </Table.Summary.Cell>
+      </Visibility>
+      <Visibility visible={!!secondAlly}>
+        <Table.Summary.Cell>
+          {numeral(totalSecondAlly).format("$0,0.00")}
           <Tag style={{ display: 'block' }}>
             {getPercentage(absoluteTotal, totalSecondAlly)}%
           </Tag>
         </Table.Summary.Cell>
-      )}
+      </Visibility>
       <Table.Summary.Cell>
         {units}
       </Table.Summary.Cell>
