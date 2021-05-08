@@ -75,6 +75,7 @@ function BudgetForm({ data, onChange, hiddenComments, readOnly, review }) {
                   )
                   }/>
                 <Table.Column
+                  fixed
                   title="Concepto"
                   key="name"
                   dataIndex="name"
