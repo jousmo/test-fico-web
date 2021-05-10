@@ -46,7 +46,7 @@ function DocumentsForm({ data, onChange, hiddenComments, readOnly }) {
               fileList={toFileList(dataSourceFiles)}
               onRemoveFile={onRemoveFile}
               onChange={onDoneFile}
-              maxFile={10}
+              maxFile={100}
               disabled={readOnly}>
               Adjuntar
             </UploadButtonForm>

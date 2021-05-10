@@ -104,7 +104,7 @@ function ProjectClosureForm({ data, save }) {
                 fileList={closureDocuments}
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
-                maxFile={5}
+                maxFile={100}
                 accept={"application/pdf,text/plain"}>
                 Subir documentos de cierre
               </UploadButtonForm>
