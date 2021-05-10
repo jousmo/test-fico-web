@@ -309,7 +309,7 @@ export function ConsultantModal({ edit, onCancel, onSave, limitDates, hiddenComm
                 fileList={toFileList(edit?.documents) || []}
                 onRemoveFile={onRemoveFile}
                 onChange={onDoneFile}
-                maxFile={5}
+                maxFile={100}
                 accept={"application/pdf"}>
                 Adjuntar documentos
               </UploadButtonForm>

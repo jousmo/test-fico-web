@@ -40,7 +40,7 @@ export function BankStatementsModal({ onCancel, onSave, ...props }){
               name="documents"
               style={{ display: "inline" }}>
               <UploadButtonForm
-                accept={"application/pdf,application/xml,.xml,.pdf"} maxFile={10}>
+                accept={"application/pdf,application/xml,.xml,.pdf"} maxFile={100}>
                 Adjunta los estados de cuenta
               </UploadButtonForm>
             </Form.Item>
