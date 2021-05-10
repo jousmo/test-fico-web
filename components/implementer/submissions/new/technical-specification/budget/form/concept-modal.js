@@ -1,4 +1,4 @@
-import { Modal, Form, Row, Col, Input, Typography } from "antd"
+import { Modal, Form, Row, Col, Input, Select, Typography } from "antd"
 import { merge } from "lodash"
 import { useEffect, useState } from "react"
 import { implementer } from "../../../../../../../helpers/selectOptions"
@@ -31,6 +31,10 @@ export function ConceptModal({
   ]
 
   const [form] = Form.useForm()
+  const [unit, setUnit] = useState({
+    isEquipment: false,
+    isHumanResource: false
+  })
   const [state, setState] = useState({})
   const [investmentState, setInvestmentState] = useState(!edit?.investmentDistribution)
   const [unitsState, setUnitsState] = useState({
@@ -46,6 +50,10 @@ export function ConceptModal({
       form.setFieldsValue(edit)
       setUnitsState({ overLimit: false, total: edit.totalUnits })
       setState(edit)
+      setUnit({
+        isEquipment: edit.type === "EQUIPMENT",
+        isHumanResource: humanResources.includes(edit.type)
+      })
     }
   }, [edit])
 
@@ -95,6 +103,7 @@ export function ConceptModal({
     form.resetFields()
     onCancel && onCancel()
     setState({})
+    setUnit({ isHumanResource: false, isEquipment: false })
   }
 
   const onFormChange = () => {
@@ -108,13 +117,13 @@ export function ConceptModal({
   const onTypeChange = value => {
     if (humanResources.includes(getSelectValue(value))){
       form.setFieldsValue({ measurementUnit: "Mes" })
-      setState(state => ({ isUnitDisabled: true, ...state }))
+      setUnit({ isHumanResource: true, isEquipment: false })
     } else if (getSelectValue(value) === "EQUIPMENT"){
       form.setFieldsValue({ measurementUnit: "Pieza" })
-      setState(state => ({ isUnitDisabled: true, ...state }))
+      setUnit({ isHumanResource: false, isEquipment: true })
     } else {
-      form.setFieldsValue({ measurementUnit: undefined })
-      setState(state => ({ isUnitDisabled: false, ...state }))
+      form.setFieldsValue({ measurementUnit: "" })
+      setUnit({ isHumanResource: false, isEquipment: false })
     }
   }
 
@@ -174,18 +183,34 @@ export function ConceptModal({
                 options={implementer.submission.conceptTypes} />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item
-              initialValue={edit?.measurementUnit}
-              name="measurementUnit"
-              style={{display: "inline"}}
-              label="Unidad de medida">
-              <Input
-                id="measurementUnit"
-                disabled={state.isUnitDisabled || readOnly}
-                type="text" />
-            </Form.Item>
-          </Col>
+          {!!unit.isHumanResource && (
+            <Col span={12}>
+              <Form.Item
+                initialValue={edit?.measurementUnit}
+                name="measurementUnit"
+                style={{display: "inline"}}
+                label="Unidad de medida">
+                <Select id="measurementUnit" disabled={readOnly}>
+                  <Select.Option value="Mes">Mes</Select.Option>
+                  <Select.Option value="Horas">Horas</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          )}
+          {!unit.isHumanResource && (
+            <Col span={12}>
+              <Form.Item
+                initialValue={edit?.measurementUnit}
+                name="measurementUnit"
+                style={{display: "inline"}}
+                label="Unidad de medida">
+                <Input
+                  id="measurementUnit"
+                  disabled={unit.isEquipment || readOnly}
+                  type="text" />
+              </Form.Item>
+            </Col>
+          )}
           <Col span={12}>
             <Form.Item
               initialValue={edit?.unitCost}
