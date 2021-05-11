@@ -39,7 +39,7 @@ export const exportBudget = async submission => {
     { name: "FICOSEC" }
   ]
   const investors = ["Implementadora", "FICOSEC"]
-  submission?.allies.forEach(ally => {
+  submission?.allies?.forEach(ally => {
     investorsColumns.push({ name: ally })
     investors.push(ally)
   })
