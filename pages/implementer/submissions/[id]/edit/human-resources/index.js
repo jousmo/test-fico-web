@@ -22,9 +22,6 @@ import {
 import {
   setSave,
 } from "../../../../../../helpers/submissionFunctions/human-resources"
-import {
-  setReviewedComments
-} from "../../../../../../helpers/submissionFunctions/comments"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 
@@ -40,19 +37,6 @@ function HumanResources({ client, query, token }) {
       refetchQueries: [
         {
           query: submission.queries.getConcepts,
-          variables: { id: query.id }
-        }
-      ]
-    }
-  )
-
-  const [updateComments] = useMutation(
-    submission.mutations.reviewComments, {
-      client: client,
-      awaitRefetchQueries: true,
-      refetchQueries: [
-        {
-          query: submission.queries.getGeneralInfo,
           variables: { id: query.id }
         }
       ]
@@ -79,10 +63,6 @@ function HumanResources({ client, query, token }) {
     await setSave(humanResources, setState, updateSubmission)
   }, [state])
 
-  const onCommentsReview = useCallback(async comments => {
-    await setReviewedComments(comments, setState, updateComments)
-  }, [state])
-
   const { shared: { submissionStatusOptions: status }} = selectOptions
   const readOnly = data?.SubmissionSimple?.state === "PROJECT" ||
     status.findIndex(el => el.value === data?.SubmissionSimple?.status) > 8 ||
@@ -103,7 +83,6 @@ function HumanResources({ client, query, token }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
-        onCommentsReview={onCommentsReview}
         readOnly
         submission={commentSubmission}>
         <ImplementerSubmissionContext.Provider value={injectActions}>

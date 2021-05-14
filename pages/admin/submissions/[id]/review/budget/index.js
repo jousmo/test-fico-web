@@ -12,7 +12,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo, selectOptions } from "../../../../../../helpers"
+import { withApollo } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -24,6 +24,7 @@ import {
   setUpdateBudget
 } from "../../../../../../helpers/submissionFunctions/budget"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
+import { setReviewedComments } from "../../../../../../helpers/submissionFunctions/comments"
 
 
 function Budget({ client, query, token }) {
@@ -31,6 +32,7 @@ function Budget({ client, query, token }) {
 
   const [state, setState] = useState({
     budget: {},
+    comments: undefined,
     dirty: false,
     isSaving: false
   })
@@ -48,6 +50,10 @@ function Budget({ client, query, token }) {
     }
   )
 
+  const [updateComments] = useMutation(
+    submission.mutations.reviewComments, { client: client }
+  )
+
   const { loading, error, data } = useQuery(submission.queries.getBudget, {
     client: client,
     variables: { id: query.id },
@@ -59,8 +65,12 @@ function Budget({ client, query, token }) {
   }, [state, setState])
 
   const save = useCallback(async () => {
-    await setSave(state, setState, updateSubmission, submissionId)
+    await setSave(state, setState, updateSubmission, submissionId, updateComments)
   }, [state, updateSubmission])
+
+  const onCommentsReview = useCallback(async comments => {
+    await setReviewedComments(comments, setState)
+  }, [state])
 
   const injectActions = useMemo(() => ({
     updateBudget,
@@ -76,6 +86,7 @@ function Budget({ client, query, token }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 2 })}>
       <CommentsProvider
+        onCommentsReview={onCommentsReview}
         submission={data?.Budget}
         readOnly={disabledComments}
         update={updateBudget}>

@@ -15,10 +15,14 @@ export const setUpdateTechnicalSpecification = (technicalSpecification, state, s
   })
 }
 
-export const setSave = async (state, setState, updateSubmission, id) => {
+export const setSave = async (state, setState, updateSubmission, id, updateComments) => {
   setState({ ...state, isSaving: true })
   const saving = loadingAlert()
   try {
+    if (state.comments) {
+      await updateComments({ variables: { data: state.comments } })
+    }
+
     const data = cloneDeep(state.technicalSpecification)
     data.developmentObjectiveIndicators = data.developmentObjectiveIndicators?.map(({ index, ...el }) => el)
     data.generalObjectiveIndicators = data.generalObjectiveIndicators?.map(({ index, ...el }) => el)
@@ -34,5 +38,5 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     apolloError(e)
   }
   saving()
-  setState({ ...state, isSaving: false, technicalSpecification: {} })
+  setState({ ...state, comments: false, isSaving: false, technicalSpecification: {} })
 }

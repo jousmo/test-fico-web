@@ -7,13 +7,17 @@ export const setUpdateGeneralInformation = (generalInformation, state, setState)
     ...generalInformation
   }
 
-  setState({...state, dirty: true, generalInformation: newGeneralInformation})
+  setState({ ...state, dirty: true, generalInformation: newGeneralInformation })
 }
 
-export const setSave = async (state, setState, updateSubmission, id) => {
+export const setSave = async (state, setState, updateSubmission, id, updateComments) => {
   setState({ ...state, isSaving: true })
   const saving = loadingAlert()
   try {
+    if (state.comments) {
+      await updateComments({ variables: { data: state.comments } })
+    }
+
     await updateSubmission({
       variables: { data: { ...state.generalInformation, id } }
     })
@@ -23,7 +27,7 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     apolloError(err)
   }
   saving()
-  setState({ ...state, isSaving: false, generalInformation: {} })
+  setState({ ...state, comments: false, isSaving: false, generalInformation: {} })
 }
 
 export const getIsCall = (data, state) => {

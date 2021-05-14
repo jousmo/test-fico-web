@@ -26,9 +26,6 @@ import {
   setSave,
   setUpdateGeneralInformation
 } from "../../../../../../helpers/submissionFunctions/general-information"
-import {
-  setReviewedComments
-} from "../../../../../../helpers/submissionFunctions/comments"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 
 function GeneralInformation({ client, query, token }) {
@@ -51,19 +48,6 @@ function GeneralInformation({ client, query, token }) {
     }
   )
 
-  const [updateComments] = useMutation(
-    submission.mutations.reviewComments, {
-      client: client,
-      awaitRefetchQueries: true,
-      refetchQueries: [
-        {
-          query: submission.queries.getGeneralInfo,
-          variables: { id: query.id }
-        }
-      ]
-    }
-  )
-
   const { loading, error, data } = useQuery(submission.queries.getGeneralInfo, {
     client: client,
     variables: { id: query.id }
@@ -75,10 +59,6 @@ function GeneralInformation({ client, query, token }) {
 
   const save = useCallback(async () => {
     await setSave(state, setState, updateSubmission, query.id)
-  }, [state])
-
-  const onCommentsReview = useCallback(async comments => {
-    await setReviewedComments(comments, setState, updateComments)
   }, [state])
 
   const isCall = useCallback(() => {
@@ -104,7 +84,6 @@ function GeneralInformation({ client, query, token }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
       <CommentsProvider
-        onCommentsReview={onCommentsReview}
         readOnly
         submission={data?.GeneralInformation}>
         <ImplementerSubmissionContext.Provider value={injectActions}>

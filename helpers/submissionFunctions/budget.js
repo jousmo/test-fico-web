@@ -8,10 +8,14 @@ export const setUpdateBudget = (data, state, setState) => {
   setState({ ...state, dirty: true, budget })
 }
 
-export const setSave = async (state, setState, updateSubmission, id) => {
+export const setSave = async (state, setState, updateSubmission, id, updateComments) => {
   setState({ ...state, isSaving: true })
   const saving = loadingAlert()
   try {
+    if (state.comments) {
+      await updateComments({ variables: { data: state.comments } })
+    }
+
     await updateSubmission({
       variables: { data: { id, ...state.budget }  }
     })
@@ -21,5 +25,5 @@ export const setSave = async (state, setState, updateSubmission, id) => {
     apolloError(err)
   }
   saving()
-  setState({ ...state, budget: {}, isSaving: false })
+  setState({ ...state, comments: false, budget: {}, isSaving: false })
 }
