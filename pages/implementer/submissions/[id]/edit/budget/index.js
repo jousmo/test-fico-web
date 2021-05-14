@@ -21,9 +21,6 @@ import {
   setSave,
   setUpdateBudget
 } from "../../../../../../helpers/submissionFunctions/budget"
-import {
-  setReviewedComments
-} from "../../../../../../helpers/submissionFunctions/comments"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { selectOptions } from "../../../../../../helpers"
 
@@ -49,19 +46,6 @@ function Budget({ client, query, token }) {
     }
   )
 
-  const [updateComments] = useMutation(
-    submission.mutations.reviewComments, {
-      client: client,
-      awaitRefetchQueries: true,
-      refetchQueries: [
-        {
-          query: submission.queries.getGeneralInfo,
-          variables: { id: query.id }
-        }
-      ]
-    }
-  )
-
   const { loading, error, data } = useQuery(submission.queries.getBudget, {
     client: client,
     variables: { id: query.id },
@@ -75,10 +59,6 @@ function Budget({ client, query, token }) {
   const save = useCallback(async () => {
     await setSave(state, setState, updateSubmission, submissionId)
   }, [state, updateSubmission])
-
-  const onCommentsReview = useCallback(async comments => {
-    await setReviewedComments(comments, setState, updateComments)
-  }, [state])
 
   const { shared: { submissionStatusOptions: status }} = selectOptions
   const readOnly = data?.Budget?.state === "PROJECT" ||
@@ -98,7 +78,6 @@ function Budget({ client, query, token }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 2 })}>
       <CommentsProvider
-        onCommentsReview={onCommentsReview}
         readOnly
         submission={data?.Budget}>
         <ImplementerSubmissionContext.Provider value={injectActions}>

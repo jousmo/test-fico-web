@@ -13,7 +13,7 @@ import { PageContext } from "../../../../../../contexts/page"
 import { submission } from "../../../../../../graphql/submission"
 import { useState, useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { withApollo, selectOptions } from "../../../../../../helpers"
+import { withApollo } from "../../../../../../helpers"
 import {
   CommentsProvider
 } from "../../../../../../contexts/admin/submissions/review/comments"
@@ -25,12 +25,14 @@ import {
   setSave,
 } from "../../../../../../helpers/submissionFunctions/human-resources"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
+import { setReviewedComments } from "../../../../../../helpers/submissionFunctions/comments"
 
 
 function HumanResources({ client, query, token }) {
   const [form] = Form.useForm()
   const [state, setState] = useState({
     humanResources: [],
+    comments: undefined,
     isSaving: false
   })
 
@@ -47,6 +49,10 @@ function HumanResources({ client, query, token }) {
     }
   )
 
+  const [updateComments] = useMutation(
+    submission.mutations.reviewComments, { client: client }
+  )
+
   const { loading, error, data } = useQuery(submission.queries.getConcepts, {
     client: client,
     variables: { id: query.id },
@@ -58,8 +64,11 @@ function HumanResources({ client, query, token }) {
   }, [state])
 
   const save = useCallback(async () => {
-    const { humanResources } = state
-    await setSave(humanResources, setState, updateSubmission)
+    await setSave(state, setState, updateSubmission, updateComments)
+  }, [state])
+
+  const onCommentsReview = useCallback(async comments => {
+    await setReviewedComments(comments, setState)
   }, [state])
 
   const injectActions = useMemo(() => ({
@@ -77,6 +86,7 @@ function HumanResources({ client, query, token }) {
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
       <CommentsProvider
+        onCommentsReview={onCommentsReview}
         submission={injectActions.commentSubmission}
         readOnly={disabledComments}
         update={updateHumanResources}>
