@@ -43,13 +43,11 @@ export function CommentModal({
     setState({ comments: getComments() })
   }, [field])
 
-  const onReview = () => {
-    onCommentsReview && onCommentsReview(reviewed)
-    closeModal()
-  }
-
   const closeModal = () => {
-    setReviewed([])
+    if (reviewed.length) {
+      onCommentsReview && onCommentsReview(reviewed)
+      setReviewed([])
+    }
     onCancel()
   }
 
@@ -57,20 +55,14 @@ export function CommentModal({
     return (
       <Modal
         title="Comentarios para revisión"
-        onCancel={closeModal}
-        okText="Guardar"
-        onOk={onReview}
-        cancelText="Cerrar"
+        onCancel={onCancel}
+        footer={false}
         width={800}
         maskClosable={false}
         {...props}>
         <CommentListing
           comments={state.comments}
-          onReview={comment =>
-            setReviewed(reviewed => [...reviewed, comment])
-          }
-          readOnly={readOnly}
-          reviewed={reviewed} />
+          readOnly={readOnly} />
       </Modal>
     )
   }
@@ -102,7 +94,11 @@ export function CommentModal({
         comments={state.comments}
         onDelete={onDeleteComment}
         readOnly={readOnly}
-        revision={revision} />
+        revision={revision}
+        onReview={comment =>
+          setReviewed(reviewed => [...reviewed, comment])
+        }
+        reviewed={reviewed} />
     </Modal>
   )
 }

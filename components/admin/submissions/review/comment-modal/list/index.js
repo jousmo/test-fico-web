@@ -41,7 +41,7 @@ export function CommentListing({ comments, onDelete, onReview, readOnly, revisio
                 <CheckSquareTwoTone style={{ fontSize: 22 }} />
               </Tooltip>
             ) : (
-              readOnly && (
+              !readOnly && (
                 <Tooltip title="¿Marcar como solucionado?">
                   <Button
                     disabled={element.reviewed || reviewedIds.includes(element.id)}
