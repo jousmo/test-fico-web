@@ -1,15 +1,22 @@
+import { useState, useEffect } from "react"
 import { withForm, toFileList } from "../../../../../../../helpers"
 import { Col, Form } from "antd"
 import { CompositeField, FieldLabel, UploadButtonForm } from "../../../../../../shared"
 import { BeneficiaryModal } from "./beneficiaryModal"
 import { BeneficiaryItem } from "./beneficiaryItem"
-import { useState } from "react"
 
 function BeneficiariesForm({ data, onChange, hiddenComments, readOnly, review }) {
+  const [documentsState, setDocumentsState] = useState([])
   const [state, setState] = useState({
     isModalOpen: false,
     edit: undefined
   })
+
+  useEffect(() => {
+    if (data.documents) {
+      setDocumentsState(data.documents)
+    }
+  }, [data])
 
   const onClickAdd = () => {
     setState({ isModalOpen: true })
@@ -39,12 +46,14 @@ function BeneficiariesForm({ data, onChange, hiddenComments, readOnly, review })
 
   const onDoneFile = files => {
     const { name, url } = files[0]
-    const documents = [...data?.documents, { name, url, type: "BENEFICIARIES" }]
+    const documents = [...documentsState, { name, url, type: "BENEFICIARIES" }]
+    setDocumentsState(documents)
     onChange({ documents })
   }
 
   const onRemoveFile = ({ url }) => {
-    const documents = data?.documents.filter(doc => doc.url !== url)
+    const documents = documentsState.filter(doc => doc.url !== url)
+    setDocumentsState(documents)
     onChange({ documents })
   }
 

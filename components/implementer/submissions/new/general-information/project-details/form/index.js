@@ -1,5 +1,5 @@
 import { Row, Form, Col, Input } from "antd"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { implementer } from "../../../../../../../helpers/selectOptions"
 import { SelectField, DateField, FieldLabel, UploadButtonForm } from "../../../../../../shared"
 import { withForm, toFileList } from "../../../../../../../helpers"
@@ -16,11 +16,18 @@ function ProjectDetailsForm({
   hiddenComments,
   readOnly
 }) {
+  const [documentsState, setDocumentsState] = useState([])
   const [state, setState] = useState({
     startDate: data?.startDate,
     endDate: data?.endDate
   })
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (data.documents) {
+      setDocumentsState(data.documents)
+    }
+  }, [data])
 
   const onAddAlly = (value) => {
     if (value.currentTarget.value.length > 2){
@@ -38,12 +45,14 @@ function ProjectDetailsForm({
 
   const onDoneFile = files => {
     const { name, url } = files[0]
-    const documents = [...data?.documents, { name, url, type: "INTENTION_LETTER" }]
+    const documents = [...documentsState, { name, url, type: "INTENTION_LETTER" }]
+    setDocumentsState(documents)
     onChange({ currentTarget: { id: "documents", value: documents }})
   }
 
   const onRemoveFile = ({ url }) => {
-    const documents = data?.documents.filter(doc => doc.url !== url)
+    const documents = documentsState.filter(doc => doc.url !== url)
+    setDocumentsState(documents)
     onChange({ currentTarget: { id: "documents", value: documents }})
   }
 
