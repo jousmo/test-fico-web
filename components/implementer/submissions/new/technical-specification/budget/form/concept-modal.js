@@ -73,6 +73,7 @@ export function ConceptModal({
     }
 
     try {
+      await form.validateFields()
       let values = await form.getFieldsValue()
 
       if(typeof edit?.index !== "undefined") {
@@ -174,7 +175,8 @@ export function ConceptModal({
               name="type"
               style={{display: "inline"}}
               label="Tipo de gasto"
-              getValueFromEvent={getSelectValue}>
+              getValueFromEvent={getSelectValue}
+              rules={[{ required: true, message: "El campo es requerido" }]}>
               <SelectField
                 id="type"
                 name="type"
@@ -189,7 +191,8 @@ export function ConceptModal({
                 initialValue={edit?.measurementUnit}
                 name="measurementUnit"
                 style={{display: "inline"}}
-                label="Unidad de medida">
+                label="Unidad de medida"
+                rules={[{ required: true, message: "El campo es requerido" }]}>
                 <Select id="measurementUnit" disabled={readOnly}>
                   <Select.Option value="Mes">Mes</Select.Option>
                   <Select.Option value="Horas">Horas</Select.Option>
@@ -203,7 +206,8 @@ export function ConceptModal({
                 initialValue={edit?.measurementUnit}
                 name="measurementUnit"
                 style={{display: "inline"}}
-                label="Unidad de medida">
+                label="Unidad de medida"
+                rules={[{ required: true, message: "El campo es requerido" }]}>
                 <Input
                   id="measurementUnit"
                   disabled={unit.isEquipment || readOnly}
@@ -216,7 +220,8 @@ export function ConceptModal({
               initialValue={edit?.unitCost}
               name="unitCost"
               style={{display: "inline"}}
-              label="Costo unitario">
+              label="Costo unitario"
+              rules={[{ required: true, message: "El campo es requerido" }]}>
               <Input
                 id="unitCost"
                 disabled={readOnly}
@@ -229,7 +234,8 @@ export function ConceptModal({
               initialValue={edit?.totalUnits}
               name="totalUnits"
               style={{display: "inline"}}
-              label="Total de unidades">
+              label="Total de unidades"
+              rules={[{ required: true, message: "El campo es requerido" }]}>
               <Input
                 id="totalUnits"
                 disabled={readOnly}
