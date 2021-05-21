@@ -30,19 +30,31 @@ export function InvestmentDistributionField({
 
   useEffect(() => {
     if (value.length) {
-      const newDistribution = [...value]
-      const firstAllyIndex = newDistribution.findIndex(el => el.type.includes("ALLIED"))
-      if (newDistribution[firstAllyIndex]?.name !== allies?.[0]) {
-        newDistribution[firstAllyIndex].name = allies?.[0]
-      }
+      if (allies.length) {
+        const newDistribution = [...value]
 
-      const secondAllyIndex = value.findIndex((el, index) =>
-        el.type.includes("ALLIED") && index !== firstAllyIndex
-      )
-      if (newDistribution[secondAllyIndex]?.name !== allies?.[1]) {
-        newDistribution[secondAllyIndex].name = allies?.[1]
+        if (newDistribution.length > 2) {
+          const firstAllyIndex = newDistribution.findIndex(el => el.type.includes("ALLIED"))
+          if (firstAllyIndex > 0 && newDistribution[firstAllyIndex]?.name !== allies?.[0]) {
+            newDistribution[firstAllyIndex].name = allies?.[0]
+          }
+
+          const secondAllyIndex = value.findIndex((el, index) =>
+            el.type.includes("ALLIED") && index !== firstAllyIndex
+          )
+          if (secondAllyIndex > 0 && newDistribution[secondAllyIndex]?.name !== allies?.[1]) {
+            newDistribution[secondAllyIndex].name = allies?.[1]
+          }
+        } else {
+          allies.forEach((ally, index) => {
+            newDistribution.push({ type: `ALLIED${index + 1}`, name: ally, percentage: undefined })
+          })
+        }
+
+        setDistribution(newDistribution)
+      } else {
+        setDistribution(value)
       }
-      setDistribution(newDistribution)
     }
   }, [value])
 

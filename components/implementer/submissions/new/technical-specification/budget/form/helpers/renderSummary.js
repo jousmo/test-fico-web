@@ -31,7 +31,7 @@ export const renderSummary = (concepts, submission) => {
       || alliesInvestment[0]?.percentage || 0
     const secondAllyPercentage = secondAlly ? alliesInvestment
       ?.find(e => e.name === "ALlIED2")?.percentage
-      || alliesInvestment[1]?.percentage: 0
+      || alliesInvestment[1]?.percentage || 0 : 0
     const ficosecPercentage = concept.investmentDistribution
       ?.find(e => e.type === "FICOSEC")?.percentage
     const implementerPercentage = concept.investmentDistribution
