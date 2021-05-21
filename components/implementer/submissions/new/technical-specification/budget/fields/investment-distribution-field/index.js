@@ -16,8 +16,8 @@ export function InvestmentDistributionField({
   const defaultValue = [
     { type: "IMPLEMENTER", name: "Implementadora", percentage: undefined },
     { type: "FICOSEC", name: "FICOSEC", percentage: undefined },
-    { type: "ALLIED", name: allies?.[0], percentage: undefined },
-    { type: "ALLIED", name: allies?.[1], percentage: undefined }
+    { type: "ALLIED1", name: allies?.[0], percentage: undefined },
+    { type: "ALLIED2", name: allies?.[1], percentage: undefined }
   ]
 
   if (!allies || allies?.length === 0) {
