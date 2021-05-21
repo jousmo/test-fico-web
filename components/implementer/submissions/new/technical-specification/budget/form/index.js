@@ -108,7 +108,7 @@ function BudgetForm({ data, onChange, hiddenComments, readOnly, review }) {
                   title="Implementadora"
                   key="implementer"
                   dataIndex="name"
-                  render={renderInvestment("Implementadora")} />
+                  render={renderInvestment("IMPLEMENTER")} />
                 <Table.Column
                   title="FICOSEC"
                   key="ficosec"
@@ -119,14 +119,14 @@ function BudgetForm({ data, onChange, hiddenComments, readOnly, review }) {
                     title={Submission?.allies[0]}
                     key="firstAlly"
                     dataIndex="name"
-                    render={renderInvestment(Submission?.allies[0])} />
+                    render={renderInvestment("ALLIED1", 0)} />
                 )}
                 {Submission?.allies?.length > 1 && (
                   <Table.Column
                     title={Submission?.allies[1]}
                     key="secondAlly"
                     dataIndex="name"
-                    render={renderInvestment(Submission?.allies[1])} />
+                    render={renderInvestment("ALLIED2", 1)} />
                 )}
                 <Table.Column
                   title="Unidades"

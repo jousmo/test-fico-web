@@ -23,14 +23,19 @@ export const renderSummary = (concepts, submission) => {
   concepts.forEach(concept => {
     const totalCost = concept.totalUnits * concept.unitCost
 
-    const firstAllyPercentage = concept.investmentDistribution
-      ?.find(e => e.name === firstAlly)?.percentage || 0
-    const secondAllyPercentage = secondAlly ? concept.investmentDistribution
-      ?.find(e => e.name === secondAlly)?.percentage : 0
+    const alliesInvestment = concept.investmentDistribution
+      .filter(el => el.type.includes("ALLIED"))
+
+    const firstAllyPercentage = alliesInvestment
+      ?.find(e => e.type === "ALLIED1")?.percentage
+      || alliesInvestment[0]?.percentage || 0
+    const secondAllyPercentage = secondAlly ? alliesInvestment
+      ?.find(e => e.name === "ALlIED2")?.percentage
+      || alliesInvestment[1]?.percentage: 0
     const ficosecPercentage = concept.investmentDistribution
-      ?.find(e => e.name === "FICOSEC")?.percentage
+      ?.find(e => e.type === "FICOSEC")?.percentage
     const implementerPercentage = concept.investmentDistribution
-      ?.find(e => e.name === "Implementadora")?.percentage
+      ?.find(e => e.type === "IMPLEMENTER")?.percentage
 
     result = {
       units: result.units + concept.totalUnits,
