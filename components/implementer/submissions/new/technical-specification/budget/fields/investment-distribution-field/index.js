@@ -6,7 +6,7 @@ import numeral from "numeral"
 export function InvestmentDistributionField({
   onChange,
   allies,
-  value = [],
+  dist = [],
   unitCost = 0.0,
   totalUnits = 0.0,
   readOnly,
@@ -29,17 +29,17 @@ export function InvestmentDistributionField({
   const [distribution, setDistribution] = useState(defaultValue)
 
   useEffect(() => {
-    if (value.length) {
+    if (dist.length) {
       if (allies.length) {
-        const newDistribution = [...value]
+        const newDistribution = [...dist]
 
         if (newDistribution.length > 2) {
           const firstAllyIndex = newDistribution.findIndex(el => el.type.includes("ALLIED"))
-          if (firstAllyIndex > 0 && newDistribution[firstAllyIndex]?.name !== allies?.[0]) {
+          if (firstAllyIndex >= 0 && newDistribution[firstAllyIndex]?.name !== allies?.[0]) {
             newDistribution[firstAllyIndex].name = allies?.[0]
           }
 
-          const secondAllyIndex = value.findIndex((el, index) =>
+          const secondAllyIndex = dist.findIndex((el, index) =>
             el.type.includes("ALLIED") && index !== firstAllyIndex
           )
           if (secondAllyIndex > 0 && newDistribution[secondAllyIndex]?.name !== allies?.[1]) {
@@ -53,10 +53,10 @@ export function InvestmentDistributionField({
 
         setDistribution(newDistribution)
       } else {
-        setDistribution(value)
+        setDistribution(dist)
       }
     }
-  }, [value])
+  }, [dist])
 
   const displayTotal = (percentage = 0) => {
     percentage = Number(percentage)
