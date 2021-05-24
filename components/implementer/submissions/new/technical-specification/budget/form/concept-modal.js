@@ -130,6 +130,7 @@ export function ConceptModal({
 
   return (
     <Modal
+      destroyOnClose
       title={`${edit ? "Editar" : "Agregar"} concepto`}
       onOk={onOk}
       onCancel={onCancelModal}
@@ -290,7 +291,7 @@ export function ConceptModal({
               </FieldLabel>}>
               <InvestmentDistributionField
                 allies={submission?.allies}
-                value={edit?.investmentDistribution}
+                dist={edit?.investmentDistribution}
                 unitCost={state.unitCost}
                 totalUnits={state.totalUnits}
                 readOnly={readOnly}

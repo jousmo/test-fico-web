@@ -1,9 +1,17 @@
 import { Typography } from "antd"
 import numeral from "numeral"
 
-export const renderInvestment = (type) => (text, record, index) => {
-  const percentage = record.investmentDistribution
-    ?.find(i => i.name === type)?.percentage || 0
+export const renderInvestment = (type, allyIndex) => (text, record, index) => {
+  let percentage = 0
+  if (type.includes("ALLIED")) {
+    const alliesInvestment = record.investmentDistribution
+      .filter(el => el.type.includes("ALLIED"))
+    percentage = alliesInvestment?.find(i => i.type === type)?.percentage
+      || alliesInvestment[allyIndex]?.percentage
+  } else {
+    percentage = record.investmentDistribution
+      ?.find(i => i.type === type)?.percentage || 0
+  }
 
   const total = Number(record.unitCost) * Number(record.totalUnits)
 

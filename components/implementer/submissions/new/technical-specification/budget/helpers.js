@@ -38,10 +38,9 @@ export const exportBudget = async submission => {
     { name: "Implementadora" },
     { name: "FICOSEC" }
   ]
-  const investors = ["Implementadora", "FICOSEC"]
+  const investors = ["IMPLEMENTER", "FICOSEC", "ALLIED1", "ALLIED2", "ALLIED"]
   submission?.allies?.forEach(ally => {
     investorsColumns.push({ name: ally })
-    investors.push(ally)
   })
 
   const conceptsInfo = []
@@ -62,7 +61,7 @@ export const exportBudget = async submission => {
     const result = Array.from(Object.values(el))
 
     investmentDistribution
-      .sort((a, b) => investors.indexOf(a.name) - investors.indexOf(b.name))
+      .sort((a, b) => investors.indexOf(a.type) - investors.indexOf(b.type))
       .forEach(el => {
         result?.push(`${el?.percentage}%`)
       })
