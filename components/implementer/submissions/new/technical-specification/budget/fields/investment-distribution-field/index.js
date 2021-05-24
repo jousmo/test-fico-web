@@ -43,7 +43,11 @@ export function InvestmentDistributionField({
             el.type.includes("ALLIED") && index !== firstAllyIndex
           )
           if (secondAllyIndex > 0 && newDistribution[secondAllyIndex]?.name !== allies?.[1]) {
-            newDistribution[secondAllyIndex].name = allies?.[1]
+            if (!!allies[1]) {
+              newDistribution[secondAllyIndex].name = allies?.[1]
+            } else {
+              newDistribution.splice(secondAllyIndex, 1)
+            }
           }
         } else {
           allies.forEach((ally, index) => {
@@ -53,7 +57,7 @@ export function InvestmentDistributionField({
 
         setDistribution(newDistribution)
       } else {
-        setDistribution(dist)
+        setDistribution(dist.filter(el => !el.type.includes("ALLIED")))
       }
     }
   }, [dist])
