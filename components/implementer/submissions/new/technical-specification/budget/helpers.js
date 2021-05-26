@@ -7,6 +7,8 @@ import { conceptTypes } from "../../../../../../helpers/selectOptions/implemente
 const displayAmount = (unitCost, value) =>
   numeral(unitCost * Number(value || 0)).format("$0,0.00")
 
+const formattedAmount = value => numeral(value).format("$0,0.00")
+
 const typeConcept = type => conceptTypes?.find(el => el.value === type)
 
 const projectMonths = ({ startDate,  endDate }) => Array
@@ -16,9 +18,14 @@ const projectMonths = ({ startDate,  endDate }) => Array
       .by("month")
   )
 
-const monthsColumns = months => {
+const monthsColumns = (months, allies) => {
   const result = []
   months?.forEach(r => {
+    result.push({ name: `FF ${Moment(r).format("MMMM")}` })
+    result.push({ name: `IMP. ${Moment(r).format("MMMM")}` })
+    allies?.forEach(ally => {
+      result.push({ name: `${ally} ${Moment(r).format("MMMM")}` })
+    })
     result.push({ name: `Unidades ${Moment(r).format("MMMM YYYY")}` })
     result.push({ name: `Costo ${Moment(r).format("MMMM YYYY")}` })
   })
@@ -33,7 +40,7 @@ export const exportBudget = async submission => {
   titleInfo.font = { size: 20, bold: true }
 
   const months = projectMonths(submission)
-  const monthColumns = monthsColumns(months)
+  const monthColumns = monthsColumns(months, submission?.allies)
   const investorsColumns = [
     { name: "Implementadora" },
     { name: "FICOSEC" }
@@ -73,11 +80,20 @@ export const exportBudget = async submission => {
       })
     }
 
+    result.push(displayAmount(concept?.budgeted, (investmentDistribution[1].percentage / 100)))
+
     months.forEach((month, index) => {
-      result.push(...[
-        monthlyDistribution?.[index],
-        displayAmount(concept?.unitCost, monthlyDistribution?.[index])
-      ])
+      const total = concept?.unitCost * monthlyDistribution?.[index]
+      result.push(displayAmount(total, (investmentDistribution[1].percentage / 100)))
+      result.push(displayAmount(total, (investmentDistribution[0].percentage / 100)))
+      if (investorsColumns.length > 2) {
+        result.push(displayAmount(total, (investmentDistribution[2].percentage / 100)))
+      }
+      if (investorsColumns.length > 3) {
+        result.push(formattedAmount(total))
+      }
+      result.push(monthlyDistribution?.[index])
+      result.push(total)
     })
 
     conceptsInfo.push(result)
@@ -99,6 +115,7 @@ export const exportBudget = async submission => {
       { name: "Total de unidades" },
       { name: "Costo total" },
       ...investorsColumns,
+      { name: "Aportación de FICOSEC" },
       ...monthColumns
     ],
     rows: conceptsInfo
