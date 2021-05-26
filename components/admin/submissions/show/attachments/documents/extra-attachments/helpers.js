@@ -71,25 +71,25 @@ export const attachmentThree = async (submission, periods) => {
           totalUnits += value
         }
         const total = unitCost * totalUnits
-        investments["Implementadora"][index] += (total * percentages["Implementadora"])
-        investments["Implementadora"]["total"] += (total * percentages["Implementadora"])
-        investments["FICOSEC"][index] += (total * percentages["FICOSEC"])
-        investments["FICOSEC"]["total"] += (total * percentages["FICOSEC"])
+        investments["Implementadora"][index] += (total * percentages["Implementadora"]) / 100
+        investments["Implementadora"]["total"] += (total * percentages["Implementadora"]) / 100
+        investments["FICOSEC"][index] += (total * percentages["FICOSEC"]) / 100
+        investments["FICOSEC"]["total"] += (total * percentages["FICOSEC"]) / 100
         if (firstAlly) {
           const totalAlly = total * percentages[firstAlly]
           if (isNaN(totalAlly)) {
             throw ("ALLIES")
           }
-          investments[firstAlly][index] += totalAlly
-          investments[firstAlly]["total"] += totalAlly
+          investments[firstAlly][index] += totalAlly / 100
+          investments[firstAlly]["total"] += totalAlly / 100
         }
         if (secondAlly) {
           const totalAlly = total * percentages[secondAlly]
           if (isNaN(totalAlly)) {
             throw ("ALLIES")
           }
-          investments[secondAlly][index] += totalAlly
-          investments[secondAlly]["total"] += totalAlly
+          investments[secondAlly][index] += totalAlly / 100
+          investments[secondAlly]["total"] += totalAlly / 100
         }
       })
     })
