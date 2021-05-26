@@ -156,7 +156,6 @@ export const attachmentFour = async (periods) => {
       name: "Anexo4",
       ref: `B3`,
       headerRow: true,
-      totalsRow: true,
       style: {
         showRowStripes: true,
       },
