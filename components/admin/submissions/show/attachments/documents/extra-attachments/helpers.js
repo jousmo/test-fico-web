@@ -3,14 +3,12 @@ import Moment from "moment"
 import { loadingAlert, warning } from "../../../../../../../helpers"
 
 const getPeriodColumns = periods => {
-  const result = []
-  periods?.forEach((el, index) => {
-    result.push({
+  return periods.map((el, index) => (
+    {
       name: `Periodo ${index + 1} | ${Moment(el[0]).format("DD/MM/YY")} - ${Moment(el[1]).endOf('month').format("DD/MM/YY")}`,
       totalsRowFunction: 'sum'
-    })
-  })
-  return result
+    }
+  ))
 }
 
 export const attachmentThree = async (submission, periods) => {
@@ -100,7 +98,7 @@ export const attachmentThree = async (submission, periods) => {
 
     worksheet.addTable({
       name: "Anexo3",
-      ref: `A${worksheet?.lastRow?._number + 2}`,
+      ref: `B3`,
       headerRow: true,
       totalsRow: true,
       style: {
@@ -118,10 +116,63 @@ export const attachmentThree = async (submission, periods) => {
     saveAs(new Blob([buf]), "Anexo_3.xlsx")
   } catch (err) {
     if (typeof err === 'string' || err.includes("ALLIES")) {
+      console.log(err)
       warning("Favor de revisar los aliados en el presupuesto...")
     } else {
       warning()
+      console.log(err)
     }
+  }
+  downloading()
+}
+
+export const attachmentFour = async (periods) => {
+  const downloading = loadingAlert("Generando anexo...")
+  try {
+    if (!periods || !periods.length) {
+      warning("Favor de agregar periodos")
+      return
+    }
+    const workbook = new ExcelJS.Workbook()
+    let worksheet = workbook.addWorksheet("Anexo 4")
+    let titleInfo = worksheet.getCell("A1")
+    titleInfo.value = "Anexo 4"
+    titleInfo.font = { size: 20, bold: true }
+
+    const periodColumns = periods?.map((el, index) => ({ name: `Periodo ${index + 1}` }))
+
+    const dates = {
+      'Fecha de entrega de parte de "DESEC"': [],
+      'Fecha inicial del periodo': [],
+      'Fecha final del periodo': []
+    }
+
+    periods?.forEach(([start, end]) => {
+      dates["Fecha inicial del periodo"].push(Moment(start).format("DD/MM/YYYY"))
+      dates["Fecha final del periodo"].push(Moment(end).endOf('month').format("DD/MM/YYYY"))
+    })
+
+    worksheet.addTable({
+      name: "Anexo4",
+      ref: `B3`,
+      headerRow: true,
+      style: {
+        showRowStripes: true,
+      },
+      columns: [
+        { name: " " },
+        ...periodColumns,
+      ],
+      rows: Object.entries(dates).map(([key, value]) => {
+        return [key, ...value]
+      })
+    })
+
+    const buf = await workbook.xlsx.writeBuffer()
+    saveAs(new Blob([buf]), "Anexo_4.xlsx")
+  } catch (err) {
+    warning()
+    console.log(err)
   }
   downloading()
 }

@@ -1,13 +1,9 @@
 import * as ExcelJS from "exceljs"
 import { saveAs } from "file-saver"
-import numeral from "numeral"
 import Moment from "moment"
 import { conceptTypes } from "../../../../../../helpers/selectOptions/implementer/submission"
 
-const displayAmount = (unitCost, value) =>
-  numeral(unitCost * Number(value || 0)).format("$0,0.00")
-
-const formattedAmount = value => numeral(value).format("$0,0.00")
+const displayAmount = (unitCost, value) => unitCost * Number(value || 0)
 
 const typeConcept = type => conceptTypes?.find(el => el.value === type)
 
@@ -21,13 +17,13 @@ const projectMonths = ({ startDate,  endDate }) => Array
 const monthsColumns = (months, allies) => {
   const result = []
   months?.forEach(r => {
-    result.push({ name: `FF ${Moment(r).format("MMMM")}` })
-    result.push({ name: `IMP. ${Moment(r).format("MMMM")}` })
+    result.push({ name: `FF ${Moment(r).format("MMMM")}`, totalsRowFunction: 'sum' })
+    result.push({ name: `IMP. ${Moment(r).format("MMMM")}`, totalsRowFunction: 'sum' })
     allies?.forEach(ally => {
-      result.push({ name: `${ally} ${Moment(r).format("MMMM")}` })
+      result.push({ name: `${ally} ${Moment(r).format("MMMM")}`, totalsRowFunction: 'sum' })
     })
     result.push({ name: `Unidades ${Moment(r).format("MMMM YYYY")}` })
-    result.push({ name: `Costo ${Moment(r).format("MMMM YYYY")}` })
+    result.push({ name: `Costo ${Moment(r).format("MMMM YYYY")}`, totalsRowFunction: 'sum' })
   })
   return result
 }
@@ -90,7 +86,7 @@ export const exportBudget = async submission => {
         result.push(displayAmount(total, (investmentDistribution[2].percentage / 100)))
       }
       if (investorsColumns.length > 3) {
-        result.push(formattedAmount(total))
+        result.push(total)
       }
       result.push(monthlyDistribution?.[index])
       result.push(total)
@@ -103,6 +99,7 @@ export const exportBudget = async submission => {
     name: "Presupuesto",
     ref: `A${worksheet?.lastRow?._number + 2}`,
     headerRow: true,
+    totalsRow: true,
     style: {
       showRowStripes: true,
     },
@@ -113,9 +110,9 @@ export const exportBudget = async submission => {
       { name: "Unidad de medida" },
       { name: "Costo unitario" },
       { name: "Total de unidades" },
-      { name: "Costo total" },
+      { name: "Costo total", totalsRowFunction: 'sum' },
       ...investorsColumns,
-      { name: "Aportación de FICOSEC" },
+      { name: "Aportación de FICOSEC", totalsRowFunction: 'sum' },
       ...monthColumns
     ],
     rows: conceptsInfo

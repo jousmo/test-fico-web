@@ -6,6 +6,7 @@ export function MultipleDateRangeField({
   onChange,
   addLabel="Agregar fecha",
   defaultValue=[],
+  format,
   limitDates,
   value=[],
   review,
@@ -42,7 +43,7 @@ export function MultipleDateRangeField({
                   onChange={updateItem(index)}
                   picker="month"
                   range
-                  format="DD/MM/YYYY"
+                  format={format || "DD/MM/YYYY"}
                   style={{ width: "90%" }} />
                 {!review && <DeleteButton onClick={removeItem(index)} />}
               </Col>

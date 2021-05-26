@@ -5,7 +5,7 @@ import { MultipleDateRangeField } from "../../../../../../shared"
 import { useQuery } from "@apollo/react-hooks"
 import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 import { useRouter } from "next/router"
-import { attachmentThree } from "./helpers"
+import { attachmentThree, attachmentFour } from "./helpers"
 
 export function ExtraAttachmentsContent() {
   const [periods, setPeriods] = useState(null)
@@ -39,6 +39,7 @@ export function ExtraAttachmentsContent() {
       <Col span={24}>
         <MultipleDateRangeField
           value={periods}
+          format="MMMM/YYYY"
           addLabel="Agregar periodo"
           onChange={value => setPeriods(value)}
           limitDates={[Budget?.startDate, Budget?.endDate]} />
@@ -49,7 +50,9 @@ export function ExtraAttachmentsContent() {
         </Button>
       </Col>
       <Col span={12}>
-        <Button style={{ width: "100%" }}>Anexo 4</Button>
+        <Button onClick={() => attachmentFour(periods)} style={{ width: "100%" }}>
+          Anexo 4
+        </Button>
       </Col>
     </Row>
   )
