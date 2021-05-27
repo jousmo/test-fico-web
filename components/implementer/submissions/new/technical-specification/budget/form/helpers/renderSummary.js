@@ -18,7 +18,7 @@ export const renderSummary = (concepts, submission) => {
   const firstAlly = submission?.allies?.[0]
   const secondAlly = submission?.allies?.[1]
 
-  let result = { ficosec: 0, implementer: 0, absoluteTotal: 0, totalFirstAlly: 0, totalSecondAlly: 0, units: 0 }
+  let result = { ficosec: 0, implementer: 0, absoluteTotal: 0, totalFirstAlly: 0, totalSecondAlly: 0 }
 
   concepts.forEach(concept => {
     const totalCost = concept.totalUnits * concept.unitCost
@@ -38,7 +38,6 @@ export const renderSummary = (concepts, submission) => {
       ?.find(e => e.type === "IMPLEMENTER")?.percentage
 
     result = {
-      units: result.units + concept.totalUnits,
       ficosec: result.ficosec + getAmount(concept, ficosecPercentage),
       implementer: result.implementer + getAmount(concept, implementerPercentage),
       absoluteTotal: result.absoluteTotal + totalCost,
@@ -47,11 +46,12 @@ export const renderSummary = (concepts, submission) => {
     }
   });
 
-  const { absoluteTotal, totalFirstAlly, totalSecondAlly, ficosec, implementer, units } = result
+  const { absoluteTotal, totalFirstAlly, totalSecondAlly, ficosec, implementer } = result
 
   return (
     <Table.Summary.Row>
       <Table.Summary.Cell>Totales</Table.Summary.Cell>
+      <Table.Summary.Cell/>
       <Table.Summary.Cell/>
       <Table.Summary.Cell/>
       <Table.Summary.Cell/>
@@ -88,9 +88,6 @@ export const renderSummary = (concepts, submission) => {
           </Tag>
         </Table.Summary.Cell>
       </Visibility>
-      <Table.Summary.Cell>
-        {units}
-      </Table.Summary.Cell>
     </Table.Summary.Row>
   )
 }
