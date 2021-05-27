@@ -13,7 +13,7 @@ export function TechnicalMonitoring() {
   } = useContext(AdminSubmissionContext)
 
   return (
-    <section>
+    <section style={{ paddingBottom: "4rem" }}>
       <PageHeader title="Monitoreo técnico" />
       <TechnicalMonitoringTabs
         data={data}
