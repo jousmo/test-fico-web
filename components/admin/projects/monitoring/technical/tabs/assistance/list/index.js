@@ -4,7 +4,7 @@ import { CheckCircleTwoTone, CloseCircleOutlined } from "@ant-design/icons"
 import Moment from "moment"
 import { getRows } from "../helpers"
 
-export function AssistanceList ({ activity, dataSource, search }) {
+export function AssistanceList ({ activity, dataSource, onEdit, search }) {
   const columns = Array.from(dataSource[activity]?.columns || [])
     .sort((a, b) => a.localeCompare(b))
   const rows = getRows(Object.values(dataSource[activity]?.participants || {}), search)
@@ -28,11 +28,16 @@ export function AssistanceList ({ activity, dataSource, search }) {
         <Table.Column
           align="center"
           key={column}
-          render={row =>
-            row.dates.includes(column) ?
-              <CheckCircleTwoTone twoToneColor="#52c41a" style={iconStyle} /> :
-              <CloseCircleOutlined style={iconStyle} />
-          }
+          render={row => {
+            const date = row.dates.find(el => el.assistanceAt === column)
+            return date
+              ? <CheckCircleTwoTone
+                  className="hover"
+                  onClick={() => onEdit(date)}
+                  twoToneColor="#52c41a"
+                  style={iconStyle} />
+              : <CloseCircleOutlined style={iconStyle} />
+          }}
           title={Moment(column).format("DD/MM/YYYY HH:mm")} />
       )}
     </Table>

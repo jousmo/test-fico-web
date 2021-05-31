@@ -32,6 +32,10 @@ function TechnicalMonitoringPage({ client, query }) {
     submission.mutations.createAssistance, { client: client }
   )
 
+  const [deleteActivityAssistance] = useMutation(
+    submission.mutations.deleteProjectAssistance, { client: client }
+  )
+
   const [createProjectAssistants] = useMutation(
     submission.mutations.createProjectAssistants, { client: client }
   )
@@ -153,6 +157,18 @@ function TechnicalMonitoringPage({ client, query }) {
     saving()
   }, [createActivityAssistance, refetch])
 
+  const deleteAssistance = useCallback(async id => {
+    const saving = loadingAlert("Eliminando...", 0)
+    try {
+      await deleteActivityAssistance({ variables: { id } })
+      success("Eliminado correctamente")
+      await refetch()
+    } catch(e) {
+      apolloError(e)
+    }
+    saving()
+  }, [deleteActivityAssistance, refetch])
+
   const updateAssistants = useCallback(async assistant => {
     const saving = loadingAlert("Guardando...", 0)
     try {
@@ -254,6 +270,7 @@ function TechnicalMonitoringPage({ client, query }) {
     createAssistants,
     updateAssistants,
     deleteAssistants,
+    deleteAssistance,
     updateSubmission,
     createAssistance,
     saveActivity,

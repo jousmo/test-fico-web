@@ -7,11 +7,13 @@ const addColumn = (activity, result, assistanceAt) => {
   result[activity.id].columns.add(moment(assistanceAt).format("MM/DD/YYYY HH:mm"))
 }
 
-const addParticipant = (activity, assistanceAt, assistantId, fullName, result) => {
+const addParticipant = (assistanceId, activity, assistanceAt, assistantId, fullName, result) => {
   if (!result[activity].participants[assistantId]) {
-    result[activity].participants[assistantId] = { assistantId, fullName, dates: [] }
+    result[activity].participants[assistantId] = { assistanceId, assistantId, fullName, dates: [] }
   }
-  result[activity].participants[assistantId].dates.push(moment(assistanceAt).format("MM/DD/YYYY HH:mm"))
+  result[activity].participants[assistantId].dates.push(
+    { id: assistanceId, assistanceAt: moment(assistanceAt).format("MM/DD/YYYY HH:mm") }
+  )
 }
 
 const getFullName = ({ lastName, name, maidenName }) => `${name} ${lastName} ${maidenName}`
@@ -20,13 +22,13 @@ export const assistanceDecorator = (assistants, dateFilter) => {
   const result = {}
   assistants.forEach(participant => {
     const fullName = getFullName(participant)
-    participant.assistance.forEach(({ assistanceAt, activity }) => {
+    participant.assistance.forEach(({ id, assistanceAt, activity }) => {
       if (dateFilter?.length > 0) {
         const isBetween = moment(assistanceAt).isBetween(dateFilter[0], dateFilter[1])
         if (!isBetween) return
       }
       addColumn(activity, result, assistanceAt)
-      addParticipant(activity.id, assistanceAt, participant.id, fullName, result)
+      addParticipant(id, activity.id, assistanceAt, participant.id, fullName, result)
     })
   })
 
