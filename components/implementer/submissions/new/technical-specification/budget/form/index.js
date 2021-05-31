@@ -96,6 +96,10 @@ function BudgetForm({ data, onChange, hiddenComments, readOnly, review }) {
                   dataIndex="unitCost"
                   render={cellFormat.money} />
                 <Table.Column
+                  title="Unidades"
+                  key="totalUnits"
+                  dataIndex="totalUnits" />
+                <Table.Column
                   title="Unidad de medida"
                   key="measurementUnit"
                   dataIndex="measurementUnit" />
@@ -128,10 +132,6 @@ function BudgetForm({ data, onChange, hiddenComments, readOnly, review }) {
                     dataIndex="name"
                     render={renderInvestment("ALLIED2", 1)} />
                 )}
-                <Table.Column
-                  title="Unidades"
-                  key="totalUnits"
-                  dataIndex="totalUnits" />
               </Table>
             </ScrollableView>
           </>
