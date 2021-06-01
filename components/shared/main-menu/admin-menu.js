@@ -1,7 +1,6 @@
 import { Menu } from "antd"
 import Link from "next/link"
 import { useAuth } from "../../../contexts/auth"
-import { Visibility } from "../visibility"
 import {
   EyeOutlined,
   InboxOutlined,
@@ -62,14 +61,14 @@ export default function AdminMenu({ step, submenu }) {
           </Link>
         </Menu.Item>
       </Menu.SubMenu>
-      <Visibility visible={user?.claims?.role === "ADMIN"}>
+      {user?.claims?.role === "ADMIN" && (
         <Menu.Item key="users">
           <TeamOutlined />
           <Link href="/admin/users">
             <a>Usuarios</a>
           </Link>
         </Menu.Item>
-      </Visibility>
+      )}
       <Menu.Item key="census">
         <TeamOutlined />
         <Link href="/admin/census">
