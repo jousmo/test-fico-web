@@ -3,11 +3,12 @@ import { CommentMonitoringListing } from "../comment-monitoring-listing"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { submission } from "../../../graphql"
 import { useCallback, useEffect, useState } from "react"
+import { Visibility } from "../visibility"
 import { loadingAlert, success, warning, withApollo } from "../../../helpers"
 import { apolloError } from "../../../helpers/bugsnag/notify"
 import "./style.sass"
 
-function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
+function ModalCommentMonitoring({ client, data, onCancel, readOnly, ...props }) {
   const [form] = Form.useForm()
   const [state, setState] = useState({
     loading: true,
@@ -80,6 +81,7 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
   }
 
   const onOk = useCallback(async () => {
+    if (readOnly) return
     const saving = loadingAlert()
     try {
       const values = await form.getFieldsValue()
@@ -106,6 +108,7 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
   }, [createComment])
 
   const onDeleteComment = useCallback(async id => {
+    if (readOnly) return
     const saving = loadingAlert("Eliminando", 0)
     try {
       await deleteMonitoringComment({ variables: { id } })
@@ -129,19 +132,24 @@ function ModalCommentMonitoring({ client, data, onCancel, ...props }) {
       width={800}
       className="comment-modal-form"
       maskClosable={false}
+      okButtonProps={{ disabled: readOnly }}
       {...props}>
-      <Form
-        form={form}
-        layout="vertical">
-        <Form.Item
-          name="comment">
-          <Input.TextArea
-            id="comment"
-            placeholder="Describe tu comentario" />
-        </Form.Item>
-      </Form>
+      <Visibility visible={!readOnly}>
+        <Form
+          form={form}
+          layout="vertical">
+          <Form.Item
+            name="comment">
+            <Input.TextArea
+              disabled={readOnly}
+              id="comment"
+              placeholder="Describe tu comentario" />
+          </Form.Item>
+        </Form>
+      </Visibility>
 
       <CommentMonitoringListing
+        readOnly={readOnly}
         loading={state.loading}
         comments={state.comments}
         onDeleteComment={onDeleteComment} />

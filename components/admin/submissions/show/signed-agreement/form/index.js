@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
-function SubmissionAgreementForm({ data, client, onSave, hasContract }) {
+function SubmissionAgreementForm({ data, client, onSave, hasContract, readOnly }) {
   const [state, setState] = useState({})
 
   const { id: submissionId, status, documents } = data || {}
@@ -50,6 +50,7 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract }) {
   }
 
   const onDoneFile = useCallback(async (info, cb) => {
+    if (readOnly) return
     const saving = loadingAlert()
     const { typeFile: type, file: { name, uid }, urls } = info
     const url = urls.find(el => el.uid === uid)?.url
@@ -66,6 +67,7 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract }) {
   }, [submissionId])
 
   const onRemoveFile = useCallback(async (file, cb) => {
+    if (readOnly) return
     const saving = loadingAlert("Eliminando...")
     const { id } = file
     try {
@@ -87,12 +89,14 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract }) {
       <Visibility visible={onAgreement}>
         <Form.Item label="Numero y fecha de firma de convenio">
           <Input
+            disabled={readOnly}
             name="agreementNumber"
             style={{width: "140px", marginRight: "5px"}}
             placeholder="Numero de acuerdo"
             defaultValue={data?.agreementNumber}
             onBlur={onChange} />
           <DateField
+            disabled={readOnly}
             id="signedContractAt"
             name="signedContractAt"
             format="DD/MM/YYYY"
@@ -100,6 +104,7 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract }) {
             onChange={onDateChange} />
           &nbsp;
           <Button
+            disabled={readOnly}
             onClick={() => onSave(state)}>
             Guardar
           </Button>
@@ -108,7 +113,7 @@ function SubmissionAgreementForm({ data, client, onSave, hasContract }) {
       <Form.Item style={{marginBottom: "5px"}}>
         <UploadButton
           typeFile="AGREEMENT"
-          disabled={hasContract}
+          disabled={hasContract || readOnly}
           onDoneFile={onDoneFile}
           onRemoveFile={onRemoveFile}
           files={files}>

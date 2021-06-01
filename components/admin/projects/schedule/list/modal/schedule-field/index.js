@@ -1,7 +1,5 @@
 import { Col, Form, Input, Row } from "antd"
-import { DateField } from "../../../../../../shared/date-field"
-import { DeleteButton } from "../../../../../../shared/delete-button"
-import { CompositeField } from "../../../../../../shared/composite-field"
+import { DeleteButton, DateField, CompositeField, Visibility } from "../../../../../../shared"
 
 export function ScheduleField({ ...props }){
   const onAddSupport = addNew => {
@@ -27,6 +25,7 @@ export function ScheduleField({ ...props }){
                     id="scheduledAt"
                     name="scheduledAt"
                     format="DD/MM/YYYY"
+                    disabled={props.isAddDisabled}
                     defaultValue={item.scheduledAt}
                     onChange={updateItem(index)}
                     fullWidth />
@@ -38,13 +37,17 @@ export function ScheduleField({ ...props }){
                   <Input
                     id="place"
                     name="place"
+                    disabled={props.isAddDisabled}
                     defaultValue={item.place}
                     onBlur={updateItem(index)}
                     type="text" />
                 </Form.Item>
               </Col>
-              <Col span={2}>
-                <DeleteButton onClick={removeItem(index)} /></Col>
+              <Visibility visible={!props.isAddDisabled}>
+                <Col span={2}>
+                  <DeleteButton onClick={removeItem(index)} />
+                </Col>
+              </Visibility>
             </Row>
           ) }
         </div>

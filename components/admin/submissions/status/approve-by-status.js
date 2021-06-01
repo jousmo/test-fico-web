@@ -7,6 +7,7 @@ import EvaluationTable from "./evaluation-table"
 
 export function ApproveByStatus() {
   const {
+    readOnly,
     loading,
     error,
     save,
@@ -26,6 +27,7 @@ export function ApproveByStatus() {
     <Section>
       <SearchField onSearch={onSearch}/>
       <EvaluationTable
+        readOnly={readOnly}
         data={state ? state : data?.Submissions}
         error={error}
         save={save}

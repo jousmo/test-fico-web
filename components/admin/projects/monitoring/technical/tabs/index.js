@@ -29,7 +29,7 @@ function TechnicalMonitoringTabs({ data }) {
           format="DD/MM/YYYY"
           onChange={onFilterChange} />
       }>
-      {user?.claims?.role !== "ADMIN" && (
+      {user?.claims?.role === "IMPLEMENTER" && (
         <>
           <Tabs.TabPane tab="Asistentes" key="1">
             <MonitoringAssistants data={data} dateFilter={filterState} />

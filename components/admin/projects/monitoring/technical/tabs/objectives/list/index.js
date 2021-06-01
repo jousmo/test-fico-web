@@ -25,9 +25,10 @@ export function ObjectivesList({ data, dateFilter }) {
   const [filterState, setFilterState] = useState(false)
 
   const dataSource = decoratedData(data, dateFilter)
-  const { save, update, saveActivity } = useContext(AdminSubmissionContext)
+  const { save, update, readOnly, saveActivity } = useContext(AdminSubmissionContext)
 
   const onSave = (monitoring, id = null) => {
+    if (readOnly) return
     const { schedules = [], ...report  } = monitoring
 
     if (schedules.length > 0) {
@@ -80,6 +81,7 @@ export function ObjectivesList({ data, dateFilter }) {
         onSave={onSave}
         range={[data?.startDate, data?.endDate]}
         save={save}
+        disabled={readOnly}
         update={update}
         visible={state.isModalOpen} />
       <Table
@@ -167,6 +169,7 @@ export function ObjectivesList({ data, dateFilter }) {
       </Table>
       {state.isModalCommentOpen && (
         <ModalCommentMonitoring
+          readOnly={readOnly}
           visible={state.isModalCommentOpen}
           data={state.objective}
           onCancel={onCancel}/>

@@ -12,7 +12,7 @@ import {
   handleView
 } from "./helpers"
 
-export function EvaluationActionButtons({ id, save }){
+export function EvaluationActionButtons({ id, save, readOnly }){
   const router = useRouter()
 
   return (
@@ -25,11 +25,13 @@ export function EvaluationActionButtons({ id, save }){
       </Tooltip>
       &nbsp;
       <ConfirmButton
+        disabled={readOnly}
         icon={<CloseOutlined />}
         confirmText="Rechazar solicitud"
         onClick={() => handleReject(id, save)} />
       &nbsp;
       <ConfirmButton
+        disabled={readOnly}
         icon={<CheckOutlined />}
         confirmText="Aprobar solicitud"
         onClick={() => handleApprove(id, router, save)}

@@ -7,7 +7,7 @@ import { ScheduleModal } from "./modal"
 import { decoratedData } from "./data-decorator"
 import moment from "moment"
 
-function ProjectScheduleList({ data, save }) {
+function ProjectScheduleList({ data, save, readOnly }) {
   const [state, setState] = useState({ isModalOpen: false, edit: undefined })
   const dataSource = decoratedData(data)
 

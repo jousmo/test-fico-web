@@ -18,7 +18,7 @@ import {
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { setSave } from "../../../../../../helpers/submissionFunctions/comments"
 
-function CommentsPage({ client, query }) {
+function CommentsPage({ client, query, readOnly }) {
   const id = query.id
 
   const { loading, error, data } = useQuery(submission.queries.getGeneralInfo, {
@@ -38,15 +38,17 @@ function CommentsPage({ client, query }) {
   )
 
   const save = useCallback(async comments => {
+    if (readOnly) return
     await setSave(comments, updateSubmission, id)
   }, [updateSubmission])
 
   const injectActions = useMemo(() => ({
+    readOnly,
     loading,
     error,
     save,
     data
-  }), [loading, data])
+  }), [loading, data, readOnly])
 
   return (
     <PageContext.Provider value={pageData({ save, step: 5 })}>

@@ -2,7 +2,7 @@ import { withForm } from "../../../../../helpers/withForm"
 import { Divider, Typography, Row, Col } from "antd"
 import { EvaluationActionButtons } from "./action-buttons"
 
-function EvaluationTable({ data, save }) {
+function EvaluationTable({ data, save, readOnly }) {
   return (
     <Row justify="space-between" align="middle">
       {data?.map(({ id, name, technicalOpinion }) => (
@@ -13,7 +13,7 @@ function EvaluationTable({ data, save }) {
             <Typography.Text>{technicalOpinion}</Typography.Text>
           </Col>
           <Col>
-            <EvaluationActionButtons save={save} id={id} />
+            <EvaluationActionButtons readOnly={readOnly} save={save} id={id} />
           </Col>
           <Divider />
         </>

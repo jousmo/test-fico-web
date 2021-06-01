@@ -14,7 +14,7 @@ import { cloneDeep } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
-function TechnicalMonitoringPage({ client, query }) {
+function TechnicalMonitoringPage({ client, query, readOnly }) {
   const { loading, error, data, refetch } = useQuery(submission.queries.getTechnicalMonitoring, {
     client: client,
     variables: { id: query.id }
@@ -33,6 +33,7 @@ function TechnicalMonitoringPage({ client, query }) {
   )
 
   const updateSubmission = useCallback(async submission => {
+    if (readOnly) return
     const saving = loadingAlert()
     try {
       await updateSub({
@@ -46,6 +47,7 @@ function TechnicalMonitoringPage({ client, query }) {
   }, [updateSub])
 
   const saveActivity = useCallback(async activity => {
+    if (readOnly) return
     try {
       await updateActivity({
         variables: { data: activity }
@@ -56,6 +58,7 @@ function TechnicalMonitoringPage({ client, query }) {
   }, [updateActivity])
 
   const save = useCallback(async monitoring => {
+    if (readOnly) return
     const saving = loadingAlert()
     try {
       await saveMonitoring({
@@ -70,6 +73,7 @@ function TechnicalMonitoringPage({ client, query }) {
   }, [saveMonitoring, refetch])
 
   const update = useCallback(async monitoring => {
+    if (readOnly) return
     const saving = loadingAlert()
     const newMonitoring = cloneDeep(monitoring)
 
@@ -93,12 +97,13 @@ function TechnicalMonitoringPage({ client, query }) {
   const injectActions = useMemo(() => ({
     updateSubmission,
     saveActivity,
+    readOnly,
     loading,
     update,
     error,
     data,
     save
-  }), [loading, data])
+  }), [loading, data, readOnly])
 
   return (
     <PageContext.Provider

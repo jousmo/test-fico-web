@@ -1,12 +1,14 @@
 import { Col, Divider, Form, Modal, Row, Tag, Typography } from "antd"
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import { capitalize } from "lodash"
 import { ScheduleField } from "./schedule-field"
 import moment from "moment"
 import { getReadableValue, implementer } from "../../../../../../helpers/selectOptions"
+import { AdminSubmissionContext } from "../../../../../../contexts/admin/submissions/show"
 moment.locale("es")
 
 export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
+  const { readOnly } = useContext(AdminSubmissionContext)
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -16,6 +18,7 @@ export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
   }, [edit])
 
   const onOk = async () => {
+    if (readOnly) return
     try {
       await form.validateFields()
       const values = await form.getFieldsValue()
@@ -47,6 +50,7 @@ export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
       width={650}
       onCancel={onClose}
       okText="Guardar"
+      okButtonProps={{ disabled: readOnly }}
       maskClosable={false}
       {...props}>
       <Row gutter={[10, 8]} justify="start">
@@ -99,7 +103,7 @@ export function ScheduleModal({ edit, onCancel, onSave, ...props }) {
             form={form}
             name="activities-schedule-form">
             <Form.Item name="schedules">
-              <ScheduleField />
+              <ScheduleField isAddDisabled={readOnly} />
             </Form.Item>
           </Form>
         </Col>

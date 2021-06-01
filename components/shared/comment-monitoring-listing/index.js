@@ -6,7 +6,7 @@ import { DeleteButton } from "../delete-button"
 import React from "react"
 import { Visibility } from "../visibility"
 
-export function CommentMonitoringListing({ loading, comments = [], onDeleteComment }){
+export function CommentMonitoringListing({ loading, comments = [], onDeleteComment, readOnly }){
   const { user: { claims: { role } } } = useAuth()
 
   const onDelete = id => {
@@ -55,7 +55,7 @@ export function CommentMonitoringListing({ loading, comments = [], onDeleteComme
                     </Typography.Text>
                   } />
 
-                <Visibility visible={userType === role}>
+                <Visibility visible={userType === role && !readOnly}>
                   <DeleteButton
                     type="primary"
                     shape="circle"

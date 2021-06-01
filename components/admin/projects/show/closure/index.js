@@ -7,6 +7,7 @@ import ProjectClosureForm from "./form"
 
 export function ProjectClosure() {
   const {
+    readOnly,
     loading,
     error,
     data,
@@ -19,6 +20,7 @@ export function ProjectClosure() {
         data={data?.Submission}
         error={error}
         save={save}
+        disabled={readOnly}
         isLoading={loading} />
     </Section>
   )

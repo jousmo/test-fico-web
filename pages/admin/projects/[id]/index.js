@@ -22,7 +22,7 @@ import { loadingAlert, success, withApollo } from "../../../../helpers"
 import { AuthCheck } from "../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../helpers/bugsnag/notify"
 
-function Project({ client, query }) {
+function Project({ client, query, readOnly }) {
   const [updateSubmission] = useMutation(
     submission.mutations.upsertSubmission, {
       client: client,
@@ -42,6 +42,7 @@ function Project({ client, query }) {
   })
 
   const save = useCallback(async submission => {
+    if (readOnly) return
     const saving = loadingAlert()
 
     try {
@@ -57,6 +58,7 @@ function Project({ client, query }) {
   }, [updateSubmission])
 
   const injectActions = useMemo(() => ({
+    readOnly,
     loading,
     error,
     data,

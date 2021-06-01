@@ -13,7 +13,7 @@ import { loadingAlert, success, withApollo } from "../../../../../helpers"
 import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../helpers/bugsnag/notify"
 
-function ProjectSchedulePage({ client, query }) {
+function ProjectSchedulePage({ client, query, readOnly }) {
   const { loading, error, data } = useQuery(submission.queries.getById, {
     client: client,
     variables: { id: query.id }
@@ -33,6 +33,7 @@ function ProjectSchedulePage({ client, query }) {
   )
 
   const save = useCallback(async submission => {
+    if (readOnly) return
     const saving = loadingAlert()
 
     try {
@@ -48,11 +49,12 @@ function ProjectSchedulePage({ client, query }) {
   }, [updateSubmission])
 
   const injectActions = useMemo(() => ({
+    readOnly,
     loading,
     error,
     save,
     data
-  }), [loading, data])
+  }), [loading, data, readOnly])
 
   return (
     <PageContext.Provider

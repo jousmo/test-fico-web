@@ -32,7 +32,7 @@ import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { setReviewedComments } from "../../../../../../helpers/submissionFunctions/comments"
 
 
-function GeneralInformation({ client, query, token }) {
+function GeneralInformation({ client, query, readOnly }) {
   const submissionId = query.id
 
   const [state, setState] = useState({
@@ -65,14 +65,17 @@ function GeneralInformation({ client, query, token }) {
   })
 
   const updateGeneralInformation = useCallback(generalInformation => {
+    if (readOnly) return
     setUpdateGeneralInformation(generalInformation, state, setState)
   }, [state, setState])
 
   const save = useCallback(async () => {
+    if (readOnly) return
     await setSave(state, setState, updateSubmission, submissionId, updateComments)
   }, [state])
 
   const onCommentsReview = useCallback(async comments => {
+    if (readOnly) return
     await setReviewedComments(comments, setState)
   }, [state])
 
@@ -82,15 +85,15 @@ function GeneralInformation({ client, query, token }) {
 
   const injectActions = useMemo(() => ({
     updateGeneralInformation,
-    isCall,
-    readOnly: false,
+    readOnly,
     loading,
+    isCall,
     error,
     data,
     review: false
-  }), [state, loading, data])
+  }), [state, loading, data, readOnly])
 
-  const disabledComments = data?.GeneralInformation?.status.includes("REVISION")
+  const disabledComments = data?.GeneralInformation?.status.includes("REVISION") || readOnly
 
   return (
     <PageContext.Provider value={pageData({ save, step: 0 })}>
@@ -101,7 +104,7 @@ function GeneralInformation({ client, query, token }) {
         update={updateGeneralInformation}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader isSaving={state.isSaving} save={save} disabled={false} />
+            <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
             <ProjectDetails admin />
             <Consultant />
             <DevelopmentObjectives />

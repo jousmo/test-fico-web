@@ -29,7 +29,7 @@ import {
 } from "../../../helpers"
 import { useAuth } from "../../../../../../../../contexts/auth"
 
-export function ModalExpense({ onSave, onCancel, edit, submission, update, ...props }) {
+export function ModalExpense({ onSave, onCancel, edit, submission, update, disabled, ...props }) {
   const [state, setState] = useState(INIT_STATE)
   const [stateTypeRH, setStateTypeRH] = useState(false)
   const [stateOldAmount, setStateOldAmount] = useState(false)
@@ -144,7 +144,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, update, ...pr
     onCancel()
   }
 
-  const readOnly = edit?.reviewed
+  const readOnly = edit?.reviewed || disabled
   const typeRH = edit?.typeRH
 
   return (
@@ -157,6 +157,7 @@ export function ModalExpense({ onSave, onCancel, edit, submission, update, ...pr
       onOk={onSubmit}
       onCancel={onCancelModal}
       maskClosable={false}
+      okButtonProps={{ disabled }}
       {...props}>
       <Form
         labelCol={{ span: 6 }}
