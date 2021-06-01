@@ -10,7 +10,7 @@ import {
 import { getSelectValue } from "../../../../../../helpers/getSelectValue"
 import { DateField, Visibility } from "../../../../../shared"
 
-function StatusForm({ data, onSave }) {
+function StatusForm({ data, onSave, readOnly }) {
   const onSaveDate = date => {
     const deadline = getSelectValue(date)
     onSave({ deadline: deadline })
@@ -33,6 +33,7 @@ function StatusForm({ data, onSave }) {
           label="Fecha límite de revisión">
           <DateField
             id="deadline"
+            disabled={readOnly}
             format="DD/MM/YYYY"
             defaultValue={data?.deadline}
             onChange={onSaveDate}/>

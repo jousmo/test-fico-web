@@ -17,7 +17,7 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { PageContext } from "../../../../contexts"
 import { AuthCheck } from "../../../../helpers/auth/auth-check"
 
-function Submission({ client, query }) {
+function Submission({ client, query, readOnly }) {
   const submissionId = query.id
 
   const [ updateSubmission ] = useMutation(
@@ -53,13 +53,14 @@ function Submission({ client, query }) {
   }, [submissionId])
 
   const injectActions = useMemo(() => ({
+    readOnly,
     refetch,
     loading,
     client,
     error,
     save,
     data
-  }), [loading, data])
+  }), [loading, data, readOnly])
 
   return (
     <PageContext.Provider

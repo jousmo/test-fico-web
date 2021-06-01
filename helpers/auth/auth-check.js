@@ -11,13 +11,16 @@ export const AuthCheck = async (ctx, role) => {
   try {
     const cookies = nookies.get(ctx)
     const token = await firebaseAdmin.auth().verifyIdToken(cookies.token)
-    const { role: userRole } = token
+    let { role: userRole } = token
 
-    if (userRole !== role) {
+    const readOnly = userRole === "ADMIN_ASSISTANT"
+
+    if (!userRole.includes(role)) {
+      if (userRole === "ADMIN_ASSISTANT") userRole = "ADMIN"
       return redirect(ctx, `/${userRole.toLowerCase()}/submissions`)
     }
 
-    return { props: { query: ctx.query, token } }
+    return { props: { query: ctx.query, token, readOnly } }
   } catch (err) {
     return redirect(ctx, "/")
   }

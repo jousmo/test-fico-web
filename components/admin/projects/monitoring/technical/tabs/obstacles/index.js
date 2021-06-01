@@ -9,7 +9,7 @@ import {
 } from "../../../../../../../contexts/admin/submissions/show"
 
 export function MonitoringObstacles({ data = {}, dateFilter }){
-  const { updateSubmission } = useContext(AdminSubmissionContext)
+  const { readOnly, updateSubmission } = useContext(AdminSubmissionContext)
 
   let obstacles = data?.Submission?.technicalUpdates
   if (dateFilter?.length > 0) {
@@ -55,6 +55,7 @@ export function MonitoringObstacles({ data = {}, dateFilter }){
       <CompositeField
         onChange={onChange}
         value={obstacles}
+        isAddDisabled={readOnly}
         onClickAdd={onClickAdd}
         orientation="TOP"
         addLabel="Agregar actividad">
@@ -63,6 +64,7 @@ export function MonitoringObstacles({ data = {}, dateFilter }){
             <ObstaclesModal
               onCancel={onCancel}
               onSave={onSave(addNew, replaceItemAtIndex)}
+              readOnly={readOnly}
               visible={state.isModalOpen}
               edit={state.edit} />
             <Table dataSource={items} pagination={false} rowKey={el => el.id}>

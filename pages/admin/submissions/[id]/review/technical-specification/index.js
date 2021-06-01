@@ -29,7 +29,7 @@ import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { setReviewedComments } from "../../../../../../helpers/submissionFunctions/comments"
 
 
-function TechnicalSpecification({ client, query }) {
+function TechnicalSpecification({ client, query, readOnly }) {
   const submissionId = query.id
 
   const [state, setState] = useState({
@@ -62,27 +62,30 @@ function TechnicalSpecification({ client, query }) {
   })
 
   const updateTechnicalSpecification = useCallback(technicalSpecification => {
+    if (readOnly) return
     setUpdateTechnicalSpecification(technicalSpecification, state, setState)
   }, [state])
 
   const save = useCallback(async () => {
+    if (readOnly) return
     await setSave(state, setState, updateSubmission, submissionId, updateComments)
   }, [state])
 
   const onCommentsReview = useCallback(async comments => {
+    if (readOnly) return
     await setReviewedComments(comments, setState)
   }, [state])
 
   const injectActions = useMemo(() => ({
     updateTechnicalSpecification,
-    readOnly: false,
+    readOnly,
     loading,
     error,
     data,
     review: false
-  }), [state, loading, data])
+  }), [state, loading, data, readOnly])
 
-  const disabledComments = data?.TechnicalSpecification?.status.includes("REVISION")
+  const disabledComments = data?.TechnicalSpecification?.status.includes("REVISION") || readOnly
 
   return (
     <PageContext.Provider value={pageData({ save, step: 1 })}>
@@ -93,7 +96,7 @@ function TechnicalSpecification({ client, query }) {
         update={updateTechnicalSpecification}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader isSaving={state.isSaving} save={save} disabled={false} />
+            <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
             <DevelopmentObjective admin />
             <GeneralObjective />
             <SpecificObjectives />

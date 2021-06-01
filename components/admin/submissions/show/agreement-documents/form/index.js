@@ -7,7 +7,7 @@ import { success, warning } from '../../../../../../helpers/alert'
 import { useMutation } from '@apollo/react-hooks'
 import { submission } from '../../../../../../graphql/submission'
 
-function AgreementDocumentsForm({ data, client, refetch }) {
+function AgreementDocumentsForm({ data, client, refetch, readOnly }) {
   if (data?.status !== "ON_AGREEMENT"){
     return (
       <Alert
@@ -33,7 +33,7 @@ function AgreementDocumentsForm({ data, client, refetch }) {
       <a href={document.url} target="_blank">
         <PaperClipOutlined />&nbsp;{document.name}
       </a>,
-      <DeleteButton style={{float: "none"}} onClick={() => onClick(document.id)}/>
+      <DeleteButton disabled={readOnly} style={{float: "none"}} onClick={() => onClick(document.id)}/>
     ]
   }
 

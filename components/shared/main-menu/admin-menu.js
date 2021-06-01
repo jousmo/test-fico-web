@@ -1,5 +1,6 @@
 import { Menu } from "antd"
 import Link from "next/link"
+import { useAuth } from "../../../contexts/auth"
 import {
   EyeOutlined,
   InboxOutlined,
@@ -7,6 +8,7 @@ import {
 } from "@ant-design/icons"
 
 export default function AdminMenu({ step, submenu }) {
+  const { user } = useAuth() || {}
   return (
     <Menu
       defaultSelectedKeys={[step]}
@@ -59,12 +61,14 @@ export default function AdminMenu({ step, submenu }) {
           </Link>
         </Menu.Item>
       </Menu.SubMenu>
-      <Menu.Item key="users">
-        <TeamOutlined />
-        <Link href="/admin/users">
-          <a>Usuarios</a>
-        </Link>
-      </Menu.Item>
+      {user?.claims?.role === "ADMIN" && (
+        <Menu.Item key="users">
+          <TeamOutlined />
+          <Link href="/admin/users">
+            <a>Usuarios</a>
+          </Link>
+        </Menu.Item>
+      )}
       <Menu.Item key="census">
         <TeamOutlined />
         <Link href="/admin/census">

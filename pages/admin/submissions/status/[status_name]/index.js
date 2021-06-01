@@ -17,7 +17,7 @@ import moment from "moment"
 import { AuthCheck } from "../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../helpers/bugsnag/notify"
 
-function SubmissionsByStatus({ client, query }) {
+function SubmissionsByStatus({ client, query, readOnly }) {
   const status = query.status_name?.toUpperCase()
 
   const [updateSubmissionStatus] = useMutation(
@@ -39,6 +39,7 @@ function SubmissionsByStatus({ client, query }) {
   })
 
   const save = useCallback(async (id, status) => {
+    if (readOnly) return
     const saving = loadingAlert()
     try {
       await updateSubmissionStatus({
@@ -53,11 +54,12 @@ function SubmissionsByStatus({ client, query }) {
   }, [])
 
   const injectActions = useMemo(() => ({
+    readOnly,
     loading,
     error,
     data,
     save
-  }), [data, loading])
+  }), [data, loading, readOnly])
 
   const pageTitle = selectOptions
     .getReadableValue(selectOptions.shared.submissionStatusOptions, status)

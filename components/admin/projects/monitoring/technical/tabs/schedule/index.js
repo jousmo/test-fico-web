@@ -5,10 +5,12 @@ import { ScheduleBox } from "./box"
 import { CommentOutlined, QuestionCircleFilled } from "@ant-design/icons"
 import { getColor, getMonths, getCompliance } from "./helpers"
 import ModalCommentMonitoring from "../../../../../../shared/modal-comment-monitoring"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { AdminSubmissionContext } from "../../../../../../../contexts/admin/submissions/show"
 moment.locale("es")
 
 export function MonitoringSchedule({ data, dateFilter }) {
+  const { readOnly } = useContext(AdminSubmissionContext)
   const [state, setState] = useState({
     isModalCommentOpen: false,
     activity: { id: "", type: "ACTIVITY" }
@@ -109,6 +111,7 @@ export function MonitoringSchedule({ data, dateFilter }) {
       </Section>
       {state.isModalCommentOpen && (
         <ModalCommentMonitoring
+          readOnly={readOnly}
           visible={state.isModalCommentOpen}
           data={state.activity}
           onCancel={onCancel}/>

@@ -6,7 +6,7 @@ import { ConfirmModal, UploadButtonForm } from "../../../../../shared"
 import { useRouter } from "next/router"
 import "./styles.sass"
 
-function ProjectClosureForm({ data, save }) {
+function ProjectClosureForm({ data, save, disabled }) {
   const { query, route } = useRouter()
 
   let role = "admin"
@@ -18,6 +18,7 @@ function ProjectClosureForm({ data, save }) {
   const [state, setState] = useState(false)
 
   const onCloseProject = async () => {
+    if (readOnly) return
     try {
       await form.validateFields()
 
@@ -36,7 +37,7 @@ function ProjectClosureForm({ data, save }) {
     }
   }
 
-  const readOnly = data?.status === "ON_CLOSURE"
+  const readOnly = data?.status === "ON_CLOSURE" || disabled
 
   const closureDocuments = data?.closureDocuments?.map(doc => ({ ...doc, uid: doc.id }))
 

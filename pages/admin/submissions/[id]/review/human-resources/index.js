@@ -28,7 +28,7 @@ import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { setReviewedComments } from "../../../../../../helpers/submissionFunctions/comments"
 
 
-function HumanResources({ client, query, token }) {
+function HumanResources({ client, query, readOnly }) {
   const [form] = Form.useForm()
   const [state, setState] = useState({
     humanResources: [],
@@ -60,28 +60,31 @@ function HumanResources({ client, query, token }) {
   })
 
   const updateHumanResources = useCallback(humanResources => {
+    if (readOnly) return
     setState({ ...state, humanResources })
   }, [state])
 
   const save = useCallback(async () => {
+    if (readOnly) return
     await setSave(state, setState, updateSubmission, updateComments)
   }, [state])
 
   const onCommentsReview = useCallback(async comments => {
+    if (readOnly) return
     await setReviewedComments(comments, setState)
   }, [state])
 
   const injectActions = useMemo(() => ({
     commentSubmission: { concepts: data?.Concepts, status: data?.SubmissionSimple?.status },
     updateHumanResources,
-    readOnly: false,
+    readOnly,
     loading,
     error,
     form,
     data
-  }), [loading, data])
+  }), [loading, data, readOnly])
 
-  const disabledComments = data?.SubmissionSimple?.status.includes("REVISION")
+  const disabledComments = data?.SubmissionSimple?.status.includes("REVISION") || readOnly
 
   return (
     <PageContext.Provider value={pageData({ save, step: 4 })}>
@@ -92,7 +95,7 @@ function HumanResources({ client, query, token }) {
         update={updateHumanResources}>
         <ImplementerSubmissionContext.Provider value={injectActions}>
           <Layout>
-            <SaveHeader isSaving={state.isSaving} save={save} disabled={false} />
+            <SaveHeader isSaving={state.isSaving} save={save} disabled={readOnly} />
             <Heading />
             <ResourcesList />
           </Layout>

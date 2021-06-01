@@ -12,7 +12,7 @@ import { quarterReadOnly } from "../helpers"
 import moment from "moment"
 import { getReadableValue, implementer } from "../../../../../../../../../helpers/selectOptions"
 
-export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, ...props }) {
+export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, disabled, ...props }) {
   const { user } = useAuth()
   const isAdmin = user?.claims?.role === "ADMIN"
 
@@ -26,6 +26,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
   }, [edit])
 
   const onOk = async () => {
+    if (disabled) return
     try {
       await form.validateFields()
       const values = await form.getFieldsValue()
@@ -104,7 +105,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
       width={650}
       onCancel={onClose}
       okText="Guardar"
-      okButtonProps={{ disabled: !isAdmin && readOnly }}
+      okButtonProps={{ disabled: (!isAdmin && readOnly) || disabled }}
       maskClosable={false}
       {...props}>
       <Form
@@ -143,7 +144,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
                   <Form.Item
                     name="schedules"
                     rules={[{ required: true, message: "Campo requerido" }]}>
-                    <SchedulesField readOnly={readOnly} />
+                    <SchedulesField readOnly={disabled || readOnly} />
                   </Form.Item>
                 </Col>
               </>
@@ -158,7 +159,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
                   id="appliedAt"
                   name="appliedAt">
                   <DateField
-                    disabled={readOnly}
+                    disabled={disabled || readOnly}
                     bordered={false}
                     style={{ width: "15rem" }}
                     format="DD/MM/YYYY"
@@ -216,7 +217,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <InputNumber
-                readOnly={readOnly}
+                readOnly={disabled || readOnly}
                 max={edit?.goal}
                 min={0}
                 onChange={v => setCompleted(v)} />
@@ -240,7 +241,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <ParticipantsField
-                readOnly={readOnly}
+                readOnly={disabled || readOnly}
                 defaultValue={edit?.participants}
                 onChange={(p) => form.setFieldsValue({ participants: p })}
                 type={type} />
@@ -260,7 +261,7 @@ export function ObjectivesModal({ edit, onCancel, onSave, range, save, update, .
               rules={[{ required: true, message: "Campo requerido" }]}
               style={{ marginBottom: "0" }}>
               <UploadButtonForm
-                disabled={readOnly}
+                disabled={disabled || readOnly}
                 fileList={files}
                 onRemoveFile={onRemoveFile}
                 onChange={onUploadFile}

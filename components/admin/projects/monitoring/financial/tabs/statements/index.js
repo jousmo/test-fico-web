@@ -31,6 +31,7 @@ export function BankStatements(){
       <CompositeField
         value={documents}
         onChange={null}
+        isAddDisabled={!addBankStatements}
         onClickAdd={onClickAdd}
         orientation="TOP"
         addLabel="Agregar archivo">

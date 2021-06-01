@@ -7,7 +7,8 @@ import Link from "next/link"
 export function UserItem ({ user, onAlias, onRecovery, onEdit, onDisabled }) {
   const ROLES = {
     "IMPLEMENTER": "Implementadora",
-    "ADMIN": "Administrador"
+    "ADMIN": "Administrador",
+    "ADMIN_ASSISTANT": "Administrador Asistente"
   }
 
   return (
@@ -15,7 +16,7 @@ export function UserItem ({ user, onAlias, onRecovery, onEdit, onDisabled }) {
       <List.Item.Meta
         avatar={<Avatar>{user?.displayName}</Avatar>}
         title={
-          user?.role !== "ADMIN" ? (
+          user?.role === "IMPLEMENTER" ? (
             <Link href={`/admin/implementer/${user?.implementer?.id}`}>
               <a>{user?.displayName}</a>
             </Link>

@@ -7,7 +7,8 @@ import { getSelectValue } from "../../../../helpers/getSelectValue"
 export function ModalInvitation ({ account, onSave, onCancel, ...props }) {
   const ROLES = [
     { label: "Implementadora", value: "IMPLEMENTER" },
-    { label: "Administrador", value: "ADMIN" }
+    { label: "Administrador", value: "ADMIN" },
+    { label: "Administrador asistente", value: "ADMIN_ASSISTANT" }
   ]
 
   const [form] = Form.useForm()

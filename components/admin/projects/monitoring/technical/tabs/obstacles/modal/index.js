@@ -1,7 +1,7 @@
 import { Col, Form, Input, Modal, Row } from "antd"
 import { useEffect } from "react"
 
-export function ObstaclesModal({ edit, onCancel, onSave, ...props }){
+export function ObstaclesModal({ edit, onCancel, onSave, readOnly, ...props }){
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -11,6 +11,7 @@ export function ObstaclesModal({ edit, onCancel, onSave, ...props }){
   }, [edit])
 
   const onOk = async () => {
+    if (readOnly) return
     try {
       const values = await form.getFieldsValue()
 
@@ -39,6 +40,7 @@ export function ObstaclesModal({ edit, onCancel, onSave, ...props }){
       width={600}
       okText="Guardar actualización"
       cancelText="Cancelar"
+      okButtonProps={{ disabled: readOnly }}
       maskClosable={false}
       {...props}>
       <Form
@@ -57,6 +59,7 @@ export function ObstaclesModal({ edit, onCancel, onSave, ...props }){
               label="Acciones correctivas"
               style={{display: "inline"}}>
               <Input.TextArea
+                readOnly={readOnly}
                 placeholder="Describe las acciones correctivas"
                 rows={5} />
             </Form.Item>
@@ -68,6 +71,7 @@ export function ObstaclesModal({ edit, onCancel, onSave, ...props }){
               label="Retos"
               style={{display: "inline"}}>
               <Input.TextArea
+                readOnly={readOnly}
                 placeholder="Describe los retos a los cuales te enfrentarás"
                 rows={5} />
             </Form.Item>
@@ -79,6 +83,7 @@ export function ObstaclesModal({ edit, onCancel, onSave, ...props }){
               label="Obstáculos"
               style={{display: "inline"}}>
               <Input.TextArea
+                readOnly={readOnly}
                 placeholder="Describe los obstaculos que te impedirían lograr
                 tus objetivos de proyecto"
                 rows={5} />

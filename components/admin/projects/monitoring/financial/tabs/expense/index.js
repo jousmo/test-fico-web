@@ -11,7 +11,7 @@ import { getConcept, readXmlFile } from "../../helpers"
 import axios from "axios"
 
 export function Expense () {
-  const { data: { Submission }, save, update, deleteInvoice } = useContext(AdminSubmissionContext)
+  const { data: { Submission }, readOnly, save, update, deleteInvoice } = useContext(AdminSubmissionContext)
   const [state, setState] = useState({
     isModalOpen: false,
     edit: false,
@@ -133,7 +133,7 @@ export function Expense () {
           <DatePicker.RangePicker format="DD/MM/YYYY" onChange={onChangeRageDate} />
         </Space>
         <CompositeField
-          isAddDisabled={state?.loading}
+          isAddDisabled={state?.loading || readOnly}
           onClickAdd={onClickAdd}
           onChange={onChange}
           value={state.filterInvoice ? state.filterInvoice : Submission?.invoices}
@@ -147,6 +147,7 @@ export function Expense () {
                 onSave={onSave(addNew, replaceItemAtIndex)}
                 onCancel={onCancel}
                 edit={state.edit}
+                disabled={readOnly}
                 update={update}
                 className="fico expense-modal-form"/>
               <ListExpense
@@ -156,6 +157,7 @@ export function Expense () {
                 onEdit={onEdit}
                 onComment={onComment}
                 getStatus={getStatus}
+                readOnly={readOnly}
                 loading={state?.loading}
               />
             </>
@@ -164,6 +166,7 @@ export function Expense () {
       </Section>
       {state.isModalCommentOpen && (
         <ModalCommentMonitoring
+          readOnly={readOnly}
           visible={state.isModalCommentOpen}
           data={state.projectInvoice}
           onCancel={onCancel}/>

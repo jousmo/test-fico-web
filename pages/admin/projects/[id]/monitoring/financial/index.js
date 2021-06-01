@@ -11,7 +11,7 @@ import { success, loadingAlert, withApollo } from "../../../../../../helpers"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
 
-function FinancialMonitoringPage({ client, query }) {
+function FinancialMonitoringPage({ client, query, readOnly }) {
   const { loading, error, data } = useQuery(submission.queries.getInvoices, {
     client: client,
     variables: { id: query.id }
@@ -44,6 +44,7 @@ function FinancialMonitoringPage({ client, query }) {
   )
 
   const save = useCallback(async expense => {
+    if (readOnly) return
     const saving = loadingAlert("Guardando", 0)
     try {
       await saveProjectInvoice({ variables: { data: { ...expense, submission: query.id } } })
@@ -55,6 +56,7 @@ function FinancialMonitoringPage({ client, query }) {
   }, [saveProjectInvoice])
 
   const deleteInvoice = useCallback(async id => {
+    if (readOnly) return
     const saving = loadingAlert("Eliminando", 0)
     try {
       await deleteProjectInvoice({ variables: { id } })
@@ -66,6 +68,7 @@ function FinancialMonitoringPage({ client, query }) {
   }, [deleteProjectInvoice])
 
   const update = useCallback(async expense => {
+    if (readOnly) return
     const saving = loadingAlert("Actualizando", 0)
     try {
       const { index, ...newExpense } = expense
@@ -78,13 +81,14 @@ function FinancialMonitoringPage({ client, query }) {
   }, [saveProjectInvoice])
 
   const injectActions = useMemo(() => ({
+    readOnly,
     loading,
     error,
     data,
     save,
     update,
     deleteInvoice
-  }), [loading, data])
+  }), [loading, data, readOnly])
 
   return (
     <PageContext.Provider

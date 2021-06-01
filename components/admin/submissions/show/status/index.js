@@ -7,6 +7,7 @@ import StatusForm from "./form"
 
 export function Status() {
   const {
+    readOnly,
     loading,
     error,
     save,
@@ -16,6 +17,7 @@ export function Status() {
   return (
     <Section title="Estatus de solicitud">
       <StatusForm
+        readOnly={readOnly}
         data={data?.Submission}
         error={error}
         isLoading={loading}

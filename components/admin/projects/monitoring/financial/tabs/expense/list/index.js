@@ -6,7 +6,7 @@ import { getUrlPdf, monthYearConvert, getConcept, invoicesExport } from "../../.
 import moment from "moment"
 moment.locale("es")
 
-export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete, getStatus, loading }) {
+export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete, getStatus, loading, readOnly }) {
   return (
     <>
       <Space style={{margin: "1rem 0"}}>
@@ -123,6 +123,7 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
               icon={<EyeOutlined />} />
             {!record?.reviewed && (
               <DeleteButton
+                disabled={readOnly}
                 type="primary"
                 shape="circle"
                 onClick={() => onDelete(record)}/>
