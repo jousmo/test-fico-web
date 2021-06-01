@@ -1,7 +1,7 @@
 import { loadingAlert, success } from "../alert"
 import { apolloError } from "../bugsnag/notify"
 
-export const setSave = async (state, setState, updateSubmission, updateComments) => {
+export const setSave = async (humanResources, state, setState, updateSubmission, updateComments) => {
   setState(state => ({ ...state, isSaving: true }))
   const saving = loadingAlert()
   try {
@@ -10,7 +10,7 @@ export const setSave = async (state, setState, updateSubmission, updateComments)
     }
 
     await updateSubmission({
-      variables: { data: state.humanResources }
+      variables: { data: humanResources }
     })
     success()
   }
