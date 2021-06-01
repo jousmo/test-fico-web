@@ -28,8 +28,8 @@ export const attachmentThree = async (submission, periods) => {
 
     const investments = { Implementadora: {}, FICOSEC: {} }
 
-    const firstAlly = submission?.allies[0]
-    const secondAlly = submission?.allies[0]
+    const firstAlly = submission?.allies?.[0]
+    const secondAlly = submission?.allies?.[1]
     if (firstAlly) investments[firstAlly] = {}
     if (secondAlly) investments[secondAlly] = {}
 
