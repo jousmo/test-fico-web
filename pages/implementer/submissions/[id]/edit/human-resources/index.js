@@ -60,7 +60,7 @@ function HumanResources({ client, query, token }) {
       warning('El campo "Puesto" no debe repetirse')
       return
     }
-    await setSave(state, setState, updateSubmission)
+    await setSave(humanResources, state, setState, updateSubmission)
   }, [state])
 
   const { shared: { submissionStatusOptions: status }} = selectOptions

@@ -112,7 +112,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                         gutter={[10, 8]}
                         justify="start"
                         key={humanResource.key}>
-                        <Col flex="50px" style={{marginTop: "5px"}}>
+                        <Col flex="50px">
                           {!hiddenComments &&
                           <CommentButton
                             index={index}
@@ -121,28 +121,28 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                             section="HUMAN_RESOURCE" />
                           }
                         </Col>
-                        <Col flex="30px" style={{marginTop: "5px"}}>
+                        <Col flex="30px">
                           <span key={`userIcon-${humanResource.key}`}>
                             &nbsp;<UserOutlined />
                           </span>
                         </Col>
                         <Col flex="150px">
-                          <Form.Item name={[index, "position"]} style={{ margin: 0 }}>
+                          <Form.Item name={[index, "position"]}>
                             <Input disabled={readOnly} />
                           </Form.Item>
                         </Col>
                         <Col flex="150px">
-                          <Form.Item name={[index, "name"]} style={{ margin: 0 }}>
+                          <Form.Item name={[index, "name"]}>
                             <Input disabled={readOnly} />
                           </Form.Item>
                         </Col>
                         <Col flex="180px">
-                          <Form.Item name={[index, "tasks"]} style={{ margin: 0 }}>
+                          <Form.Item name={[index, "tasks"]}>
                             <Input disabled={readOnly} />
                           </Form.Item>
                         </Col>
                         <Col flex="150px">
-                          <Form.Item name={[index, "overseer"]} style={{ margin: 0 }}>
+                          <Form.Item name={[index, "overseer"]}>
                             <Input disabled={readOnly} />
                           </Form.Item>
                         </Col>
@@ -150,7 +150,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                           <Form.Item
                             getValueFromEvent={event => Number(getSelectValue(event))}
                             name={[index, "hours"]}
-                            style={{ margin: 0 }}>
+                           >
                             <Input min={1} disabled={readOnly} type="number" />
                           </Form.Item>
                         </Col>
@@ -158,7 +158,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                           <Form.Item
                             getValueFromEvent={event => onContracyTypeChange(event, index)}
                             name={[index, "contractType"]}
-                            style={{ margin: 0 }}>
+                           >
                             <SelectField disabled={readOnly} options={contractTypes} />
                           </Form.Item>
                         </Col>
@@ -166,7 +166,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                           <Form.Item
                             getValueFromEvent={event => Number(getSelectValue(event))}
                             name={[index, "salary"]}
-                            style={{ margin: 0 }}>
+                           >
                             <Input
                               addonBefore="$"
                               disabled={readOnly}
@@ -175,7 +175,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                           </Form.Item>
                         </Col>
                         <Col flex="130px">
-                          <Form.Item name={[index, "benefits"]} style={{ margin: 0 }}>
+                          <Form.Item name={[index, "benefits"]}>
                             <Radio.Group disabled={readOnly}>
                               <Radio value={true}>Si</Radio>
                               <Radio value={false}>No</Radio>
@@ -186,7 +186,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                           <Form.Item
                             getValueFromEvent={event => Number(getSelectValue(event))}
                             name={[index, "taxes"]}
-                            style={{ margin: 0 }}>
+                           >
                             <Input
                               addonBefore="$"
                               disabled={readOnly || !state[index]?.hasTax}
@@ -195,7 +195,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                           </Form.Item>
                         </Col>
                         <Col flex="150px">
-                          <Form.Item name={[index, "total"]} style={{ margin: 0 }}>
+                          <Form.Item name={[index, "total"]}>
                             <Input
                               addonBefore="$"
                               disabled
@@ -203,7 +203,7 @@ function HumanResourcesTable({ data, form, hiddenComments, readOnly }) {
                           </Form.Item>
                         </Col>
                         <Col flex="80px">
-                          <Form.Item name={[index, "documents"]} style={{ margin: 0 }}>
+                          <Form.Item name={[index, "documents"]}>
                             <UploadTooltip
                               readOnly={readOnly}
                               body="Adjunta el CV y el documento que certifica los

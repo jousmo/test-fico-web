@@ -66,7 +66,7 @@ function HumanResources({ client, query, readOnly }) {
 
   const save = useCallback(async () => {
     if (readOnly) return
-    await setSave(state, setState, updateSubmission, updateComments)
+    await setSave(state.humanResources, state, setState, updateSubmission, updateComments)
   }, [state])
 
   const onCommentsReview = useCallback(async comments => {
