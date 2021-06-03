@@ -1,4 +1,5 @@
-import { Table, Button, Space, Empty } from "antd"
+import { useEffect, useState } from "react"
+import { Table, Button, Select, Space, Empty } from "antd"
 import { EditOutlined, EyeOutlined, CommentOutlined } from "@ant-design/icons"
 import { DateField, DeleteButton, SelectField } from "../../../../../../../shared"
 import { cellFormat } from "../../../../../../../../helpers"
@@ -7,9 +8,32 @@ import moment from "moment"
 moment.locale("es")
 
 export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete, getStatus, loading, readOnly }) {
+  const [items, setItems] = useState(dataSource)
+
+  useEffect(() => {
+    setItems(dataSource)
+  }, [dataSource])
+
+  const statusOptions = new Set()
+  dataSource.forEach(el => statusOptions.add(el.status))
+
+  const onFilter = status => {
+    if (status === "ALL") {
+      setItems(dataSource)
+    } else {
+      setItems(Array.from(dataSource).filter(el => el.status === status))
+    }
+  }
+
   return (
     <>
       <Space style={{margin: "1rem 0"}}>
+        <Select onSelect={onFilter} placeholder="Filtrar por estatus">
+          <Select.Option value="ALL">Todos</Select.Option>
+          {Array.from(statusOptions).map(el =>
+            <Select.Option value={el}>{el}</Select.Option>
+          )}
+        </Select>
         <Button
           disabled={loading}
           onClick={() => invoicesExport(dataSource, concepts)}>
@@ -26,7 +50,7 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
         loading={loading}
         rowKey={a => a.id}
         style={{marginTop: "1.5rem"}}
-        dataSource={dataSource}
+        dataSource={items}
         size="small"
         locale={{emptyText: <Empty description="Agrega todas las facturas" />}}
         scroll={{ x: true }}
@@ -88,7 +112,7 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
           dataIndex="concept"
           title="ID Concepto"
           render={text => <SelectField value={getConcept(concepts, text)} disabled />}
-          sorter={(a, b) => getConcept(concepts, a.concept).localeCompare(getConcept(concepts, b.concept))}
+          sorter={(a, b) => getConcept(concepts, a.concept)?.localeCompare(getConcept(concepts, b.concept))}
           showSorterTooltip={false} />
         <Table.Column
           width={1}
@@ -102,7 +126,7 @@ export function ListExpense ({ dataSource, concepts, onEdit, onComment, onDelete
           dataIndex="status"
           render={text => text || "- - -"}
           showSorterTooltip={false}
-          sorter={(a, b) => a.status.localeCompare(b.status)}
+          sorter={(a, b) => a.status?.localeCompare(b.status)}
           title="Estatus" />
         <Table.Column
           width={1}
