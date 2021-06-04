@@ -1,13 +1,13 @@
 import { Card, Table } from "antd"
 import { useContext, useState } from "react"
-import { CompositeField } from "../../../../../../shared"
+import { CompositeField, DeleteButton } from "../../../../../../shared"
 import {
   AdminSubmissionContext
 } from "../../../../../../../contexts/admin/submissions/show"
 import { BankStatementsModal } from "./modal"
 
 export function BankStatements(){
-  const { data, addBankStatements } = useContext(AdminSubmissionContext)
+  const { data, addBankStatements, deleteBankStatements } = useContext(AdminSubmissionContext)
 
   const documents = data?.Submission?.documents?.filter(doc => doc.type === "BANK_STATEMENT")
 
@@ -45,6 +45,10 @@ export function BankStatements(){
               <Table.Column
                 render={row => <a href={row.url}>{row.name}</a>}
                 title="Estado de cuenta" />
+              <Table.Column
+                render={row =>
+                  <DeleteButton onClick={() => deleteBankStatements(row.id)} />
+                } />
             </Table>
           </div>
         }
