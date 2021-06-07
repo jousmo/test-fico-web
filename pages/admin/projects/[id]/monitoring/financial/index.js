@@ -83,6 +83,7 @@ function FinancialMonitoringPage({ client, query, readOnly }) {
   const injectActions = useMemo(() => ({
     readOnly,
     loading,
+    client,
     error,
     data,
     save,
