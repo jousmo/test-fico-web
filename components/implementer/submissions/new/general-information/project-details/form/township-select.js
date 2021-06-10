@@ -11,29 +11,23 @@ export function TownshipSelect({
   const options = implementer.submission.townships
 
   const onSelectChange = values => {
-    const township = {
-      id: "township",
-      value: values
+    const township = { id: "township", value: values }
+
+    let regions = new Set()
+    values.forEach(township => {
+      regions.add(options.find(el => el.townships.includes(township))?.region)
+    })
+
+    let region = null
+    regions = Array.from(regions)
+    if (regions.length > 1 || values.includes("Zona centro sur")) {
+      region = "Zona centro sur"
+    } else if (regions[0] !== "Otro") {
+      region = regions[0]
     }
 
-    let region = options?.find(region => (
-      region?.townships?.includes(values[0])
-    ))?.region
-
-    if (region === "Otro"){
-      setRegion({ region: null })
-      region = null
-    } else {
-      setRegion({ region: region })
-    }
-
-    onChange([
-      {
-        id: "region",
-        value: region
-      },
-      township
-    ])
+    setRegion({ region })
+    onChange([{ id: "region", value: region }, township])
   }
 
 
