@@ -2,7 +2,8 @@ export const regions = [
   { label: "Parral", value: "Parral" },
   { label: "Delicias", value: "Delicias" },
   { label: "Cuauhtémoc", value: "Cuauhtémoc" },
-  { label: "Chihuahua", value: "Chihuahua" }
+  { label: "Chihuahua", value: "Chihuahua" },
+  { label: "Zona centro sur", value: "Zona centro sur" }
 ]
 
 export const townships = [
