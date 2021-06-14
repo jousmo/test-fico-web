@@ -53,6 +53,7 @@ export function UploadButton({
       }
     },
     onRemove(file) {
+      if (disabled) return false
       onRemoveFile(file, (err, refetch = () => null) => {
         if (err) {
           warning("Hubo un error al eliminar el documento")
@@ -78,9 +79,11 @@ export function UploadButton({
       className={className}
       data={getDataParams}
       {...uploadProps}>
-      <Button disabled={disabled || isDisabled }>
-        <UploadOutlined /> {children}
-      </Button>
+      {(!disabled && !isDisabled) && (
+        <Button disabled={disabled || isDisabled }>
+          <UploadOutlined /> {children}
+        </Button>
+      )}
     </Upload>
   )
 }
