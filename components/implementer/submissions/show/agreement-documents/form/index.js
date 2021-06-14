@@ -85,22 +85,47 @@ function AgreementDocumentsForm({ data, client }) {
             style={{display: "inline"}}
             label="Documentos de la implementadora para firma de convenio">
             <List>
-              <FileInput
-                typeFile="CONSTITUTIVE"
-                label="Acta constitutiva"
-                className="documentsAgreement"
-                files={documents?.filter(document => document.type === "CONSTITUTIVE")}
-                onDoneFile={onDoneFile}
-                onRemoveFile={onRemoveFile}
-              />
-              <FileInput
-                typeFile="LEGAL_POWER"
-                label="Poder representante legal"
-                className="documentsAgreement"
-                files={documents?.filter(document => document.type === "LEGAL_POWER")}
-                onDoneFile={onDoneFile}
-                onRemoveFile={onRemoveFile}
-              />
+              {data.implementer.type === "GOVERNMENT" ? (
+                <>
+                  <FileInput
+                    disabled
+                    className="documentsAgreement"
+                    label="Decreto de creación (Perfil de implementadora)"
+                    files={data.implementer.documents?.filter(document => document.type === "CREATION_ACT")}
+                    onRemoveFile={() => null} />
+                  <FileInput
+                    disabled
+                    className="documentsAgreement"
+                    label="Ley o reglamento que otorga facultades al representante legal (Perfil de implementadora)"
+                    files={data.implementer.documents?.filter(document => document.type === "REP_RULES")}
+                    onRemoveFile={() => null} />
+                  <FileInput
+                    disabled
+                    className="documentsAgreement"
+                    label="Nombramiento de quien funge como representante legal o titular (Perfil de implementadora)"
+                    files={data.implementer.documents?.filter(document => document.type === "CONSTITUTIVE")}
+                    onRemoveFile={() => null} />
+                </>
+              ) : (
+                <>
+                  <FileInput
+                    typeFile="CONSTITUTIVE"
+                    label="Acta constitutiva"
+                    className="documentsAgreement"
+                    files={documents?.filter(document => document.type === "CONSTITUTIVE")}
+                    onDoneFile={onDoneFile}
+                    onRemoveFile={onRemoveFile}
+                  />
+                  <FileInput
+                    typeFile="LEGAL_POWER"
+                    label="Poder representante legal"
+                    className="documentsAgreement"
+                    files={documents?.filter(document => document.type === "LEGAL_POWER")}
+                    onDoneFile={onDoneFile}
+                    onRemoveFile={onRemoveFile}
+                  />
+                </>
+              )}
               <FileInput
                 typeFile="IDENTIFICATION"
                 label="Copia de la identificación oficial de representante legal"
