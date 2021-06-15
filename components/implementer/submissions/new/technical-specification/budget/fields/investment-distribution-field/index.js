@@ -30,7 +30,7 @@ export function InvestmentDistributionField({
 
   useEffect(() => {
     if (dist.length) {
-      if (allies.length) {
+      if (allies?.length) {
         const newDistribution = [...dist]
 
         if (newDistribution.length > 2) {
