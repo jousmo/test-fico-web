@@ -63,6 +63,7 @@ export const getDetails = gql`
         }
       }
       specificObjectives {
+        orderIndex
         description
       }
       beneficiaries {

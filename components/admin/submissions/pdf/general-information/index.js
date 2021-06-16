@@ -132,7 +132,7 @@ export function GeneralInformationPDF() {
         <Descriptions.Item label="Objetivo general / propósito">
           {submission?.generalObjective}
         </Descriptions.Item>
-        { submission?.specificObjectives?.map((objective, index) =>
+        { submission?.specificObjectives?.sort((a, b) => a.orderIndex - b.orderIndex).map((objective, index) =>
           <Descriptions.Item
             key={index}
             label={`Objetivo específico ${index + 1}`}>
