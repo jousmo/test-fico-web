@@ -16,7 +16,7 @@ export function AttachmentsXLSContent() {
   const router = useRouter()
   const { query: { id } } = router || {}
 
-  const [getGeneralInfo, { data: generalInfo = {} }] = useLazyQuery(submission.queries.getGeneralInfo, {
+  const [getGeneralInfo, { data: generalInfo = {} }] = useLazyQuery(submission.queries.getDetails, {
     client,
     variables: { id }
   })
@@ -35,8 +35,8 @@ export function AttachmentsXLSContent() {
   })
 
   useEffect(async () => {
-    if (generalInfo.GeneralInformation) {
-      await generalInformationExport(generalInfo.GeneralInformation)
+    if (generalInfo.Submission) {
+      await generalInformationExport(generalInfo.Submission)
     }
   }, [generalInfo])
 
