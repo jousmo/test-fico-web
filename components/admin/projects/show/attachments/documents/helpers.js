@@ -6,13 +6,6 @@ import numeral from "numeral"
 const moment = extendMoment(Moment)
 moment.locale("es")
 import {
-  submissionTypes,
-  strategicAxisTypes,
-  preventionLevelTypes,
-  scopeTypes,
-  issueTypes,
-  fiscalPersonTypes,
-  educationLevelTypes,
   measurementPeriodicityTypes,
   conceptTypes,
   verificationTypes,
@@ -20,6 +13,7 @@ import {
 } from "../../../../../../helpers/selectOptions/implementer/submission"
 import { capitalize } from "lodash"
 import { getReadableValue } from "../../../../../../helpers/selectOptions"
+import { BENEFICIARIES, GENERAL_INFO, IMPLEMENTER } from "./constants"
 
 const projectMonths = ({ startDate,  endDate }) => Array
   .from(
@@ -31,20 +25,6 @@ const projectMonths = ({ startDate,  endDate }) => Array
 
 const displayMonthTotal = (unitCost, value) =>
   numeral(unitCost * Number(value || 0)).format("$0,0.00")
-
-const typeSubmission = type => submissionTypes?.find(el => el.value === type)
-
-const axisTypesStrategic = type => strategicAxisTypes?.find(el => el.value === type)
-
-const levelTypesPrevention = type => preventionLevelTypes?.find(el => el.value === type)
-
-const typesScope = type => scopeTypes?.find(el => el.value === type)
-
-const typesIssue = type => issueTypes?.find(el => el.value === type)
-
-const personTypesFiscal = type => fiscalPersonTypes?.find(el => el.value === type)
-
-const levelTypesEducation = type => educationLevelTypes?.find(el => el.value === type)
 
 const periodicityTypesMeasurement = type => measurementPeriodicityTypes?.find(el => el.value === type)
 
@@ -62,169 +42,87 @@ const findNameConcept = (concepts, id) => {
   return name
 }
 
+const getMergedCell = (worksheet, range, value) => {
+  worksheet.mergeCells(range)
+  getLabelCell(worksheet, range.split(":")[0], value)
+}
+
+const getLabelCell = (worksheet, cellKey, value) => {
+  const cell = worksheet.getCell(cellKey)
+  cell.value = value
+  cell.font = { bold: true, color: { argb: "FFFFFFFF" }, size: 14 }
+  cell.border = {
+    top: { style: 'thin' }, left: { style: 'thin' }, right: { style: 'thin' }, bottom: { style: 'thin' }
+  }
+  cell.fill = {
+    type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF80221C' }, bgColor: { argb: "FFFFFFFF" }
+  }
+}
+
+const getValueCell = (worksheet, cellKey, value, fn) => {
+  const cell = worksheet.getCell(cellKey)
+  cell.font = { size: 14 }
+  cell.value = fn ? fn(value) : value
+  cell.alignment = { wrapText: true }
+  cell.border = {
+    top: { style: 'thin' }, left: { style: 'thin' }, right: { style: 'thin' }, bottom: { style: 'thin' }
+  }
+}
+
 export const generalInformationExport = async data => {
   const workbook = new ExcelJS.Workbook()
-  let worksheet = workbook.addWorksheet("Información General")
+  let worksheet = workbook.addWorksheet("Anexo 1.1")
+  worksheet.getColumn('C').width = 40
+  worksheet.getColumn('D').width = 80
 
-  let titleInfo = worksheet.getCell("A1")
-  titleInfo.value = "Detalles del proyecto"
+  let titleInfo = worksheet.getCell("C3")
+  titleInfo.value = "ANEXO 1.1 Información General"
   titleInfo.font = { size: 20, bold: true }
 
-  worksheet.addTable({
-    name: "General",
-    ref: "A3",
-    headerRow: true,
-    style: {
-      showRowStripes: true,
-    },
-    columns: [
-      { name: "Tipo de solicitud" },
-      { name: "Convocatoria a la que aplica" },
-      { name: "Nombre del proyecto" },
-      { name: "Municipio" },
-      { name: "Región" },
-      { name: "Aliados del proyecto" },
-      { name: "Lugar de implementación" },
-      { name: "Responsable del proyecto" },
-      { name: "Fecha de inicio" },
-      { name: "Fecha de conclusión" },
-      { name: "Eje estratégico" },
-      { name: "Nivel de prevención" },
-      { name: "Ámbitos de intervención del Proyecto" },
-      { name: "Problemática a tratar" },
-      { name: "Descripción del proyecto" },
-      { name: "Justificación" }
-    ],
-    rows: [
-      [
-        typeSubmission(data?.type)?.label,
-        data?.applyingCall,
-        data?.name,
-        data?.township,
-        data?.region,
-        data?.allies?.join(','),
-        data?.implementationPlace,
-        data?.responsible,
-        translateDate(data?.startDate, "DD/MM/YYYY"),
-        translateDate(data?.endDate, "DD/MM/YYYY"),
-        axisTypesStrategic(data?.strategicAxis)?.label,
-        levelTypesPrevention(data?.preventionLevel?.join(','))?.label,
-        typesScope(data?.scope?.join(','))?.label,
-        typesIssue(data?.issueDescription)?.label,
-        data?.description,
-        data?.justification
-      ]
-    ]
+  const {
+    beneficiaries, implementer,
+    specificObjectives, ...submission
+  } = data
+
+  let row = 4
+  IMPLEMENTER.forEach(({ label, key }) => {
+    getLabelCell(worksheet, `C${row}`, label)
+    getValueCell(worksheet, `D${row}`, implementer[key])
+    row++
   })
 
-  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-  titleInfo.value = "Consultores"
-  titleInfo.font = { size: 20, bold: true }
+  const projectLabel = worksheet.getCell(`C${row}`)
+  projectLabel.value = "Proyecto"
+  projectLabel.font = { bold: true, size: 18 }
+  row++
 
-  let consultants = data?.consultants?.map(({
-    id,
-    supports,
-    documents,
-    comments,
-    ...el
-  }) => {
-    el.fiscalPersonType = personTypesFiscal(el?.fiscalPersonType)?.label
-    el.hadReceivedSupports = typeBooleans(el?.hadReceivedSupports)
-    return Object.values(el)
+  GENERAL_INFO.forEach(({ label, key, getValue }) => {
+    getLabelCell(worksheet, `C${row}`, label)
+    getValueCell(worksheet, `D${row}`, submission[key], getValue)
+    row++
   })
 
-  consultants = consultants?.length ? consultants : [[]]
-
-  worksheet.addTable({
-    name: "General2",
-    ref: `A${worksheet?.lastRow?._number + 2}`,
-    headerRow: true,
-    style: {
-      showRowStripes: true
-    },
-    columns: [
-      { name: "Descripción" },
-      { name: "Nombre comercial" },
-      { name: "Dirección comercial"},
-      { name: "Contacto responsable" },
-      { name: "Número de teléfono" },
-      { name: "Rfc"},
-      { name: "Dirección fiscal" },
-      { name: "Tipo de persona" },
-      { name: "Apoyos"}
-    ],
-    rows: consultants
+  specificObjectives.forEach(({ description }, index) => {
+    getLabelCell(worksheet, `C${row}`, `Objetivo específico ${index + 1}`)
+    getValueCell(worksheet, `D${row}`, description)
+    row++
   })
 
-  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-  titleInfo.value = "Objetivos"
-  titleInfo.font = { size: 20, bold: true }
-
-  let objectives = []
-  data?.specificObjectives?.forEach(el => {
-    objectives.push([data?.developmentObjective, data?.generalObjective, el?.description])
-  })
-
-  objectives = objectives.length ? objectives : [[data?.developmentObjective, data?.generalObjective, ""]]
-
-  worksheet.addTable({
-    name: "General3",
-    ref: `A${worksheet?.lastRow?._number + 2}`,
-    headerRow: true,
-    style: {
-      showRowStripes: true
-    },
-    columns: [
-      { name: "Objetivo de desarrollo" },
-      { name: "Objetivo general" },
-      { name: "Objetivos específicos" }
-    ],
-    rows: objectives
-  })
-
-  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-  titleInfo.value = "Beneficiarios"
-  titleInfo.font = { size: 20, bold: true }
-
-  let beneficiaries = data?.beneficiaries?.map(({
-    id,
-    comments,
-    ...el
-  }) => {
-    el.age = el?.age?.join(' | ')
-    el.gender = el?.gender?.join(' | ')
-    el.educationLevel = el.educationLevel?.map(el => levelTypesEducation(el)?.label).join(' | ')
-    el.preventionLevel = levelTypesPrevention(el?.preventionLevel)?.label
-    return Object.values(el)
-  })
-
-  beneficiaries = beneficiaries?.length ? beneficiaries : [[]]
-
-  worksheet.addTable({
-    name: "General4",
-    ref: `A${worksheet?.lastRow?._number + 2}`,
-    headerRow: true,
-    style: {
-      showRowStripes: true
-    },
-    columns: [
-      { name: "Descripción" },
-      { name: "Cantidad" },
-      { name: "Sexo" },
-      { name: "Nivel de educación" },
-      { name: "Edad" },
-      { name: "Prevención" }
-    ],
-    rows: beneficiaries
+  beneficiaries.forEach((beneficiary, index) => {
+    getMergedCell(worksheet, `C${row}:C${row + 5}`, `Perfil del Beneficiario ${index + 1}`)
+    BENEFICIARIES.forEach(({ key, getValue }) => {
+      getValueCell(worksheet, `D${row}`, beneficiary[key], getValue)
+      row++
+    })
   })
 
   const buf = await workbook.xlsx.writeBuffer()
-  saveAs(new Blob([buf]), "General.xlsx")
+  saveAs(new Blob([buf]), "Info_General.xlsx")
 }
 
 export const technicalSpecificationExport = async data => {
   const workbook = new ExcelJS.Workbook()
-  let worksheet = workbook.addWorksheet("Ficha Tecnica")
+  let worksheet = workbook.addWorksheet("Ficha Técnica")
 
   let titleInfo = worksheet.getCell("A1")
   titleInfo.value = "Objetivo de desarrollo"
