@@ -12,6 +12,7 @@ export function ProjectDetails({ admin }) {
     updateGeneralInformation,
     readOnly,
     loading,
+    details,
     error,
     data,
     isCall,
@@ -34,7 +35,7 @@ export function ProjectDetails({ admin }) {
 
   return (
     <Section
-      extra={admin && <Button onClick={() => generalInformationExport(data?.GeneralInformation)}>Exportar</Button>}
+      extra={admin && <Button onClick={() => generalInformationExport(details?.Submission)}>Exportar</Button>}
       title="1. Detalles del proyecto">
       <ProjectDetailsForm
         isLoading={loading}
