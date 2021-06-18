@@ -7,6 +7,15 @@ export const getById = gql`
       implementer {
         id
         name
+        email
+        phone
+        vision
+        mission
+        director
+        previousSupports
+        commercialAddress
+        legalRepresentative
+        institutionalExperience
         councilMembers {
           name
           charge

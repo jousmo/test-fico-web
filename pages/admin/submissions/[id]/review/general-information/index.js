@@ -64,6 +64,11 @@ function GeneralInformation({ client, query, readOnly }) {
     variables: { id: query.id }
   })
 
+  const { data: details } = useQuery(submission.queries.getDetails, {
+    client: client,
+    variables: { id: query.id }
+  })
+
   const updateGeneralInformation = useCallback(generalInformation => {
     if (readOnly) return
     setUpdateGeneralInformation(generalInformation, state, setState)
@@ -87,6 +92,7 @@ function GeneralInformation({ client, query, readOnly }) {
     updateGeneralInformation,
     readOnly,
     loading,
+    details,
     isCall,
     error,
     data,
