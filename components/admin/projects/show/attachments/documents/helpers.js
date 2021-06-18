@@ -47,7 +47,7 @@ const getMergedCell = (worksheet, range, value) => {
   getLabelCell(worksheet, range.split(":")[0], value)
 }
 
-const getLabelCell = (worksheet, cellKey, value) => {
+const getLabelCell = (worksheet, cellKey, value, centered) => {
   const cell = worksheet.getCell(cellKey)
   cell.value = value
   cell.font = { bold: true, color: { argb: "FFFFFFFF" }, size: 14 }
@@ -57,13 +57,16 @@ const getLabelCell = (worksheet, cellKey, value) => {
   cell.fill = {
     type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF80221C' }, bgColor: { argb: "FFFFFFFF" }
   }
+  if (centered) {
+    cell.alignment = { horizontal: 'center' }
+  }
 }
 
-const getValueCell = (worksheet, cellKey, value, fn) => {
+const getValueCell = (worksheet, cellKey, value, fn, bold, centered) => {
   const cell = worksheet.getCell(cellKey)
-  cell.font = { size: 14 }
+  cell.font = { size: 14, bold }
   cell.value = fn ? fn(value) : value
-  cell.alignment = { wrapText: true }
+  cell.alignment = { wrapText: true, horizontal: centered ? 'center' : 'left' }
   cell.border = {
     top: { style: 'thin' }, left: { style: 'thin' }, right: { style: 'thin' }, bottom: { style: 'thin' }
   }
@@ -120,222 +123,147 @@ export const generalInformationExport = async data => {
   saveAs(new Blob([buf]), "Info_General.xlsx")
 }
 
+const getIndicator = (worksheet, row, el) => {
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, "")
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, `Indicador: ${el.title}`)
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, el.description)
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, "Metodología", undefined, true, true)
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, el.methodology)
+  row++
+  getValueCell(worksheet, `B${row}`, "Línea base", undefined, true, true)
+  getValueCell(worksheet, `C${row}`, "Meta", undefined, true, true)
+  getValueCell(worksheet, `D${row}`, "Formula", undefined, true, true)
+  row++
+  getValueCell(worksheet, `B${row}`, el.baseline)
+  getValueCell(worksheet, `C${row}`, el.goal)
+  getValueCell(worksheet, `D${row}`, el.formula)
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, "Medios de verificación", undefined, true)
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(
+    worksheet,
+    `B${row}`,
+    el.meansOfVerification?.map(mean => getReadableValue(verificationTypes, mean)).join(', ')
+  )
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, "Productos", undefined, true)
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, el.products?.join(', '))
+  row++
+  return row
+}
+
+const getActivity = (worksheet, row, activity, index) => {
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, `Actividad ${index + 1}: ${activity.title}`)
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, `Responsable: ${activity.responsible}`)
+  row++
+  getValueCell(worksheet, `B${row}`, "Línea base", undefined, true, true)
+  getValueCell(worksheet, `C${row}`, "Meta", undefined, true, true)
+  getValueCell(worksheet, `D${row}`, "Formula", undefined, true, true)
+  row++
+  getValueCell(worksheet, `B${row}`, activity.baseline)
+  getValueCell(worksheet, `C${row}`, activity.goal)
+  getValueCell(worksheet, `D${row}`, activity.formula)
+  row++
+  getValueCell(worksheet, `B${row}`, "Medio de verificación", undefined, true, true)
+  getValueCell(worksheet, `C${row}`, "Lugar de intervención", undefined, true, true)
+  getValueCell(worksheet, `D${row}`, "Mes de implementación", undefined, true, true)
+  row++
+  getValueCell(
+    worksheet,
+    `B${row}`,
+    activity.meansOfVerification?.map(mean => getReadableValue(verificationTypes, mean)).join(', ')
+  )
+  getValueCell(worksheet, `C${row}`, activity.place)
+  getValueCell(
+    worksheet,
+    `D${row}`,
+    activity.months.map(value =>
+      Array.from(Moment.range(value[0], value[1]).by("month"))?.map(r => r.format("MMMM YYYY")).join(", ")
+    ).join(", ")
+  )
+  row++
+  return row
+}
+
 export const technicalSpecificationExport = async data => {
   const workbook = new ExcelJS.Workbook()
-  let worksheet = workbook.addWorksheet("Ficha Técnica")
+  let worksheet = workbook.addWorksheet("Anexo 1.2")
+  worksheet.getColumn('B').width = 35
+  worksheet.getColumn('C').width = 35
+  worksheet.getColumn('D').width = 35
 
-  let titleInfo = worksheet.getCell("A1")
-  titleInfo.value = "Objetivo de desarrollo"
+  let titleInfo = worksheet.getCell("B3")
+  titleInfo.value = "ANEXO 1.2 Ficha técnica"
   titleInfo.font = { size: 20, bold: true }
 
-  titleInfo = worksheet.getCell("A3")
-  titleInfo.value = data?.developmentObjective
-  titleInfo.font = { size: 16, bold: true }
+  getLabelCell(worksheet, "B4", "Proyecto")
+  worksheet.mergeCells("C4:D4")
+  getValueCell(worksheet, "C4", data?.name)
 
-  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-  titleInfo.value = "Indicadores"
-  titleInfo.font = { size: 14, bold: true }
+  worksheet.mergeCells("B5:D5")
+  getLabelCell(worksheet, "B5", "Objetivo de desarrollo", true)
+  worksheet.mergeCells("B6:D6")
+  getValueCell(worksheet, "B6", data?.developmentObjective)
 
-  let developmentObjectiveIndicators = data?.developmentObjectiveIndicators?.map(({
-    id,
-    type,
-    comments,
-    ...el
-  }) => {
-    el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
-    el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
-    el.products = el?.products?.join(' | ')
-    el.meansOfVerification = el?.meansOfVerification
-      ?.map(mean => getReadableValue(verificationTypes, mean))
-      .join(' | ')
-    el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
-    return Object.values(el)
+  let row = 7
+  data?.developmentObjectiveIndicators?.forEach(el => {
+    row = getIndicator(worksheet, row, el)
   })
 
-  developmentObjectiveIndicators = developmentObjectiveIndicators?.length ? developmentObjectiveIndicators : [[]]
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getLabelCell(worksheet, `B${row}`, "Objetivo general", true)
+  row++
+  worksheet.mergeCells(`B${row}:D${row}`)
+  getValueCell(worksheet, `B${row}`, data?.generalObjective)
 
-  worksheet.addTable({
-    name: "FichaTecnica",
-    ref: `A${worksheet?.lastRow?._number + 2}`,
-    headerRow: true,
-    style: {
-      showRowStripes: true,
-    },
-    columns: [
-      { name: "Tipo del indicador" },
-      { name: "Descripción" },
-      { name: "Metodología" },
-      { name: "Fórmula" },
-      { name: "Medio de verificación" },
-      { name: "Línea base" },
-      { name: "Meta" },
-      { name: "Fecha de inicio" },
-      { name: "Fecha de fin" },
-      { name: "Periodicidad de medición" },
-      { name: "Productos" }
-    ],
-    rows: developmentObjectiveIndicators
+  row++
+  data?.generalObjectiveIndicators?.forEach(el => {
+    row = getIndicator(worksheet, row, el)
   })
 
-  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-  titleInfo.value = "Objetivo Generales"
-  titleInfo.font = { size: 20, bold: true }
+  data?.specificObjectives.sort((a, b) => a.orderIndex - b.orderIndex).forEach((el, index) => {
+    row++
+    worksheet.mergeCells(`B${row}:D${row}`)
+    getLabelCell(worksheet, `B${row}`, `Objetivo específico ${index + 1}`, true)
+    row++
+    worksheet.mergeCells(`B${row}:D${row}`)
+    getValueCell(worksheet, `B${row}`, el.description)
 
-  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-  titleInfo.value = data?.generalObjective
-  titleInfo.font = { size: 16, bold: true }
-
-  titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-  titleInfo.value = "Indicadores"
-  titleInfo.font = { size: 14, bold: true }
-
-  let generalObjectiveIndicators = data?.generalObjectiveIndicators?.map(({
-    id,
-    type,
-    comments,
-    ...el
-  }) => {
-    el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
-    el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
-    el.products = el?.products?.join(' | ')
-    el.meansOfVerification = el?.meansOfVerification
-      ?.map(mean => getReadableValue(verificationTypes, mean))
-      .join(' | ')
-    el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
-    return Object.values(el)
-  })
-
-  generalObjectiveIndicators = generalObjectiveIndicators?.length ? generalObjectiveIndicators : [[]]
-
-  worksheet.addTable({
-    name: "FichaTecnica2",
-    ref: `A${worksheet?.lastRow?._number + 2}`,
-    headerRow: true,
-    style: {
-      showRowStripes: true,
-    },
-    columns: [
-      { name: "Tipo del indicador" },
-      { name: "Descripción" },
-      { name: "Metodología" },
-      { name: "Fórmula" },
-      { name: "Medio de verificación" },
-      { name: "Línea base" },
-      { name: "Meta" },
-      { name: "Fecha de inicio" },
-      { name: "Fecha de fin" },
-      { name: "Periodicidad de medición" },
-      { name: "Productos" }
-    ],
-    rows: generalObjectiveIndicators
-  })
-
-  data?.specificObjectives?.forEach((specificObjectives, index) => {
-
-    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-    titleInfo.value = `Objetivo epecifico ${index + 1}`
-    titleInfo.font = { size: 20, bold: true }
-
-    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-    titleInfo.value = specificObjectives?.description
-    titleInfo.font = { size: 16, bold: true }
-
-    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-    titleInfo.value = "Indicadores"
-    titleInfo.font = { size: 14, bold: true }
-
-    let indicators = specificObjectives?.indicators?.map(({
-      id,
-      type,
-      comments,
-      orderIndex,
-      ...el
-    }) => {
-      el.startDate = translateDate(el?.startDate, "DD/MM/YYYY")
-      el.endDate = translateDate(el?.endDate, "DD/MM/YYYY")
-      el.products = el?.products?.join(' | ')
-      el.meansOfVerification = el?.meansOfVerification
-        ?.map(mean => getReadableValue(verificationTypes, mean))
-        .join(' | ')
-      el.measurementPeriodicity = periodicityTypesMeasurement(el?.measurementPeriodicity)?.label
-      return Object.values(el)
+    row++
+    el.indicators?.forEach(indicator => {
+      row = getIndicator(worksheet, row, indicator)
     })
 
-    indicators = indicators?.length ? indicators : [[]]
+    row++
+    worksheet.mergeCells(`B${row}:D${row}`)
+    getLabelCell(worksheet, `B${row}`, 'Actividades', true)
 
-    worksheet.addTable({
-      name: `Indicadores${index}`,
-      ref: `A${worksheet?.lastRow?._number + 2}`,
-      headerRow: true,
-      style: {
-        showRowStripes: true,
-      },
-      columns: [
-        { name: "Tipo del indicador" },
-        { name: "Descripción" },
-        { name: "Metodología" },
-        { name: "Fórmula" },
-        { name: "Medio de verificación" },
-        { name: "Línea base" },
-        { name: "Meta" },
-        { name: "Fecha de inicio" },
-        { name: "Fecha de fin" },
-        { name: "Periodicidad de medición" },
-        { name: "Productos" }
-      ],
-      rows: indicators
-    })
-
-    titleInfo = worksheet.getCell(`A${worksheet?.lastRow?._number + 2}`)
-    titleInfo.value = "Actividades"
-    titleInfo.font = { size: 14, bold: true }
-
-    let activities = specificObjectives?.activities?.map(({
-      id,
-      comments,
-      orderIndex,
-      schedules,
-      ...el
-    }) => {
-      el.inputs = el?.inputs?.join(' | ')
-      el.products = el?.products?.join(' | ')
-      el.months = el?.months?.reduce((prev, next) => {
-        const format = next?.map(el => capitalize(translateDate(el, "MMMM YYYY")))
-        return prev?.concat(format?.join(' - '))
-      }, [])?.join(' | ')
-
-      return Object.values(el)
-    })
-
-    activities = activities?.length ? activities : [[]]
-
-    worksheet.addTable({
-      name: `Actividades${index}`,
-      ref: `A${worksheet?.lastRow?._number + 2}`,
-      headerRow: true,
-      style: {
-        showRowStripes: true,
-      },
-      columns: [
-        { name: "Tipo del indicador" },
-        { name: "Descripción" },
-        { name: "Responsable" },
-        { name: "Metodología" },
-        { name: "Fórmula" },
-        { name: "Medio de verificación" },
-        { name: "Línea base" },
-        { name: "Meta" },
-        { name: "Lugar de intervención" },
-        { name: "Meses de implementación" },
-        { name: "Insumos" },
-        { name: "Productos" }
-      ],
-      rows: activities
+    el.activities?.sort((a, b) => a.orderIndex - b.orderIndex).forEach((activity, index) => {
+      row = getActivity(worksheet, row, activity, index)
     })
   })
 
   const buf = await workbook.xlsx.writeBuffer()
-  saveAs(new Blob([buf]), "Tecnica.xlsx")
+  saveAs(new Blob([buf]), "Ficha_Tecnica.xlsx")
 }
 
 export const budgetExport = async data => {
