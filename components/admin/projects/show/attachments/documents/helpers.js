@@ -102,7 +102,7 @@ export const generalInformationExport = async data => {
     row++
   })
 
-  specificObjectives.forEach(({ description }, index) => {
+  specificObjectives.sort((a, b) => a.orderIndex - b.orderIndex).forEach(({ description }, index) => {
     getLabelCell(worksheet, `C${row}`, `Objetivo específico ${index + 1}`)
     getValueCell(worksheet, `D${row}`, description)
     row++
