@@ -4,6 +4,7 @@ export const getTechnicalSpecification = gql`
   query TechnicalSpecification($id: ID!) {
     TechnicalSpecification(id: $id) {
       id
+      name
       startDate
       endDate
       developmentObjective
