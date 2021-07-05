@@ -34,15 +34,15 @@ export function InvestmentDistributionField({
         const newDistribution = [...dist]
 
         if (newDistribution.length > 2) {
-          const firstAllyIndex = newDistribution.findIndex(el => el.type.includes("ALLIED"))
+          const firstAllyIndex = newDistribution.findIndex(el => el.type.includes("ALLIED1"))
           if (firstAllyIndex >= 0 && newDistribution[firstAllyIndex]?.name !== allies?.[0]) {
             newDistribution[firstAllyIndex].name = allies?.[0]
           }
 
           const secondAllyIndex = dist.findIndex((el, index) =>
-            el.type.includes("ALLIED") && index !== firstAllyIndex
+            el.type.includes("ALLIED2") && index !== firstAllyIndex
           )
-          if (secondAllyIndex > 0 && newDistribution[secondAllyIndex]?.name !== allies?.[1]) {
+          if (secondAllyIndex >= 0 && newDistribution[secondAllyIndex]?.name !== allies?.[1]) {
             if (!!allies[1]) {
               newDistribution[secondAllyIndex].name = allies?.[1]
             } else {
