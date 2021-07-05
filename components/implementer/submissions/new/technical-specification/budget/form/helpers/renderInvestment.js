@@ -6,6 +6,7 @@ export const renderInvestment = (type, allyIndex) => (text, record, index) => {
   if (type.includes("ALLIED")) {
     const alliesInvestment = record.investmentDistribution
       .filter(el => el.type.includes("ALLIED"))
+      .sort((a, b) => a.type[6] - b.type[6])
     const typePercentage = alliesInvestment?.find(i => i.type === type)?.percentage
     percentage = isNaN(typePercentage) ? alliesInvestment[allyIndex]?.percentage : typePercentage
   } else {
