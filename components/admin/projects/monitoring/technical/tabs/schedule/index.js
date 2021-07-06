@@ -16,10 +16,10 @@ export function MonitoringSchedule({ data, dateFilter }) {
     activity: { id: "", type: "ACTIVITY" }
   })
 
-  const fullMonths = getMonths(data?.Submission)
+  const fullMonths = getMonths(data?.TechnicalSpecification)
   let months = dateFilter?.length ? getMonths(dateFilter) : fullMonths
 
-  const activities = data?.Submission?.specificObjectives?.reduce(
+  const activities = data?.TechnicalSpecification?.specificObjectives?.reduce(
     (prev, { activities }) => activities ? prev.concat(activities) : null, []
   ) || []
 
