@@ -25,6 +25,7 @@ export const renderSummary = (concepts, submission) => {
 
     const alliesInvestment = concept.investmentDistribution
       .filter(el => el.type.includes("ALLIED"))
+      .sort((a, b) => a.type[6] - b.type[6])
 
     const firstAllyPercentage = alliesInvestment
       ?.find(e => e.type === "ALLIED1")?.percentage
