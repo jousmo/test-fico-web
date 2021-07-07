@@ -4,7 +4,7 @@ import { CheckCircleTwoTone, CloseCircleOutlined } from "@ant-design/icons"
 import Moment from "moment"
 import { getRows } from "../helpers"
 
-export function AssistanceList ({ activity, dataSource, onEdit, search }) {
+export function AssistanceList ({ activity, dataSource, loading, onEdit, search }) {
   const columns = Array.from(dataSource[activity]?.columns || [])
     .sort((a, b) => a.localeCompare(b))
   const rows = getRows(Object.values(dataSource[activity]?.participants || {}), search)
@@ -16,6 +16,7 @@ export function AssistanceList ({ activity, dataSource, onEdit, search }) {
       style={{ marginTop: "1.5rem" }}
       dataSource={rows}
       size="small"
+      loading={loading}
       locale={{ emptyText: <Empty description="No hay asistencias registradas" /> }}
       scroll={{ x: true }}
       pagination={true}>
