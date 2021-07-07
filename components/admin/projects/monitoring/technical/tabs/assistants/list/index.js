@@ -4,7 +4,7 @@ import { EditOutlined } from "@ant-design/icons"
 import { translateGender, translateDate } from "../../../../../../../../helpers/assistantsBeneficiaries"
 import { DeleteButton } from "../../../../../../../shared"
 
-export function ListAssistants ({ dataSource, onEdit, onDelete, selected, setSelected }) {
+export function ListAssistants ({ dataSource, onEdit, onDelete, loading, selected, setSelected }) {
   const onSelectChange = (selectedRowKeys, selectedRows) => {
     setSelected({ rows: selectedRows, keys: selectedRowKeys })
   }
@@ -21,7 +21,6 @@ export function ListAssistants ({ dataSource, onEdit, onDelete, selected, setSel
     getCheckboxProps: onSelectDisabled
   }
 
-  dataSource.sort((a, b) => a.folio - b.folio)
   return (
     <Table
       rowKey={a => a.id}
@@ -30,6 +29,7 @@ export function ListAssistants ({ dataSource, onEdit, onDelete, selected, setSel
       dataSource={dataSource}
       size="small"
       locale={{emptyText: <Empty description="Agrega asistentes" />}}
+      loading={loading}
       pagination={true}>
       <Table.Column
         width={1}

@@ -10,17 +10,27 @@ import { AdminSubmissionContext } from "../../../../../../../contexts/admin/subm
 import { onSearch } from "../../../../../census/tabs/card/helpers"
 import { warning } from "../../../../../../../helpers"
 import { getAssistance } from "./assistance/helpers"
+import { useQuery } from "@apollo/react-hooks"
+import { submission } from "../../../../../../../graphql"
+import { useRouter } from "next/router"
 
 export function MonitoringAssistants({ data, dateFilter }) {
-  const { Submission } = data || {}
-  const dataSource = decoratedData(Submission?.assistants, dateFilter)
+  const router = useRouter()
   const {
+    client,
     createAssistants,
     updateAssistants,
     deleteAssistants,
     createAssistance,
     createBeneficiaries
   } = useContext(AdminSubmissionContext)
+
+  const { loading, data: assistantsData } = useQuery(submission.queries.getProjectAssistants, {
+    client,
+    variables: { id: router?.query.id }
+  })
+
+  const dataSource = decoratedData(assistantsData?.ProjectAssistants, dateFilter)
   const [selected, setSelected] = useState({ rows: [], keys: [] })
 
   const [state, setState] = useState({
@@ -117,9 +127,10 @@ export function MonitoringAssistants({ data, dateFilter }) {
               <ListAssistants
                 selected={selected}
                 setSelected={setSelected}
+                loading={loading}
                 dataSource={items}
                 onEdit={onEdit}
-                onDelete={onDelete}/>
+                onDelete={onDelete} />
             </>
           }
         </CompositeField>

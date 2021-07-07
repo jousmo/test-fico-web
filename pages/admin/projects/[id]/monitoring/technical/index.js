@@ -99,6 +99,7 @@ function TechnicalMonitoringPage({ client, query, readOnly }) {
     saveActivity,
     readOnly,
     loading,
+    client,
     update,
     error,
     data,
