@@ -90,30 +90,6 @@ export const getTechnicalMonitoring = gql`
         correctiveActions
       }
       createdAt
-      assistants{
-        id
-        name
-        curp
-        phone
-        state
-        folio
-        gender
-        colony
-        lastName
-        birthdate
-        maidenName
-        beneficiary
-        municipality
-        assistance{
-          id
-          assistanceAt
-          activity {
-            id
-            description
-            title
-          }
-        }
-      }
       projectBeneficiaries{
         id
         name
