@@ -275,6 +275,7 @@ function TechnicalMonitoringPage({ client, query }) {
     createAssistance,
     saveActivity,
     loading,
+    client,
     update,
     error,
     data,

@@ -11,7 +11,7 @@ import { MonitoringSchedule } from "../../../technical/tabs/schedule"
 export function FinancialSchedule(){
   const router = useRouter()
   const { client } = useContext(AdminSubmissionContext)
-  const { loading, data } = useQuery(submission.queries.getTechnicalMonitoring, {
+  const { loading, data } = useQuery(submission.queries.getTechnicalSpecification, {
     client: client,
     variables: { id: router?.query.id }
   })

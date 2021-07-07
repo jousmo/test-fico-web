@@ -26,13 +26,12 @@ export const getColor = filterSchedule => {
 }
 
 export const getCompliance = activity => {
-
   const compliance = activity?.schedules?.reduce((prev, current) => {
     const dateCompliance = current?.completedAt?.split("T")[0]
     return dateCompliance ? prev + 1 : prev + 0
   }, 0)
 
-  return ((compliance * 100) / activity?.schedules?.length).toFixed(2)
+  return ((compliance * 100) / (activity?.schedules?.length || 1)).toFixed(2)
 }
 
 export const getMonths = dates => {
