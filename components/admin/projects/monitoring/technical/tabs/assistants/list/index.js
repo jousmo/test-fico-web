@@ -30,6 +30,7 @@ export function ListAssistants ({ dataSource, onEdit, onDelete, loading, selecte
       size="small"
       locale={{emptyText: <Empty description="Agrega asistentes" />}}
       loading={loading}
+      scroll={{ x: true }}
       pagination={true}>
       <Table.Column
         width={1}
