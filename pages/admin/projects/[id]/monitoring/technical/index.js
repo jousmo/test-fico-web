@@ -9,7 +9,7 @@ import {
 import { submission } from "../../../../../../graphql"
 import { useCallback, useMemo } from "react"
 import { useMutation, useQuery } from "@apollo/react-hooks"
-import { success, loadingAlert, withApollo } from "../../../../../../helpers"
+import { success, loadingAlert, withApollo, warning } from "../../../../../../helpers"
 import { cloneDeep } from "lodash"
 import { AuthCheck } from "../../../../../../helpers/auth/auth-check"
 import { apolloError } from "../../../../../../helpers/bugsnag/notify"
@@ -31,6 +31,31 @@ function TechnicalMonitoringPage({ client, query, readOnly }) {
   const [updateActivity] = useMutation(
     submission.mutations.updateActivity, { client: client }
   )
+
+  const [createProjectAssistants] = useMutation(
+    submission.mutations.createProjectAssistants, { client: client }
+  )
+
+  const createAssistants = useCallback(async assistant => {
+    const saving = loadingAlert("Guardando...", 0)
+    try {
+      await createProjectAssistants({
+        variables: { data: assistant, id: query.id }
+      })
+      success()
+      await refetch()
+      saving()
+      return true
+    } catch(e) {
+      saving()
+      if (e.graphQLErrors[0].message.includes("CURP")) {
+        warning("El CURP ya existe")
+        return false
+      } else {
+        apolloError(e)
+      }
+    }
+  }, [createProjectAssistants, refetch])
 
   const updateSubmission = useCallback(async submission => {
     if (readOnly) return
@@ -96,6 +121,7 @@ function TechnicalMonitoringPage({ client, query, readOnly }) {
 
   const injectActions = useMemo(() => ({
     updateSubmission,
+    createAssistants,
     saveActivity,
     readOnly,
     loading,
