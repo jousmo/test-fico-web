@@ -25,7 +25,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     createBeneficiaries
   } = useContext(AdminSubmissionContext)
 
-  const { loading, data: assistantsData } = useQuery(submission.queries.getProjectAssistants, {
+  const { loading, data: assistantsData, refetch } = useQuery(submission.queries.getProjectAssistants, {
     client,
     variables: { id: router?.query.id }
   })
@@ -73,6 +73,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     if (saved) {
       form.resetFields()
       onCancel()
+      await refetch()
     }
   }
 
