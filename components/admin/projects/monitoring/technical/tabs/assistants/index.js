@@ -25,7 +25,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     createBeneficiaries
   } = useContext(AdminSubmissionContext)
 
-  const { loading, data: assistantsData } = useQuery(submission.queries.getProjectAssistants, {
+  const { loading, data: assistantsData, refetch } = useQuery(submission.queries.getProjectAssistants, {
     client,
     variables: { id: router?.query.id }
   })
@@ -49,6 +49,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     createBeneficiaries && createBeneficiaries(selected.rows)
     setSelected({ rows: [], keys: [] })
     onToggleConfirm()
+    refetch().then()
   }
 
   const onClickAdd = () => {
@@ -73,6 +74,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     if (saved) {
       form.resetFields()
       onCancel()
+      await refetch()
     }
   }
 
@@ -83,6 +85,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
 
   const onDelete = ({ id }) => {
     deleteAssistants && deleteAssistants(id)
+    refetch().then()
   }
 
   const onAssistance = () => {
@@ -95,6 +98,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
 
   const onRegisterAssistance = values => {
     createAssistance && createAssistance(getAssistance(values, selected.rows))
+    refetch().then()
     setAssistance(false)
     setSelected({ rows: [], keys: [] })
   }

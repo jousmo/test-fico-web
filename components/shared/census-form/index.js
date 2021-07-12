@@ -30,7 +30,8 @@ export function CensusForm({ form, disabled = false, divider = true }) {
       </Form.Item>
       <Form.Item
         label="Género:"
-        name="gender">
+        name="gender"
+        rules={[{ required: true, message: "El campo es requerido" }]}>
         <Radio.Group disabled={disabled}>
           <Radio value="M">Masculino</Radio>
           <Radio value="F">Femenino</Radio>
