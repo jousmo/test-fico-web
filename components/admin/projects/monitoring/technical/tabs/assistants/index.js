@@ -49,6 +49,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
     createBeneficiaries && createBeneficiaries(selected.rows)
     setSelected({ rows: [], keys: [] })
     onToggleConfirm()
+    refetch().then()
   }
 
   const onClickAdd = () => {
@@ -84,6 +85,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
 
   const onDelete = ({ id }) => {
     deleteAssistants && deleteAssistants(id)
+    refetch().then()
   }
 
   const onAssistance = () => {
@@ -96,6 +98,7 @@ export function MonitoringAssistants({ data, dateFilter }) {
 
   const onRegisterAssistance = values => {
     createAssistance && createAssistance(getAssistance(values, selected.rows))
+    refetch().then()
     setAssistance(false)
     setSelected({ rows: [], keys: [] })
   }
