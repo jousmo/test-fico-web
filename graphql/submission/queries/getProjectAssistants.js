@@ -8,7 +8,6 @@ export const getProjectAssistants = gql`
       curp
       phone
       state
-      createdAt
       folio
       gender
       colony
