@@ -103,6 +103,7 @@ export const attachmentThree = async (submission, periods) => {
       totalsRow: true,
       style: {
         showRowStripes: true,
+        theme: "TableStyleMedium10"
       },
       columns: [
         { name: "Aportante \\ Fecha" },
@@ -158,6 +159,7 @@ export const attachmentFour = async (periods) => {
       headerRow: true,
       style: {
         showRowStripes: true,
+        theme: "TableStyleMedium10"
       },
       columns: [
         { name: " " },

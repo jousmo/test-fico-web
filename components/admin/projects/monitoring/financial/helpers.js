@@ -394,6 +394,7 @@ export const invoicesExport = async (invoices, concepts) => {
     headerRow: true,
     style: {
       showRowStripes: true,
+      theme: "TableStyleMedium10"
     },
     columns: [
       { name: "Folio SAT" },
