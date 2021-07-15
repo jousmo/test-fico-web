@@ -195,7 +195,7 @@ const getActivity = (worksheet, row, activity, index) => {
   getValueCell(
     worksheet,
     `D${row}`,
-    activity.months.map(value =>
+    activity.months?.map(value =>
       Array.from(Moment.range(value[0], value[1]).by("month"))?.map(r => r.format("MMMM YYYY")).join(", ")
     ).join(", ")
   )
