@@ -76,6 +76,7 @@ export const censusExport = async (data, section) => {
     headerRow: true,
     style: {
       showRowStripes: true,
+      theme: "TableStyleMedium10"
     },
     columns: [
       { name: "Folio" },

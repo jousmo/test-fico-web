@@ -296,6 +296,7 @@ export const budgetExport = async data => {
     headerRow: true,
     style: {
       showRowStripes: true,
+      theme: "TableStyleMedium10"
     },
     columns: [
       { name: "Concepto" },
@@ -330,6 +331,7 @@ export const budgetExport = async data => {
       headerRow: true,
       style: {
         showRowStripes: true,
+        theme: "TableStyleMedium10"
       },
       columns: [
         { name: "Mes" },
@@ -356,6 +358,7 @@ export const budgetExport = async data => {
       headerRow: true,
       style: {
         showRowStripes: true,
+        theme: "TableStyleMedium10"
       },
       columns: columnsInvestment,
       rows: [rowsInvestment]
@@ -399,6 +402,7 @@ export const humanResourcesExport = async data => {
       headerRow: true,
       style: {
         showRowStripes: true,
+        theme: "TableStyleMedium10"
       },
       columns: [
         { name: "Puesto" },
@@ -458,6 +462,7 @@ export const scheduleExport = async data => {
       headerRow: true,
       style: {
         showRowStripes: true,
+        theme: "TableStyleMedium10"
       },
       columns: [
         { name: "Actividad" },
@@ -516,6 +521,7 @@ export const financialMonitoringExport = async data => {
     headerRow: true,
     style: {
       showRowStripes: true,
+      theme: "TableStyleMedium10"
     },
     columns: [
       { name: "UUID" },

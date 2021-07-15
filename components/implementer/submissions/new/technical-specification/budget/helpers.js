@@ -102,6 +102,7 @@ export const exportBudget = async submission => {
     totalsRow: true,
     style: {
       showRowStripes: true,
+      theme: "TableStyleMedium10"
     },
     columns: [
       { name: "Concepto" },
