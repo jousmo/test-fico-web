@@ -64,7 +64,7 @@ export function ActivitiesField({
           { items?.map((item, index) =>
             <ActivityItem
               data={item}
-              key={`activity_${index}`}
+              key={`activity_${item.orderIndex}`}
               readOnly={readOnly}
               review={review}
               onDelete={removeItem(index)}

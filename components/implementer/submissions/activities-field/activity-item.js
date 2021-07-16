@@ -19,6 +19,7 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
     place = "N/A",
     months = "N/A",
     title = "N/A",
+    orderIndex,
     key
   } = data
 
@@ -41,7 +42,7 @@ export function ActivityItem({ data, onDelete, onEdit, readOnly, review }) {
   return (
     <Card key={`indicator_${key}`} style={{marginBottom: "20px"}}>
       <Typography.Text strong>
-        {title || "Actividad sin titulo"}
+        Actividad {orderIndex}: {title || "Actividad sin titulo"}
       </Typography.Text>
       <br />
       <Typography.Text>{description || "N/A"}</Typography.Text>
