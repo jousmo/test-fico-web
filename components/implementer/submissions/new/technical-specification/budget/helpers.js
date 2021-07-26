@@ -82,7 +82,7 @@ export const exportBudget = async submission => {
       const total = concept?.unitCost * monthlyDistribution?.[index]
       result.push(displayAmount(total, (investmentDistribution[1].percentage / 100)))
       result.push(displayAmount(total, (investmentDistribution[0].percentage / 100)))
-      if (investorsColumns.length > 2) {
+      if (investorsColumns.length > 2 && investmentDistribution.length > 2) {
         result.push(displayAmount(total, (investmentDistribution[2].percentage / 100)))
       }
       if (investorsColumns.length > 3) {
